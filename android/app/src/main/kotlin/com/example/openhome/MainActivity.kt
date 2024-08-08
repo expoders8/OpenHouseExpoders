@@ -1,4 +1,4 @@
-package com.example.openhome
+package com.openuniverse.openhouse
 
 import io.flutter.embedding.android.FlutterActivity
 
