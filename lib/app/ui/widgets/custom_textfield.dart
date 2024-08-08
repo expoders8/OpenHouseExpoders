@@ -113,7 +113,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               )
             : null,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(9.0),
+          borderRadius: BorderRadius.circular(25.0),
           borderSide: const BorderSide(color: kSecondaryPrimaryColor),
         ),
         errorBorder: OutlineInputBorder(
@@ -124,12 +124,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         errorStyle: const TextStyle(color: kErrorColor),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(9.0),
+          borderRadius: BorderRadius.circular(25.0),
           borderSide:
               const BorderSide(color: kSecondaryPrimaryColor, width: 1.0),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(9.0),
+          borderRadius: BorderRadius.circular(25.0),
           borderSide: const BorderSide(color: kSecondaryPrimaryColor),
         ),
       ),

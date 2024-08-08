@@ -148,7 +148,7 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
                                 : Get.width / 2.350,
                         padding: const EdgeInsets.symmetric(vertical: 9),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.0),
+                            borderRadius: BorderRadius.circular(25.0),
                             border: Border.all(
                                 color: kSecondaryPrimaryColor, width: 0.7)),
                         child: Row(

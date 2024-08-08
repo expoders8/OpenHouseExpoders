@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
 import '../ui/Auth/SignUp/signup.dart';
+import '../ui/welcome/welcome.dart';
 
 part 'app_routes.dart';
 
@@ -23,6 +24,10 @@ class AppPages {
     GetPage(
       name: _Paths.tabPage,
       page: () => const TabPage(),
+    ),
+    GetPage(
+      name: _Paths.welcomePage,
+      page: () => const WelcomePage(),
     ),
   ];
 }

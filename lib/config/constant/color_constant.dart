@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 const kAppBarColor = Color(0xFFEF5B5B);
-const kButtonColor = Color(0XFF29CE55);
+const kButtonColor = Color(0XFFFF385C);
 const kAppBackGround1Color = Color(0xFF00E869);
 const kAppBackGround2Color = Color(0xFF057DDB);
 const kPrimaryColor = Color(0XFF000000);

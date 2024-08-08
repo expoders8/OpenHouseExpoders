@@ -41,32 +41,36 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 90),
-                      GradientText(
-                        text: "Signup for a new a account",
-                        style: TextStyle(
-                          fontSize: size.width > 500 ? 25 : 20,
-                          fontFamily:
-                              'CircularStdBold', // Make sure this font is added in your pubspec.yaml
+                      const SizedBox(height: 40),
+                      const Center(
+                        child: Text(
+                          "Open House",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 35,
+                              fontFamily: kCircularStdBold,
+                              color: kPrimaryColor),
                         ),
-                        gradient: const LinearGradient(
-                            colors: [
-                              kAppBackGround1Color,
-                              kAppBackGround2Color
-                            ],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            tileMode: TileMode.repeated),
                       ),
-                      SizedBox(height: size.height > 500 ? 10 : 5),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      const Text(
+                        "Sign Up",
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontFamily: kCircularStdMedium,
+                            color: kPrimaryColor),
+                      ),
+                      const SizedBox(height: 5),
                       Text(
-                        "Enter your email and first name to create an account.",
+                        "Welcome! Please enter your details.",
                         style: TextStyle(
                             color: kSecondaryPrimaryColor,
                             fontSize: size.width > 500 ? 25 : 14,
                             fontFamily: kCircularStdNormal),
                       ),
-                      const SizedBox(height: 35),
+                      const SizedBox(height: 25),
                       SizedBox(
                         width: Get.width > 500 ? 600 : Get.width,
                         child: IntrinsicHeight(
@@ -78,12 +82,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    buildTitleWidget("First Name:"),
-                                    SizedBox(height: size.width > 500 ? 30 : 5),
                                     CustomTextFormField(
-                                      hintText: '',
+                                      hintText: 'First Name',
                                       maxLines: 1,
                                       ctrl: firstNameController,
+                                      prefixIcon: "assets/icons/user.png",
                                       name: "name",
                                       formSubmitted: isFormSubmitted,
                                       validationMsg: 'Please enter first name',
@@ -97,11 +100,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    buildTitleWidget("Last Name:"),
-                                    SizedBox(height: size.width > 500 ? 30 : 5),
                                     CustomTextFormField(
-                                      hintText: '',
+                                      hintText: 'Last Name',
                                       maxLines: 1,
+                                      prefixIcon: "assets/icons/user.png",
                                       ctrl: lastNameController,
                                       name: "name",
                                       formSubmitted: isFormSubmitted,
@@ -115,13 +117,57 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      buildTitleWidget("Email address:"),
-                      SizedBox(height: size.width > 500 ? 30 : 5),
+                      SizedBox(
+                        width: Get.width > 500 ? 600 : Get.width,
+                        child: IntrinsicHeight(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomTextFormField(
+                                      hintText: '+91',
+                                      maxLines: 1,
+                                      ctrl: firstNameController,
+                                      name: "code",
+                                      formSubmitted: isFormSubmitted,
+                                      validationMsg: 'Please enter first name',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomTextFormField(
+                                      hintText: 'Phone No',
+                                      maxLines: 1,
+                                      ctrl: lastNameController,
+                                      prefixIcon: "assets/icons/phone.png",
+                                      name: "phoneno",
+                                      formSubmitted: isFormSubmitted,
+                                      validationMsg: 'Please enter last name',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
                       SizedBox(
                         width: size.width > 500 ? 600 : size.width,
                         child: CustomTextFormField(
-                          hintText: 'Jone@gmail.com',
+                          hintText: 'Email',
                           maxLines: 1,
+                          prefixIcon: "assets/icons/email.png",
                           ctrl: emailController,
                           name: "email",
                           formSubmitted: isFormSubmitted,
@@ -129,7 +175,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      buildTitleWidget("Password:"),
                       SizedBox(height: size.width > 500 ? 30 : 5),
                       SizedBox(
                         width: size.width > 500 ? 600 : size.width,
@@ -137,43 +182,30 @@ class _SignUpPageState extends State<SignUpPage> {
                           hintText: '***********',
                           maxLines: 1,
                           ctrl: passwordController,
+                          prefixIcon: "assets/icons/padlock.png",
                           name: "password",
                           formSubmitted: isFormSubmitted,
                           validationMsg: 'Please enter password',
                         ),
                       ),
-                      const SizedBox(height: 25),
-                      SizedBox(
-                        width: size.width > 500 ? 600 : size.width,
-                        height: 48,
-                        child: CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          child: Container(
-                            width: size.width,
-                            height: 48,
-                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            decoration: BoxDecoration(
-                              color: kButtonColor,
-                              borderRadius: BorderRadius.circular(9.0),
-                              gradient: const LinearGradient(
-                                  colors: [
-                                    kAppBackGround1Color,
-                                    kAppBackGround2Color
-                                  ],
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  tileMode: TileMode.repeated),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Create account',
-                                style: TextStyle(
-                                    color: kWhiteColor,
-                                    letterSpacing: 1.5,
-                                    fontFamily: kCircularStdNormal,
-                                    fontSize: 16),
-                              ),
+                      const SizedBox(height: 20),
+                      CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () {},
+                        child: Container(
+                          height: 45,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(color: kWhiteColor),
+                              color: kButtonColor),
+                          child: const Center(
+                            child: Text(
+                              "Sign Up",
+                              style: TextStyle(
+                                  color: kWhiteColor,
+                                  fontFamily: kCircularStdNormal,
+                                  fontSize: 18),
                             ),
                           ),
                         ),
@@ -206,7 +238,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -235,7 +267,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 20),
                       const SocialLoginPage(checkRowOrColumn: "row"),
                     ],
                   ),
