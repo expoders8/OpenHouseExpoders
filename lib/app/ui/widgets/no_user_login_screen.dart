@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../../routes/app_pages.dart';
 import '../widgets/social_login_widget.dart';
-import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 

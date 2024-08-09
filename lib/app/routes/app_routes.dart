@@ -7,6 +7,7 @@ abstract class Routes {
   static const loginPage = _Paths.loginPage;
   static const signUpPage = _Paths.signUpPage;
   static const welcomePage = _Paths.welcomePage;
+  static const forgotPasswordPage = _Paths.forgotPasswordPage;
 }
 
 abstract class _Paths {
@@ -14,4 +15,5 @@ abstract class _Paths {
   static const loginPage = '/loginPage';
   static const signUpPage = '/signUpPage';
   static const welcomePage = '/welcomePage';
+  static const forgotPasswordPage = '/forgotPasswordPage';
 }

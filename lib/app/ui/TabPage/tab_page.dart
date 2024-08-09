@@ -7,6 +7,7 @@ import '../../controller/tab_controller.dart';
 import '../Home/home.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../Property/property.dart';
 
 class TabPage extends StatefulWidget {
   final String? firstIndex;
@@ -53,7 +54,7 @@ class _TabPageState extends State<TabPage> {
                   index: tabCountController.tabIndex.value,
                   children: const [
                     HomePage(),
-                    HomePage(),
+                    PropertyPage(),
                     HomePage(),
                     HomePage(),
                     HomePage(),
@@ -80,11 +81,11 @@ class _TabPageState extends State<TabPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 buildBottomTab(
-                                    0, "Home", "assets/icons/gridview.png"),
-                                const SizedBox(width: 25),
+                                    0, "Home", "assets/icons/homeicon.png"),
+                                const SizedBox(width: 20),
                                 buildBottomTab(
-                                    1, "Property", "assets/icons/homeicon.png"),
-                                const SizedBox(width: 25),
+                                    1, "Property", "assets/icons/property.png"),
+                                const SizedBox(width: 20),
                                 CupertinoButton(
                                   padding: EdgeInsets.zero,
                                   onPressed: () {
@@ -94,7 +95,7 @@ class _TabPageState extends State<TabPage> {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                        color: kRedColor,
+                                        color: kButtonColor,
                                         borderRadius:
                                             BorderRadius.circular(25)),
                                     child: Image.asset(
@@ -103,10 +104,10 @@ class _TabPageState extends State<TabPage> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 25),
+                                const SizedBox(width: 20),
                                 buildBottomTab(
-                                    3, "Payment", "assets/icons/phone.png"),
-                                const SizedBox(width: 25),
+                                    3, "Payment", "assets/icons/payment.png"),
+                                const SizedBox(width: 20),
                                 buildBottomTab(
                                     4, "Profile", "assets/icons/profile.png"),
                               ],
@@ -132,7 +133,13 @@ class _TabPageState extends State<TabPage> {
         tabCountController.changeTabIndex(index);
       },
       child: SizedBox(
-        height: title == "Home" ? 25 : 34,
+        height: title == "Home"
+            ? 25
+            : title == "Payment"
+                ? 25
+                : title == "Property"
+                    ? 25
+                    : 35,
         child: Image.asset(
           image,
           color: kPrimaryColor,

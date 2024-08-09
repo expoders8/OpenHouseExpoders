@@ -120,7 +120,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           borderSide: const BorderSide(
             color: kErrorColor, // Default border color
           ),
-          borderRadius: BorderRadius.circular(7),
+          borderRadius: BorderRadius.circular(25.0),
         ),
         errorStyle: const TextStyle(color: kErrorColor),
         enabledBorder: OutlineInputBorder(
