@@ -20,6 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _loginFormKey = GlobalKey<FormState>();
   bool selectEmail = true;
   TextEditingController firstNameController = TextEditingController();
+  TextEditingController mobilenoController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -27,14 +28,14 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Form(
-            key: _loginFormKey,
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Form(
+              key: _loginFormKey,
               child: Column(
                 children: [
                   Padding(
@@ -90,7 +91,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         maxLines: 1,
                                         ctrl: firstNameController,
                                         prefixIcon: "assets/icons/user.png",
-                                        name: "name",
+                                        name: "firstUser",
                                         formSubmitted: isFormSubmitted,
                                         validationMsg:
                                             'Please enter first name',
@@ -110,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         maxLines: 1,
                                         prefixIcon: "assets/icons/user.png",
                                         ctrl: lastNameController,
-                                        name: "name",
+                                        name: "firstUser",
                                         formSubmitted: isFormSubmitted,
                                         validationMsg: 'Please enter last name',
                                       ),
@@ -137,11 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       CustomTextFormField(
                                         hintText: '+91',
                                         maxLines: 1,
-                                        ctrl: firstNameController,
                                         name: "code",
-                                        formSubmitted: isFormSubmitted,
-                                        validationMsg:
-                                            'Please enter first name',
                                       ),
                                     ],
                                   ),
@@ -154,13 +151,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       CustomTextFormField(
-                                        hintText: 'Phone No',
+                                        hintText: 'PhoneNo',
                                         maxLines: 1,
-                                        ctrl: lastNameController,
+                                        ctrl: mobilenoController,
+                                        keyboardType: TextInputType.phone,
                                         prefixIcon: "assets/icons/phone.png",
                                         name: "phoneno",
                                         formSubmitted: isFormSubmitted,
-                                        validationMsg: 'Please enter last name',
+                                        validationMsg:
+                                            'Please enter PhoneNumber',
                                       ),
                                     ],
                                   ),
@@ -187,7 +186,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(
                           width: size.width > 500 ? 600 : size.width,
                           child: CustomTextFormField(
-                            hintText: '***********',
+                            hintText: 'Password',
                             maxLines: 1,
                             ctrl: passwordController,
                             prefixIcon: "assets/icons/padlock.png",
@@ -225,9 +224,9 @@ class _SignUpPageState extends State<SignUpPage> {
                             Text(
                               "Already have an account? ",
                               style: TextStyle(
-                                fontSize: size.width > 500 ? 17.5 : 12.5,
+                                fontSize: size.width > 500 ? 17.5 : 12,
                                 color: kPrimaryColor,
-                                fontFamily: kCircularStdBook,
+                                fontFamily: kCircularStdNormal,
                               ),
                             ),
                             CupertinoButton(
@@ -238,9 +237,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               child: Text(
                                 "Login",
                                 style: TextStyle(
-                                    fontSize: size.width > 500 ? 17.5 : 12.5,
+                                    fontSize: size.width > 500 ? 17.5 : 14,
                                     color: kPrimaryColor,
-                                    fontFamily: kCircularStdBook,
+                                    fontFamily: kCircularStdMedium,
                                     decoration: TextDecoration.underline),
                               ),
                             ),
@@ -259,7 +258,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              "or continue with",
+                              "Or",
                               style: TextStyle(
                                   color: kSecondaryPrimaryColor,
                                   fontSize: size.width > 500 ? 25 : 15,

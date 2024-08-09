@@ -27,14 +27,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Form(
-            key: _loginFormKey,
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Form(
+              key: _loginFormKey,
               child: Column(
                 children: [
                   Padding(
@@ -144,11 +144,11 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Not a member? ",
+                                "Don’t  have an account? ",
                                 style: TextStyle(
-                                  fontSize: size.width > 500 ? 17.5 : 12.5,
+                                  fontSize: size.width > 500 ? 17.5 : 12,
                                   color: kPrimaryColor,
-                                  fontFamily: kCircularStdBook,
+                                  fontFamily: kCircularStdNormal,
                                 ),
                               ),
                               CupertinoButton(
@@ -159,9 +159,9 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Text(
                                   "Sign Up",
                                   style: TextStyle(
-                                      fontSize: size.width > 500 ? 17.5 : 12.5,
+                                      fontSize: size.width > 500 ? 17.5 : 14,
                                       color: kPrimaryColor,
-                                      fontFamily: kCircularStdBook,
+                                      fontFamily: kCircularStdMedium,
                                       decoration: TextDecoration.underline),
                                 ),
                               ),
@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              "or log in with",
+                              "Or",
                               style: TextStyle(
                                   color: kSecondaryPrimaryColor,
                                   fontSize: size.width > 500 ? 25 : 15,

@@ -77,7 +77,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         return validateInput(value);
       },
       obscureText: widget.name == "password" ? !_passwordVisible : false,
-      obscuringCharacter: '*',
+      obscuringCharacter: '●',
       decoration: InputDecoration(
         hintText: widget.hintText,
         filled: true,
@@ -91,9 +91,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             ? Image.asset(
                 widget.prefixIcon.toString(),
                 color: kPrimaryColor,
-                height: 20,
-                width: 20,
-                fit: BoxFit.cover,
+                scale: widget.name == "firstUser"
+                    ? 11
+                    : widget.name == "phoneno"
+                        ? 11
+                        : 1.5,
               )
             : null,
         suffixIcon: widget.name == "password"
