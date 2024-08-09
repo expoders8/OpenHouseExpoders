@@ -11,7 +11,7 @@ class _PropertyPageState extends State<PropertyPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SafeArea(child: Text("Property")),
+      body: SafeArea(child: Center(child: Text("Property"))),
     );
   }
 }

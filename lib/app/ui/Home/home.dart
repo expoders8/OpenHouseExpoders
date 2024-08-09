@@ -15,17 +15,35 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "OpenHouse",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        automaticallyImplyLeading: false,
+        actions: [
+          GestureDetector(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset("assets/icons/notification.png", scale: 1.8),
+            ),
+          ),
+        ],
+        backgroundColor: kBackGroundColor,
+      ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: Get.width / 2.240,
                       decoration: BoxDecoration(
                         color: kButtonColor,
                         borderRadius: BorderRadius.circular(15),
@@ -54,12 +72,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Container(
+                    const SizedBox(width: 10),
+                    Container(
+                      width: Get.width / 2.240,
                       decoration: BoxDecoration(
                         color: kWhiteColor,
                         borderRadius: BorderRadius.circular(15),
@@ -78,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                                   color: kPrimaryColor),
                             ),
                             Text(
-                              "\$2000",
+                              "\$1952",
                               style: TextStyle(
                                   fontFamily: kCircularStdMedium,
                                   fontSize: 25,
@@ -88,234 +103,330 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    color: kWhiteColor,
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: Get.width,
-                decoration: BoxDecoration(
-                  color: kWhiteColor,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 15.0, right: 15.0, top: 20, bottom: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Total Property",
-                            style: TextStyle(
-                                fontFamily: kCircularStdMedium,
-                                fontSize: 15,
-                                color: kPrimaryColor),
-                          ),
-                          Text(
-                            "10",
-                            style: TextStyle(
-                                fontFamily: kCircularStdMedium,
-                                fontSize: 25,
-                                color: kPrimaryColor),
-                          ),
-                        ],
-                      ),
-                      Image.asset(
-                        "assets/icons/line_vertical.png",
-                        fit: BoxFit.cover,
-                        scale: 1.5,
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Property on lease",
-                            style: TextStyle(
-                                fontFamily: kCircularStdMedium,
-                                fontSize: 15,
-                                color: kPrimaryColor),
-                          ),
-                          Text(
-                            "8",
-                            style: TextStyle(
-                                fontFamily: kCircularStdMedium,
-                                fontSize: 25,
-                                color: kPrimaryColor),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 180,
-                decoration: BoxDecoration(
-                  color: kWhiteColor,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                border: Border.all(color: kPrimaryColor)),
-                            child: const Padding(
-                              padding: EdgeInsets.all(3.0),
-                              child: Icon(
-                                Icons.electric_bolt_sharp,
-                                size: 22,
-                                color: kButtonColor,
-                              ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 15.0, right: 15.0, top: 20, bottom: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Total Property",
+                              style: TextStyle(
+                                  fontFamily: kCircularStdNormal,
+                                  fontSize: 14,
+                                  color: kPrimaryColor),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
-                            "Electricity",
-                            style: TextStyle(
-                                fontFamily: kCircularStdMedium,
-                                fontSize: 20,
-                                color: kPrimaryColor),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        "I want to change fan.",
-                        style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 15,
-                            fontFamily: kCircularStdNormal),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            size: 15,
-                            color: kButtonColor,
-                          ),
-                          Text(
-                            "4693 Wentz Avenue, Saskatoon",
-                            style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 12,
-                                fontFamily: kCircularStdNormal),
-                          ),
-                        ],
-                      ),
-                    ],
+                            Text(
+                              "10",
+                              style: TextStyle(
+                                  fontFamily: kCircularStdMedium,
+                                  fontSize: 24,
+                                  color: kPrimaryColor),
+                            ),
+                          ],
+                        ),
+                        Image.asset(
+                          "assets/icons/line_vertical.png",
+                          fit: BoxFit.cover,
+                          scale: 1.2,
+                        ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Property on lease",
+                              style: TextStyle(
+                                  fontFamily: kCircularStdNormal,
+                                  fontSize: 14,
+                                  color: kPrimaryColor),
+                            ),
+                            Text(
+                              "8",
+                              style: TextStyle(
+                                  fontFamily: kCircularStdMedium,
+                                  fontSize: 24,
+                                  color: kPrimaryColor),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              const Text(
-                "Tenant Requests",
-                style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 20,
-                    fontFamily: kCircularStdMedium),
-              ),
-              SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  "Tenant Requests",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 17,
+                      fontFamily: kCircularStdNormal),
+                ),
+                SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      tenantRequest("Tenant Name", "assets/icons/user.png",
-                          "Pending", "tenant request"),
-                      tenantRequest("Tenant Name", "assets/icons/user.png",
-                          "Pending", "tenant request"),
-                      tenantRequest("Tenant Name", "assets/icons/user.png",
-                          "Pending", "tenant request")
+                      tenantRequest(
+                          "Electricity",
+                          "I want to change fan.",
+                          "4693 Wentz Avenue, Saskatoon",
+                          "Tenant Name",
+                          Icons.electric_bolt_sharp),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      tenantRequest(
+                          "Gas",
+                          "I want to change Gas meter.",
+                          "4693 Wentz Avenue, Saskatoon",
+                          "Tenant Name",
+                          Icons.gas_meter_sharp),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      tenantRequest(
+                          "Electricity",
+                          "I want to change Air Conditioner.",
+                          "3545 Robson St, Vancouver",
+                          "Tenant Name",
+                          Icons.electric_bolt_sharp),
                     ],
-                  )),
-            ],
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  "Routine Maintenance",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 17,
+                      fontFamily: kCircularStdNormal),
+                ),
+                routingmaintanance("Electricity", "\$105", "25-12-2020",
+                    "101 Main Street", Icons.electric_bolt_sharp),
+                routingmaintanance("Gas", "\$99", "25-11-2020",
+                    "3545 Robson St, Vancouver", Icons.gas_meter_rounded),
+                routingmaintanance("Repair", "\$65", "25-11-2020",
+                    "101 Main Street", Icons.manage_history_sharp),
+                routingmaintanance(
+                    "Internet",
+                    "\$46",
+                    "30-1-2021",
+                    "3545 Robson St, Vancouver",
+                    Icons.signal_wifi_statusbar_connected_no_internet_4_sharp),
+                const SizedBox(
+                  height: 65,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  tenantRequest(String text, image, price, comments) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      onPressed: () {},
-      child: Card(
-        shadowColor: const Color.fromARGB(10, 0, 0, 0),
-        elevation: 5,
-        child: Container(
-            decoration: BoxDecoration(
-              color: kWhiteColor,
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+  tenantRequest(String title, comments, address, name, IconData icons) {
+    return Container(
+      width: Get.width - 130,
+      decoration: BoxDecoration(
+        color: kWhiteColor,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: 65,
-                  width: 65,
-                  decoration: BoxDecoration(
-                      color: kWhiteColor,
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Image.asset(
-                    image,
-                    fit: BoxFit.cover,
-                    scale: 1.5,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  text,
-                  style: const TextStyle(
-                      color: kPrimaryColor,
-                      fontFamily: kCircularStdMedium,
-                      fontSize: 16),
-                ),
                 Row(
                   children: [
-                    const Text(
-                      "Comments: ",
-                      style: TextStyle(
-                          color: kPrimaryColor,
-                          fontFamily: kCircularStdNormal,
-                          fontSize: 12),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(color: kPrimaryColor)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Icon(
+                          icons,
+                          size: 22,
+                          color: kButtonColor,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
                     ),
                     Text(
-                      comments,
+                      title,
                       style: const TextStyle(
-                          color: kPrimaryColor,
-                          fontFamily: kCircularStdNormal,
-                          fontSize: 12),
+                          fontFamily: kCircularStdMedium,
+                          fontSize: 20,
+                          color: kPrimaryColor),
                     ),
                   ],
                 ),
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                  color: kButtonColor,
+                ),
               ],
-            )),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 18,
+                  color: kButtonColor,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                  width: Get.width - 220,
+                  child: Text(
+                    comments,
+                    style: const TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdBold),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                const Icon(
+                  Icons.location_on,
+                  size: 18,
+                  color: kButtonColor,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                  width: Get.width - 220,
+                  child: Text(
+                    address,
+                    style: const TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdNormal),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                const Icon(
+                  Icons.person,
+                  size: 18,
+                  color: kButtonColor,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                  width: Get.width - 220,
+                  child: Text(
+                    name,
+                    style: const TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdNormal),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  routingmaintanance(String title, amount, date, address, IconData icons) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(
+                icons,
+                size: 25,
+                color: kButtonColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 18,
+                        fontFamily: kCircularStdMedium),
+                  ),
+                  Text(
+                    address,
+                    style: const TextStyle(
+                        color: kSecondaryPrimaryColor,
+                        fontSize: 13,
+                        fontFamily: kCircularStdMedium),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                amount,
+                style: const TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 18,
+                    fontFamily: kCircularStdMedium),
+              ),
+              Text(
+                date,
+                style: const TextStyle(
+                    color: kSecondaryPrimaryColor,
+                    fontSize: 13,
+                    fontFamily: kCircularStdMedium),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

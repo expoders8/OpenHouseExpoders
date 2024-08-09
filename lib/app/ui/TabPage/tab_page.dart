@@ -7,6 +7,8 @@ import '../../controller/tab_controller.dart';
 import '../Home/home.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../Payment/payment.dart';
+import '../Profile/profile.dart';
 import '../Property/property.dart';
 
 class TabPage extends StatefulWidget {
@@ -56,8 +58,8 @@ class _TabPageState extends State<TabPage> {
                     HomePage(),
                     PropertyPage(),
                     HomePage(),
-                    HomePage(),
-                    HomePage(),
+                    PaymentPage(),
+                    ProfilePage(),
                   ],
                 ),
                 Positioned(
