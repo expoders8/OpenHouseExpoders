@@ -1,9 +1,10 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../controller/tab_controller.dart';
-import '../widgets/no_user_login_screen.dart';
+import '../Home/home.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -45,16 +46,99 @@ class _TabPageState extends State<TabPage> {
     return GetBuilder<TabCountController>(
       builder: (context) {
         return Scaffold(
-          bottomNavigationBar:
-              buildBottomNavigationMenu(context, tabCountController),
           body: Obx(
-            () => IndexedStack(
-              index: tabCountController.tabIndex.value,
-              children: [],
+            () => Stack(
+              children: [
+                IndexedStack(
+                  index: tabCountController.tabIndex.value,
+                  children: const [
+                    HomePage(),
+                    HomePage(),
+                    HomePage(),
+                    HomePage(),
+                    HomePage(),
+                  ],
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Card(
+                      shadowColor: Color.fromARGB(118, 0, 0, 0),
+                      elevation: 5,
+                      child: Container(
+                        margin: EdgeInsets.only(top: Platform.isIOS ? 8 : 0),
+                        height: Platform.isIOS ? 100 : 68,
+                        // decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: kWhiteColor),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                buildBottomTab(
+                                    0, "Home", "assets/icons/gridview.png"),
+                                const SizedBox(width: 25),
+                                buildBottomTab(
+                                    1, "Property", "assets/icons/homeicon.png"),
+                                const SizedBox(width: 25),
+                                CupertinoButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    tabCountController.changeTabIndex(3);
+                                  },
+                                  child: Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                        color: kRedColor,
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
+                                    child: Image.asset(
+                                      "assets/icons/Plus.png",
+                                      color: kWhiteColor,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 25),
+                                buildBottomTab(
+                                    3, "Payment", "assets/icons/phone.png"),
+                                const SizedBox(width: 25),
+                                buildBottomTab(
+                                    4, "Profile", "assets/icons/profile.png"),
+                              ],
+                            )),
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         );
       },
+    );
+  }
+
+  buildBottomTab(int index, String title, String image) {
+    final TabCountController tabCountController =
+        Get.put(TabCountController(), permanent: false);
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        tabCountController.changeTabIndex(index);
+      },
+      child: SizedBox(
+        height: title == "Home" ? 25 : 34,
+        child: Image.asset(
+          image,
+          color: kPrimaryColor,
+          scale: 1.5,
+        ),
+      ),
     );
   }
 

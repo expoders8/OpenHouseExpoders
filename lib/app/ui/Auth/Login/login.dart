@@ -98,7 +98,9 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 15),
                       CupertinoButton(
                         padding: EdgeInsets.zero,
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.tabPage);
+                        },
                         child: Container(
                           height: 50,
                           width: Get.width,
