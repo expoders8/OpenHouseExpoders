@@ -72,12 +72,12 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
         title: const Text(
           "Create Property",
-          style: TextStyle(fontSize: 15),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        automaticallyImplyLeading: false,
+        backgroundColor: kBackGroundColor,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),

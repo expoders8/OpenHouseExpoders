@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: Get.width / 2.240,
+                      width: Get.width / 2.250,
                       decoration: BoxDecoration(
                         color: kButtonColor,
                         borderRadius: BorderRadius.circular(15),
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(width: 10),
                     Container(
-                      width: Get.width / 2.240,
+                      width: Get.width / 2.250,
                       decoration: BoxDecoration(
                         color: kWhiteColor,
                         borderRadius: BorderRadius.circular(15),
@@ -167,16 +167,15 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15),
                 const Text(
                   "Tenant Requests",
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 17,
-                      fontFamily: kCircularStdNormal),
+                      fontFamily: kCircularStdMedium),
                 ),
+                const SizedBox(height: 10),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -187,18 +186,14 @@ class _HomePageState extends State<HomePage> {
                           "4693 Wentz Avenue, Saskatoon",
                           "Tenant Name",
                           Icons.electric_bolt_sharp),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       tenantRequest(
                           "Gas",
                           "I want to change Gas meter.",
                           "4693 Wentz Avenue, Saskatoon",
                           "Tenant Name",
                           Icons.gas_meter_sharp),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       tenantRequest(
                           "Electricity",
                           "I want to change Air Conditioner.",
@@ -208,14 +203,15 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 10),
                 const Text(
                   "Routine Maintenance",
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 17,
-                      fontFamily: kCircularStdNormal),
+                      fontFamily: kCircularStdMedium),
                 ),
+                const SizedBox(height: 10),
                 routingmaintanance("Electricity", "\$105", "25-12-2020",
                     "101 Main Street", Icons.electric_bolt_sharp),
                 routingmaintanance("Gas", "\$99", "25-11-2020",
@@ -242,12 +238,13 @@ class _HomePageState extends State<HomePage> {
   tenantRequest(String title, comments, address, name, IconData icons) {
     return Container(
       width: Get.width - 130,
+      height: Get.height / 4.0,
       decoration: BoxDecoration(
         color: kWhiteColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -264,7 +261,7 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(3.0),
                         child: Icon(
                           icons,
-                          size: 22,
+                          size: 18,
                           color: kButtonColor,
                         ),
                       ),
@@ -276,14 +273,14 @@ class _HomePageState extends State<HomePage> {
                       title,
                       style: const TextStyle(
                           fontFamily: kCircularStdMedium,
-                          fontSize: 20,
+                          fontSize: 18,
                           color: kPrimaryColor),
                     ),
                   ],
                 ),
                 const Icon(
                   Icons.arrow_forward_ios_rounded,
-                  size: 18,
+                  size: 15,
                   color: kButtonColor,
                 ),
               ],
@@ -296,7 +293,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const Icon(
                   Icons.arrow_forward_rounded,
-                  size: 18,
+                  size: 16,
                   color: kButtonColor,
                 ),
                 const SizedBox(
@@ -308,8 +305,10 @@ class _HomePageState extends State<HomePage> {
                     comments,
                     style: const TextStyle(
                         color: kPrimaryColor,
-                        fontSize: 15,
+                        fontSize: 13,
                         fontFamily: kCircularStdBold),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -321,7 +320,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const Icon(
                   Icons.location_on,
-                  size: 18,
+                  size: 16,
                   color: kButtonColor,
                 ),
                 const SizedBox(
@@ -346,7 +345,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const Icon(
                   Icons.person,
-                  size: 18,
+                  size: 16,
                   color: kButtonColor,
                 ),
                 const SizedBox(
@@ -358,7 +357,7 @@ class _HomePageState extends State<HomePage> {
                     name,
                     style: const TextStyle(
                         color: kPrimaryColor,
-                        fontSize: 12,
+                        fontSize: 13,
                         fontFamily: kCircularStdNormal),
                   ),
                 ),
@@ -380,7 +379,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Icon(
                 icons,
-                size: 25,
+                size: 18,
                 color: kButtonColor,
               ),
               const SizedBox(
@@ -393,14 +392,14 @@ class _HomePageState extends State<HomePage> {
                     title,
                     style: const TextStyle(
                         color: kPrimaryColor,
-                        fontSize: 18,
+                        fontSize: 15,
                         fontFamily: kCircularStdMedium),
                   ),
                   Text(
                     address,
                     style: const TextStyle(
                         color: kSecondaryPrimaryColor,
-                        fontSize: 13,
+                        fontSize: 12,
                         fontFamily: kCircularStdMedium),
                   ),
                 ],
@@ -414,14 +413,14 @@ class _HomePageState extends State<HomePage> {
                 amount,
                 style: const TextStyle(
                     color: kPrimaryColor,
-                    fontSize: 18,
+                    fontSize: 15,
                     fontFamily: kCircularStdMedium),
               ),
               Text(
                 date,
                 style: const TextStyle(
                     color: kSecondaryPrimaryColor,
-                    fontSize: 13,
+                    fontSize: 12,
                     fontFamily: kCircularStdMedium),
               ),
             ],
