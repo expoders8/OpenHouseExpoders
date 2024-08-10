@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../config/constant/color_constant.dart';
+import '../../../config/constant/font_constant.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final TextEditingController? ctrl;
@@ -81,12 +82,20 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       decoration: InputDecoration(
         hintText: widget.hintText,
         filled: true,
-        fillColor: kTransparentColor,
+        fillColor: widget.name == "create" ? kWhiteColor : kTransparentColor,
         contentPadding:
             EdgeInsets.fromLTRB(13, widget.maxLines == 5 ? 16 : 0, 10, 0),
         hintStyle: TextStyle(
-            color: kSecondaryPrimaryColor,
-            fontSize: widget.name == "password" ? 16 : 16),
+            color: widget.name == "create"
+                ? kPrimaryColor
+                : kSecondaryPrimaryColor,
+            fontFamily: kCircularStdNormal,
+            fontWeight: FontWeight.w400,
+            fontSize: widget.name == "password"
+                ? 16
+                : widget.name == "create"
+                    ? 14
+                    : 16),
         prefixIcon: widget.prefixIcon != null
             ? Image.asset(
                 widget.prefixIcon.toString(),
@@ -119,20 +128,29 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           borderSide: const BorderSide(color: kSecondaryPrimaryColor),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: kErrorColor, // Default border color
+          borderSide: BorderSide(
+            color: widget.name == "create" ? kWhiteColor : kErrorColor,
           ),
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius:
+              BorderRadius.circular(widget.name == "create" ? 10 : 25.0),
         ),
         errorStyle: const TextStyle(color: kErrorColor),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide:
-              const BorderSide(color: kSecondaryPrimaryColor, width: 1.0),
+          borderRadius:
+              BorderRadius.circular(widget.name == "create" ? 10 : 25.0),
+          borderSide: BorderSide(
+              color: widget.name == "create"
+                  ? kWhiteColor
+                  : kSecondaryPrimaryColor,
+              width: 1.0),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: const BorderSide(color: kSecondaryPrimaryColor),
+          borderRadius:
+              BorderRadius.circular(widget.name == "create" ? 8 : 25.0),
+          borderSide: BorderSide(
+              color: widget.name == "create"
+                  ? kWhiteColor
+                  : kSecondaryPrimaryColor),
         ),
       ),
       maxLines: widget.maxLines,

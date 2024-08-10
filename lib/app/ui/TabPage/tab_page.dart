@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../controller/tab_controller.dart';
+import '../CreateProperty/create_property.dart';
 import '../Home/home.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -20,9 +21,10 @@ class TabPage extends StatefulWidget {
   State<TabPage> createState() => _TabPageState();
 }
 
-class _TabPageState extends State<TabPage> {
+class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
   // FCMNotificationServices fCMNotificationServices = FCMNotificationServices();
   String authToken = "";
+  bool _isKeyboardVisible = false;
   final controller = Get.put(TabCountController());
   final TextStyle unselectedLabelStyle = const TextStyle(
       color: kBlack45Color, fontFamily: kCircularStdNormal, fontSize: 11);
@@ -39,6 +41,22 @@ class _TabPageState extends State<TabPage> {
     // notificationServices.isTokenRefresh();
     // fCMNotificationServices.firebaseInit();
     // fCMNotificationServices.getDeviceToken().then((value) => print(value));
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
+    setState(() {
+      _isKeyboardVisible = bottomInset > 0;
+    });
   }
 
   @override
@@ -57,67 +75,70 @@ class _TabPageState extends State<TabPage> {
                   children: const [
                     HomePage(),
                     PropertyPage(),
-                    HomePage(),
+                    CreatePropertyPage(),
                     PaymentPage(),
                     ProfilePage(),
                   ],
                 ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Card(
-                      shadowColor: Color.fromARGB(118, 0, 0, 0),
-                      elevation: 5,
-                      child: Container(
-                        margin: EdgeInsets.only(top: Platform.isIOS ? 8 : 0),
-                        height: Platform.isIOS ? 100 : 68,
-                        // decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: kWhiteColor),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                buildBottomTab(
-                                    0, "Home", "assets/icons/homeicon.png"),
-                                const SizedBox(width: 20),
-                                buildBottomTab(
-                                    1, "Property", "assets/icons/property.png"),
-                                const SizedBox(width: 20),
-                                CupertinoButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {
-                                    tabCountController.changeTabIndex(3);
-                                  },
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                        color: kButtonColor,
-                                        borderRadius:
-                                            BorderRadius.circular(25)),
-                                    child: Image.asset(
-                                      "assets/icons/Plus.png",
-                                      color: kWhiteColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 20),
-                                buildBottomTab(
-                                    3, "Payment", "assets/icons/payment.png"),
-                                const SizedBox(width: 20),
-                                buildBottomTab(
-                                    4, "Profile", "assets/icons/profile.png"),
-                              ],
-                            )),
-                      ),
-                    ),
-                  ),
-                )
+                !_isKeyboardVisible
+                    ? Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Card(
+                            shadowColor: Color.fromARGB(118, 0, 0, 0),
+                            elevation: 5,
+                            child: Container(
+                              margin:
+                                  EdgeInsets.only(top: Platform.isIOS ? 8 : 0),
+                              height: Platform.isIOS ? 100 : 68,
+                              // decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: kWhiteColor),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      buildBottomTab(0, "Home",
+                                          "assets/icons/homeicon.png"),
+                                      const SizedBox(width: 20),
+                                      buildBottomTab(1, "Property",
+                                          "assets/icons/property.png"),
+                                      const SizedBox(width: 20),
+                                      CupertinoButton(
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {
+                                          tabCountController.changeTabIndex(2);
+                                        },
+                                        child: Container(
+                                          height: 50,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                              color: kButtonColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(25)),
+                                          child: Image.asset(
+                                            "assets/icons/Plus.png",
+                                            color: kWhiteColor,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 20),
+                                      buildBottomTab(3, "Payment",
+                                          "assets/icons/payment.png"),
+                                      const SizedBox(width: 20),
+                                      buildBottomTab(4, "Profile",
+                                          "assets/icons/profile.png"),
+                                    ],
+                                  )),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container()
               ],
             ),
           ),
