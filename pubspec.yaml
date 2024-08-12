@@ -40,6 +40,7 @@ dependencies:
   country_list_pick: ^1.0.1+6
   dotted_border: ^2.0.0+3
   flutter_typeahead: ^4.1.1
+  another_carousel_pro: ^1.0.2
 
 dev_dependencies:
   flutter_test:

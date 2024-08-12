@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/widgets.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 
 import '../../../config/constant/color_constant.dart';
 import '../../../config/constant/font_constant.dart';
@@ -140,192 +141,197 @@ class _PropertyPageState extends State<PropertyPage>
 
   leaseproperty(String image, price, address, person, tenantname, balancedue,
       rentdue, expiredate) {
-    return Container(
-      width: Get.width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25), color: kWhiteColor),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(25),
-                  child: Image.asset(
-                    image,
-                    fit: BoxFit.cover,
-                    scale: 1.2,
-                    height: 120,
-                    width: 120,
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(Routes.propertyDetailPage);
+      },
+      child: Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25), color: kWhiteColor),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: Image.asset(
+                      image,
+                      fit: BoxFit.cover,
+                      scale: 1.2,
+                      height: 120,
+                      width: 120,
+                    ),
                   ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        price,
+                        style: const TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 25,
+                            fontFamily: kCircularStdMedium),
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.location_on,
+                            size: 16,
+                            color: kButtonColor,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          SizedBox(
+                            width: Get.width / 2.5,
+                            child: Text(
+                              address,
+                              style: const TextStyle(
+                                  color: kSecondaryPrimaryColor,
+                                  fontSize: 13,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.bed_outlined,
+                            size: 16,
+                            color: kButtonColor,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          SizedBox(
+                            width: Get.width - 220,
+                            child: Text(
+                              person,
+                              style: const TextStyle(
+                                  color: kSecondaryPrimaryColor,
+                                  fontSize: 13,
+                                  fontFamily: kCircularStdBold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.person,
+                            size: 16,
+                            color: kButtonColor,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          SizedBox(
+                            width: Get.width - 220,
+                            child: Text(
+                              tenantname,
+                              style: const TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 13,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 5.0, right: 5.0, top: 10, bottom: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(
-                      price,
-                      style: const TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 25,
-                          fontFamily: kCircularStdMedium),
-                    ),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.location_on,
-                          size: 16,
-                          color: kButtonColor,
+                        const Text(
+                          "Balance Due",
+                          style: TextStyle(
+                              fontFamily: kCircularStdNormal,
+                              fontSize: 12,
+                              color: kPrimaryColor),
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: Get.width / 2.5,
-                          child: Text(
-                            address,
-                            style: const TextStyle(
-                                color: kSecondaryPrimaryColor,
-                                fontSize: 13,
-                                fontFamily: kCircularStdMedium),
-                          ),
+                        Text(
+                          balancedue,
+                          style: const TextStyle(
+                              fontFamily: kCircularStdMedium,
+                              fontSize: 17,
+                              color: kPrimaryColor),
                         ),
                       ],
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Image.asset(
+                      "assets/icons/line_vertical.png",
+                      fit: BoxFit.cover,
+                      scale: 1.8,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.bed_outlined,
-                          size: 16,
-                          color: kButtonColor,
+                        const Text(
+                          "Rent Due on",
+                          style: TextStyle(
+                              fontFamily: kCircularStdNormal,
+                              fontSize: 12,
+                              color: kPrimaryColor),
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: Get.width - 220,
-                          child: Text(
-                            person,
-                            style: const TextStyle(
-                                color: kSecondaryPrimaryColor,
-                                fontSize: 13,
-                                fontFamily: kCircularStdBold),
-                          ),
+                        Text(
+                          rentdue,
+                          style: const TextStyle(
+                              fontFamily: kCircularStdMedium,
+                              fontSize: 17,
+                              color: kPrimaryColor),
                         ),
                       ],
                     ),
-                    Row(
+                    Image.asset(
+                      "assets/icons/line_vertical.png",
+                      fit: BoxFit.cover,
+                      scale: 1.8,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.person,
-                          size: 16,
-                          color: kButtonColor,
+                        const Text(
+                          "lease Expaires",
+                          style: TextStyle(
+                              fontFamily: kCircularStdNormal,
+                              fontSize: 12,
+                              color: kPrimaryColor),
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: Get.width - 220,
-                          child: Text(
-                            tenantname,
-                            style: const TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 13,
-                                fontFamily: kCircularStdMedium),
-                          ),
+                        Text(
+                          expiredate,
+                          style: const TextStyle(
+                              fontFamily: kCircularStdMedium,
+                              fontSize: 17,
+                              color: kPrimaryColor),
                         ),
                       ],
                     ),
                   ],
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 5.0, right: 5.0, top: 10, bottom: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Balance Due",
-                        style: TextStyle(
-                            fontFamily: kCircularStdNormal,
-                            fontSize: 12,
-                            color: kPrimaryColor),
-                      ),
-                      Text(
-                        balancedue,
-                        style: const TextStyle(
-                            fontFamily: kCircularStdMedium,
-                            fontSize: 17,
-                            color: kPrimaryColor),
-                      ),
-                    ],
-                  ),
-                  Image.asset(
-                    "assets/icons/line_vertical.png",
-                    fit: BoxFit.cover,
-                    scale: 1.8,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Rent Due on",
-                        style: TextStyle(
-                            fontFamily: kCircularStdNormal,
-                            fontSize: 12,
-                            color: kPrimaryColor),
-                      ),
-                      Text(
-                        rentdue,
-                        style: const TextStyle(
-                            fontFamily: kCircularStdMedium,
-                            fontSize: 17,
-                            color: kPrimaryColor),
-                      ),
-                    ],
-                  ),
-                  Image.asset(
-                    "assets/icons/line_vertical.png",
-                    fit: BoxFit.cover,
-                    scale: 1.8,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "lease Expaires",
-                        style: TextStyle(
-                            fontFamily: kCircularStdNormal,
-                            fontSize: 12,
-                            color: kPrimaryColor),
-                      ),
-                      Text(
-                        expiredate,
-                        style: const TextStyle(
-                            fontFamily: kCircularStdMedium,
-                            fontSize: 17,
-                            color: kPrimaryColor),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../ui/Auth/ForgotPassword/forgot_password.dart';
+import '../ui/Property Details/property_details.dart';
 import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
 import '../ui/Auth/SignUp/signup.dart';
@@ -33,6 +34,10 @@ class AppPages {
     GetPage(
       name: _Paths.forgotPasswordPage,
       page: () => const ForgotPasswordPage(),
+    ),
+    GetPage(
+      name: _Paths.propertyDetailPage,
+      page: () => const PropertyDetailPage(),
     ),
   ];
 }
