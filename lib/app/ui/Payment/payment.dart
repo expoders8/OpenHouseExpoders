@@ -166,9 +166,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           size: 18,
                           color: status != "Paid" ? kRedColor : kGreenColor,
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         SizedBox(
                           width: Get.width - 220,
                           child: Text(
@@ -182,9 +180,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         const Icon(
@@ -207,9 +203,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         const Icon(
@@ -232,9 +226,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         const Icon(
@@ -264,16 +256,13 @@ class _PaymentPageState extends State<PaymentPage> {
                   child: Image.asset(
                     userimage,
                     fit: BoxFit.cover,
-                    scale: 1.5,
                     height: 65,
                     width: 65,
                   ),
                 ),
               ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             status == "Paid"
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
