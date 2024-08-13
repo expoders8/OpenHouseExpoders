@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../../config/constant/color_constant.dart';
 import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -18,7 +18,7 @@ class _PaymentPageState extends State<PaymentPage> {
       appBar: AppBar(
         title: const Text(
           "Payment",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontFamily: kCircularStdBook),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
@@ -52,7 +52,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                   color: kPrimaryColor),
                             ),
                             Text(
-                              "\$2000",
+                              "\$5420",
                               style: TextStyle(
                                   fontFamily: kCircularStdMedium,
                                   fontSize: 25,
@@ -95,9 +95,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15),
                 payment(
                     "assets/icons/boy 1.png",
                     "\$1850",
@@ -107,9 +105,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     "+91 1234567890",
                     "\$0",
                     "12-06-2025"),
-                const SizedBox(
-                  height: 12,
-                ),
+                const SizedBox(height: 12),
                 payment(
                     "assets/icons/boy 2.png",
                     "\$1850",
@@ -119,9 +115,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     "+91 9898758462",
                     "\$250",
                     "25-06-2025"),
-                const SizedBox(
-                  height: 12,
-                ),
+                const SizedBox(height: 12),
                 payment(
                     "assets/icons/boy 3.png",
                     "\$1850",
@@ -155,102 +149,73 @@ class _PaymentPageState extends State<PaymentPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.pending_actions_rounded,
-                          size: 18,
-                          color: status != "Paid" ? kRedColor : kGreenColor,
-                        ),
-                        const SizedBox(width: 10),
-                        SizedBox(
-                          width: Get.width - 220,
-                          child: Text(
-                            status,
-                            style: TextStyle(
-                                color:
-                                    status != "Paid" ? kRedColor : kGreenColor,
-                                fontSize: 15,
-                                fontFamily: kCircularStdBold),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.pending_actions_rounded,
+                              size: 18,
+                              color: status != "Paid" ? kRedColor : kGreenColor,
+                            ),
+                            const SizedBox(width: 10),
+                            SizedBox(
+                                width: Get.width - 220,
+                                child: Text(status,
+                                    style: TextStyle(
+                                        color: status != "Paid"
+                                            ? kRedColor
+                                            : kGreenColor,
+                                        fontSize: 15,
+                                        fontFamily: kCircularStdBold)))
+                          ]),
+                      const SizedBox(height: 5),
+                      Row(children: [
                         const Icon(
                           Icons.location_on,
                           size: 16,
                           color: kButtonColor,
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         SizedBox(
-                          width: Get.width / 2,
-                          child: Text(
-                            address,
-                            style: const TextStyle(
-                                color: kSecondaryPrimaryColor,
-                                fontSize: 13,
-                                fontFamily: kCircularStdMedium),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          size: 16,
-                          color: kButtonColor,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                            width: Get.width / 2,
+                            child: Text(address,
+                                style: const TextStyle(
+                                    color: kSecondaryPrimaryColor,
+                                    fontSize: 13,
+                                    fontFamily: kCircularStdMedium))),
+                      ]),
+                      const SizedBox(height: 5),
+                      Row(children: [
+                        const Icon(Icons.person, size: 16, color: kButtonColor),
+                        const SizedBox(width: 10),
                         SizedBox(
-                          width: Get.width - 220,
-                          child: Text(
-                            tenantname,
-                            style: const TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 13,
-                                fontFamily: kCircularStdMedium),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
+                            width: Get.width - 220,
+                            child: Text(tenantname,
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 13,
+                                    fontFamily: kCircularStdMedium)))
+                      ]),
+                      const SizedBox(height: 5),
+                      Row(children: [
                         const Icon(
                           Icons.phone,
                           size: 16,
                           color: kButtonColor,
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         SizedBox(
-                          width: Get.width - 220,
-                          child: Text(
-                            cantact,
-                            style: const TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 13,
-                                fontFamily: kCircularStdMedium),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                            width: Get.width - 220,
+                            child: Text(cantact,
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 13,
+                                    fontFamily: kCircularStdMedium)))
+                      ]),
+                    ]),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Image.asset(
@@ -268,11 +233,8 @@ class _PaymentPageState extends State<PaymentPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       details("Payment", totalamount),
-                      Image.asset(
-                        "assets/icons/line_vertical.png",
-                        fit: BoxFit.cover,
-                        scale: 1.8,
-                      ),
+                      Image.asset("assets/icons/line_vertical.png",
+                          fit: BoxFit.cover, scale: 1.8),
                       details("Payment Date", duedate),
                     ],
                   )
@@ -280,17 +242,11 @@ class _PaymentPageState extends State<PaymentPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       details("Payment", totalamount),
-                      Image.asset(
-                        "assets/icons/line_vertical.png",
-                        fit: BoxFit.cover,
-                        scale: 1.8,
-                      ),
+                      Image.asset("assets/icons/line_vertical.png",
+                          fit: BoxFit.cover, scale: 1.8),
                       details("Pending Payment", pendingpayment),
-                      Image.asset(
-                        "assets/icons/line_vertical.png",
-                        fit: BoxFit.cover,
-                        scale: 1.8,
-                      ),
+                      Image.asset("assets/icons/line_vertical.png",
+                          fit: BoxFit.cover, scale: 1.8),
                       details("Due Date", duedate),
                     ],
                   ),
@@ -302,24 +258,19 @@ class _PaymentPageState extends State<PaymentPage> {
 
   details(String title, detail) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-              fontFamily: kCircularStdNormal,
-              fontSize: 12,
-              color: kPrimaryColor),
-        ),
-        Text(
-          detail,
-          style: const TextStyle(
-              color: kPrimaryColor,
-              fontSize: 17,
-              fontFamily: kCircularStdMedium),
-        ),
-      ],
-    );
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(title,
+              style: const TextStyle(
+                  fontFamily: kCircularStdNormal,
+                  fontSize: 12,
+                  color: kPrimaryColor)),
+          Text(detail,
+              style: const TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 17,
+                  fontFamily: kCircularStdMedium)),
+        ]);
   }
 }

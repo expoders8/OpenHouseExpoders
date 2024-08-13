@@ -12,6 +12,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? validationMsg;
   final int? maxLines;
   final bool formSubmitted;
+  final TextEditingController? confirmPasswordController;
 
   const CustomTextFormField(
       {Key? key,
@@ -22,6 +23,7 @@ class CustomTextFormField extends StatefulWidget {
       this.maxLines,
       this.formSubmitted = false,
       this.name,
+      this.confirmPasswordController,
       this.validationMsg})
       : super(key: key);
 
@@ -39,27 +41,21 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     _passwordVisible = false;
   }
 
-  validateInput(value) {
+  String? validateInput(String? value) {
     if (isTouched || widget.formSubmitted) {
-      if (value != null && value?.toString() != '') {
+      if (value != null && value.isNotEmpty) {
         if (widget.name == 'email') {
-          if (value.isEmpty) {
-            widget.validationMsg;
-          } else {
-            const pattern =
-                r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$)';
-            final regExp = RegExp(pattern);
-
-            if (!regExp.hasMatch(value.toString())) {
-              return "Please enter valid email";
-            }
+          const pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$)';
+          final regExp = RegExp(pattern);
+          if (!regExp.hasMatch(value)) {
+            return "Please enter a valid email";
+          }
+        } else if (widget.name == "newpassword" ||
+            widget.name == "confirmpassword") {
+          if (widget.ctrl?.text != widget.confirmPasswordController?.text) {
+            return 'Passwords do not match';
           }
         }
-        // if (widget.name == "password") {
-        //   if (value.isEmpty) {
-        //     widget.validationMsg;
-        //   }
-        // }
         return null;
       }
       return widget.validationMsg;

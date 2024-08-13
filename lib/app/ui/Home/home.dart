@@ -1,8 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:openhome/config/constant/color_constant.dart';
-import 'package:openhome/config/constant/font_constant.dart';
+import 'package:flutter/material.dart';
+
+import '../../routes/app_pages.dart';
+import '../../controller/tab_controller.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,18 +14,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final TabCountController tabCountController = Get.find<TabCountController>();
+  final tabController = Get.put(TabCountController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "OpenHouse",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontFamily: kCircularStdBook),
         ),
         automaticallyImplyLeading: false,
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(Routes.notificationPage);
+            },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset("assets/icons/notification.png", scale: 1.8),
@@ -42,128 +48,143 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: Get.width / 2.250,
-                      decoration: BoxDecoration(
-                        color: kButtonColor,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(
-                            left: 15.0, right: 15.0, top: 20, bottom: 20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Total Amount",
-                              style: TextStyle(
-                                  fontFamily: kCircularStdMedium,
-                                  fontSize: 15,
-                                  color: kWhiteColor),
-                            ),
-                            Text(
-                              "\$2000",
-                              style: TextStyle(
-                                  fontFamily: kCircularStdMedium,
-                                  fontSize: 25,
-                                  color: kWhiteColor),
-                            ),
-                          ],
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(Routes.totalAmountDetailPage);
+                      },
+                      child: Container(
+                        width: Get.width / 2.250,
+                        decoration: BoxDecoration(
+                          color: kButtonColor,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.0, right: 15.0, top: 20, bottom: 20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Total Amount",
+                                style: TextStyle(
+                                    fontFamily: kCircularStdMedium,
+                                    fontSize: 15,
+                                    color: kWhiteColor),
+                              ),
+                              Text(
+                                "\$50,000",
+                                style: TextStyle(
+                                    fontFamily: kCircularStdMedium,
+                                    fontSize: 25,
+                                    color: kWhiteColor),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Container(
-                      width: Get.width / 2.250,
-                      decoration: BoxDecoration(
-                        color: kWhiteColor,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(
-                            left: 15.0, right: 15.0, top: 20, bottom: 20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Month Due",
-                              style: TextStyle(
-                                  fontFamily: kCircularStdMedium,
-                                  fontSize: 15,
-                                  color: kPrimaryColor),
-                            ),
-                            Text(
-                              "\$1952",
-                              style: TextStyle(
-                                  fontFamily: kCircularStdMedium,
-                                  fontSize: 25,
-                                  color: kPrimaryColor),
-                            ),
-                          ],
+                    GestureDetector(
+                      onTap: () {
+                        tabCountController.changeTabIndex(3);
+                      },
+                      child: Container(
+                        width: Get.width / 2.250,
+                        decoration: BoxDecoration(
+                          color: kWhiteColor,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(
+                              left: 15.0, right: 15.0, top: 20, bottom: 20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Month Due",
+                                style: TextStyle(
+                                    fontFamily: kCircularStdMedium,
+                                    fontSize: 15,
+                                    color: kPrimaryColor),
+                              ),
+                              Text(
+                                "\$1952",
+                                style: TextStyle(
+                                    fontFamily: kCircularStdMedium,
+                                    fontSize: 25,
+                                    color: kPrimaryColor),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
-                Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    color: kWhiteColor,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 15.0, right: 15.0, top: 20, bottom: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Total Property",
-                              style: TextStyle(
-                                  fontFamily: kCircularStdNormal,
-                                  fontSize: 14,
-                                  color: kPrimaryColor),
-                            ),
-                            Text(
-                              "10",
-                              style: TextStyle(
-                                  fontFamily: kCircularStdMedium,
-                                  fontSize: 24,
-                                  color: kPrimaryColor),
-                            ),
-                          ],
-                        ),
-                        Image.asset(
-                          "assets/icons/line_vertical.png",
-                          fit: BoxFit.cover,
-                          scale: 1.2,
-                        ),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Property on lease",
-                              style: TextStyle(
-                                  fontFamily: kCircularStdNormal,
-                                  fontSize: 14,
-                                  color: kPrimaryColor),
-                            ),
-                            Text(
-                              "8",
-                              style: TextStyle(
-                                  fontFamily: kCircularStdMedium,
-                                  fontSize: 24,
-                                  color: kPrimaryColor),
-                            ),
-                          ],
-                        ),
-                      ],
+                GestureDetector(
+                  onTap: () {
+                    tabCountController.changeTabIndex(1);
+                  },
+                  child: Container(
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: kWhiteColor,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 15.0, right: 15.0, top: 20, bottom: 20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Total Property",
+                                style: TextStyle(
+                                    fontFamily: kCircularStdNormal,
+                                    fontSize: 14,
+                                    color: kPrimaryColor),
+                              ),
+                              Text(
+                                "10",
+                                style: TextStyle(
+                                    fontFamily: kCircularStdMedium,
+                                    fontSize: 24,
+                                    color: kPrimaryColor),
+                              ),
+                            ],
+                          ),
+                          Image.asset(
+                            "assets/icons/line_vertical.png",
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                          ),
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Property on lease",
+                                style: TextStyle(
+                                    fontFamily: kCircularStdNormal,
+                                    fontSize: 14,
+                                    color: kPrimaryColor),
+                              ),
+                              Text(
+                                "8",
+                                style: TextStyle(
+                                    fontFamily: kCircularStdMedium,
+                                    fontSize: 24,
+                                    color: kPrimaryColor),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -224,9 +245,7 @@ class _HomePageState extends State<HomePage> {
                     "30-1-2021",
                     "3545 Robson St, Vancouver",
                     Icons.signal_wifi_statusbar_connected_no_internet_4_sharp),
-                const SizedBox(
-                  height: 65,
-                ),
+                const SizedBox(height: 65),
               ],
             ),
           ),
@@ -266,9 +285,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 8,
-                    ),
+                    const SizedBox(width: 8),
                     Text(
                       title,
                       style: const TextStyle(
@@ -285,9 +302,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -296,9 +311,7 @@ class _HomePageState extends State<HomePage> {
                   size: 16,
                   color: kButtonColor,
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 SizedBox(
                   width: Get.width - 220,
                   child: Text(
@@ -313,9 +326,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 const Icon(
@@ -323,9 +334,7 @@ class _HomePageState extends State<HomePage> {
                   size: 16,
                   color: kButtonColor,
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 SizedBox(
                   width: Get.width - 220,
                   child: Text(
@@ -338,9 +347,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 const Icon(
@@ -348,9 +355,7 @@ class _HomePageState extends State<HomePage> {
                   size: 16,
                   color: kButtonColor,
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 SizedBox(
                   width: Get.width - 220,
                   child: Text(
@@ -382,9 +387,7 @@ class _HomePageState extends State<HomePage> {
                 size: 18,
                 color: kButtonColor,
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

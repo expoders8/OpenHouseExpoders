@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 
-import '../../../config/constant/color_constant.dart';
 import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -18,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text(
           "Profile",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontFamily: kCircularStdBook),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
@@ -51,25 +52,30 @@ class _ProfilePageState extends State<ProfilePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(color: kWhiteColor)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Icon(
-                                      Icons.edit,
-                                      size: 20,
-                                      color: kWhiteColor,
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(Routes.editProfilePage);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 15.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        border: Border.all(color: kWhiteColor)),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(5.0),
+                                      child: Icon(
+                                        Icons.edit,
+                                        size: 20,
+                                        color: kWhiteColor,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                               const Padding(
                                 padding:
-                                    EdgeInsets.only(right: 25.0, bottom: 10),
+                                    EdgeInsets.only(right: 0.0, bottom: 10),
                                 child: Text(
                                   "Host Name",
                                   style: TextStyle(
@@ -324,36 +330,41 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 18),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.change_circle_outlined,
-                          size: 18,
-                          color: kButtonColor,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Change Password",
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 16,
-                              fontFamily: kCircularStdMedium),
-                        ),
-                      ],
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 13,
-                      color: kButtonColor,
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.changePasswordPage);
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.change_circle_outlined,
+                            size: 18,
+                            color: kButtonColor,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Change Password",
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 13,
+                        color: kButtonColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 18),

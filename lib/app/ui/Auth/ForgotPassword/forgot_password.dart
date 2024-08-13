@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:openhome/app/ui/Auth/Login/login.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../../config/constant/color_constant.dart';
-import '../../../../config/constant/font_constant.dart';
+import '../Login/login.dart';
 import '../../widgets/custom_textfield.dart';
+import '../../../../config/constant/font_constant.dart';
+import '../../../../config/constant/color_constant.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -50,9 +50,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               fontFamily: kCircularStdBold,
                               color: kPrimaryColor),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
+                        const SizedBox(height: 15),
                         const Text(
                           "Please enter your email address to receive\nyour password",
                           style: TextStyle(
@@ -73,9 +71,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             validationMsg: 'Please enter email',
                           ),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
+                        const SizedBox(height: 15),
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {},
@@ -97,9 +93,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.only(top: 0),
                           child: Row(

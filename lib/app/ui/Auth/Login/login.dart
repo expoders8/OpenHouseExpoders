@@ -54,9 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                                 color: kPrimaryColor),
                           ),
                         ),
-                        const SizedBox(
-                          height: 50,
-                        ),
+                        const SizedBox(height: 50),
                         const Text(
                           "Login",
                           style: TextStyle(

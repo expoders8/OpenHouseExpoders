@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:openhome/app/routes/app_pages.dart';
 
-import '../../../config/constant/color_constant.dart';
 import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class PropertyPage extends StatefulWidget {
   const PropertyPage({super.key});
@@ -39,7 +38,7 @@ class _PropertyPageState extends State<PropertyPage>
         child: AppBar(
           title: const Text(
             "My Properties",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontFamily: kCircularStdBook),
           ),
           automaticallyImplyLeading: false,
           bottom: TabBar(
@@ -47,8 +46,8 @@ class _PropertyPageState extends State<PropertyPage>
             indicatorColor: kButtonColor,
             labelColor: kPrimaryColor,
             tabs: const [
-              Tab(text: 'On Lease'),
-              Tab(text: 'Others'),
+              Tab(text: 'On lease'),
+              Tab(text: 'Not lease'),
             ],
           ),
           backgroundColor: kBackGroundColor,
@@ -207,9 +206,7 @@ class _PropertyPageState extends State<PropertyPage>
                             size: 16,
                             color: kButtonColor,
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const SizedBox(width: 10),
                           SizedBox(
                             width: Get.width - 220,
                             child: Text(
@@ -229,9 +226,7 @@ class _PropertyPageState extends State<PropertyPage>
                             size: 16,
                             color: kButtonColor,
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const SizedBox(width: 10),
                           SizedBox(
                             width: Get.width - 220,
                             child: Text(
@@ -248,9 +243,7 @@ class _PropertyPageState extends State<PropertyPage>
                   )
                 ],
               ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.only(
                     left: 5.0, right: 5.0, top: 10, bottom: 10.0),
@@ -359,9 +352,7 @@ class _PropertyPageState extends State<PropertyPage>
                     width: 95,
                   ),
                 ),
-                const SizedBox(
-                  width: 15,
-                ),
+                const SizedBox(width: 15),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -380,9 +371,7 @@ class _PropertyPageState extends State<PropertyPage>
                           size: 16,
                           color: kButtonColor,
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         SizedBox(
                           width: Get.width / 2.5,
                           child: Text(
@@ -403,9 +392,7 @@ class _PropertyPageState extends State<PropertyPage>
                           size: 16,
                           color: kButtonColor,
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         SizedBox(
                           width: Get.width - 220,
                           child: Text(

@@ -1,10 +1,10 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../../../config/constant/color_constant.dart';
-import '../../../config/constant/font_constant.dart';
 import '../widgets/custom_textfield.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class CreatePropertyPage extends StatefulWidget {
   const CreatePropertyPage({super.key});
@@ -74,7 +74,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
       appBar: AppBar(
         title: const Text(
           "Create Property",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontFamily: kCircularStdBook),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
@@ -90,9 +90,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Card(
                   shadowColor: const Color.fromARGB(10, 0, 0, 0),
                   elevation: 5,
@@ -107,9 +105,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       children: <Widget>[
                         Row(
                           children: [
-                            const SizedBox(
-                              width: 20,
-                            ),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,9 +141,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                         ),
                         Row(
                           children: [
-                            const SizedBox(
-                              width: 20,
-                            ),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,9 +177,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                 ],
                               ),
                             ),
-                            const SizedBox(
-                              width: 20,
-                            ),
+                            const SizedBox(width: 20),
                           ],
                         ),
                         const SizedBox(height: 25)
@@ -544,9 +536,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: SizedBox(

@@ -9,6 +9,10 @@ abstract class Routes {
   static const welcomePage = _Paths.welcomePage;
   static const forgotPasswordPage = _Paths.forgotPasswordPage;
   static const propertyDetailPage = _Paths.propertyDetailPage;
+  static const editProfilePage = _Paths.editProfilePage;
+  static const notificationPage = _Paths.notificationPage;
+  static const changePasswordPage = _Paths.changePasswordPage;
+  static const totalAmountDetailPage = _Paths.totalAmountDetailPage;
 }
 
 abstract class _Paths {
@@ -18,4 +22,8 @@ abstract class _Paths {
   static const welcomePage = '/welcomePage';
   static const forgotPasswordPage = '/forgotPasswordPage';
   static const propertyDetailPage = '/propertyDetailPage';
+  static const editProfilePage = '/editProfilePage';
+  static const notificationPage = '/notificationPage';
+  static const changePasswordPage = '/changePasswordPage';
+  static const totalAmountDetailPage = '/totalAmountDetailPage';
 }

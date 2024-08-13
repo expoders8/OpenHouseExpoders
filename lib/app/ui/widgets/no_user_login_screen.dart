@@ -32,9 +32,7 @@ class _NoUserLoginScreenState extends State<NoUserLoginScreen> {
               width: 200,
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           SizedBox(
             width: size.width - 50,
             child: const Text(
@@ -48,15 +46,11 @@ class _NoUserLoginScreenState extends State<NoUserLoginScreen> {
                   fontFamily: kCircularStdMedium),
             ),
           ),
-          const SizedBox(
-            height: 40,
-          ),
+          const SizedBox(height: 40),
           SocialLoginPage(
               checkRowOrColumn: 'column',
               selectscreenIndex: widget.selectscreenIndex),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           SizedBox(
             width: Get.width - 50,
             height: 50,
@@ -87,9 +81,7 @@ class _NoUserLoginScreenState extends State<NoUserLoginScreen> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 40,
-          ),
+          const SizedBox(height: 40),
         ],
       ),
     );

@@ -1,16 +1,16 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../controller/tab_controller.dart';
-import '../CreateProperty/create_property.dart';
 import '../Home/home.dart';
-import '../../../config/constant/font_constant.dart';
-import '../../../config/constant/color_constant.dart';
 import '../Payment/payment.dart';
 import '../Profile/profile.dart';
 import '../Property/property.dart';
+import '../../controller/tab_controller.dart';
+import '../CreateProperty/create_property.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class TabPage extends StatefulWidget {
   final String? firstIndex;

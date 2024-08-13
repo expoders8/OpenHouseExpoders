@@ -1,9 +1,9 @@
-import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:openhome/config/constant/color_constant.dart';
+import 'package:flutter/material.dart';
+import 'package:another_carousel_pro/another_carousel_pro.dart';
 
 import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class PropertyDetailPage extends StatefulWidget {
   const PropertyDetailPage({super.key});
@@ -26,9 +26,9 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
               width: double.infinity,
               child: AnotherCarousel(
                 images: const [
-                  AssetImage("assets/icons/1.png"),
-                  AssetImage("assets/icons/2.png"),
                   AssetImage("assets/icons/3.png"),
+                  AssetImage("assets/icons/6.png"),
+                  AssetImage("assets/icons/7.png"),
                 ],
                 dotSize: 6,
                 autoplay: false,
@@ -353,6 +353,9 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                 ),
                               ],
                             ),
+                            const SizedBox(height: 20),
+                            tenantname(),
+                            const SizedBox(height: 15),
                           ],
                         ),
                       ),
@@ -366,70 +369,155 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
       ],
     ));
   }
-}
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-//           child: Column(
-//             children: [
-//               // ClipRRect(
-//               //   borderRadius: BorderRadius.circular(25),
-//               //   child: Image.asset(
-//               //     "assets/icons/1.png",
-//               //     fit: BoxFit.cover,
-//               //     scale: 0.5,
-//               //   ),
-//               // ),
 
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-amenities(String text) {
-  return Row(
-    children: [
-      Image.asset(
-        "assets/icons/correct.png",
-        fit: BoxFit.cover,
-        height: 15,
-        width: 15,
-      ),
-      const SizedBox(
-        width: 10,
-      ),
-      Text(
-        text,
-        style: const TextStyle(
-            color: kPrimaryColor, fontSize: 14, fontFamily: kCircularStdNormal),
-      ),
-    ],
-  );
-}
-
-Widget _buildFacilityIcon(IconData icon, String label) {
-  return Container(
-    width: 75,
-    height: 75,
-    decoration: BoxDecoration(
-        color: kBorderColor,
-        borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: kPrimaryColor)),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+  tenantname() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 18),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(color: kPrimaryColor, fontSize: 15),
+        const Text(
+          "Tenant details",
+          style: TextStyle(
+              color: kPrimaryColor,
+              fontSize: 17,
+              fontFamily: kCircularStdMedium),
+        ),
+        const Divider(),
+        const SizedBox(height: 5),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.asset(
+                "assets/icons/boy 2.png",
+                fit: BoxFit.cover,
+                height: 65,
+                width: 65,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Tenant Name",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 18,
+                      fontFamily: kCircularStdMedium),
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.phone,
+                      size: 15,
+                      color: kButtonColor,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      "+91 9898567548",
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 13,
+                          fontFamily: kCircularStdNormal),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.email,
+                      size: 15,
+                      color: kButtonColor,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      "test@google.com",
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 13,
+                          fontFamily: kCircularStdNormal),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Monthly rent",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdNormal),
+                ),
+                Text(
+                  "\$2540 / month",
+                  style: TextStyle(
+                      color: kSecondaryPrimaryColor,
+                      fontSize: 12,
+                      fontFamily: kCircularStdBook),
+                ),
+              ],
+            ),
+            Image.asset(
+              "assets/icons/line_vertical.png",
+              fit: BoxFit.cover,
+              scale: 1.9,
+              color: kSecondaryColor,
+            ),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Deposit",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdNormal),
+                ),
+                Text(
+                  "\$1800",
+                  style: TextStyle(
+                      color: kSecondaryPrimaryColor,
+                      fontSize: 12,
+                      fontFamily: kCircularStdBook),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
-    ),
-  );
+    );
+  }
+
+  amenities(String text) {
+    return Row(
+      children: [
+        Image.asset(
+          "assets/icons/correct.png",
+          fit: BoxFit.cover,
+          height: 15,
+          width: 15,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Text(
+          text,
+          style: const TextStyle(
+              color: kPrimaryColor,
+              fontSize: 14,
+              fontFamily: kCircularStdNormal),
+        ),
+      ],
+    );
+  }
 }

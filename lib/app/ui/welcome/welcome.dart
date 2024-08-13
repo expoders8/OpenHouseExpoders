@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:openhome/config/constant/color_constant.dart';
-import 'package:openhome/config/constant/font_constant.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../routes/app_pages.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -24,17 +24,13 @@ class _WelcomePageState extends State<WelcomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 100,
-                ),
+                const SizedBox(height: 100),
                 Image.asset(
                   "assets/house101.png",
                   fit: BoxFit.cover,
                   scale: 1.2,
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15),
                 const Text(
                   "Welcome",
                   style: TextStyle(
@@ -49,9 +45,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       fontSize: 35,
                       color: kPrimaryColor),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 CupertinoButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
@@ -75,9 +69,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15),
                 CupertinoButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {

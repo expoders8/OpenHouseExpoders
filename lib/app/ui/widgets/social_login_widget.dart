@@ -245,11 +245,7 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
                         ),
                       ),
                     ),
-                    Platform.isIOS
-                        ? const SizedBox(
-                            height: 20,
-                          )
-                        : Container(),
+                    Platform.isIOS ? const SizedBox(height: 20) : Container(),
                     Platform.isIOS
                         ? SizedBox(
                             width: Get.width - 50,

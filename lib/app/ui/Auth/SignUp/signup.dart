@@ -55,9 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 color: kPrimaryColor),
                           ),
                         ),
-                        const SizedBox(
-                          height: 40,
-                        ),
+                        const SizedBox(height: 40),
                         const Text(
                           "Sign Up",
                           style: TextStyle(
