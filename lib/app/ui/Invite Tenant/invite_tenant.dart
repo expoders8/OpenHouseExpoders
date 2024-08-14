@@ -1,13 +1,12 @@
-import 'package:country_list_pick/country_list_pick.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/routes/app_pages.dart';
+import 'package:country_list_pick/country_list_pick.dart';
 
-import '../../../config/constant/color_constant.dart';
-import '../../../config/constant/font_constant.dart';
 import '../widgets/custom_textfield.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class InviteTenantPage extends StatefulWidget {
   const InviteTenantPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:openhome/app/routes/app_pages.dart';
+import 'package:another_carousel_pro/another_carousel_pro.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
