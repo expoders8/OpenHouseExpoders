@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -117,12 +118,11 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                                           height: 50,
                                           width: 50,
                                           decoration: BoxDecoration(
-                                              color: kButtonColor,
                                               borderRadius:
                                                   BorderRadius.circular(25)),
                                           child: Image.asset(
-                                            "assets/icons/Plus.png",
-                                            color: kWhiteColor,
+                                            "assets/icons/tablogo.png",
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
@@ -165,7 +165,9 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                     : 35,
         child: Image.asset(
           image,
-          color: kPrimaryColor,
+          color: tabCountController.tabIndex.value == index
+              ? kButtonColor
+              : kPrimaryColor,
           scale: 1.5,
         ),
       ),

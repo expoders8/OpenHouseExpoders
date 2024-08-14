@@ -14,13 +14,13 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  bool isFormSubmitted = false;
   bool selectEmail = true;
-  TextEditingController firstNameController = TextEditingController();
+  bool isFormSubmitted = false;
+  TextEditingController emailController = TextEditingController();
   TextEditingController mobilenoController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +29,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           "Edit Profile",
           style: TextStyle(fontFamily: kCircularStdBook),
         ),
-        automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
         centerTitle: true,
       ),

@@ -1,6 +1,8 @@
+import 'package:country_list_pick/country_list_pick.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 
 import '../Login/login.dart';
 import '../../widgets/custom_textfield.dart';
@@ -24,6 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String selectedCountrydialCode = "+91";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -127,18 +130,27 @@ class _SignUpPageState extends State<SignUpPage> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CustomTextFormField(
-                                        hintText: '+91',
-                                        maxLines: 1,
-                                        name: "code",
-                                      ),
-                                    ],
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: kBackGroundColor,
+                                      border: Border.all(
+                                          color: kSecondaryPrimaryColor),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: CountryListPick(
+                                    theme: CountryTheme(
+                                      isShowFlag: false,
+                                      isShowTitle: false,
+                                      isShowCode: true,
+                                      isDownIcon: false,
+                                      showEnglishName: true,
+                                    ),
+                                    initialSelection: 'IN',
+                                    onChanged: (CountryCode? code) {
+                                      setState(() {
+                                        selectedCountrydialCode =
+                                            code!.dialCode.toString();
+                                      });
+                                    },
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -153,11 +165,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                         maxLines: 1,
                                         ctrl: mobilenoController,
                                         keyboardType: TextInputType.phone,
-                                        prefixIcon: "assets/icons/phone.png",
                                         name: "phoneno",
                                         formSubmitted: isFormSubmitted,
-                                        validationMsg:
-                                            'Please enter PhoneNumber',
                                       ),
                                     ],
                                   ),
@@ -196,7 +205,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         const SizedBox(height: 20),
                         CupertinoButton(
                           padding: EdgeInsets.zero,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(Routes.selectRollPage);
+                          },
                           child: Container(
                             height: 45,
                             width: Get.width,

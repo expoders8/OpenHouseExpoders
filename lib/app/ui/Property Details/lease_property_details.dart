@@ -1,19 +1,20 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
-class PropertyDetailPage extends StatefulWidget {
-  const PropertyDetailPage({super.key});
+class LeasePropertyDetailPage extends StatefulWidget {
+  const LeasePropertyDetailPage({super.key});
 
   @override
-  State<PropertyDetailPage> createState() => _PropertyDetailPageState();
+  State<LeasePropertyDetailPage> createState() =>
+      _LeasePropertyDetailPageeState();
 }
 
-class _PropertyDetailPageState extends State<PropertyDetailPage> {
-  @override
+class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,15 +83,35 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                         color: kWhiteColor,
                         borderRadius: BorderRadius.circular(15)),
                     child: const Padding(
-                      padding: EdgeInsets.only(left: 9.0),
+                      padding: EdgeInsets.only(left: 8.5),
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: kPrimaryColor,
-                        size: 20,
+                        size: 17,
                       ),
                     ),
                   ),
                 )),
+            // Positioned(
+            //     top: 40,
+            //     right: 10,
+            //     child: GestureDetector(
+            //       onTap: () {
+            //         Get.toNamed(Routes.editPropertyPage);
+            //       },
+            //       child: Container(
+            //         height: 45,
+            //         width: 45,
+            //         decoration: BoxDecoration(
+            //             color: kWhiteColor,
+            //             borderRadius: BorderRadius.circular(15)),
+            //         child: const Icon(
+            //           Icons.edit,
+            //           color: kPrimaryColor,
+            //           size: 17,
+            //         ),
+            //       ),
+            //     )),
             Positioned(
               child: Container(
                 height: Get.height / 1.54,
@@ -113,33 +134,61 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                             const SizedBox(
                               height: 15,
                             ),
-                            SizedBox(
-                              width: Get.width - 100,
-                              child: const Text(
-                                "3545 Robson St, Vancouver",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 18,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                            ),
-                            const Row(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "\$2513",
-                                  style: TextStyle(
-                                      color: kButtonColor,
-                                      fontSize: 18,
-                                      fontFamily: kCircularStdMedium),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: Get.width - 100,
+                                      child: const Text(
+                                        "3545 Robson St, Vancouver",
+                                        style: TextStyle(
+                                            color: kPrimaryColor,
+                                            fontSize: 18,
+                                            fontFamily: kCircularStdMedium),
+                                      ),
+                                    ),
+                                    const Row(
+                                      children: [
+                                        Text(
+                                          "\$2513",
+                                          style: TextStyle(
+                                              color: kButtonColor,
+                                              fontSize: 18,
+                                              fontFamily: kCircularStdMedium),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          "per month",
+                                          style: TextStyle(
+                                              color: kSecondaryPrimaryColor,
+                                              fontSize: 13,
+                                              fontFamily: kCircularStdMedium),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: 10),
-                                Text(
-                                  "per month",
-                                  style: TextStyle(
-                                      color: kSecondaryPrimaryColor,
-                                      fontSize: 13,
-                                      fontFamily: kCircularStdMedium),
-                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(Routes.editPropertyPage);
+                                  },
+                                  child: Container(
+                                    height: 45,
+                                    width: 45,
+                                    decoration: BoxDecoration(
+                                        color: kBorderColor,
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: const Icon(
+                                      Icons.edit,
+                                      color: kPrimaryColor,
+                                      size: 20,
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                             Row(
@@ -150,80 +199,8 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                 ..add(const Icon(Icons.star_half,
                                     color: Color.fromARGB(255, 255, 230, 0))),
                             ),
-                            const SizedBox(height: 5),
-                            const Divider(),
-                            const SizedBox(height: 5),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "Send Request",
-                                  style: TextStyle(
-                                      color: kBlueColor, fontSize: 12),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Image.asset(
-                                    "assets/icons/boy 1.png",
-                                    fit: BoxFit.cover,
-                                    height: 65,
-                                    width: 65,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Host Name",
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 18,
-                                          fontFamily: kCircularStdMedium),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.phone,
-                                          size: 15,
-                                          color: kButtonColor,
-                                        ),
-                                        SizedBox(width: 10),
-                                        Text(
-                                          "+91 9898567548",
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 13,
-                                              fontFamily: kCircularStdNormal),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.email,
-                                          size: 15,
-                                          color: kButtonColor,
-                                        ),
-                                        SizedBox(width: 10),
-                                        Text(
-                                          "test@google.com",
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 13,
-                                              fontFamily: kCircularStdNormal),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                            const SizedBox(height: 15),
+                            tenantname(),
                             const SizedBox(height: 20),
                             const Text(
                               "Property details",
@@ -354,7 +331,18 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                               ],
                             ),
                             const SizedBox(height: 20),
-                            tenantname(),
+                            const Text(
+                              "Tenant History",
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 17,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                            const Divider(),
+                            const SizedBox(height: 5),
+                            tenanthistory(),
+                            tenanthistory(),
+                            tenanthistory(),
                             const SizedBox(height: 15),
                           ],
                         ),
@@ -494,6 +482,83 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
             ),
           ],
         ),
+      ],
+    );
+  }
+
+  tenanthistory() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.asset(
+                "assets/icons/boy 2.png",
+                fit: BoxFit.cover,
+                height: 40,
+                width: 40,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Tenant Name",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.phone,
+                          size: 15,
+                          color: kButtonColor,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          "+91 9898567548",
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 11,
+                              fontFamily: kCircularStdNormal),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.date_range,
+                          size: 15,
+                          color: kButtonColor,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          "01-7-24 to 30-10-24",
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 11,
+                              fontFamily: kCircularStdNormal),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
       ],
     );
   }

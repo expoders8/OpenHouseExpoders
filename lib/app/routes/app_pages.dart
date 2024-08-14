@@ -2,14 +2,18 @@ import 'package:get/get.dart';
 
 import '../ui/Auth/ChangePassword/change_password.dart';
 import '../ui/Auth/ForgotPassword/forgot_password.dart';
+import '../ui/EditProperty/edit_property.dart';
+import '../ui/Invite Tenant/invite_tenant.dart';
+import '../ui/Invite Tenant/invite_tenant_detail.dart';
 import '../ui/Notification/notification.dart';
 import '../ui/Profile/edit_profile.dart';
-import '../ui/Property Details/property_details.dart';
+import '../ui/Property Details/lease_property_details.dart';
+import '../ui/Property Details/not_lease_property_details.dart';
 import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
 import '../ui/Auth/SignUp/signup.dart';
 import '../ui/Total Amount/total_amount_detail.dart';
-import '../ui/welcome/welcome.dart';
+import '../ui/Select Roll/select_roll.dart';
 
 part 'app_routes.dart';
 
@@ -32,16 +36,16 @@ class AppPages {
       page: () => const TabPage(),
     ),
     GetPage(
-      name: _Paths.welcomePage,
-      page: () => const WelcomePage(),
+      name: _Paths.selectRollPage,
+      page: () => const SelectRollPage(),
     ),
     GetPage(
       name: _Paths.forgotPasswordPage,
       page: () => const ForgotPasswordPage(),
     ),
     GetPage(
-      name: _Paths.propertyDetailPage,
-      page: () => const PropertyDetailPage(),
+      name: _Paths.leasePropertyDetailPage,
+      page: () => const LeasePropertyDetailPage(),
     ),
     GetPage(
       name: _Paths.editProfilePage,
@@ -58,6 +62,22 @@ class AppPages {
     GetPage(
       name: _Paths.totalAmountDetailPage,
       page: () => const TotalAmountDetailPage(),
+    ),
+    GetPage(
+      name: _Paths.notLeasePropertyDetailPage,
+      page: () => const NotLeasePropertyDetailPage(),
+    ),
+    GetPage(
+      name: _Paths.inviteTenantPage,
+      page: () => const InviteTenantPage(),
+    ),
+    GetPage(
+      name: _Paths.inviteTenantDetailPage,
+      page: () => const InviteTenantDetailPage(),
+    ),
+    GetPage(
+      name: _Paths.editPropertyPage,
+      page: () => const EditPropertyPage(),
     ),
   ];
 }
