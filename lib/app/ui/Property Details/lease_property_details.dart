@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
+import 'package:openhome/app/view/property_details_view.dart';
+import 'package:openhome/app/view/tenant_history_view.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -247,185 +249,11 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                       children: [
                                         tenantname(),
                                         const SizedBox(height: 15),
-                                        const Text(
-                                          "Previous Tenants",
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 17,
-                                              fontFamily: kCircularStdMedium),
-                                        ),
-                                        const Divider(),
-                                        const SizedBox(height: 5),
-                                        tenanthistory(),
-                                        tenanthistory(),
-                                        tenanthistory(),
-                                        tenanthistory(),
-                                        tenanthistory(),
+                                        TenantHistoryView()
                                       ],
                                     ),
                                   ),
-                                  SingleChildScrollView(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          "Property details",
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 17,
-                                              fontFamily: kCircularStdMedium),
-                                        ),
-                                        const Divider(),
-                                        const SizedBox(height: 5),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            const Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "Bedrooms",
-                                                  style: TextStyle(
-                                                      color: kPrimaryColor,
-                                                      fontSize: 15,
-                                                      fontFamily:
-                                                          kCircularStdNormal),
-                                                ),
-                                                Text(
-                                                  "1 Single",
-                                                  style: TextStyle(
-                                                      color:
-                                                          kSecondaryPrimaryColor,
-                                                      fontSize: 12,
-                                                      fontFamily:
-                                                          kCircularStdBook),
-                                                ),
-                                                Text(
-                                                  "1 Double",
-                                                  style: TextStyle(
-                                                      color:
-                                                          kSecondaryPrimaryColor,
-                                                      fontSize: 12,
-                                                      fontFamily:
-                                                          kCircularStdBook),
-                                                ),
-                                                SizedBox(height: 10),
-                                                Text(
-                                                  "Capacity",
-                                                  style: TextStyle(
-                                                      color: kPrimaryColor,
-                                                      fontSize: 15,
-                                                      fontFamily:
-                                                          kCircularStdNormal),
-                                                ),
-                                                Text(
-                                                  "3 Person",
-                                                  style: TextStyle(
-                                                      color:
-                                                          kSecondaryPrimaryColor,
-                                                      fontSize: 12,
-                                                      fontFamily:
-                                                          kCircularStdBook),
-                                                ),
-                                              ],
-                                            ),
-                                            Image.asset(
-                                              "assets/icons/line_vertical.png",
-                                              fit: BoxFit.cover,
-                                              scale: 0.7,
-                                              color: kSecondaryColor,
-                                            ),
-                                            const Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "Bathrooms",
-                                                  style: TextStyle(
-                                                      color: kPrimaryColor,
-                                                      fontSize: 15,
-                                                      fontFamily:
-                                                          kCircularStdNormal),
-                                                ),
-                                                Text(
-                                                  "1 full bathroom",
-                                                  style: TextStyle(
-                                                      color:
-                                                          kSecondaryPrimaryColor,
-                                                      fontSize: 12,
-                                                      fontFamily:
-                                                          kCircularStdBook),
-                                                ),
-                                                Text(
-                                                  "1 toilet",
-                                                  style: TextStyle(
-                                                      color:
-                                                          kSecondaryPrimaryColor,
-                                                      fontSize: 12,
-                                                      fontFamily:
-                                                          kCircularStdBook),
-                                                ),
-                                                SizedBox(height: 10),
-                                                Text(
-                                                  "Bills",
-                                                  style: TextStyle(
-                                                      color: kPrimaryColor,
-                                                      fontSize: 15,
-                                                      fontFamily:
-                                                          kCircularStdNormal),
-                                                ),
-                                                Text(
-                                                  "included",
-                                                  style: TextStyle(
-                                                      color:
-                                                          kSecondaryPrimaryColor,
-                                                      fontSize: 12,
-                                                      fontFamily:
-                                                          kCircularStdBook),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 20),
-                                        const Text(
-                                          "Room & Property amenities",
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 17,
-                                              fontFamily: kCircularStdMedium),
-                                        ),
-                                        const Divider(),
-                                        const SizedBox(height: 5),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                amenities("Parking"),
-                                                const SizedBox(height: 5),
-                                                amenities("Wifi"),
-                                                const SizedBox(height: 5),
-                                                amenities("Garden"),
-                                                const SizedBox(height: 5),
-                                                amenities("Washing machine"),
-                                                const SizedBox(height: 5),
-                                                amenities("TV"),
-                                                const SizedBox(height: 5),
-                                                amenities("Furnished"),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  PropertyDetailsView(),
                                   const SingleChildScrollView(
                                     child: Column(
                                       children: [
@@ -456,68 +284,68 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
     ));
   }
 
-  tenantRequest() {
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image.asset(
-                "assets/icons/boy 2.png",
-                fit: BoxFit.cover,
-                height: 35,
-                width: 35,
-              ),
-            ),
-            const SizedBox(width: 8),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Tenant Name",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 13,
-                      fontFamily: kCircularStdMedium),
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.phone,
-                      size: 12,
-                      color: kButtonColor,
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      "+91 9898567548",
-                      style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 10,
-                          fontFamily: kCircularStdNormal),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Pendding",
-                      style: TextStyle(
-                          color: kRedColor,
-                          fontSize: 10,
-                          fontFamily: kCircularStdNormal),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-      ],
-    );
-  }
+  // tenantRequest() {
+  //   return Column(
+  //     children: [
+  //       Row(
+  //         crossAxisAlignment: CrossAxisAlignment.center,
+  //         children: [
+  //           ClipRRect(
+  //             borderRadius: BorderRadius.circular(100),
+  //             child: Image.asset(
+  //               "assets/icons/boy 2.png",
+  //               fit: BoxFit.cover,
+  //               height: 35,
+  //               width: 35,
+  //             ),
+  //           ),
+  //           const SizedBox(width: 8),
+  //           const Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Text(
+  //                 "Tenant Name",
+  //                 style: TextStyle(
+  //                     color: kPrimaryColor,
+  //                     fontSize: 13,
+  //                     fontFamily: kCircularStdMedium),
+  //               ),
+  //               Row(
+  //                 children: [
+  //                   Icon(
+  //                     Icons.phone,
+  //                     size: 12,
+  //                     color: kButtonColor,
+  //                   ),
+  //                   SizedBox(width: 5),
+  //                   Text(
+  //                     "+91 9898567548",
+  //                     style: TextStyle(
+  //                         color: kPrimaryColor,
+  //                         fontSize: 10,
+  //                         fontFamily: kCircularStdNormal),
+  //                   ),
+  //                 ],
+  //               ),
+  //               Row(
+  //                 children: [
+  //                   Text(
+  //                     "Pendding",
+  //                     style: TextStyle(
+  //                         color: kRedColor,
+  //                         fontSize: 10,
+  //                         fontFamily: kCircularStdNormal),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 10),
+  //     ],
+  //   );
+  // }
 
   tenantname() {
     return Column(
@@ -526,79 +354,123 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
         const SizedBox(height: 10),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image.asset(
-                "assets/icons/boy 2.png",
-                fit: BoxFit.cover,
-                height: 65,
-                width: 65,
-              ),
-            ),
-            const SizedBox(width: 10),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                Text(
-                  "Tenant Name",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 18,
-                      fontFamily: kCircularStdMedium),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset(
+                    "assets/icons/boy 2.png",
+                    fit: BoxFit.cover,
+                    height: 65,
+                    width: 65,
+                  ),
                 ),
-                Row(
+                const SizedBox(width: 10),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.phone,
-                      size: 15,
-                      color: kButtonColor,
-                    ),
-                    SizedBox(width: 10),
                     Text(
-                      "+91 9898567548",
+                      "Tenant Name",
                       style: TextStyle(
                           color: kPrimaryColor,
-                          fontSize: 13,
-                          fontFamily: kCircularStdNormal),
+                          fontSize: 18,
+                          fontFamily: kCircularStdMedium),
                     ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.email,
-                      size: 15,
-                      color: kButtonColor,
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.phone,
+                          size: 15,
+                          color: kButtonColor,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "+91 9898567548",
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 13,
+                              fontFamily: kCircularStdNormal),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 10),
-                    Text(
-                      "test@google.com",
-                      style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 13,
-                          fontFamily: kCircularStdNormal),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.email,
+                          size: 15,
+                          color: kButtonColor,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "test@google.com",
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 13,
+                              fontFamily: kCircularStdNormal),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.date_range,
-                      size: 15,
-                      color: kButtonColor,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      "01-7-2024 to 30-11-2024",
-                      style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 13,
-                          fontFamily: kCircularStdNormal),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.date_range,
+                          size: 15,
+                          color: kButtonColor,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "01-7-2024 to 30-11-2024",
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 13,
+                              fontFamily: kCircularStdNormal),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: kButtonColor),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: const Padding(
+                      padding: EdgeInsets.all(4.0),
+                      child: Text(
+                        "Extend",
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 11,
+                            fontFamily: kCircularStdNormal),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: kButtonColor),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: const Padding(
+                      padding: EdgeInsets.all(4.0),
+                      child: Text(
+                        "Terminate",
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 11,
+                            fontFamily: kCircularStdNormal),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -653,121 +525,6 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
           ],
         ),
       ],
-    );
-  }
-
-  tenanthistory() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image.asset(
-                "assets/icons/boy 2.png",
-                fit: BoxFit.cover,
-                height: 40,
-                width: 40,
-              ),
-            ),
-            const SizedBox(width: 10),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Tenant Name",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 15,
-                      fontFamily: kCircularStdMedium),
-                ),
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.phone,
-                          size: 15,
-                          color: kButtonColor,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          "+91 9898567548",
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 11,
-                              fontFamily: kCircularStdNormal),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.date_range,
-                          size: 15,
-                          color: kButtonColor,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          "01-7-24 to 30-10-24",
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 11,
-                              fontFamily: kCircularStdNormal),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-      ],
-    );
-  }
-
-  amenities(String text) {
-    return SizedBox(
-      width: Get.width - 30,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Image.asset(
-                "assets/icons/correct.png",
-                fit: BoxFit.cover,
-                height: 15,
-                width: 15,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                text,
-                style: const TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 14,
-                    fontFamily: kCircularStdNormal),
-              ),
-            ],
-          ),
-          const Text(
-            "How to.?",
-            style: TextStyle(
-                color: kBlueColor,
-                fontSize: 10,
-                fontFamily: kCircularStdNormal),
-          ),
-        ],
-      ),
     );
   }
 }
