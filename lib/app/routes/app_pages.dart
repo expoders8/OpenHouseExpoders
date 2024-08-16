@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 import '../ui/Auth/ChangePassword/change_password.dart';
 import '../ui/Auth/ForgotPassword/forgot_password.dart';
-import '../ui/EditProperty/edit_property.dart';
 import '../ui/Invite Tenant/invite_tenant.dart';
 import '../ui/Invite Tenant/invite_tenant_detail.dart';
 import '../ui/Notification/notification.dart';
@@ -74,10 +73,6 @@ class AppPages {
     GetPage(
       name: _Paths.inviteTenantDetailPage,
       page: () => const InviteTenantDetailPage(),
-    ),
-    GetPage(
-      name: _Paths.editPropertyPage,
-      page: () => const EditPropertyPage(),
     ),
   ];
 }

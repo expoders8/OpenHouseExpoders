@@ -50,10 +50,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           if (!regExp.hasMatch(value)) {
             return "Please enter a valid email";
           }
-        } else if (widget.name == "newpassword" ||
-            widget.name == "confirmpassword") {
+        }
+        if (widget.name == "confirmpassword") {
           if (widget.ctrl?.text != widget.confirmPasswordController?.text) {
-            return 'Passwords do not match';
+            return 'Confirm Password do not match';
           }
         }
         return null;

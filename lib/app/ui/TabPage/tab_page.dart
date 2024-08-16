@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +88,7 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Card(
-                            shadowColor: Color.fromARGB(118, 0, 0, 0),
+                            shadowColor: const Color.fromARGB(118, 0, 0, 0),
                             elevation: 5,
                             child: Container(
                               margin:

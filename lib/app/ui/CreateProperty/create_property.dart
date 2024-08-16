@@ -7,7 +7,8 @@ import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
 class CreatePropertyPage extends StatefulWidget {
-  const CreatePropertyPage({super.key});
+  final String? checkEdit;
+  const CreatePropertyPage({super.key, this.checkEdit});
 
   @override
   State<CreatePropertyPage> createState() => _CreatePropertyPageState();
@@ -72,8 +73,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Create Property",
+        title: Text(
+          widget.checkEdit == "edit" ? "Edit Property" : "Create Property",
           style: TextStyle(fontFamily: kCircularStdBook),
         ),
         automaticallyImplyLeading: false,

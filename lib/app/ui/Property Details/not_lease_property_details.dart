@@ -6,6 +6,7 @@ import 'package:another_carousel_pro/another_carousel_pro.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../CreateProperty/create_property.dart';
 
 class NotLeasePropertyDetailPage extends StatefulWidget {
   const NotLeasePropertyDetailPage({super.key});
@@ -155,7 +156,8 @@ class _NotLeasePropertyDetailPageState
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Get.toNamed(Routes.editPropertyPage);
+                                    Get.to(() => const CreatePropertyPage(
+                                        checkEdit: "edit"));
                                   },
                                   child: Container(
                                     height: 45,

@@ -76,7 +76,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25.0),
-            side: BorderSide(color: kSecondaryPrimaryColor),
+            side: const BorderSide(color: kSecondaryPrimaryColor),
           ),
         ),
       ),

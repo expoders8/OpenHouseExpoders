@@ -93,10 +93,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           isFormSubmitted = true;
                         });
                         if (_formKey.currentState?.validate() ?? false) {
-                          print("Form is valid");
-                        } else {
-                          print("Form is invalid");
-                        }
+                        } else {}
                       },
                       child: Container(
                         height: 45,
