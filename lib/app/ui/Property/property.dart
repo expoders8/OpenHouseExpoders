@@ -16,6 +16,7 @@ class PropertyPage extends StatefulWidget {
 class _PropertyPageState extends State<PropertyPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  var searchController = TextEditingController();
 
   @override
   void initState() {
@@ -57,53 +58,110 @@ class _PropertyPageState extends State<PropertyPage>
         child: TabBarView(
           controller: _tabController,
           children: [
-            SingleChildScrollView(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-                child: Column(
-                  children: [
-                    leaseproperty(
-                        "assets/icons/1.png",
-                        "\$2550",
-                        "101 Main Street",
-                        "2",
-                        "Tenant Name",
-                        "\$15,200",
-                        "\$220",
-                        "12-06-2021"),
-                    const SizedBox(height: 15),
-                    leaseproperty(
-                        "assets/icons/2.png",
-                        "\$1520",
-                        "3545 Robson St, Vancouver",
-                        "1",
-                        "Tenant Name",
-                        "\$10,105",
-                        "\$108",
-                        "25-06-2021"),
-                    const SizedBox(height: 15),
-                    leaseproperty(
-                        "assets/icons/3.png",
-                        "\$1850",
-                        "224 Robson St, Vancouver",
-                        "2",
-                        "Tenant Name",
-                        "\$10,105",
-                        "\$108",
-                        "25-06-2021"),
-                    const SizedBox(height: 15),
-                    const SizedBox(height: 75),
-                  ],
+            GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: searchController,
+                        decoration: const InputDecoration(
+                          labelText: 'Search',
+                          labelStyle: TextStyle(color: kPrimaryColor),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: kPrimaryColor,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: kPrimaryColor,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: kButtonColor,
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      leaseproperty(
+                          "assets/icons/1.png",
+                          "\$2550",
+                          "101 Main Street",
+                          "2",
+                          "Tenant Name",
+                          "\$15,200",
+                          "\$220",
+                          "12-06-2021"),
+                      const SizedBox(height: 15),
+                      leaseproperty(
+                          "assets/icons/2.png",
+                          "\$1520",
+                          "3545 Robson St, Vancouver",
+                          "1",
+                          "Tenant Name",
+                          "\$10,105",
+                          "\$108",
+                          "25-06-2021"),
+                      const SizedBox(height: 15),
+                      leaseproperty(
+                          "assets/icons/3.png",
+                          "\$1850",
+                          "224 Robson St, Vancouver",
+                          "2",
+                          "Tenant Name",
+                          "\$10,105",
+                          "\$108",
+                          "25-06-2021"),
+                      const SizedBox(height: 15),
+                      const SizedBox(height: 75),
+                    ],
+                  ),
                 ),
               ),
             ),
             SingleChildScrollView(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                 child: Column(
                   children: [
+                    TextFormField(
+                      controller: searchController,
+                      decoration: const InputDecoration(
+                        labelText: 'Search',
+                        labelStyle: TextStyle(color: kPrimaryColor),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: kPrimaryColor,
+                            width: 1,
+                          ),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: kPrimaryColor,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: kButtonColor,
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     property("assets/icons/1.png", "\$2550", "101 Main Street",
                         "2", "Tenant Name", "\$15,200", "\$220", "12-06-2021"),
                     const SizedBox(height: 15),
