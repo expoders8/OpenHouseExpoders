@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
@@ -9,7 +10,8 @@ import '../../../config/constant/color_constant.dart';
 import '../CreateProperty/create_property.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
-  const LeasePropertyDetailPage({super.key});
+  final String? checkRoll;
+  const LeasePropertyDetailPage({super.key, this.checkRoll});
 
   @override
   State<LeasePropertyDetailPage> createState() =>
@@ -196,24 +198,27 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                   ),
                                 ],
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => const CreatePropertyPage(
-                                      checkEdit: "edit"));
-                                },
-                                child: Container(
-                                  height: 45,
-                                  width: 45,
-                                  decoration: BoxDecoration(
-                                      color: kBorderColor,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: const Icon(
-                                    Icons.edit,
-                                    color: kPrimaryColor,
-                                    size: 20,
-                                  ),
-                                ),
-                              )
+                              widget.checkRoll == "tenant"
+                                  ? Container()
+                                  : GestureDetector(
+                                      onTap: () {
+                                        Get.to(() => const CreatePropertyPage(
+                                            checkEdit: "edit"));
+                                      },
+                                      child: Container(
+                                        height: 45,
+                                        width: 45,
+                                        decoration: BoxDecoration(
+                                            color: kBorderColor,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: const Icon(
+                                          Icons.edit,
+                                          color: kPrimaryColor,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
                             ],
                           ),
                           Row(
@@ -228,10 +233,13 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                             controller: _tabController,
                             indicatorColor: kButtonColor,
                             labelColor: kPrimaryColor,
-                            tabs: const [
-                              Tab(text: 'Tenants'),
-                              Tab(text: 'Overview'),
-                              Tab(text: 'Near By'),
+                            tabs: [
+                              Tab(
+                                  text: widget.checkRoll == "tenant"
+                                      ? "Host"
+                                      : 'Tenants'),
+                              const Tab(text: 'Overview'),
+                              const Tab(text: 'Near By'),
                             ],
                           ),
                           SizedBox(
@@ -249,7 +257,52 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                       children: [
                                         tenantname(),
                                         const SizedBox(height: 15),
-                                        TenantHistoryView()
+                                        widget.checkRoll == "tenant"
+                                            ? Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 150,
+                                                    child: CupertinoButton(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        color: kButtonColor,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Icon(Icons.payment),
+                                                            SizedBox(width: 10),
+                                                            Text("Pay rent"),
+                                                          ],
+                                                        ),
+                                                        onPressed: () {}),
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  SizedBox(
+                                                    width: 150,
+                                                    child: CupertinoButton(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        color: kBlack87Color,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Icon(Icons
+                                                                .checklist_outlined),
+                                                            SizedBox(width: 10),
+                                                            Text("Checkout"),
+                                                          ],
+                                                        ),
+                                                        onPressed: () {}),
+                                                  ),
+                                                ],
+                                              )
+                                            : TenantHistoryView()
                                       ],
                                     ),
                                   ),
@@ -368,17 +421,19 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                   ),
                 ),
                 const SizedBox(width: 10),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Tenant Name",
-                      style: TextStyle(
+                      widget.checkRoll == "tenant"
+                          ? "Host Name"
+                          : "Tenant Name",
+                      style: const TextStyle(
                           color: kPrimaryColor,
                           fontSize: 18,
                           fontFamily: kCircularStdMedium),
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Icon(
                           Icons.phone,
@@ -395,7 +450,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                         ),
                       ],
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Icon(
                           Icons.email,
@@ -412,7 +467,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                         ),
                       ],
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Icon(
                           Icons.date_range,
@@ -433,45 +488,47 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: kButtonColor),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Text(
-                        "Extend",
-                        style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 11,
-                            fontFamily: kCircularStdNormal),
-                      ),
+            widget.checkRoll == "tenant"
+                ? Container()
+                : Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: kButtonColor),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Text(
+                              "Extend",
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 11,
+                                  fontFamily: kCircularStdNormal),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: kButtonColor),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Text(
+                              "Terminate",
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 11,
+                                  fontFamily: kCircularStdNormal),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: kButtonColor),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Text(
-                        "Terminate",
-                        style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 11,
-                            fontFamily: kCircularStdNormal),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
         const SizedBox(height: 20),

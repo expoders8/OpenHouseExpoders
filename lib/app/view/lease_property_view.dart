@@ -4,46 +4,60 @@ import 'package:get/get.dart';
 import '../../config/constant/color_constant.dart';
 import '../../config/constant/font_constant.dart';
 import '../routes/app_pages.dart';
+import '../ui/Property Details/lease_property_details.dart';
 
-class LeasePropertyView extends StatelessWidget {
-  const LeasePropertyView({super.key});
+class LeasePropertyView extends StatefulWidget {
+  final String? checkRoll;
+  const LeasePropertyView({super.key, this.checkRoll});
 
   @override
+  State<LeasePropertyView> createState() => _LeasePropertyViewState();
+}
+
+class _LeasePropertyViewState extends State<LeasePropertyView> {
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        leaseproperty("assets/icons/1.png", "\$2550", "101 Main Street", "2",
-            "Tenant Name", "\$15,200", "\$220", "12-06-2021"),
-        const SizedBox(height: 15),
-        leaseproperty(
-            "assets/icons/2.png",
-            "\$1520",
-            "3545 Robson St, Vancouver",
-            "1",
-            "Tenant Name",
-            "\$10,105",
-            "\$108",
-            "25-06-2021"),
-        const SizedBox(height: 15),
-        leaseproperty(
-            "assets/icons/3.png",
-            "\$1850",
-            "224 Robson St, Vancouver",
-            "2",
-            "Tenant Name",
-            "\$10,105",
-            "\$108",
-            "25-06-2021"),
-        const SizedBox(height: 85),
-      ],
+    return SizedBox(
+      height: Get.height - 200,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            leaseproperty("assets/icons/1.png", "\$2550", "101 Main Street",
+                "2", "Tenant Name", "\$15,200", "\$220", "12-06-2021"),
+            const SizedBox(height: 15),
+            leaseproperty(
+                "assets/icons/2.png",
+                "\$1520",
+                "3545 Robson St, Vancouver",
+                "1",
+                "Tenant Name",
+                "\$10,105",
+                "\$108",
+                "25-06-2021"),
+            const SizedBox(height: 15),
+            leaseproperty(
+                "assets/icons/3.png",
+                "\$1850",
+                "224 Robson St, Vancouver",
+                "2",
+                "Tenant Name",
+                "\$10,105",
+                "\$108",
+                "25-06-2021"),
+            const SizedBox(height: 85),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget leaseproperty(String image, price, address, person, tenantname,
-      balancedue, rentdue, expiredate) {
+  leaseproperty(String image, price, address, person, tenantname, balancedue,
+      rentdue, expiredate) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.leasePropertyDetailPage);
+        Get.to(LeasePropertyDetailPage(
+          checkRoll: widget.checkRoll,
+        ));
       },
       child: Container(
         width: Get.width,

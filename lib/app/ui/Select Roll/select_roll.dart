@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:openhome/app/ui/TabPage/tab_page.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../routes/app_pages.dart';
 
 class SelectRollPage extends StatefulWidget {
   const SelectRollPage({super.key});
@@ -41,58 +44,98 @@ class _SelectRollPageState extends State<SelectRollPage> {
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(height: 25),
-                Container(
-                  height: 80,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Center(
-                    child: RadioListTile(
-                      dense: true,
-                      title: const Text(
-                        "A Tenant",
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: kPrimaryColor,
-                            fontFamily: kCircularStdMedium),
+                CupertinoButton(
+                  onPressed: () {
+                    setState(() {
+                      rolltype = "tenant";
+                    });
+                    Get.to(const TabPage(checkRoll: "tenant"));
+                  },
+                  child: Container(
+                    height: 80,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Center(
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 25),
+                          Container(
+                            padding: const EdgeInsets.all(3),
+                            height: 19,
+                            width: 19,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: kPrimaryColor),
+                                borderRadius: BorderRadius.circular(25)),
+                            child: Container(
+                              height: 8,
+                              width: 8,
+                              decoration: BoxDecoration(
+                                  color: rolltype == "tenant"
+                                      ? kPrimaryColor
+                                      : kWhiteColor,
+                                  borderRadius: BorderRadius.circular(25)),
+                            ),
+                          ),
+                          const SizedBox(width: 25),
+                          const Text(
+                            "A Tenant",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: kPrimaryColor,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                        ],
                       ),
-                      value: "tenant",
-                      groupValue: rolltype,
-                      onChanged: (value) {
-                        setState(() {
-                          rolltype = value.toString();
-                          rolltypeSelected = true;
-                        });
-                      },
                     ),
                   ),
                 ),
                 const SizedBox(height: 15),
-                Container(
-                  height: 80,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Center(
-                    child: RadioListTile(
-                      dense: true,
-                      title: const Text(
-                        "A Landlord",
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: kPrimaryColor,
-                            fontFamily: kCircularStdMedium),
+                CupertinoButton(
+                  onPressed: () {
+                    setState(() {
+                      rolltype = "host";
+                    });
+                    Get.to(const TabPage(checkRoll: "host"));
+                  },
+                  child: Container(
+                    height: 80,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Center(
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 25),
+                          Container(
+                            padding: const EdgeInsets.all(3),
+                            height: 19,
+                            width: 19,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: kPrimaryColor),
+                                borderRadius: BorderRadius.circular(25)),
+                            child: Container(
+                              height: 8,
+                              width: 8,
+                              decoration: BoxDecoration(
+                                  color: rolltype == "host"
+                                      ? kPrimaryColor
+                                      : kWhiteColor,
+                                  borderRadius: BorderRadius.circular(25)),
+                            ),
+                          ),
+                          const SizedBox(width: 25),
+                          const Text(
+                            "A Landlord",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: kPrimaryColor,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                        ],
                       ),
-                      value: "landload",
-                      groupValue: rolltype,
-                      onChanged: (value) {
-                        setState(() {
-                          rolltype = value.toString();
-                          rolltypeSelected = true;
-                        });
-                      },
                     ),
                   ),
                 ),

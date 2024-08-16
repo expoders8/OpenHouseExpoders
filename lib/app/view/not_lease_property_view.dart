@@ -10,30 +10,34 @@ class NotLeasePropertyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        notLeaseProperty(
-          "assets/icons/1.png",
-          "\$2550",
-          "101 Main Street",
-          "2",
+    return SizedBox(
+      height: Get.height - 210,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            notLeaseProperty(
+              "assets/icons/1.png",
+              "\$2550",
+              "101 Main Street",
+              "2",
+            ),
+            const SizedBox(height: 15),
+            notLeaseProperty(
+              "assets/icons/2.png",
+              "\$1520",
+              "3545 Robson St, Vancouver",
+              "1",
+            ),
+            const SizedBox(height: 15),
+            notLeaseProperty(
+              "assets/icons/3.png",
+              "\$1850",
+              "224 Robson St, Vancouver",
+              "2",
+            ),
+          ],
         ),
-        const SizedBox(height: 15),
-        notLeaseProperty(
-          "assets/icons/2.png",
-          "\$1520",
-          "3545 Robson St, Vancouver",
-          "1",
-        ),
-        const SizedBox(height: 15),
-        notLeaseProperty(
-          "assets/icons/3.png",
-          "\$1850",
-          "224 Robson St, Vancouver",
-          "2",
-        ),
-        const SizedBox(height: 85),
-      ],
+      ),
     );
   }
 

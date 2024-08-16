@@ -15,7 +15,9 @@ import '../../../config/constant/color_constant.dart';
 class TabPage extends StatefulWidget {
   final String? firstIndex;
   final int? selectedTabIndex;
-  const TabPage({super.key, this.firstIndex, this.selectedTabIndex = 0});
+  final String? checkRoll;
+  const TabPage(
+      {super.key, this.firstIndex, this.selectedTabIndex = 0, this.checkRoll});
 
   @override
   State<TabPage> createState() => _TabPageState();
@@ -72,12 +74,12 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
               children: [
                 IndexedStack(
                   index: tabCountController.tabIndex.value,
-                  children: const [
-                    HomePage(),
-                    PropertyPage(),
-                    CreatePropertyPage(),
-                    PaymentPage(),
-                    ProfilePage(),
+                  children: [
+                    HomePage(checkRoll: widget.checkRoll),
+                    PropertyPage(checkRoll: widget.checkRoll),
+                    const CreatePropertyPage(),
+                    const PaymentPage(),
+                    const ProfilePage(),
                   ],
                 ),
                 !_isKeyboardVisible
