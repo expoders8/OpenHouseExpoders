@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
 import '../widgets/custom_textfield.dart';
 import '../../../config/constant/font_constant.dart';
@@ -25,7 +26,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController personController = TextEditingController();
   bool isTouched = false;
   bool isFormSubmitted = false;
-
+  List<Asset> images = <Asset>[];
+  String error = 'No Error Dectected';
+  List<Asset> imageList = <Asset>[];
   final List<String> cities = [
     'New York',
     'Los Angeles',
@@ -75,7 +78,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
       appBar: AppBar(
         title: Text(
           widget.checkEdit == "edit" ? "Edit Property" : "Create Property",
-          style: TextStyle(fontFamily: kCircularStdBook),
+          style: const TextStyle(fontFamily: kCircularStdBook),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
@@ -488,55 +491,143 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                GestureDetector(
-                  onTap: () {},
-                  child: SizedBox(
-                    height: 150,
-                    child: Card(
-                      shadowColor: const Color.fromARGB(20, 0, 0, 0),
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          side: const BorderSide(color: kWhiteColor)),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: kWhiteColor,
-                            borderRadius: BorderRadius.circular(8.0)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: DottedBorder(
-                            color: kBorderColor,
-                            borderType: BorderType.RRect,
-                            radius: const Radius.circular(8),
-                            strokeWidth: 1,
-                            dashPattern: const [6, 6],
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    "assets/icons/upload_image.png",
-                                    scale: 1.5,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Text(
-                                    "Upload Cover photo",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: kCircularStdBook,
+                imageList.isEmpty
+                    ? GestureDetector(
+                        onTap: pickImage,
+                        child: SizedBox(
+                          height: 150,
+                          child: Card(
+                            shadowColor: const Color.fromARGB(20, 0, 0, 0),
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                side: const BorderSide(color: kWhiteColor)),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: kWhiteColor,
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: DottedBorder(
+                                  color: kBorderColor,
+                                  borderType: BorderType.RRect,
+                                  radius: const Radius.circular(8),
+                                  strokeWidth: 1,
+                                  dashPattern: const [6, 6],
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          "assets/icons/upload_image.png",
+                                          scale: 1.5,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        const Text(
+                                          "Upload Cover photo",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontFamily: kCircularStdBook,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
-                                ],
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
+                      )
+                    : SizedBox(
+                        height: imageList.length == 2 ? 150 : 260,
+                        child: GridView.count(
+                          physics: const NeverScrollableScrollPhysics(),
+                          crossAxisCount: 3,
+                          children: List.generate(6, (index) {
+                            if (index < imageList.length) {
+                              Asset asset = imageList[index];
+                              return Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: SizedBox(
+                                        width: 120,
+                                        height: 120,
+                                        child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: AssetThumb(
+                                            asset: asset,
+                                            width: 120,
+                                            height: 120,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: Container(
+                                        height: 130,
+                                        width: 130,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                          color:
+                                              const Color.fromARGB(92, 0, 0, 0),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 10,
+                                      top: 10,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            imageList.removeAt(index);
+                                          });
+                                        },
+                                        child: const Icon(
+                                          Icons.delete,
+                                          color: kWhiteColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else if (index == imageList.length) {
+                              return Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: GestureDetector(
+                                  onTap: pickImage,
+                                  child: DottedBorder(
+                                    color: kRedColor,
+                                    borderType: BorderType.RRect,
+                                    radius: const Radius.circular(8),
+                                    strokeWidth: 1,
+                                    dashPattern: const [6, 6],
+                                    child: Center(
+                                      child: Image.asset(
+                                        "assets/icons/shareImage.png",
+                                        color: kPrimaryColor,
+                                        scale: 1.2,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
@@ -576,5 +667,34 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         ),
       ),
     );
+  }
+
+  pickImage() async {
+    try {
+      imageList = await MultiImagePicker.pickImages(
+        selectedAssets: imageList.isEmpty ? images : imageList,
+        iosOptions: const IOSOptions(
+          doneButton: UIBarButtonItem(title: 'Confirm', tintColor: kRedColor),
+          cancelButton:
+              UIBarButtonItem(title: 'Cancel', tintColor: kRedAccentColor),
+          albumButtonColor: kPrimaryColor,
+          // settings: iosSettings,
+        ),
+        androidOptions: const AndroidOptions(
+          actionBarColor: kRedColor,
+          actionBarTitleColor: kWhiteColor,
+          maxImages: 5,
+          hasCameraInPickerPage: false,
+          statusBarColor: kBlack26Color,
+          actionBarTitle: "Select Photo",
+          allViewTitle: "All Photos",
+          useDetailsView: false,
+          selectCircleStrokeColor: kRedColor,
+        ),
+      );
+      setState(() {});
+    } on Exception catch (e) {
+      error = e.toString();
+    }
   }
 }
