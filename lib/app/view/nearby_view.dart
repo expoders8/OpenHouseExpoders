@@ -1,12 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../config/constant/color_constant.dart';
 import '../../config/constant/font_constant.dart';
+import '../../config/constant/color_constant.dart';
 
-class NearByAmenitiesView extends StatelessWidget {
+class NearByAmenitiesView extends StatefulWidget {
   const NearByAmenitiesView({super.key});
 
+  @override
+  State<NearByAmenitiesView> createState() => _NearByAmenitiesViewState();
+}
+
+class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

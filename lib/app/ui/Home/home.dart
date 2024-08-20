@@ -1,14 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
+import '../../view/my_request.dart';
 import '../../routes/app_pages.dart';
+import '../../view/tenant_request_view.dart';
+import '../../view/chechout_request.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../view/chechout_request.dart';
-import '../../view/my_request.dart';
-import '../../view/tanant_request.dart';
 
 class HomePage extends StatefulWidget {
   final String? checkRoll;
@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      MyRequestView(),
+                      const MyRequestView(),
                       const SizedBox(height: 10),
                       const SizedBox(height: 65),
                     ],
@@ -223,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                 )
               : Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 15),
+                      horizontal: 15.0, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -311,7 +311,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        "Checkout Request",
+                        "Checkout Requests",
                         style: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 17,
@@ -320,28 +320,58 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(height: 3),
                       const CheckOutRequestView(),
                       const SizedBox(height: 10),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Tenant Requests",
                             style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: 17,
                                 fontFamily: kCircularStdMedium),
                           ),
-                          Text(
-                            "View all",
-                            style: TextStyle(
-                                color: kBlueColor,
-                                fontSize: 13,
-                                fontFamily: kCircularStdMedium),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.tenantRequestPage);
+                            },
+                            child: const Text(
+                              "View all",
+                              style: TextStyle(
+                                  color: kBlueColor,
+                                  fontSize: 13,
+                                  fontFamily: kCircularStdMedium),
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 5),
-                      TanantRequestView(),
+                      TenantRequestView(isviewall: 0),
                       const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Lease Status",
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 17,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              tabCountController.changeTabIndex(1);
+                            },
+                            child: const Text(
+                              "View all",
+                              style: TextStyle(
+                                  color: kBlueColor,
+                                  fontSize: 13,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
                       leaseproperty(
                           "assets/icons/1.png",
                           "\$2550",

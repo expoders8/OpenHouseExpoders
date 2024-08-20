@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../config/constant/color_constant.dart';
 import '../../config/constant/font_constant.dart';
+import '../../config/constant/color_constant.dart';
 
 class CheckOutRequestView extends StatefulWidget {
   const CheckOutRequestView({super.key});
@@ -100,7 +100,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                           ],
                         ),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       const Text(
                         "CheckPoints",
                         style: TextStyle(
@@ -146,7 +146,6 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 25),
                   ],
                 )
               ],
@@ -385,7 +384,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                       ),
                       onTap: () {},
                     ),
-                    SizedBox(height: 25)
+                    const SizedBox(height: 25)
                   ],
                 )),
           ],

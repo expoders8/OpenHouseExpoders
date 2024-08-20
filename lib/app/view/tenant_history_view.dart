@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../config/constant/color_constant.dart';
 import '../../config/constant/font_constant.dart';
+import '../../config/constant/color_constant.dart';
 
-class TenantHistoryView extends StatelessWidget {
+class TenantHistoryView extends StatefulWidget {
+  const TenantHistoryView({super.key});
+
+  @override
+  State<TenantHistoryView> createState() => _TenantHistoryViewState();
+}
+
+class _TenantHistoryViewState extends State<TenantHistoryView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

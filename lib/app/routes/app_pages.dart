@@ -11,6 +11,7 @@ import '../ui/Property Details/not_lease_property_details.dart';
 import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
 import '../ui/Auth/SignUp/signup.dart';
+import '../ui/Tenant Requests/tenant_request.dart';
 import '../ui/Total Amount/total_amount_detail.dart';
 import '../ui/Select Roll/select_roll.dart';
 
@@ -73,6 +74,10 @@ class AppPages {
     GetPage(
       name: _Paths.inviteTenantDetailPage,
       page: () => const InviteTenantDetailPage(),
+    ),
+    GetPage(
+      name: _Paths.tenantRequestPage,
+      page: () => const TenantRequestPage(),
     ),
   ];
 }

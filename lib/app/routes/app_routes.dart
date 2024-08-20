@@ -16,6 +16,7 @@ abstract class Routes {
   static const notLeasePropertyDetailPage = _Paths.notLeasePropertyDetailPage;
   static const inviteTenantPage = _Paths.inviteTenantPage;
   static const inviteTenantDetailPage = _Paths.inviteTenantDetailPage;
+  static const tenantRequestPage = _Paths.tenantRequestPage;
 }
 
 abstract class _Paths {
@@ -32,4 +33,5 @@ abstract class _Paths {
   static const notLeasePropertyDetailPage = '/notLeasePropertyDetailPage';
   static const inviteTenantPage = '/inviteTenantPage';
   static const inviteTenantDetailPage = '/inviteTenantDetailPage';
+  static const tenantRequestPage = '/tenantRequestPage';
 }

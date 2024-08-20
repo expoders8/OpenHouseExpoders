@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../config/constant/color_constant.dart';
 import '../../config/constant/font_constant.dart';
-import '../routes/app_pages.dart';
+import '../../config/constant/color_constant.dart';
 import '../ui/Property Details/lease_property_details.dart';
 
 class LeasePropertyView extends StatefulWidget {

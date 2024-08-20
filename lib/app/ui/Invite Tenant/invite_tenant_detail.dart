@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../widgets/custom_textfield.dart';
+import '../../controller/tab_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../../config/provider/custom_datepicker.dart';
@@ -15,8 +16,11 @@ class InviteTenantDetailPage extends StatefulWidget {
 }
 
 class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
+  final TabCountController tabCountController = Get.find<TabCountController>();
+  final tabController = Get.put(TabCountController());
   TextEditingController amountController = TextEditingController();
   int userAge = 0;
+  bool checkedValue = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +67,25 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
             const SizedBox(height: 15),
             Row(
               children: [
+                Checkbox(
+                  checkColor: kWhiteColor,
+                  activeColor: kButtonColor,
+                  value: checkedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      checkedValue = value!;
+                    });
+                  },
+                ),
+                const Text(
+                  "The property shall be used solely\nfor residential purposes.",
+                  style: TextStyle(color: kBlackColor),
+                )
+              ],
+            ),
+            const SizedBox(height: 15),
+            Row(
+              children: [
                 GestureDetector(
                   onTap: () {
                     Get.back();
@@ -87,7 +110,9 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
                 Expanded(
                   child: CupertinoButton(
                     padding: EdgeInsets.zero,
-                    onPressed: () {},
+                    onPressed: () {
+                      tabCountController.changeTabIndex(2);
+                    },
                     child: Container(
                       height: 45,
                       decoration: BoxDecoration(

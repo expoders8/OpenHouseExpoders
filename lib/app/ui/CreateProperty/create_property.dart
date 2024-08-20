@@ -344,6 +344,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       );
                     },
                     onSuggestionSelected: (String suggestion) {
+                      // ignore: avoid_print
                       print('Selected: $suggestion');
                     },
                     noItemsFoundBuilder: (context) => const Padding(
@@ -413,6 +414,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       );
                     },
                     onSuggestionSelected: (String suggestion) {
+                      // ignore: avoid_print
                       print('Selected: $suggestion');
                     },
                     noItemsFoundBuilder: (context) => const Padding(
@@ -482,6 +484,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       );
                     },
                     onSuggestionSelected: (String suggestion) {
+                      // ignore: avoid_print
                       print('Selected: $suggestion');
                     },
                     noItemsFoundBuilder: (context) => const Padding(

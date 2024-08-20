@@ -1,55 +1,69 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../config/constant/color_constant.dart';
 import '../../config/constant/font_constant.dart';
+import '../../config/constant/color_constant.dart';
 
-class TanantRequestView extends StatefulWidget {
-  const TanantRequestView({super.key});
+// ignore: must_be_immutable
+class TenantRequestView extends StatefulWidget {
+  int? isviewall;
+  TenantRequestView({super.key, this.isviewall});
 
   @override
-  State<TanantRequestView> createState() => _TanantRequestViewState();
+  State<TenantRequestView> createState() => _TanantRequestViewState();
 }
 
-class _TanantRequestViewState extends State<TanantRequestView> {
+class _TanantRequestViewState extends State<TenantRequestView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          tenantRequest(
-              "Electricity",
-              "I want to change fan.",
-              "4693 Wentz Avenue, Saskatoon",
-              "Tenant Name",
-              "Emergency",
-              Icons.electric_bolt_sharp),
-          const SizedBox(width: 10),
-          tenantRequest(
-              "Gas",
-              "I want to change Gas meter.",
-              "4693 Wentz Avenue, Saskatoon",
-              "Tenant Name",
-              "Emergency",
-              Icons.gas_meter_sharp),
-          const SizedBox(width: 10),
-          tenantRequest(
-              "Electricity",
-              "I want to change Air Conditioner.",
-              "3545 Robson St, Vancouver",
-              "Tenant Name",
-              "",
-              Icons.electric_bolt_sharp),
-        ],
-      ),
+      scrollDirection: widget.isviewall == 1 ? Axis.vertical : Axis.horizontal,
+      child: widget.isviewall == 1
+          ? Column(
+              children: [
+                tenantRequest(
+                    "Gas",
+                    "I want to change Gas meter.",
+                    "4693 Wentz Avenue, Saskatoon",
+                    "Tenant Name",
+                    "Emergency",
+                    Icons.gas_meter_sharp),
+                const SizedBox(height: 10),
+                tenantRequest(
+                    "Electricity",
+                    "I want to change Air Conditioner.",
+                    "3545 Robson St, Vancouver",
+                    "Tenant Name",
+                    "",
+                    Icons.electric_bolt_sharp),
+              ],
+            )
+          : Row(
+              children: [
+                tenantRequest(
+                    "Gas",
+                    "I want to change Gas meter.",
+                    "4693 Wentz Avenue, Saskatoon",
+                    "Tenant Name",
+                    "Emergency",
+                    Icons.gas_meter_sharp),
+                const SizedBox(width: 10),
+                tenantRequest(
+                    "Electricity",
+                    "I want to change Air Conditioner.",
+                    "3545 Robson St, Vancouver",
+                    "Tenant Name",
+                    "",
+                    Icons.electric_bolt_sharp),
+              ],
+            ),
     );
   }
 
   tenantRequest(
       String title, comments, address, name, emergency, IconData icons) {
     return Container(
-      width: Get.width - 130,
+      width: widget.isviewall == 1 ? Get.width : Get.width - 130,
       decoration: BoxDecoration(
         color: kWhiteColor,
         borderRadius: BorderRadius.circular(15),
@@ -105,7 +119,8 @@ class _TanantRequestViewState extends State<TanantRequestView> {
                 ),
                 const SizedBox(width: 10),
                 SizedBox(
-                  width: Get.width - 186,
+                  width:
+                      widget.isviewall == 1 ? Get.width - 100 : Get.width - 186,
                   child: Text(
                     comments,
                     style: const TextStyle(
@@ -174,7 +189,7 @@ class _TanantRequestViewState extends State<TanantRequestView> {
                 emergency != ""
                     ? Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 3),
+                            horizontal: 5, vertical: 3),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                             color: kButtonColor),
@@ -182,15 +197,15 @@ class _TanantRequestViewState extends State<TanantRequestView> {
                           children: [
                             const Icon(
                               Icons.warning,
-                              size: 16,
+                              size: 11,
                               color: kWhiteColor,
                             ),
-                            const SizedBox(width: 10),
+                            const SizedBox(width: 5),
                             Text(
                               emergency,
                               style: const TextStyle(
                                   color: kWhiteColor,
-                                  fontSize: 13,
+                                  fontSize: 9,
                                   fontFamily: kCircularStdNormal),
                             ),
                           ],

@@ -1,13 +1,15 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:openhome/app/view/property_details_view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/view/tenant_history_view.dart';
+import 'package:openhome/app/view/property_details_view.dart';
+import 'package:another_carousel_pro/another_carousel_pro.dart';
 
+import '../../view/nearby_view.dart';
+import '../../view/payment_detail_view.dart';
+import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../CreateProperty/create_property.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
   final String? checkRoll;
@@ -25,22 +27,13 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
   @override
   void initState() {
     super.initState();
-    // Initialize the TabController with `this` as the vsync
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
-  }
-
-  int _selectedIndex = 0;
-
-  void _onTabSelected(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
@@ -68,81 +61,33 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                 dotBgColor: Colors.transparent,
               ),
             ),
-            // Positioned(
-            //   left: 20,
-            //   top: 45,
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(8),
-            //       color: kWhiteColor,
-            //       boxShadow: const [
-            //         BoxShadow(
-            //           color: Color.fromARGB(80, 0, 0, 0),
-            //           blurRadius: 10,
-            //           offset: Offset(0, 2),
-            //           spreadRadius: -6,
-            //         ),
-            //       ],
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: InkWell(
-            //         onTap: () {},
-            //         child: const ImageIcon(
-            //           AssetImage("assets/icons/back.png"),
-            //           size: 25,
-            //           color: kPrimaryColor,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Positioned(
-                top: 40,
-                left: 10,
-                child: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    height: 45,
-                    width: 45,
-                    decoration: BoxDecoration(
-                        color: kWhiteColor,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 8.5),
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: kPrimaryColor,
-                        size: 17,
-                      ),
+              top: 40,
+              left: 10,
+              child: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  height: 45,
+                  width: 45,
+                  decoration: BoxDecoration(
+                      color: kWhiteColor,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 8.5),
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: kPrimaryColor,
+                      size: 17,
                     ),
                   ),
-                )),
-            // Positioned(
-            //     top: 40,
-            //     right: 10,
-            //     child: GestureDetector(
-            //       onTap: () {
-            //         Get.toNamed(Routes.editPropertyPage);
-            //       },
-            //       child: Container(
-            //         height: 45,
-            //         width: 45,
-            //         decoration: BoxDecoration(
-            //             color: kWhiteColor,
-            //             borderRadius: BorderRadius.circular(15)),
-            //         child: const Icon(
-            //           Icons.edit,
-            //           color: kPrimaryColor,
-            //           size: 17,
-            //         ),
-            //       ),
-            //     )),
+                ),
+              ),
+            ),
             Positioned(
               child: Container(
-                height: Get.height / 1.457,
+                height: Get.height - 225,
                 margin: const EdgeInsets.only(top: 225),
                 decoration: BoxDecoration(
                   color: kBackGroundColor,
@@ -232,96 +177,104 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                           TabBar(
                             controller: _tabController,
                             indicatorColor: kButtonColor,
+                            isScrollable: true,
                             labelColor: kPrimaryColor,
                             tabs: [
                               Tab(
                                   text: widget.checkRoll == "tenant"
                                       ? "Host"
                                       : 'Tenants'),
-                              const Tab(text: 'Overview'),
+                              const Tab(
+                                text: 'Overview',
+                              ),
                               const Tab(text: 'Near By'),
+                              if (widget.checkRoll != "tenant")
+                                const Tab(text: 'Payment'),
+                              const Tab(text: 'Expense'),
                             ],
                           ),
                           SizedBox(
-                            height: 353,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 0.0, vertical: 10),
-                              child: TabBarView(
-                                controller: _tabController,
-                                children: [
-                                  SingleChildScrollView(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        tenantname(),
-                                        const SizedBox(height: 15),
-                                        widget.checkRoll == "tenant"
-                                            ? Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 150,
-                                                    child: CupertinoButton(
-                                                        padding:
-                                                            EdgeInsets.zero,
-                                                        color: kButtonColor,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Icon(Icons.payment),
-                                                            SizedBox(width: 10),
-                                                            Text("Pay rent"),
-                                                          ],
-                                                        ),
-                                                        onPressed: () {}),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  SizedBox(
-                                                    width: 150,
-                                                    child: CupertinoButton(
-                                                        padding:
-                                                            EdgeInsets.zero,
-                                                        color: kBlack87Color,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Icon(Icons
-                                                                .checklist_outlined),
-                                                            SizedBox(width: 10),
-                                                            Text("Checkout"),
-                                                          ],
-                                                        ),
-                                                        onPressed: () {}),
-                                                  ),
-                                                ],
-                                              )
-                                            : TenantHistoryView()
-                                      ],
-                                    ),
+                            height: Get.height / 2.02825,
+                            child: TabBarView(
+                              controller: _tabController,
+                              children: [
+                                SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      tenantname(),
+                                      const SizedBox(height: 15),
+                                      widget.checkRoll == "tenant"
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  width: 150,
+                                                  child: CupertinoButton(
+                                                      padding: EdgeInsets.zero,
+                                                      color: kButtonColor,
+                                                      child: const Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(Icons.payment),
+                                                          SizedBox(width: 10),
+                                                          Text("Pay rent"),
+                                                        ],
+                                                      ),
+                                                      onPressed: () {}),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                SizedBox(
+                                                  width: 150,
+                                                  child: CupertinoButton(
+                                                      padding: EdgeInsets.zero,
+                                                      color: kBlack87Color,
+                                                      child: const Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(Icons
+                                                              .checklist_outlined),
+                                                          SizedBox(width: 10),
+                                                          Text("Checkout"),
+                                                        ],
+                                                      ),
+                                                      onPressed: () {}),
+                                                ),
+                                              ],
+                                            )
+                                          : const TenantHistoryView()
+                                    ],
                                   ),
-                                  PropertyDetailsView(),
-                                  const SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Near By",
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 15,
-                                              fontFamily: kCircularStdNormal),
-                                        ),
-                                      ],
-                                    ),
+                                ),
+                                const PropertyDetailsView(),
+                                const NearByAmenitiesView(),
+                                if (widget.checkRoll != "tenant")
+                                  const PaymentView(),
+                                SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(height: 10),
+                                      routingmaintanance("Electricity", "\$105",
+                                          Icons.electric_bolt_sharp),
+                                      routingmaintanance("Gas", "\$99",
+                                          Icons.gas_meter_rounded),
+                                      routingmaintanance("Repair", "\$65",
+                                          Icons.manage_history_sharp),
+                                      routingmaintanance(
+                                          "Internet",
+                                          "\$46",
+                                          Icons
+                                              .signal_wifi_statusbar_connected_no_internet_4_sharp),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -337,68 +290,40 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
     ));
   }
 
-  // tenantRequest() {
-  //   return Column(
-  //     children: [
-  //       Row(
-  //         crossAxisAlignment: CrossAxisAlignment.center,
-  //         children: [
-  //           ClipRRect(
-  //             borderRadius: BorderRadius.circular(100),
-  //             child: Image.asset(
-  //               "assets/icons/boy 2.png",
-  //               fit: BoxFit.cover,
-  //               height: 35,
-  //               width: 35,
-  //             ),
-  //           ),
-  //           const SizedBox(width: 8),
-  //           const Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               Text(
-  //                 "Tenant Name",
-  //                 style: TextStyle(
-  //                     color: kPrimaryColor,
-  //                     fontSize: 13,
-  //                     fontFamily: kCircularStdMedium),
-  //               ),
-  //               Row(
-  //                 children: [
-  //                   Icon(
-  //                     Icons.phone,
-  //                     size: 12,
-  //                     color: kButtonColor,
-  //                   ),
-  //                   SizedBox(width: 5),
-  //                   Text(
-  //                     "+91 9898567548",
-  //                     style: TextStyle(
-  //                         color: kPrimaryColor,
-  //                         fontSize: 10,
-  //                         fontFamily: kCircularStdNormal),
-  //                   ),
-  //                 ],
-  //               ),
-  //               Row(
-  //                 children: [
-  //                   Text(
-  //                     "Pendding",
-  //                     style: TextStyle(
-  //                         color: kRedColor,
-  //                         fontSize: 10,
-  //                         fontFamily: kCircularStdNormal),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         ],
-  //       ),
-  //       const SizedBox(height: 10),
-  //     ],
-  //   );
-  // }
+  routingmaintanance(String title, amount, IconData icons) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(
+                icons,
+                size: 18,
+                color: kButtonColor,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                title,
+                style: const TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 15,
+                    fontFamily: kCircularStdMedium),
+              ),
+            ],
+          ),
+          Text(
+            amount,
+            style: const TextStyle(
+                color: kPrimaryColor,
+                fontSize: 15,
+                fontFamily: kCircularStdMedium),
+          ),
+        ],
+      ),
+    );
+  }
 
   tenantname() {
     return Column(

@@ -1,10 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../config/constant/color_constant.dart';
 import '../../config/constant/font_constant.dart';
+import '../../config/constant/color_constant.dart';
 
-class PropertyDetailsView extends StatelessWidget {
+class PropertyDetailsView extends StatefulWidget {
+  const PropertyDetailsView({super.key});
+
+  @override
+  State<PropertyDetailsView> createState() => _PropertyDetailsViewState();
+}
+
+class _PropertyDetailsViewState extends State<PropertyDetailsView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

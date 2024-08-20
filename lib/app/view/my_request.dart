@@ -1,31 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../config/constant/color_constant.dart';
 import '../../config/constant/font_constant.dart';
+import '../../config/constant/color_constant.dart';
 
 class MyRequestView extends StatefulWidget {
   const MyRequestView({super.key});
 
   @override
-  State<MyRequestView> createState() => _TanantRequestViewState();
+  State<MyRequestView> createState() => _MyRequestViewState();
 }
 
-class _TanantRequestViewState extends State<MyRequestView> {
+class _MyRequestViewState extends State<MyRequestView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          myRequest(
-              "Electricity",
-              "I want to change fan.",
-              "4693 Wentz Avenue, Saskatoon",
-              "Tenant Name",
-              "Emergency",
-              Icons.electric_bolt_sharp),
-          const SizedBox(width: 10),
           myRequest(
               "Gas",
               "I want to change Gas meter.",
@@ -173,7 +165,7 @@ class _TanantRequestViewState extends State<MyRequestView> {
                 emergency != ""
                     ? Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 3),
+                            horizontal: 5, vertical: 3),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                             color: kButtonColor),
@@ -181,15 +173,15 @@ class _TanantRequestViewState extends State<MyRequestView> {
                           children: [
                             const Icon(
                               Icons.warning,
-                              size: 16,
+                              size: 11,
                               color: kWhiteColor,
                             ),
-                            const SizedBox(width: 10),
+                            const SizedBox(width: 5),
                             Text(
                               emergency,
                               style: const TextStyle(
                                   color: kWhiteColor,
-                                  fontSize: 13,
+                                  fontSize: 9,
                                   fontFamily: kCircularStdNormal),
                             ),
                           ],

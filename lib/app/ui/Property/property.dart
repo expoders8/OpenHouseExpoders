@@ -1,11 +1,10 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:openhome/app/routes/app_pages.dart';
 
-import '../../../config/constant/font_constant.dart';
-import '../../../config/constant/color_constant.dart';
 import '../../view/lease_property_view.dart';
 import '../../view/not_lease_property_view.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class PropertyPage extends StatefulWidget {
   final String? checkRoll;

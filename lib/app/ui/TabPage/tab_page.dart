@@ -55,6 +55,7 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
+    // ignore: deprecated_member_use
     final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
     setState(() {
       _isKeyboardVisible = bottomInset > 0;

@@ -1,12 +1,15 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
+import '../../view/nearby_view.dart';
+import '../../view/tenant_history_view.dart';
+import '../../view/property_details_view.dart';
+import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../view/property_details_view.dart';
-import '../../view/tenant_history_view.dart';
-import '../CreateProperty/create_property.dart';
 
 class NotLeasePropertyDetailPage extends StatefulWidget {
   const NotLeasePropertyDetailPage({super.key});
@@ -23,7 +26,6 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
   @override
   void initState() {
     super.initState();
-    // Initialize the TabController with `this` as the vsync
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -58,35 +60,6 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                 dotBgColor: Colors.transparent,
               ),
             ),
-            // Positioned(
-            //   left: 20,
-            //   top: 45,
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(8),
-            //       color: kWhiteColor,
-            //       boxShadow: const [
-            //         BoxShadow(
-            //           color: Color.fromARGB(80, 0, 0, 0),
-            //           blurRadius: 10,
-            //           offset: Offset(0, 2),
-            //           spreadRadius: -6,
-            //         ),
-            //       ],
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: InkWell(
-            //         onTap: () {},
-            //         child: const ImageIcon(
-            //           AssetImage("assets/icons/back.png"),
-            //           size: 25,
-            //           color: kPrimaryColor,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Positioned(
                 top: 40,
                 left: 10,
@@ -112,7 +85,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                 )),
             Positioned(
               child: Container(
-                height: Get.height / 1.457,
+                height: Get.height - 225,
                 margin: const EdgeInsets.only(top: 225),
                 decoration: BoxDecoration(
                   color: kBackGroundColor,
@@ -207,28 +180,56 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                             ],
                           ),
                           SizedBox(
-                            height: 353,
+                            height: Get.height / 2.02825,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 0.0, vertical: 10),
                               child: TabBarView(
                                 controller: _tabController,
                                 children: [
-                                  TenantHistoryView(),
-                                  PropertyDetailsView(),
-                                  const SingleChildScrollView(
+                                  SingleChildScrollView(
                                     child: Column(
                                       children: [
-                                        Text(
-                                          "Near By",
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 15,
-                                              fontFamily: kCircularStdNormal),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            CupertinoButton(
+                                              padding: EdgeInsets.zero,
+                                              onPressed: () {
+                                                Get.toNamed(
+                                                    Routes.inviteTenantPage);
+                                              },
+                                              child: Container(
+                                                height: 38,
+                                                width: Get.width - 200,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                    border: Border.all(
+                                                        color: kButtonColor),
+                                                    color: kBackGroundColor),
+                                                child: const Center(
+                                                  child: Text(
+                                                    "Invite Tenant",
+                                                    style: TextStyle(
+                                                        color: kPrimaryColor,
+                                                        fontFamily:
+                                                            kCircularStdNormal,
+                                                        fontSize: 15),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
+                                        const TenantHistoryView(),
                                       ],
                                     ),
                                   ),
+                                  const PropertyDetailsView(),
+                                  const NearByAmenitiesView(),
                                 ],
                               ),
                             ),
