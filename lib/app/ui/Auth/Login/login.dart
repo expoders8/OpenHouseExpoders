@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../../config/constant/constant.dart';
 import '../../../routes/app_pages.dart';
+import '../../TabPage/tab_page.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/social_login_widget.dart';
 import '../../../../config/constant/font_constant.dart';
@@ -116,7 +118,8 @@ class _LoginPageState extends State<LoginPage> {
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            Get.toNamed(Routes.tabPage);
+                            getStorage.write('roll', "host");
+                            Get.to(const TabPage(checkRoll: "host"));
                           },
                           child: Container(
                             height: 50,

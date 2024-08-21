@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/ui/TabPage/tab_page.dart';
 
+import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -45,6 +46,7 @@ class _SelectRollPageState extends State<SelectRollPage> {
                 const SizedBox(height: 25),
                 CupertinoButton(
                   onPressed: () {
+                    getStorage.write('roll', "tenant");
                     setState(() {
                       rolltype = "tenant";
                     });
@@ -93,6 +95,7 @@ class _SelectRollPageState extends State<SelectRollPage> {
                 const SizedBox(height: 15),
                 CupertinoButton(
                   onPressed: () {
+                    getStorage.write('roll', "host");
                     setState(() {
                       rolltype = "host";
                     });

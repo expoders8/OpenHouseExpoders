@@ -2,8 +2,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:openhome/app/routes/app_pages.dart';
 
+import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../TabPage/tab_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -13,6 +15,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String selectedRoll = "";
+  @override
+  void initState() {
+    var roll = getStorage.read('roll') ?? "";
+    setState(() {
+      selectedRoll = roll;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -342,7 +354,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         children: [
                           Icon(
-                            Icons.change_circle_outlined,
+                            Icons.lock,
                             size: 18,
                             color: kButtonColor,
                           ),
@@ -359,6 +371,50 @@ class _ProfilePageState extends State<ProfilePage> {
                         ],
                       ),
                       Icon(
+                        Icons.arrow_forward_ios,
+                        size: 13,
+                        color: kButtonColor,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 18),
+              GestureDetector(
+                onTap: () {
+                  if (selectedRoll == "tenant") {
+                    getStorage.write('roll', "host");
+                    Get.offAll(const TabPage(checkRoll: "host"));
+                  } else {
+                    getStorage.write('roll', "tenant");
+                    Get.offAll(const TabPage(checkRoll: "tenant"));
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.sync,
+                            size: 18,
+                            color: kButtonColor,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Swich To ${selectedRoll == "tenant" ? "Host" : "Tenant"}",
+                            style: const TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                        ],
+                      ),
+                      const Icon(
                         Icons.arrow_forward_ios,
                         size: 13,
                         color: kButtonColor,
