@@ -128,36 +128,56 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                           ),
                         ],
                       ),
-                      const Row(
+                      // const Row(
+                      //   children: [
+                      //     Icon(
+                      //       Icons.wifi,
+                      //       size: 16,
+                      //       color: kSecondaryPrimaryColor,
+                      //     ),
+                      //     SizedBox(width: 5),
+                      //     Icon(
+                      //       Icons.gas_meter_rounded,
+                      //       size: 16,
+                      //       color: kSecondaryPrimaryColor,
+                      //     ),
+                      //     SizedBox(width: 5),
+                      //     Icon(
+                      //       Icons.electric_bolt_sharp,
+                      //       size: 16,
+                      //       color: kSecondaryPrimaryColor,
+                      //     ),
+                      //     SizedBox(width: 5),
+                      //     Icon(
+                      //       Icons.local_parking,
+                      //       size: 16,
+                      //       color: kSecondaryPrimaryColor,
+                      //     ),
+                      //     SizedBox(width: 5),
+                      //     Icon(
+                      //       Icons.nest_cam_wired_stand_sharp,
+                      //       size: 16,
+                      //       color: kSecondaryPrimaryColor,
+                      //     ),
+                      //   ],
+                      // ),
+                      Row(
                         children: [
-                          Icon(
-                            Icons.wifi,
+                          const Icon(
+                            Icons.person,
                             size: 16,
-                            color: kSecondaryPrimaryColor,
+                            color: kButtonColor,
                           ),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.gas_meter_rounded,
-                            size: 16,
-                            color: kSecondaryPrimaryColor,
-                          ),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.electric_bolt_sharp,
-                            size: 16,
-                            color: kSecondaryPrimaryColor,
-                          ),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.local_parking,
-                            size: 16,
-                            color: kSecondaryPrimaryColor,
-                          ),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.nest_cam_wired_stand_sharp,
-                            size: 16,
-                            color: kSecondaryPrimaryColor,
+                          const SizedBox(width: 10),
+                          SizedBox(
+                            width: Get.width - 220,
+                            child: const Text(
+                              "Host Name",
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 13,
+                                  fontFamily: kCircularStdMedium),
+                            ),
                           ),
                         ],
                       ),
@@ -173,7 +193,7 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                       padding: EdgeInsets.zero,
                       onPressed: () {},
                       child: Container(
-                        height: 38,
+                        height: 35,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                             border: Border.all(color: kWhiteColor),
@@ -184,19 +204,19 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                             style: TextStyle(
                                 color: kWhiteColor,
                                 fontFamily: kCircularStdNormal,
-                                fontSize: 15),
+                                fontSize: 13),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 35),
                   Expanded(
                     child: CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {},
                       child: Container(
-                        height: 38,
+                        height: 35,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                             border: Border.all(color: kWhiteColor),
@@ -207,7 +227,7 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                             style: TextStyle(
                                 color: kWhiteColor,
                                 fontFamily: kCircularStdNormal,
-                                fontSize: 15),
+                                fontSize: 13),
                           ),
                         ),
                       ),

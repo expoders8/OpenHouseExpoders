@@ -130,12 +130,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             color: widget.name == "create" ? kWhiteColor : kErrorColor,
           ),
           borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 10 : 25.0),
+              BorderRadius.circular(widget.name == "create" ? 25 : 25.0),
         ),
         errorStyle: const TextStyle(color: kErrorColor),
         enabledBorder: OutlineInputBorder(
           borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 10 : 25.0),
+              BorderRadius.circular(widget.name == "create" ? 25 : 25.0),
           borderSide: BorderSide(
               color: widget.name == "create"
                   ? kWhiteColor
@@ -144,7 +144,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 8 : 25.0),
+              BorderRadius.circular(widget.name == "create" ? 25 : 25.0),
           borderSide: BorderSide(
               color: widget.name == "create"
                   ? kWhiteColor
