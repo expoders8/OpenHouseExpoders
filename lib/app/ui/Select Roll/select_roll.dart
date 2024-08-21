@@ -50,7 +50,7 @@ class _SelectRollPageState extends State<SelectRollPage> {
                     setState(() {
                       rolltype = "tenant";
                     });
-                    Get.to(const TabPage(checkRoll: "tenant"));
+                    Get.to(() => const TabPage(checkRoll: "tenant"));
                   },
                   child: Container(
                     height: 80,
@@ -99,7 +99,7 @@ class _SelectRollPageState extends State<SelectRollPage> {
                     setState(() {
                       rolltype = "host";
                     });
-                    Get.to(const TabPage(checkRoll: "host"));
+                    Get.to(() => const TabPage(checkRoll: "host"));
                   },
                   child: Container(
                     height: 80,

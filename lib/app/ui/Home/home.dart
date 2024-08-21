@@ -199,18 +199,25 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 17,
                                 fontFamily: kCircularStdMedium),
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: kPrimaryColor, width: 1),
-                                borderRadius: BorderRadius.circular(25)),
-                            child: const Text(
-                              "Add +",
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 14,
-                                  fontFamily: kCircularStdNormal),
+                          CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              Get.toNamed(Routes.createMyRequestsPage);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 2),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: kPrimaryColor, width: 1),
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: const Text(
+                                "Add +",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 14,
+                                    fontFamily: kCircularStdNormal),
+                              ),
                             ),
                           ),
                         ],

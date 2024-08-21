@@ -83,9 +83,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             EdgeInsets.fromLTRB(13, widget.maxLines == 5 ? 16 : 0, 10, 0),
         hintStyle: TextStyle(
             color: widget.name == "create"
-                ? kPrimaryColor
+                ? widget.hintText == "Describe you request"
+                    ? kSecondaryPrimaryColor
+                    : kPrimaryColor
                 : kSecondaryPrimaryColor,
-            fontFamily: kCircularStdNormal,
+            fontFamily: kCircularStdNormal, //Describe you request
             fontWeight: FontWeight.w400,
             fontSize: widget.name == "password"
                 ? 16

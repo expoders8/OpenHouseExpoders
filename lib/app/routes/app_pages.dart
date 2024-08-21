@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../ui/Auth/ChangePassword/change_password.dart';
 import '../ui/Auth/ForgotPassword/forgot_password.dart';
+import '../ui/Home/create_my_requests.dart';
 import '../ui/Invite Tenant/invite_tenant.dart';
 import '../ui/Invite Tenant/invite_tenant_detail.dart';
 import '../ui/Notification/notification.dart';
@@ -78,6 +79,10 @@ class AppPages {
     GetPage(
       name: _Paths.tenantRequestPage,
       page: () => const TenantRequestPage(),
+    ),
+    GetPage(
+      name: _Paths.createMyRequestsPage,
+      page: () => const CreateMyRequestsPage(),
     ),
   ];
 }
