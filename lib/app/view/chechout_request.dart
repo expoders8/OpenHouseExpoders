@@ -102,7 +102,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                       ),
                       const SizedBox(width: 5),
                       const Text(
-                        "CheckPoints",
+                        "CheckOut Checklist",
                         style: TextStyle(
                             color: kButtonColor,
                             fontSize: 13,

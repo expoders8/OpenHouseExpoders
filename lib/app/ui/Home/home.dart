@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 
 import '../../view/my_request.dart';
 import '../../routes/app_pages.dart';
-import '../../view/tenant_request_view.dart';
 import '../../view/chechout_request.dart';
+import '../../view/tenant_request_view.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../Property Details/lease_property_details.dart';
 
 class HomePage extends StatefulWidget {
   final String? checkRoll;
@@ -427,7 +428,9 @@ class _HomePageState extends State<HomePage> {
       rentdue, expiredate) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.leasePropertyDetailPage);
+        Get.to(LeasePropertyDetailPage(
+          checkRoll: widget.checkRoll,
+        ));
       },
       child: Container(
         width: Get.width,
