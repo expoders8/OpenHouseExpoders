@@ -428,9 +428,9 @@ class _HomePageState extends State<HomePage> {
       rentdue, expiredate) {
     return GestureDetector(
       onTap: () {
-        Get.to(LeasePropertyDetailPage(
-          checkRoll: widget.checkRoll,
-        ));
+        Get.to(() => LeasePropertyDetailPage(
+              checkRoll: widget.checkRoll,
+            ));
       },
       child: Container(
         width: Get.width,

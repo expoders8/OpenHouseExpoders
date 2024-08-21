@@ -175,6 +175,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                   color: Color.fromARGB(255, 255, 230, 0))),
                           ),
                           TabBar(
+                            tabAlignment: TabAlignment.start,
                             controller: _tabController,
                             indicatorColor: kButtonColor,
                             isScrollable: true,
