@@ -526,9 +526,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                           "assets/icons/upload_image.png",
                                           scale: 1.5,
                                         ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
+                                        const SizedBox(height: 10),
                                         const Text(
                                           "Upload Cover photo",
                                           style: TextStyle(

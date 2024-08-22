@@ -13,6 +13,7 @@ import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
 import '../ui/Auth/SignUp/signup.dart';
 import '../ui/Tenant Requests/tenant_request.dart';
+import '../ui/My Tenants/my_tenant.dart';
 import '../ui/Total Amount/total_amount_detail.dart';
 import '../ui/Select Roll/select_roll.dart';
 
@@ -83,6 +84,10 @@ class AppPages {
     GetPage(
       name: _Paths.createMyRequestsPage,
       page: () => const CreateMyRequestsPage(),
+    ),
+    GetPage(
+      name: _Paths.myTenantsPage,
+      page: () => const MyTenantsPage(),
     ),
   ];
 }

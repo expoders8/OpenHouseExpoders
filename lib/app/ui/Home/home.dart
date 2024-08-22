@@ -236,99 +236,98 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 10),
                       const MyRequestView(),
-                      const SizedBox(height: 10),
-                      const SizedBox(height: 65),
+                      const SizedBox(height: 85)
                     ],
                   ),
                 )
               : Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed(Routes.totalAmountDetailPage);
-                            },
-                            child: Container(
-                              width: Get.width / 2.250,
-                              decoration: BoxDecoration(
-                                color: kButtonColor,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.only(
-                                    left: 15.0,
-                                    right: 15.0,
-                                    top: 20,
-                                    bottom: 20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Total Amount",
-                                      style: TextStyle(
-                                          fontFamily: kCircularStdMedium,
-                                          fontSize: 15,
-                                          color: kWhiteColor),
-                                    ),
-                                    Text(
-                                      "\$50,000",
-                                      style: TextStyle(
-                                          fontFamily: kCircularStdMedium,
-                                          fontSize: 25,
-                                          color: kWhiteColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          GestureDetector(
-                            onTap: () {
-                              tabCountController.changeTabIndex(3);
-                            },
-                            child: Container(
-                              width: Get.width / 2.250,
-                              decoration: BoxDecoration(
-                                color: kWhiteColor,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.only(
-                                    left: 15.0,
-                                    right: 15.0,
-                                    top: 20,
-                                    bottom: 20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Month Due",
-                                      style: TextStyle(
-                                          fontFamily: kCircularStdMedium,
-                                          fontSize: 15,
-                                          color: kPrimaryColor),
-                                    ),
-                                    Text(
-                                      "\$1952",
-                                      style: TextStyle(
-                                          fontFamily: kCircularStdMedium,
-                                          fontSize: 25,
-                                          color: kPrimaryColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     GestureDetector(
+                      //       onTap: () {
+                      //         Get.toNamed(Routes.totalAmountDetailPage);
+                      //       },
+                      //       child: Container(
+                      //         width: Get.width / 2.250,
+                      //         decoration: BoxDecoration(
+                      //           color: kButtonColor,
+                      //           borderRadius: BorderRadius.circular(15),
+                      //         ),
+                      //         child: const Padding(
+                      //           padding: EdgeInsets.only(
+                      //               left: 15.0,
+                      //               right: 15.0,
+                      //               top: 20,
+                      //               bottom: 20.0),
+                      //           child: Column(
+                      //             mainAxisAlignment: MainAxisAlignment.center,
+                      //             children: [
+                      //               Text(
+                      //                 "Total Amount",
+                      //                 style: TextStyle(
+                      //                     fontFamily: kCircularStdMedium,
+                      //                     fontSize: 15,
+                      //                     color: kWhiteColor),
+                      //               ),
+                      //               Text(
+                      //                 "\$50,000",
+                      //                 style: TextStyle(
+                      //                     fontFamily: kCircularStdMedium,
+                      //                     fontSize: 25,
+                      //                     color: kWhiteColor),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     const SizedBox(width: 10),
+                      //     GestureDetector(
+                      //       onTap: () {
+                      //         tabCountController.changeTabIndex(3);
+                      //       },
+                      //       child: Container(
+                      //         width: Get.width / 2.250,
+                      //         decoration: BoxDecoration(
+                      //           color: kWhiteColor,
+                      //           borderRadius: BorderRadius.circular(15),
+                      //         ),
+                      //         child: const Padding(
+                      //           padding: EdgeInsets.only(
+                      //               left: 15.0,
+                      //               right: 15.0,
+                      //               top: 20,
+                      //               bottom: 20.0),
+                      //           child: Column(
+                      //             mainAxisAlignment: MainAxisAlignment.center,
+                      //             children: [
+                      //               Text(
+                      //                 "Month Due",
+                      //                 style: TextStyle(
+                      //                     fontFamily: kCircularStdMedium,
+                      //                     fontSize: 15,
+                      //                     color: kPrimaryColor),
+                      //               ),
+                      //               Text(
+                      //                 "\$1952",
+                      //                 style: TextStyle(
+                      //                     fontFamily: kCircularStdMedium,
+                      //                     fontSize: 25,
+                      //                     color: kPrimaryColor),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(height: 10),
                       const Text(
                         "Checkout Requests",
@@ -401,7 +400,7 @@ class _HomePageState extends State<HomePage> {
                           "\$15,200",
                           "\$220",
                           "12-06-2021"),
-                      const SizedBox(height: 80)
+                      const SizedBox(height: 85)
                     ],
                   ),
                 ),
@@ -447,7 +446,7 @@ class _HomePageState extends State<HomePage> {
       rentdue, expiredate) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => LeasePropertyDetailPage());
+        Get.to(() => const LeasePropertyDetailPage());
       },
       child: Container(
         width: Get.width,

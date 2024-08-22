@@ -17,14 +17,17 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildrequestwidget("Jons jacko", "6001 Main Street"),
-        buildrequestwidget("Brrom Karle", "4599 Main Street"),
-        buildrequestwidget("Olka Prems", "850 Main Street"),
+        buildrequestwidget("Jons jacko", "6001 Main Street", "+91 9898567452",
+            "assets/icons/boy 1.png"),
+        buildrequestwidget("Brrom Karle", "4599 Main Street", "+91 9898556241",
+            "assets/icons/boy 2.png"),
+        buildrequestwidget("Olka Prems", "850 Main Street", "+91 9898778844",
+            "assets/icons/boy 3.png"),
       ],
     );
   }
 
-  buildrequestwidget(name, addresh) {
+  buildrequestwidget(name, addresh, contact, image) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Container(
@@ -37,6 +40,41 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    image,
+                    fit: BoxFit.cover,
+                    scale: 1.2,
+                    height: 40,
+                    width: 40,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 12,
+                          fontFamily: kCircularStdMedium),
+                    ),
+                    Text(
+                      contact,
+                      style: const TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 10,
+                          fontFamily: kCircularStdMedium),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
             const Text(
               "You have received a house Checkout Request from",
               style: TextStyle(
@@ -46,24 +84,6 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
             ),
             Row(
               children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationColor: kRedColor,
-                      color: kRedColor,
-                      fontSize: 14,
-                      fontFamily: kCircularStdNormal),
-                ),
-                const SizedBox(width: 5),
-                const Text(
-                  "for",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 14,
-                      fontFamily: kCircularStdNormal),
-                ),
-                const SizedBox(width: 5),
                 Text(
                   addresh,
                   style: const TextStyle(
@@ -75,7 +95,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                 ),
               ],
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

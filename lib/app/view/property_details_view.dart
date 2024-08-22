@@ -18,6 +18,7 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 10),
           const Text(
             "Property details",
             style: TextStyle(

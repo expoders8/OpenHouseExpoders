@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import '../../config/constant/constant.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../ui/Property Details/lease_property_details.dart';
@@ -55,7 +54,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
       rentdue, expiredate) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => LeasePropertyDetailPage());
+        Get.to(() => const LeasePropertyDetailPage());
       },
       child: Container(
         width: Get.width,

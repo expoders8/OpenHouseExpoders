@@ -1,12 +1,11 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/constant/constant.dart';
 import '../../view/lease_property_view.dart';
+import '../../../config/constant/constant.dart';
+import '../../view/previous_property_view.dart';
 import '../../view/not_lease_property_view.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../view/previous_property_view.dart';
 
 class PropertyPage extends StatefulWidget {
   const PropertyPage({
@@ -110,7 +109,7 @@ class _PropertyPageState extends State<PropertyPage>
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                LeasePropertyView(),
+                                const LeasePropertyView(),
                               ],
                             ),
                           ),
@@ -211,47 +210,52 @@ class _PropertyPageState extends State<PropertyPage>
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                LeasePropertyView(),
+                                const LeasePropertyView(),
                               ],
                             ),
                           ),
-                          Column(
-                            children: [
-                              const SizedBox(height: 10),
-                              TextFormField(
-                                controller: searchController,
-                                decoration: InputDecoration(
-                                  contentPadding:
-                                      const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                                  prefixIcon: const Icon(Icons.search),
-                                  filled: true,
-                                  fillColor: kWhiteColor,
-                                  hintText: 'Search',
-                                  hintStyle: const TextStyle(
-                                      color: kSecondaryPrimaryColor,
-                                      fontFamily: kCircularStdNormal,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                    borderSide:
-                                        const BorderSide(color: kWhiteColor),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                    borderSide:
-                                        const BorderSide(color: kWhiteColor),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                    borderSide:
-                                        const BorderSide(color: kWhiteColor),
+                          GestureDetector(
+                            onTap: () {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            },
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 10),
+                                TextFormField(
+                                  controller: searchController,
+                                  decoration: InputDecoration(
+                                    contentPadding:
+                                        const EdgeInsets.fromLTRB(13, 0, 10, 0),
+                                    prefixIcon: const Icon(Icons.search),
+                                    filled: true,
+                                    fillColor: kWhiteColor,
+                                    hintText: 'Search',
+                                    hintStyle: const TextStyle(
+                                        color: kSecondaryPrimaryColor,
+                                        fontFamily: kCircularStdNormal,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide:
+                                          const BorderSide(color: kWhiteColor),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide:
+                                          const BorderSide(color: kWhiteColor),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide:
+                                          const BorderSide(color: kWhiteColor),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              const NotLeasePropertyView(),
-                            ],
+                                const SizedBox(height: 10),
+                                const NotLeasePropertyView(),
+                              ],
+                            ),
                           ),
                         ],
                       ),

@@ -14,41 +14,43 @@ class _PaymentViewState extends State<PaymentView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            payment(
-              "assets/icons/boy 2.png",
-              "\$1850",
-              "Pending",
-              "Tenant Name",
-              "+91 9898758462",
-              "\$300",
-              "25-07-2024",
-            ),
-            const SizedBox(height: 10),
-            paymenthistory(
-              "Paid",
-              "Tenant Name",
-              "\$1850",
-              "10-06-2024",
-            ),
-            const SizedBox(height: 10),
-            paymenthistory(
-              "Paid",
-              "Tenant Name",
-              "\$1850",
-              "10-05-2024",
-            ),
-            const SizedBox(height: 10),
-            paymenthistory(
-              "Paid",
-              "Tenant Name",
-              "\$1850",
-              "10-04-2024",
-            ),
-          ],
+      body: Flexible(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              payment(
+                "assets/icons/boy 2.png",
+                "\$1850",
+                "Pending",
+                "Tenant Name",
+                "+91 9898758462",
+                "\$300",
+                "25-07-2024",
+              ),
+              const SizedBox(height: 10),
+              paymenthistory(
+                "Paid",
+                "Tenant Name",
+                "\$1850",
+                "10-06-2024",
+              ),
+              const SizedBox(height: 10),
+              paymenthistory(
+                "Paid",
+                "Tenant Name",
+                "\$1850",
+                "10-05-2024",
+              ),
+              const SizedBox(height: 10),
+              paymenthistory(
+                "Paid",
+                "Tenant Name",
+                "\$1850",
+                "10-04-2024",
+              ),
+            ],
+          ),
         ),
       ),
     );

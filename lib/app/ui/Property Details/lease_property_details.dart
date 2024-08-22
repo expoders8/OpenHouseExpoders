@@ -110,9 +110,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(
-                            height: 15,
-                          ),
+                          const SizedBox(height: 15),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -307,6 +305,37 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                           "\$46",
                                           Icons
                                               .signal_wifi_statusbar_connected_no_internet_4_sharp),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          CupertinoButton(
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {},
+                                            child: Container(
+                                              height: 45,
+                                              width: 45,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: kPrimaryColor),
+                                                  color: kBackGroundColor),
+                                              child: const Center(
+                                                child: Text(
+                                                  "+",
+                                                  style: TextStyle(
+                                                      color: kPrimaryColor,
+                                                      fontFamily:
+                                                          kCircularStdNormal,
+                                                      fontSize: 20),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
