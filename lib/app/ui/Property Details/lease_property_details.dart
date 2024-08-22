@@ -5,6 +5,7 @@ import 'package:openhome/app/view/tenant_history_view.dart';
 import 'package:openhome/app/view/property_details_view.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
+import '../../../config/constant/constant.dart';
 import '../../view/nearby_view.dart';
 import '../../view/payment_detail_view.dart';
 import '../CreateProperty/create_property.dart';
@@ -12,8 +13,9 @@ import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
-  final String? checkRoll;
-  const LeasePropertyDetailPage({super.key, this.checkRoll});
+  const LeasePropertyDetailPage({
+    super.key,
+  });
 
   @override
   State<LeasePropertyDetailPage> createState() =>
@@ -23,10 +25,15 @@ class LeasePropertyDetailPage extends StatefulWidget {
 class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  String selectedRoll = "";
 
   @override
   void initState() {
     super.initState();
+    var roll = getStorage.read('roll') ?? "";
+    setState(() {
+      selectedRoll = roll;
+    });
     _tabController = TabController(length: 5, vsync: this);
   }
 
@@ -143,7 +150,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                   ),
                                 ],
                               ),
-                              widget.checkRoll == "tenant"
+                              selectedRoll == "tenant"
                                   ? Container()
                                   : GestureDetector(
                                       onTap: () {
@@ -182,7 +189,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                             labelColor: kPrimaryColor,
                             tabs: [
                               Tab(
-                                  text: widget.checkRoll == "tenant"
+                                  text: selectedRoll == "tenant"
                                       ? "Host"
                                       : 'Tenants'),
                               const Tab(
@@ -190,7 +197,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                               ),
                               const Tab(text: 'Near By'),
                               Tab(
-                                  text: widget.checkRoll == "tenant"
+                                  text: selectedRoll == "tenant"
                                       ? "Amenities"
                                       : 'Payment'),
                               const Tab(text: 'Expense'),
@@ -208,7 +215,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                     children: [
                                       tenantname(),
                                       const SizedBox(height: 15),
-                                      widget.checkRoll == "tenant"
+                                      selectedRoll == "tenant"
                                           ? Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -257,7 +264,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                 ),
                                 const PropertyDetailsView(),
                                 const NearByAmenitiesView(),
-                                widget.checkRoll == "tenant"
+                                selectedRoll == "tenant"
                                     ? SingleChildScrollView(
                                         child: Column(
                                           children: [
@@ -588,9 +595,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.checkRoll == "tenant"
-                          ? "Host Name"
-                          : "Tenant Name",
+                      selectedRoll == "tenant" ? "Host Name" : "Tenant Name",
                       style: const TextStyle(
                           color: kPrimaryColor,
                           fontSize: 18,
@@ -651,7 +656,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                 ),
               ],
             ),
-            widget.checkRoll == "tenant"
+            selectedRoll == "tenant"
                 ? Container()
                 : Padding(
                     padding: const EdgeInsets.only(right: 8.0),

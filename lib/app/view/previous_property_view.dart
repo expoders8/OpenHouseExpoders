@@ -15,8 +15,7 @@ class PreviousPropertyView extends StatefulWidget {
 class _PreviousPropertyViewState extends State<PreviousPropertyView> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Get.height - 210,
+    return Flexible(
       child: SingleChildScrollView(
         child: Column(
           children: [

@@ -15,8 +15,7 @@ class NotLeasePropertyView extends StatefulWidget {
 class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Get.height - 210,
+    return Flexible(
       child: SingleChildScrollView(
         child: Column(
           children: [

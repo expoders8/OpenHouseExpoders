@@ -80,7 +80,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         filled: true,
         fillColor: widget.name == "create" ? kWhiteColor : kTransparentColor,
         contentPadding:
-            EdgeInsets.fromLTRB(13, widget.maxLines == 5 ? 16 : 0, 10, 0),
+            EdgeInsets.fromLTRB(13, widget.maxLines == 4 ? 16 : 0, 10, 0),
         hintStyle: TextStyle(
             color: widget.name == "create"
                 ? widget.hintText == "Describe you request"
@@ -122,7 +122,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               )
             : null,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius:
+              BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
           borderSide: const BorderSide(color: kSecondaryPrimaryColor),
         ),
         errorBorder: OutlineInputBorder(
@@ -130,12 +131,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             color: widget.name == "create" ? kWhiteColor : kErrorColor,
           ),
           borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 25 : 25.0),
+              BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
         ),
         errorStyle: const TextStyle(color: kErrorColor),
         enabledBorder: OutlineInputBorder(
           borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 25 : 25.0),
+              BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
           borderSide: BorderSide(
               color: widget.name == "create"
                   ? kWhiteColor
@@ -144,7 +145,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 25 : 25.0),
+              BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
           borderSide: BorderSide(
               color: widget.name == "create"
                   ? kWhiteColor

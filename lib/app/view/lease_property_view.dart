@@ -1,13 +1,15 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../config/constant/constant.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../ui/Property Details/lease_property_details.dart';
 
 class LeasePropertyView extends StatefulWidget {
-  final String? checkRoll;
-  const LeasePropertyView({super.key, this.checkRoll});
+  const LeasePropertyView({
+    super.key,
+  });
 
   @override
   State<LeasePropertyView> createState() => _LeasePropertyViewState();
@@ -16,8 +18,7 @@ class LeasePropertyView extends StatefulWidget {
 class _LeasePropertyViewState extends State<LeasePropertyView> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Get.height - 200,
+    return Flexible(
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -54,9 +55,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
       rentdue, expiredate) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => LeasePropertyDetailPage(
-              checkRoll: widget.checkRoll,
-            ));
+        Get.to(() => LeasePropertyDetailPage());
       },
       child: Container(
         width: Get.width,

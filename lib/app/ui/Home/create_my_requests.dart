@@ -135,8 +135,9 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                   ),
                 ),
                 buildTextWidget("Comment"),
-                SizedBox(
-                  width: Get.width > 500 ? 600 : Get.width,
+                Container(
+                  margin: const EdgeInsets.only(left: 5),
+                  width: Get.width > 500 ? 600 : Get.width - 42,
                   child: CustomTextFormField(
                     hintText: 'Describe you request',
                     maxLines: 4,
@@ -149,7 +150,7 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                 const SizedBox(height: 25),
                 Row(
                   children: [
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
@@ -194,7 +195,7 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {

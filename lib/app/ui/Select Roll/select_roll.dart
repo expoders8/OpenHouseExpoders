@@ -6,6 +6,7 @@ import 'package:openhome/app/ui/TabPage/tab_page.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../routes/app_pages.dart';
 
 class SelectRollPage extends StatefulWidget {
   const SelectRollPage({super.key});
@@ -50,7 +51,7 @@ class _SelectRollPageState extends State<SelectRollPage> {
                     setState(() {
                       rolltype = "tenant";
                     });
-                    Get.to(() => const TabPage(checkRoll: "tenant"));
+                    Get.toNamed(Routes.tabPage);
                   },
                   child: Container(
                     height: 80,
@@ -99,7 +100,7 @@ class _SelectRollPageState extends State<SelectRollPage> {
                     setState(() {
                       rolltype = "host";
                     });
-                    Get.to(() => const TabPage(checkRoll: "host"));
+                    Get.toNamed(Routes.tabPage);
                   },
                   child: Container(
                     height: 80,

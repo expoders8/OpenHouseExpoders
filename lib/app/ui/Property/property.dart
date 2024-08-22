@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../../config/constant/constant.dart';
 import '../../view/lease_property_view.dart';
 import '../../view/not_lease_property_view.dart';
 import '../../../config/constant/font_constant.dart';
@@ -8,8 +9,9 @@ import '../../../config/constant/color_constant.dart';
 import '../../view/previous_property_view.dart';
 
 class PropertyPage extends StatefulWidget {
-  final String? checkRoll;
-  const PropertyPage({super.key, this.checkRoll});
+  const PropertyPage({
+    super.key,
+  });
 
   @override
   State<PropertyPage> createState() => _PropertyPageState();
@@ -20,9 +22,15 @@ class _PropertyPageState extends State<PropertyPage>
   late TabController _tabController;
   var searchController = TextEditingController();
 
+  String selectedRoll = "";
+
   @override
   void initState() {
     super.initState();
+    var roll = getStorage.read('roll') ?? "";
+    setState(() {
+      selectedRoll = roll;
+    });
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -38,9 +46,7 @@ class _PropertyPageState extends State<PropertyPage>
       appBar: AppBar(
         toolbarHeight: 40,
         title: Text(
-          widget.checkRoll == "tenant"
-              ? "On Lease Properties"
-              : "My Properties",
+          selectedRoll == "tenant" ? "On Lease Properties" : "My Properties",
           style: const TextStyle(fontFamily: kCircularStdBook),
         ),
         automaticallyImplyLeading: false,
@@ -49,7 +55,7 @@ class _PropertyPageState extends State<PropertyPage>
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: SafeArea(
-          child: widget.checkRoll == "tenant"
+          child: selectedRoll == "tenant"
               ? Column(
                   children: [
                     TabBar(
@@ -61,8 +67,7 @@ class _PropertyPageState extends State<PropertyPage>
                         Tab(text: 'Previous Properties'),
                       ],
                     ),
-                    SizedBox(
-                      height: Get.height - 132,
+                    Flexible(
                       child: TabBarView(
                         controller: _tabController,
                         children: [
@@ -105,7 +110,7 @@ class _PropertyPageState extends State<PropertyPage>
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                LeasePropertyView(checkRoll: widget.checkRoll),
+                                LeasePropertyView(),
                               ],
                             ),
                           ),
@@ -163,8 +168,7 @@ class _PropertyPageState extends State<PropertyPage>
                         Tab(text: 'Not lease'),
                       ],
                     ),
-                    SizedBox(
-                      height: Get.height - 132,
+                    Flexible(
                       child: TabBarView(
                         controller: _tabController,
                         children: [
@@ -207,7 +211,7 @@ class _PropertyPageState extends State<PropertyPage>
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                LeasePropertyView(checkRoll: widget.checkRoll),
+                                LeasePropertyView(),
                               ],
                             ),
                           ),

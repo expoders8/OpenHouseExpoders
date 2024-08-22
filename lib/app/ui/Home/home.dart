@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../config/constant/constant.dart';
 import '../../view/my_request.dart';
 import '../../routes/app_pages.dart';
 import '../../view/chechout_request.dart';
@@ -12,8 +13,9 @@ import '../../../config/constant/color_constant.dart';
 import '../Property Details/lease_property_details.dart';
 
 class HomePage extends StatefulWidget {
-  final String? checkRoll;
-  const HomePage({super.key, this.checkRoll});
+  const HomePage({
+    super.key,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -22,6 +24,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TabCountController tabCountController = Get.find<TabCountController>();
   final tabController = Get.put(TabCountController());
+  String selectedRoll = "";
+  @override
+  void initState() {
+    var roll = getStorage.read('roll') ?? "";
+    setState(() {
+      selectedRoll = roll;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +58,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: widget.checkRoll == "tenant"
+          child: selectedRoll == "tenant"
               ? Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 15.0, vertical: 15),
@@ -435,9 +447,7 @@ class _HomePageState extends State<HomePage> {
       rentdue, expiredate) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => LeasePropertyDetailPage(
-              checkRoll: widget.checkRoll,
-            ));
+        Get.to(() => LeasePropertyDetailPage());
       },
       child: Container(
         width: Get.width,

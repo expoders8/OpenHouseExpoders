@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.zero,
                           onPressed: () {
                             getStorage.write('roll', "host");
-                            Get.to(() => const TabPage(checkRoll: "host"));
+                            Get.toNamed(Routes.tabPage);
                           },
                           child: Container(
                             height: 50,

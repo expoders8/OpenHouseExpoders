@@ -384,10 +384,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 onTap: () {
                   if (selectedRoll == "tenant") {
                     getStorage.write('roll', "host");
-                    Get.offAll(const TabPage(checkRoll: "host"));
+                    Get.offAll(const TabPage());
                   } else {
                     getStorage.write('roll', "tenant");
-                    Get.offAll(const TabPage(checkRoll: "tenant"));
+                    Get.offAll(const TabPage());
                   }
                 },
                 child: Padding(
