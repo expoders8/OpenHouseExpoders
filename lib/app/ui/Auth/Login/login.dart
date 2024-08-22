@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../config/constant/constant.dart';
+import '../../../../config/provider/loader_provider.dart';
 import '../../../routes/app_pages.dart';
-import '../../TabPage/tab_page.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/social_login_widget.dart';
+import '../../../controller/auth_controller.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
 
@@ -23,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isFormSubmitted = false;
   final _loginFormKey = GlobalKey<FormState>();
   bool selectEmail = true;
+  final loginController = Get.put(LoginController());
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
@@ -210,6 +212,22 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  onLoginButtonPress() {
+    setState(() {
+      isFormSubmitted = true;
+    });
+    FocusScope.of(context).requestFocus(FocusNode());
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      if (_loginFormKey.currentState!.validate()) {
+        loginController.email(emailController.text);
+        loginController.password(passwordController.text);
+        LoaderX.show(context, 60.0, 60.0);
+
+        loginController.login();
+      }
+    });
   }
 
   buildTitleWidget(String title) {

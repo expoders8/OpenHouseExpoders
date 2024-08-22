@@ -47,7 +47,6 @@ class _MyTenantsPageState extends State<MyTenantsPage>
           "My Tenants",
           style: TextStyle(fontFamily: kCircularStdBook),
         ),
-        automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
       ),
       body: Padding(

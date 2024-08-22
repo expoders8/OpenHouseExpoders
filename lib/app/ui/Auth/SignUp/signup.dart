@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 
+import '../../../../config/provider/loader_provider.dart';
+import '../../../controller/auth_controller.dart';
 import '../Login/login.dart';
 import '../../../routes/app_pages.dart';
 import '../../widgets/custom_textfield.dart';
@@ -19,8 +21,9 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   bool isFormSubmitted = false;
-  final _loginFormKey = GlobalKey<FormState>();
+  final _signupFormKey = GlobalKey<FormState>();
   bool selectEmail = true;
+  final signUpController = Get.put(SignUpController());
   TextEditingController firstNameController = TextEditingController();
   TextEditingController mobilenoController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -38,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
         child: SingleChildScrollView(
           child: SafeArea(
             child: Form(
-              key: _loginFormKey,
+              key: _signupFormKey,
               child: Column(
                 children: [
                   Padding(
@@ -167,6 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         keyboardType: TextInputType.phone,
                                         name: "phoneno",
                                         formSubmitted: isFormSubmitted,
+                                        validationMsg: 'Please enter phoneNo',
                                       ),
                                     ],
                                   ),
@@ -295,6 +299,24 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  onSignUpButtonPress() {
+    setState(() {
+      isFormSubmitted = true;
+    });
+    FocusScope.of(context).requestFocus(FocusNode());
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      if (_signupFormKey.currentState!.validate()) {
+        signUpController.firstname(firstNameController.text);
+        signUpController.lastname(lastNameController.text);
+        signUpController.email(emailController.text);
+        signUpController
+            .mobileNo("$selectedCountrydialCode${mobilenoController.text}");
+        signUpController.password(passwordController.text);
+        Get.toNamed(Routes.selectRollPage);
+      }
+    });
   }
 
   buildTitleWidget(String title) {

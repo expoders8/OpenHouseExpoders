@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:openhome/app/ui/TabPage/tab_page.dart';
 
+import '../../controller/auth_controller.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/loader_provider.dart';
 import '../../routes/app_pages.dart';
 
 class SelectRollPage extends StatefulWidget {
@@ -17,7 +18,8 @@ class SelectRollPage extends StatefulWidget {
 
 class _SelectRollPageState extends State<SelectRollPage> {
   bool rolltypeSelected = false;
-  String rolltype = "tenant";
+  String rolltype = "";
+  final signUpController = Get.put(SignUpController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +54,9 @@ class _SelectRollPageState extends State<SelectRollPage> {
                       rolltype = "tenant";
                     });
                     Get.toNamed(Routes.tabPage);
+                    // LoaderX.show(context, 60.0, 60.0);
+                    // signUpController.roll("tenant");
+                    // signUpController.signUp();
                   },
                   child: Container(
                     height: 80,
@@ -100,7 +105,11 @@ class _SelectRollPageState extends State<SelectRollPage> {
                     setState(() {
                       rolltype = "host";
                     });
+                    // LoaderX.show(context, 60.0, 60.0);
                     Get.toNamed(Routes.tabPage);
+
+                    // signUpController.roll("host");
+                    // signUpController.signUp();
                   },
                   child: Container(
                     height: 80,

@@ -5,6 +5,7 @@ import 'package:openhome/app/routes/app_pages.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../Auth/Login/login.dart';
 import '../TabPage/tab_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -825,41 +826,82 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     const SizedBox(height: 18),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.logout,
-                                size: 18,
-                                color: kButtonColor,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "Log out",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 16,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: 13,
-                            color: kButtonColor,
-                          ),
-                        ],
+                    GestureDetector(
+                      onTap: logoutConfirmationDialog,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.logout,
+                                  size: 18,
+                                  color: kButtonColor,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Log out",
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 16,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 13,
+                              color: kButtonColor,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
+      ),
+    );
+  }
+
+  logoutConfirmationDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Alert !"),
+        elevation: 5,
+        titleTextStyle: const TextStyle(fontSize: 18, color: kRedColor),
+        content: const Text("Are you sure want to logout?"),
+        contentPadding: const EdgeInsets.only(left: 25, top: 10),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              // FirebaseAuthServices().signOut();
+              Get.back();
+              // getStorage.remove('user');
+              // getStorage.remove('authToken');
+              // getStorage.write("index", 0);
+              Get.offAll(() => const LoginPage());
+            },
+            child: const Text(
+              'Yes',
+              style: TextStyle(fontSize: 16, color: kPrimaryColor),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text(
+              'No',
+              style: TextStyle(fontSize: 16, color: kPrimaryColor),
+            ),
+          ),
+        ],
       ),
     );
   }
