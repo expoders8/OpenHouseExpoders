@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../view/tenant_request_view.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../view/tenant_request_view.dart';
 
 class TenantRequestPage extends StatefulWidget {
   const TenantRequestPage({super.key});

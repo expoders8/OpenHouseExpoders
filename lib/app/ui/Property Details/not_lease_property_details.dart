@@ -380,9 +380,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
           height: 15,
           width: 15,
         ),
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(
           text,
           style: const TextStyle(

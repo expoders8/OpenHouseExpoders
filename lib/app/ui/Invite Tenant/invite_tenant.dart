@@ -17,9 +17,10 @@ class InviteTenantPage extends StatefulWidget {
 
 class _InviteTenantPageState extends State<InviteTenantPage> {
   bool isFormSubmitted = false;
-  final TextEditingController mobilenoController = TextEditingController();
-  String selectedCountrydialCode = "+91";
   final RxString mobileno = ''.obs;
+  String selectedCountrydialCode = "+91";
+  final TextEditingController mobilenoController = TextEditingController();
+
   @override
   void initState() {
     super.initState();

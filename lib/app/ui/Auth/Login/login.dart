@@ -21,9 +21,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool selectEmail = true;
   bool isFormSubmitted = false;
   final _loginFormKey = GlobalKey<FormState>();
-  bool selectEmail = true;
   final loginController = Get.put(LoginController());
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();

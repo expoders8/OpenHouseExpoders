@@ -6,9 +6,7 @@ import '../../config/constant/color_constant.dart';
 import '../ui/Property Details/lease_property_details.dart';
 
 class LeasePropertyView extends StatefulWidget {
-  const LeasePropertyView({
-    super.key,
-  });
+  const LeasePropertyView({super.key});
 
   @override
   State<LeasePropertyView> createState() => _LeasePropertyViewState();
@@ -95,9 +93,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                             size: 16,
                             color: kButtonColor,
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const SizedBox(width: 10),
                           SizedBox(
                             width: Get.width / 2.5,
                             child: Text(

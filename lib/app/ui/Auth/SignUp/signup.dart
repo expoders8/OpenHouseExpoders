@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 
-import '../../../../config/provider/loader_provider.dart';
-import '../../../controller/auth_controller.dart';
 import '../Login/login.dart';
 import '../../../routes/app_pages.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/social_login_widget.dart';
+import '../../../controller/auth_controller.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
 
@@ -20,16 +19,16 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  bool isFormSubmitted = false;
-  final _signupFormKey = GlobalKey<FormState>();
   bool selectEmail = true;
+  bool isFormSubmitted = false;
+  String selectedCountrydialCode = "+91";
+  final _signupFormKey = GlobalKey<FormState>();
   final signUpController = Get.put(SignUpController());
-  TextEditingController firstNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController mobilenoController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  String selectedCountrydialCode = "+91";
+  TextEditingController firstNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

@@ -5,17 +5,15 @@ import 'package:openhome/app/view/tenant_history_view.dart';
 import 'package:openhome/app/view/property_details_view.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
-import '../../../config/constant/constant.dart';
 import '../../view/nearby_view.dart';
 import '../../view/payment_detail_view.dart';
+import '../../../config/constant/constant.dart';
 import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
-  const LeasePropertyDetailPage({
-    super.key,
-  });
+  const LeasePropertyDetailPage({super.key});
 
   @override
   State<LeasePropertyDetailPage> createState() =>
@@ -24,8 +22,8 @@ class LeasePropertyDetailPage extends StatefulWidget {
 
 class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
   String selectedRoll = "";
+  late TabController _tabController;
 
   @override
   void initState() {

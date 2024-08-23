@@ -83,9 +83,7 @@ class _TenantHistoryViewState extends State<TenantHistoryView> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: 10),
                     Row(
                       children: [
                         Icon(

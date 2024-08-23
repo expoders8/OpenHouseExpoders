@@ -1,21 +1,21 @@
 import 'package:get/get.dart';
 
-import '../ui/Auth/ChangePassword/change_password.dart';
-import '../ui/Auth/ForgotPassword/forgot_password.dart';
-import '../ui/Home/create_my_requests.dart';
-import '../ui/Invite Tenant/invite_tenant.dart';
-import '../ui/Invite Tenant/invite_tenant_detail.dart';
-import '../ui/Notification/notification.dart';
-import '../ui/Profile/edit_profile.dart';
-import '../ui/Property Details/lease_property_details.dart';
-import '../ui/Property Details/not_lease_property_details.dart';
 import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
 import '../ui/Auth/SignUp/signup.dart';
-import '../ui/Tenant Requests/tenant_request.dart';
 import '../ui/My Tenants/my_tenant.dart';
-import '../ui/Total Amount/total_amount_detail.dart';
+import '../ui/Profile/edit_profile.dart';
+import '../ui/Home/create_my_requests.dart';
 import '../ui/Select Roll/select_roll.dart';
+import '../ui/Notification/notification.dart';
+import '../ui/Invite Tenant/invite_tenant.dart';
+import '../ui/Tenant Requests/tenant_request.dart';
+import '../ui/Total Amount/total_amount_detail.dart';
+import '../ui/Invite Tenant/invite_tenant_detail.dart';
+import '../ui/Auth/ChangePassword/change_password.dart';
+import '../ui/Auth/ForgotPassword/forgot_password.dart';
+import '../ui/Property Details/lease_property_details.dart';
+import '../ui/Property Details/not_lease_property_details.dart';
 
 part 'app_routes.dart';
 

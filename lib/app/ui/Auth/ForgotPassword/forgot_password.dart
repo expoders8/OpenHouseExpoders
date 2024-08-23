@@ -15,9 +15,9 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  bool selectEmail = true;
   bool isFormSubmitted = false;
   final _loginFormKey = GlobalKey<FormState>();
-  bool selectEmail = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override

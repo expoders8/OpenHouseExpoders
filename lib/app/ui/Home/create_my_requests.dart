@@ -1,14 +1,14 @@
-import 'package:bottom_picker/bottom_picker.dart';
-import 'package:bottom_picker/resources/arrays.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../../../config/constant/color_constant.dart';
-import '../../../config/constant/font_constant.dart';
 import '../widgets/custom_textfield.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class CreateMyRequestsPage extends StatefulWidget {
   const CreateMyRequestsPage({super.key});
@@ -19,16 +19,15 @@ class CreateMyRequestsPage extends StatefulWidget {
 
 class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
   final _formKey = GlobalKey<FormState>();
-  String selctesType = "normal";
-  String selectdate = "YYYY/MM/DD";
-  String selectTime = "Time";
-  final TextEditingController raisedFundsController = TextEditingController();
-  final TextEditingController amenityController = TextEditingController();
-  bool isTouched = false, timeError = false, dateError = false;
-  bool isFormSubmitted = false;
   String pickedDate = "";
   String pickedTime = "";
-
+  String selectTime = "Time";
+  String selctesType = "normal";
+  String selectdate = "YYYY/MM/DD";
+  bool isTouched = false, timeError = false, dateError = false;
+  final TextEditingController amenityController = TextEditingController();
+  final TextEditingController raisedFundsController = TextEditingController();
+  bool isFormSubmitted = false;
   final List<String> amenities = [
     'Electricity',
     'Gas',

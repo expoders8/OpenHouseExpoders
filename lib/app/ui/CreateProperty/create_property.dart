@@ -17,13 +17,13 @@ class CreatePropertyPage extends StatefulWidget {
 
 class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController raisedFundsController = TextEditingController();
   final TextEditingController sellController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController personController = TextEditingController();
   final TextEditingController street1Controller = TextEditingController();
   final TextEditingController street2Controller = TextEditingController();
-  final TextEditingController personController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController raisedFundsController = TextEditingController();
   bool isTouched = false;
   bool isFormSubmitted = false;
   List<Asset> images = <Asset>[];
@@ -158,7 +158,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                     //   LengthLimitingTextInputFormatter(40),
                                     // ],
                                     controller: descriptionController,
-
                                     decoration: const InputDecoration(
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide:

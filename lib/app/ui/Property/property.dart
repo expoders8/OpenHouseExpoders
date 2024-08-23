@@ -8,9 +8,7 @@ import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
 class PropertyPage extends StatefulWidget {
-  const PropertyPage({
-    super.key,
-  });
+  const PropertyPage({super.key});
 
   @override
   State<PropertyPage> createState() => _PropertyPageState();
@@ -18,10 +16,9 @@ class PropertyPage extends StatefulWidget {
 
 class _PropertyPageState extends State<PropertyPage>
     with SingleTickerProviderStateMixin {
+  String selectedRoll = "";
   late TabController _tabController;
   var searchController = TextEditingController();
-
-  String selectedRoll = "";
 
   @override
   void initState() {

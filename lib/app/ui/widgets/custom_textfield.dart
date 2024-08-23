@@ -87,7 +87,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     ? kSecondaryPrimaryColor
                     : kPrimaryColor
                 : kSecondaryPrimaryColor,
-            fontFamily: kCircularStdNormal, //Describe you request
+            fontFamily: kCircularStdNormal,
             fontWeight: FontWeight.w400,
             fontSize: widget.name == "password"
                 ? 16

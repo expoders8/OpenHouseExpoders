@@ -16,11 +16,11 @@ class InviteTenantDetailPage extends StatefulWidget {
 }
 
 class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
-  final TabCountController tabCountController = Get.find<TabCountController>();
-  final tabController = Get.put(TabCountController());
-  TextEditingController amountController = TextEditingController();
   int userAge = 0;
   bool checkedValue = false;
+  final tabController = Get.put(TabCountController());
+  TextEditingController amountController = TextEditingController();
+  final TabCountController tabCountController = Get.find<TabCountController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

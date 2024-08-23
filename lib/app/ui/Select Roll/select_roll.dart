@@ -2,12 +2,11 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../routes/app_pages.dart';
 import '../../controller/auth_controller.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../../config/provider/loader_provider.dart';
-import '../../routes/app_pages.dart';
 
 class SelectRollPage extends StatefulWidget {
   const SelectRollPage({super.key});
@@ -17,8 +16,8 @@ class SelectRollPage extends StatefulWidget {
 }
 
 class _SelectRollPageState extends State<SelectRollPage> {
-  bool rolltypeSelected = false;
   String rolltype = "";
+  bool rolltypeSelected = false;
   final signUpController = Get.put(SignUpController());
   @override
   Widget build(BuildContext context) {

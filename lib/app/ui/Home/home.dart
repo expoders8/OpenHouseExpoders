@@ -2,29 +2,27 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../config/constant/constant.dart';
 import '../../view/my_request.dart';
 import '../../routes/app_pages.dart';
 import '../../view/chechout_request.dart';
 import '../../view/tenant_request_view.dart';
 import '../../controller/tab_controller.dart';
+import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../Property Details/lease_property_details.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({
-    super.key,
-  });
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final TabCountController tabCountController = Get.find<TabCountController>();
-  final tabController = Get.put(TabCountController());
   String selectedRoll = "";
+  final tabController = Get.put(TabCountController());
+  final TabCountController tabCountController = Get.find<TabCountController>();
   @override
   void initState() {
     var roll = getStorage.read('roll') ?? "";
@@ -70,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                         "Invitations",
                         style: TextStyle(
                             color: kPrimaryColor,
-                            fontSize: 17,
+                            fontSize: 16,
                             fontFamily: kCircularStdMedium),
                       ),
                       const SizedBox(height: 10),
@@ -187,10 +185,10 @@ class _HomePageState extends State<HomePage> {
                         "My Lease",
                         style: TextStyle(
                             color: kPrimaryColor,
-                            fontSize: 17,
+                            fontSize: 16,
                             fontFamily: kCircularStdMedium),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 5),
                       leaseproperty(
                           "assets/icons/1.png",
                           "\$2550",
@@ -208,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                             "My Requests",
                             style: TextStyle(
                                 color: kPrimaryColor,
-                                fontSize: 17,
+                                fontSize: 16,
                                 fontFamily: kCircularStdMedium),
                           ),
                           CupertinoButton(
@@ -234,7 +232,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 5),
                       const MyRequestView(),
                       const SizedBox(height: 85)
                     ],
@@ -333,10 +331,9 @@ class _HomePageState extends State<HomePage> {
                         "Checkout Requests",
                         style: TextStyle(
                             color: kPrimaryColor,
-                            fontSize: 17,
+                            fontSize: 16,
                             fontFamily: kCircularStdMedium),
                       ),
-                      const SizedBox(height: 3),
                       const CheckOutRequestView(),
                       const SizedBox(height: 10),
                       Row(
@@ -346,7 +343,7 @@ class _HomePageState extends State<HomePage> {
                             "Tenant Requests",
                             style: TextStyle(
                                 color: kPrimaryColor,
-                                fontSize: 17,
+                                fontSize: 16,
                                 fontFamily: kCircularStdMedium),
                           ),
                           GestureDetector(
@@ -373,7 +370,7 @@ class _HomePageState extends State<HomePage> {
                             "Lease Status",
                             style: TextStyle(
                                 color: kPrimaryColor,
-                                fontSize: 17,
+                                fontSize: 16,
                                 fontFamily: kCircularStdMedium),
                           ),
                           GestureDetector(

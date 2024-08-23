@@ -14,12 +14,12 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
-  bool isFormSubmitted = false;
   bool selectEmail = true;
+  bool isFormSubmitted = false;
   final _formKey = GlobalKey<FormState>();
-  TextEditingController currentPasswordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController currentPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

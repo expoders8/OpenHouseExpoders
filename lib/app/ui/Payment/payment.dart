@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
@@ -15,6 +15,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   String selectedRoll = "";
+
   @override
   void initState() {
     var roll = getStorage.read('roll') ?? "";
@@ -125,28 +126,30 @@ class _PaymentPageState extends State<PaymentPage> {
                           "\$250",
                           "25-06-2025"),
                       const SizedBox(height: 15),
-                      CupertinoButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {},
-                        child: Container(
-                          height: 50,
-                          width: Get.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              border: Border.all(color: kWhiteColor),
-                              color: kButtonColor),
-                          child: const Center(
-                            child: Text(
-                              "Pay Now",
-                              style: TextStyle(
-                                  color: kWhiteColor,
-                                  fontFamily: kCircularStdNormal,
-                                  fontSize: 18),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          child: Container(
+                            height: 45,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                border: Border.all(color: kWhiteColor),
+                                color: kButtonColor),
+                            child: const Center(
+                              child: Text(
+                                "Pay Now",
+                                style: TextStyle(
+                                    color: kWhiteColor,
+                                    fontFamily: kCircularStdNormal,
+                                    fontSize: 18),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 85)
                     ],
                   ),
                 ),

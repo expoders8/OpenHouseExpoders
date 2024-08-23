@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/routes/app_pages.dart';
 
+import '../Auth/Login/login.dart';
+import '../TabPage/tab_page.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../Auth/Login/login.dart';
-import '../TabPage/tab_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -18,6 +18,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String selectedRoll = "";
+
   @override
   void initState() {
     var roll = getStorage.read('roll') ?? "";
@@ -88,13 +89,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsets.only(right: 0.0, bottom: 10),
+                                padding: const EdgeInsets.only(
+                                    right: 0.0, bottom: 10),
                                 child: Text(
                                   selectedRoll == "tenant"
                                       ? "Tenant Name"
                                       : "Host Name",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: kWhiteColor,
                                       fontFamily: kCircularStdBold,
                                       fontSize: 23),
@@ -184,9 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
               selectedRoll == "tenant"
                   ? CupertinoButton(
                       padding: EdgeInsets.zero,
-                      onPressed: () {
-                        Get.toNamed(Routes.myTenantsPage);
-                      },
+                      onPressed: () {},
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
@@ -199,9 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   size: 18,
                                   color: kButtonColor,
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
+                                SizedBox(width: 10),
                                 Text(
                                   "Host Details",
                                   style: TextStyle(
@@ -237,9 +234,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   size: 18,
                                   color: kButtonColor,
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
+                                SizedBox(width: 10),
                                 Text(
                                   "My Tenants",
                                   style: TextStyle(
@@ -273,9 +268,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 size: 18,
                                 color: kButtonColor,
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
+                              SizedBox(width: 10),
                               Text(
                                 "Requests",
                                 style: TextStyle(
@@ -306,9 +299,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           size: 18,
                           color: kButtonColor,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        SizedBox(width: 10),
                         Text(
                           "Privacy and Security",
                           style: TextStyle(
@@ -339,9 +330,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           size: 18,
                           color: kButtonColor,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        SizedBox(width: 10),
                         Text(
                           "Terms and conditions",
                           style: TextStyle(
@@ -372,9 +361,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           size: 18,
                           color: kButtonColor,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        SizedBox(width: 10),
                         Text(
                           "Help Us",
                           style: TextStyle(
@@ -410,9 +397,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             size: 18,
                             color: kButtonColor,
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
+                          SizedBox(width: 10),
                           Text(
                             "Change Password",
                             style: TextStyle(
@@ -443,7 +428,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                 },
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -454,9 +439,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             size: 18,
                             color: kButtonColor,
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const SizedBox(width: 10),
                           Text(
                             "Swich To ${selectedRoll == "tenant" ? "Host" : "Tenant"}",
                             style: const TextStyle(
@@ -490,9 +473,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             size: 18,
                             color: kButtonColor,
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
+                          SizedBox(width: 10),
                           Text(
                             "Log out",
                             style: TextStyle(
@@ -565,9 +546,7 @@ class _ProfilePageState extends State<ProfilePage> {
           size: 30,
           color: kButtonColor,
         ),
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(
           text,
           style: const TextStyle(
