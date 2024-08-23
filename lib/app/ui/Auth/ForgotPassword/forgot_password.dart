@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../Login/login.dart';
+import '../../../services/auth_service.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
+import '../../../../config/provider/loader_provider.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -17,7 +19,8 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   bool selectEmail = true;
   bool isFormSubmitted = false;
-  final _loginFormKey = GlobalKey<FormState>();
+  AuthService authService = AuthService();
+  final _forgotpasswordFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
@@ -29,7 +32,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Form(
-            key: _loginFormKey,
+            key: _forgotpasswordFormKey,
             child: GestureDetector(
               onTap: () {
                 FocusScope.of(context).requestFocus(FocusNode());
@@ -74,7 +77,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         const SizedBox(height: 15),
                         CupertinoButton(
                           padding: EdgeInsets.zero,
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              isFormSubmitted = true;
+                            });
+                            if (_forgotpasswordFormKey.currentState!
+                                .validate()) {
+                              LoaderX.show(context, 60.0, 60.0);
+                              authService.forgotPassword(emailController.text);
+                            }
+                          },
                           child: Container(
                             height: 50,
                             width: Get.width,

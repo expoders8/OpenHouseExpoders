@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../../config/provider/loader_provider.dart';
+import '../../../services/auth_service.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
@@ -16,6 +18,7 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   bool selectEmail = true;
   bool isFormSubmitted = false;
+  AuthService authService = AuthService();
   final _formKey = GlobalKey<FormState>();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -93,6 +96,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           isFormSubmitted = true;
                         });
                         if (_formKey.currentState?.validate() ?? false) {
+                          LoaderX.show(context, 60.0, 60.0);
+                          authService.changePassowrd(
+                              "userId",
+                              currentPasswordController.text,
+                              newPasswordController.text);
                         } else {}
                       },
                       child: Container(

@@ -143,6 +143,7 @@ class AuthService {
             'Content-type': 'application/json'
           });
       if (response.statusCode == 200) {
+        LoaderX.hide();
         var decodedUser = jsonDecode(response.body);
         return decodedUser;
       } else {
@@ -170,6 +171,7 @@ class AuthService {
               headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200) {
+        LoaderX.hide();
         return decodedUser;
       } else {
         LoaderX.hide();

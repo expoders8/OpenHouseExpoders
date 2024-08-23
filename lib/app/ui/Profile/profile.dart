@@ -36,7 +36,6 @@ class _ProfilePageState extends State<ProfilePage> {
           "Profile",
           style: TextStyle(fontFamily: kCircularStdBook),
         ),
-        automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
       ),
       body: SafeArea(
@@ -144,9 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               size: 18,
                               color: kButtonColor,
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
+                            SizedBox(width: 10),
                             Text(
                               "+91 9898567548",
                               style: TextStyle(
@@ -164,9 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               size: 18,
                               color: kButtonColor,
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
+                            SizedBox(width: 10),
                             Text(
                               "test@google.com",
                               style: TextStyle(

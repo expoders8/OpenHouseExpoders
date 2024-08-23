@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../config/constant/constant.dart';
 import '../Home/home.dart';
+import '../My Tenants/my_tenant.dart';
 import '../Payment/payment.dart';
 import '../Profile/profile.dart';
 import '../Property/property.dart';
@@ -28,6 +30,7 @@ class TabPage extends StatefulWidget {
 class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
   // FCMNotificationServices fCMNotificationServices = FCMNotificationServices();
   String authToken = "";
+  String selectedRoll = "";
   bool _isKeyboardVisible = false;
   final controller = Get.put(TabCountController());
   final TextStyle unselectedLabelStyle = const TextStyle(
@@ -41,6 +44,10 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    var roll = getStorage.read('roll') ?? "";
+    setState(() {
+      selectedRoll = roll;
+    });
     // fCMNotificationServices.requestNotificationPermission();
     // notificationServices.isTokenRefresh();
     // fCMNotificationServices.firebaseInit();
@@ -77,12 +84,15 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
               children: [
                 IndexedStack(
                   index: tabCountController.tabIndex.value,
-                  children: const [
-                    HomePage(),
-                    PropertyPage(),
-                    CreatePropertyPage(),
-                    PaymentPage(),
-                    ProfilePage(),
+                  children: [
+                    const HomePage(),
+                    const PropertyPage(),
+                    const CreatePropertyPage(),
+                    const PaymentPage(),
+                    selectedRoll == "tenant"
+                        ? const ProfilePage()
+                        : const MyTenantsPage(),
+                    //
                   ],
                 ),
                 !_isKeyboardVisible
@@ -134,8 +144,15 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                                       buildBottomTab(3, "Payment",
                                           "assets/icons/payment.png"),
                                       const SizedBox(width: 20),
-                                      buildBottomTab(4, "Profile",
-                                          "assets/icons/profile.png"),
+                                      buildBottomTab(
+                                        4,
+                                        selectedRoll == "tenant"
+                                            ? "Profile"
+                                            : "MyTenant",
+                                        selectedRoll == "tenant"
+                                            ? "assets/icons/profile.png"
+                                            : "assets/icons/people.png",
+                                      ),
                                     ],
                                   )),
                             ),
@@ -164,9 +181,11 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
             ? 25
             : title == "Payment"
                 ? 25
-                : title == "Property"
-                    ? 25
-                    : 35,
+                : title == "MyTenant"
+                    ? 38
+                    : title == "Property"
+                        ? 25
+                        : 35,
         child: Image.asset(
           image,
           color: tabCountController.tabIndex.value == index

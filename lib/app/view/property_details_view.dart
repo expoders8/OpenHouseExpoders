@@ -171,9 +171,7 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
                 height: 15,
                 width: 15,
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Text(
                 text,
                 style: const TextStyle(

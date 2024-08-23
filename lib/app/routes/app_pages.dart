@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../ui/Profile/profile.dart';
 import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
 import '../ui/Auth/SignUp/signup.dart';
@@ -88,6 +89,10 @@ class AppPages {
     GetPage(
       name: _Paths.myTenantsPage,
       page: () => const MyTenantsPage(),
+    ),
+    GetPage(
+      name: _Paths.profilePage,
+      page: () => const ProfilePage(),
     ),
   ];
 }

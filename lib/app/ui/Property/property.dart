@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../routes/app_pages.dart';
 import '../../view/lease_property_view.dart';
 import '../../../config/constant/constant.dart';
 import '../../view/previous_property_view.dart';
@@ -40,13 +42,33 @@ class _PropertyPageState extends State<PropertyPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 40,
+        toolbarHeight: 45,
         title: Text(
           selectedRoll == "tenant" ? "On Lease Properties" : "My Properties",
           style: const TextStyle(fontFamily: kCircularStdBook),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
+        actions: [
+          selectedRoll == "tenant"
+              ? Container()
+              : GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.profilePage);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.asset(
+                          "assets/icons/boy 1.png",
+                          fit: BoxFit.cover,
+                          height: 30,
+                          width: 30,
+                        )),
+                  ),
+                ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),

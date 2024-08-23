@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
+import 'package:openhome/app/view/amenities_view.dart';
 
 import '../widgets/custom_textfield.dart';
 import '../../../config/constant/font_constant.dart';
@@ -16,6 +17,7 @@ class CreatePropertyPage extends StatefulWidget {
 }
 
 class _CreatePropertyPageState extends State<CreatePropertyPage> {
+  String amenities = "";
   final _formKey = GlobalKey<FormState>();
   final TextEditingController sellController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
@@ -491,6 +493,17 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       child: Text('No cities found'),
                     ),
                   ),
+                ),
+                const SizedBox(height: 10),
+                AmenitiesView(
+                  initialvalue: amenities,
+                  callbacklist: (val) {
+                    if (mounted) {
+                      setState(() {
+                        amenities = val;
+                      });
+                    }
+                  },
                 ),
                 const SizedBox(height: 10),
                 imageList.isEmpty
