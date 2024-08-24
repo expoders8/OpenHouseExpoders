@@ -183,7 +183,7 @@ class _PropertyPageState extends State<PropertyPage>
                       labelColor: kPrimaryColor,
                       tabs: const [
                         Tab(text: 'On lease'),
-                        Tab(text: 'Not lease'),
+                        Tab(text: 'Available'),
                       ],
                     ),
                     Flexible(

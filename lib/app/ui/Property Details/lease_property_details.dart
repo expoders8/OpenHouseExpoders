@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 import 'package:openhome/app/view/tenant_history_view.dart';
 import 'package:openhome/app/view/property_details_view.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
@@ -292,6 +293,33 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                   child: Column(
                                     children: [
                                       const SizedBox(height: 10),
+                                      CupertinoButton(
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {
+                                          Get.toNamed(Routes.addExpensePage);
+                                        },
+                                        child: Container(
+                                          height: 38,
+                                          width: Get.width,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: kPrimaryColor),
+                                              color: kBackGroundColor),
+                                          child: const Center(
+                                            child: Text(
+                                              "+ Add Expansion",
+                                              style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontFamily:
+                                                      kCircularStdNormal,
+                                                  fontSize: 18),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
                                       routingmaintanance("Electricity", "\$105",
                                           Icons.electric_bolt_sharp),
                                       routingmaintanance("Gas", "\$99",
@@ -303,37 +331,6 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                           "\$46",
                                           Icons
                                               .signal_wifi_statusbar_connected_no_internet_4_sharp),
-                                      const SizedBox(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          CupertinoButton(
-                                            padding: EdgeInsets.zero,
-                                            onPressed: () {},
-                                            child: Container(
-                                              height: 45,
-                                              width: 45,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                      color: kPrimaryColor),
-                                                  color: kBackGroundColor),
-                                              child: const Center(
-                                                child: Text(
-                                                  "+",
-                                                  style: TextStyle(
-                                                      color: kPrimaryColor,
-                                                      fontFamily:
-                                                          kCircularStdNormal,
-                                                      fontSize: 20),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                     ],
                                   ),
                                 ),

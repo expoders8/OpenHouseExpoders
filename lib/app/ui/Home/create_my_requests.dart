@@ -46,7 +46,6 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
           "Add Request",
           style: TextStyle(fontFamily: kCircularStdBook),
         ),
-        centerTitle: true,
         backgroundColor: kBackGroundColor,
       ),
       body: Padding(

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 
+// ignore: must_be_immutable
 class MyRequestView extends StatefulWidget {
-  const MyRequestView({super.key});
+  int? isviewall;
+  MyRequestView({super.key, this.isviewall});
 
   @override
   State<MyRequestView> createState() => _MyRequestViewState();
@@ -15,32 +17,52 @@ class _MyRequestViewState extends State<MyRequestView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          myRequest(
-              "Gas",
-              "I want to change Gas meter.",
-              "4693 Wentz Avenue, Saskatoon",
-              "Tenant Name",
-              "Emergency",
-              Icons.gas_meter_sharp),
-          const SizedBox(width: 10),
-          myRequest(
-              "Electricity",
-              "I want to change Air Conditioner.",
-              "3545 Robson St, Vancouver",
-              "Tenant Name",
-              "",
-              Icons.electric_bolt_sharp),
-        ],
-      ),
+      scrollDirection: widget.isviewall == 1 ? Axis.vertical : Axis.horizontal,
+      child: widget.isviewall == 1
+          ? Column(
+              children: [
+                myRequest(
+                    "Gas",
+                    "I want to change Gas meter.",
+                    "4693 Wentz Avenue, Saskatoon",
+                    "Tenant Name",
+                    "Emergency",
+                    Icons.gas_meter_sharp),
+                const SizedBox(height: 10),
+                myRequest(
+                    "Electricity",
+                    "I want to change Air Conditioner.",
+                    "3545 Robson St, Vancouver",
+                    "Tenant Name",
+                    "",
+                    Icons.electric_bolt_sharp),
+              ],
+            )
+          : Row(
+              children: [
+                myRequest(
+                    "Gas",
+                    "I want to change Gas meter.",
+                    "4693 Wentz Avenue, Saskatoon",
+                    "Tenant Name",
+                    "Emergency",
+                    Icons.gas_meter_sharp),
+                const SizedBox(width: 10),
+                myRequest(
+                    "Electricity",
+                    "I want to change Air Conditioner.",
+                    "3545 Robson St, Vancouver",
+                    "Tenant Name",
+                    "",
+                    Icons.electric_bolt_sharp),
+              ],
+            ),
     );
   }
 
   myRequest(String title, comments, address, name, emergency, IconData icons) {
     return Container(
-      width: Get.width - 130,
+      width: widget.isviewall == 1 ? Get.width : Get.width - 130,
       decoration: BoxDecoration(
         color: kWhiteColor,
         borderRadius: BorderRadius.circular(15),

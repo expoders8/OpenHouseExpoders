@@ -233,30 +233,20 @@ class _HomePageState extends State<HomePage> {
                                 fontFamily: kCircularStdMedium),
                           ),
                           CupertinoButton(
-                            padding: EdgeInsets.zero,
                             onPressed: () {
-                              Get.toNamed(Routes.createMyRequestsPage);
+                              Get.toNamed(Routes.tenantRequestPage);
                             },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 2),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: kPrimaryColor, width: 1),
-                                  borderRadius: BorderRadius.circular(25)),
-                              child: const Text(
-                                "Add +",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 14,
-                                    fontFamily: kCircularStdNormal),
-                              ),
+                            child: const Text(
+                              "View all",
+                              style: TextStyle(
+                                  color: kBlueColor,
+                                  fontSize: 13,
+                                  fontFamily: kCircularStdMedium),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5),
-                      const MyRequestView(),
+                      MyRequestView(isviewall: 0),
                       const SizedBox(height: 85)
                     ],
                   ),
@@ -369,8 +359,8 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 16,
                                 fontFamily: kCircularStdMedium),
                           ),
-                          GestureDetector(
-                            onTap: () {
+                          CupertinoButton(
+                            onPressed: () {
                               Get.toNamed(Routes.tenantRequestPage);
                             },
                             child: const Text(
@@ -383,7 +373,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5),
                       TenantRequestView(isviewall: 0),
                       const SizedBox(height: 10),
                       Row(
@@ -396,8 +385,8 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 16,
                                 fontFamily: kCircularStdMedium),
                           ),
-                          GestureDetector(
-                            onTap: () {
+                          CupertinoButton(
+                            onPressed: () {
                               tabCountController.changeTabIndex(1);
                             },
                             child: const Text(
@@ -410,7 +399,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5),
                       leaseproperty(
                           "assets/icons/1.png",
                           "\$2550",

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../config/constant/constant.dart';
+import '../Home/create_my_requests.dart';
 import '../Home/home.dart';
 import '../My Tenants/my_tenant.dart';
 import '../Payment/payment.dart';
@@ -87,7 +88,9 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                   children: [
                     const HomePage(),
                     const PropertyPage(),
-                    const CreatePropertyPage(),
+                    selectedRoll == "tenant"
+                        ? const CreateMyRequestsPage()
+                        : const CreatePropertyPage(),
                     const PaymentPage(),
                     selectedRoll == "tenant"
                         ? const ProfilePage()

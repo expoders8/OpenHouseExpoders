@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../ui/Add Expense/add_expense.dart';
 import '../ui/Profile/profile.dart';
 import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
@@ -93,6 +94,10 @@ class AppPages {
     GetPage(
       name: _Paths.profilePage,
       page: () => const ProfilePage(),
+    ),
+    GetPage(
+      name: _Paths.addExpensePage,
+      page: () => const AddExpensePage(),
     ),
   ];
 }
