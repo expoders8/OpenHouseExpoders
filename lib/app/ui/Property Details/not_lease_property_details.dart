@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/routes/app_pages.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
+import '../../view/house_keeper_view.dart';
 import '../../view/nearby_view.dart';
 import '../../view/tenant_history_view.dart';
 import '../../view/property_details_view.dart';
@@ -222,7 +223,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                             ),
                                           ],
                                         ),
-                                        const TenantHistoryView(),
+                                        const HouseKeeperView(),
                                       ],
                                     ),
                                   ),

@@ -1,9 +1,5 @@
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:bottom_picker/bottom_picker.dart';
-import 'package:bottom_picker/resources/arrays.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../widgets/custom_textfield.dart';
@@ -43,7 +39,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Add Expansion",
+          "Add Expenses",
           style: TextStyle(fontFamily: kCircularStdBook),
         ),
         backgroundColor: kBackGroundColor,

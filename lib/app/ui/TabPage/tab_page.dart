@@ -3,15 +3,15 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../config/constant/constant.dart';
-import '../Home/create_my_requests.dart';
 import '../Home/home.dart';
-import '../My Tenants/my_tenant.dart';
+import '../My Host/my_host.dart';
 import '../Payment/payment.dart';
-import '../Profile/profile.dart';
 import '../Property/property.dart';
+import '../My Tenants/my_tenant.dart';
+import '../Home/create_my_requests.dart';
 import '../../controller/tab_controller.dart';
 import '../CreateProperty/create_property.dart';
+import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -93,7 +93,7 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                         : const CreatePropertyPage(),
                     const PaymentPage(),
                     selectedRoll == "tenant"
-                        ? const ProfilePage()
+                        ? const MyHostsPage()
                         : const MyTenantsPage(),
                     //
                   ],
@@ -147,15 +147,8 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                                       buildBottomTab(3, "Payment",
                                           "assets/icons/payment.png"),
                                       const SizedBox(width: 20),
-                                      buildBottomTab(
-                                        4,
-                                        selectedRoll == "tenant"
-                                            ? "Profile"
-                                            : "MyTenant",
-                                        selectedRoll == "tenant"
-                                            ? "assets/icons/profile.png"
-                                            : "assets/icons/people.png",
-                                      ),
+                                      buildBottomTab(4, "Profile",
+                                          "assets/icons/people.png"),
                                     ],
                                   )),
                             ),

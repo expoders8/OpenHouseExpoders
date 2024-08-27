@@ -37,24 +37,22 @@ class _PaymentPageState extends State<PaymentPage> {
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
         actions: [
-          selectedRoll == "tenant"
-              ? Container()
-              : GestureDetector(
-                  onTap: () {
-                    Get.toNamed(Routes.profilePage);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.asset(
-                          "assets/icons/boy 1.png",
-                          fit: BoxFit.cover,
-                          height: 30,
-                          width: 30,
-                        )),
-                  ),
-                ),
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.profilePage);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset(
+                    "assets/icons/boy 1.png",
+                    fit: BoxFit.cover,
+                    height: 30,
+                    width: 30,
+                  )),
+            ),
+          ),
         ],
       ),
       body: SafeArea(

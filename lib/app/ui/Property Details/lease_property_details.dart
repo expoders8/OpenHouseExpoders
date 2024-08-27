@@ -6,6 +6,7 @@ import 'package:openhome/app/view/tenant_history_view.dart';
 import 'package:openhome/app/view/property_details_view.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
+import '../../view/house_keeper_view.dart';
 import '../../view/nearby_view.dart';
 import '../../view/payment_detail_view.dart';
 import '../../../config/constant/constant.dart';
@@ -213,49 +214,60 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                       tenantname(),
                                       const SizedBox(height: 15),
                                       selectedRoll == "tenant"
-                                          ? Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                          ? Column(
                                               children: [
-                                                SizedBox(
-                                                  width: 150,
-                                                  child: CupertinoButton(
-                                                      padding: EdgeInsets.zero,
-                                                      color: kButtonColor,
-                                                      child: const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Icon(Icons.payment),
-                                                          SizedBox(width: 10),
-                                                          Text("Pay rent"),
-                                                        ],
-                                                      ),
-                                                      onPressed: () {}),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 150,
+                                                      child: CupertinoButton(
+                                                          padding:
+                                                              EdgeInsets.zero,
+                                                          color: kButtonColor,
+                                                          child: const Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Icon(Icons
+                                                                  .payment),
+                                                              SizedBox(
+                                                                  width: 10),
+                                                              Text("Pay rent"),
+                                                            ],
+                                                          ),
+                                                          onPressed: () {}),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    SizedBox(
+                                                      width: 150,
+                                                      child: CupertinoButton(
+                                                          padding:
+                                                              EdgeInsets.zero,
+                                                          color: kBlack87Color,
+                                                          child: const Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Icon(Icons
+                                                                  .checklist_outlined),
+                                                              SizedBox(
+                                                                  width: 10),
+                                                              Text("Checkout"),
+                                                            ],
+                                                          ),
+                                                          onPressed: () {}),
+                                                    ),
+                                                  ],
                                                 ),
-                                                const SizedBox(width: 10),
-                                                SizedBox(
-                                                  width: 150,
-                                                  child: CupertinoButton(
-                                                      padding: EdgeInsets.zero,
-                                                      color: kBlack87Color,
-                                                      child: const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Icon(Icons
-                                                              .checklist_outlined),
-                                                          SizedBox(width: 10),
-                                                          Text("Checkout"),
-                                                        ],
-                                                      ),
-                                                      onPressed: () {}),
-                                                ),
+                                                const SizedBox(height: 15),
+                                                const HouseKeeperView()
                                               ],
                                             )
-                                          : const TenantHistoryView()
+                                          : const HouseKeeperView()
                                     ],
                                   ),
                                 ),
@@ -309,7 +321,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                               color: kBackGroundColor),
                                           child: const Center(
                                             child: Text(
-                                              "+ Add Expansion",
+                                              "+ Add Expenses",
                                               style: TextStyle(
                                                   color: kPrimaryColor,
                                                   fontFamily:
