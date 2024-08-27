@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
-
-import '../../../config/constant/color_constant.dart';
-import '../../config/constant/font_constant.dart';
 import '../models/amenities_model.dart';
+import '../services/lookup_service.dart';
+import '../models/get_amenities_model.dart';
+import '../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 typedef StringCallback = void Function(String val);
 
 class AmenitiesView extends StatefulWidget {
-  final StringCallback callbacklist;
+  final StringCallback nameCallback;
+  final StringCallback idCallback;
   final String? initialvalue;
   const AmenitiesView({
     super.key,
-    required this.callbacklist,
+    required this.nameCallback,
+    required this.idCallback,
     this.initialvalue = "",
   });
 
@@ -21,55 +24,40 @@ class AmenitiesView extends StatefulWidget {
 }
 
 class _AmenitiesViewState extends State<AmenitiesView> {
-  List<AmenitiesModel> amenitiesModel = [
-    AmenitiesModel(
-      name: "Electricity",
-      id: "0",
-    ),
-    AmenitiesModel(
-      name: "Gas",
-      id: "1",
-    ),
-    AmenitiesModel(
-      name: "Water",
-      id: "2",
-    ),
-    AmenitiesModel(
-      name: "Wifi",
-      id: "3",
-    ),
-    AmenitiesModel(
-      name: "Parking",
-      id: "4",
-    ),
-    AmenitiesModel(
-      name: "Washing Machine",
-      id: "5",
-    ),
-    AmenitiesModel(
-      name: "CCTV Camera",
-      id: "6",
-    ),
-    AmenitiesModel(
-      name: "Housekeeping",
-      id: "7",
-    ),
-    AmenitiesModel(
-      name: "Smart TV",
-      id: "8",
-    ),
-  ];
+  List<AmenitiesModel> amenitiesModel = [];
   var selectedValues = [];
   List<dynamic> separatedList = [];
+
   @override
   void initState() {
+    super.initState();
     selectedValues = widget.initialvalue != null ? [widget.initialvalue!] : [];
     if (selectedValues.isNotEmpty) {
       separatedList = selectedValues[0].split(",");
     } else {
       separatedList = [];
     }
-    super.initState();
+
+    _fetchAmenities();
+  }
+
+  Future<void> _fetchAmenities() async {
+    try {
+      List<GetAllAmenitiesDataModel>? apiAmenities =
+          (await LookupService.getamenities());
+
+      setState(() {
+        amenitiesModel = apiAmenities
+            .map((item) => AmenitiesModel(
+                  name: item.title!,
+                  id: item.id.toString(),
+                ))
+            .toList();
+      });
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error fetching amenities: $e');
+    }
   }
 
   @override
@@ -79,7 +67,7 @@ class _AmenitiesViewState extends State<AmenitiesView> {
       items: amenitiesModel
           .map(
             (category) => MultiSelectItem(
-                category.name.toString(), category.name.toString()),
+                category.id.toString(), category.name.toString()),
           )
           .toList(),
       searchable: true,
@@ -116,8 +104,21 @@ class _AmenitiesViewState extends State<AmenitiesView> {
       separateSelectedItems: true,
       onConfirm: (values) {
         selectedValues = values;
-        String numbersAsString = values.map((e) => e.toString()).join(',');
-        widget.callbacklist(numbersAsString);
+        List<String> selectedIds = [];
+        List<String> selectedNames = [];
+        for (var value in values) {
+          try {
+            var item =
+                amenitiesModel.firstWhere((element) => element.id == value);
+            selectedIds.add(item.id);
+            selectedNames.add(item.name);
+          } catch (e) {
+            // ignore: avoid_print
+            print("No matching element found for value: $value");
+          }
+        }
+        widget.idCallback(selectedIds.join(','));
+        widget.nameCallback(selectedNames.join(','));
       },
       title: const Text(
         "House Amenities",

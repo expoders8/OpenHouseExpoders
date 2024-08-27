@@ -96,7 +96,7 @@ class AuthService {
     String provider,
   ) async {
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/Auth/SocialLogin'),
+      var response = await http.post(Uri.parse('$baseUrl/api/social-login'),
           body: json.encode({
             "firstName": firstName,
             "lastName": lastName,
@@ -163,12 +163,11 @@ class AuthService {
     String email,
   ) async {
     try {
-      var response =
-          await http.post(Uri.parse('$baseUrl/api/Auth/ForgotPassword'),
-              body: json.encode({
-                "email": email,
-              }),
-              headers: {'Content-type': 'application/json'});
+      var response = await http.post(Uri.parse('$baseUrl/api/forgot-password'),
+          body: json.encode({
+            "email": email,
+          }),
+          headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200) {
         LoaderX.hide();

@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 import 'package:openhome/app/view/amenities_view.dart';
 
+import '../../models/country_model.dart';
+import '../../models/state_model.dart';
+import '../../services/lookup_service.dart';
+import '../../services/properties_service.dart';
 import '../widgets/custom_textfield.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -17,16 +23,21 @@ class CreatePropertyPage extends StatefulWidget {
 }
 
 class _CreatePropertyPageState extends State<CreatePropertyPage> {
-  String amenities = "";
+  String amenities = "", amenitiesid = "";
   final _formKey = GlobalKey<FormState>();
   final TextEditingController sellController = TextEditingController();
-  final TextEditingController titleController = TextEditingController();
+  final TextEditingController propertyNameController = TextEditingController();
   final TextEditingController personController = TextEditingController();
-  final TextEditingController street1Controller = TextEditingController();
-  final TextEditingController street2Controller = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController raisedFundsController = TextEditingController();
+  final TextEditingController propertyPriceController = TextEditingController();
+  PropertiesService propertiesService = PropertiesService();
+  String countryId = "", stateid = "";
+  final TextEditingController countryController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
   bool isTouched = false;
+  File? imagefile;
   bool isFormSubmitted = false;
   List<Asset> images = <Asset>[];
   String error = 'No Error Dectected';
@@ -117,7 +128,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TextFormField(
-                                    controller: titleController,
+                                    controller: propertyNameController,
                                     textInputAction: TextInputAction.next,
                                     onChanged: ((value) {}),
                                     decoration: const InputDecoration(
@@ -197,31 +208,31 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                     hintText: '\$100',
                     maxLines: 1,
                     keyboardType: TextInputType.number,
-                    ctrl: raisedFundsController,
+                    ctrl: propertyPriceController,
                     name: "create",
                     formSubmitted: isFormSubmitted,
                     validationMsg: 'Please enter Property Price',
                   ),
                 ),
                 const SizedBox(height: 10),
-                SizedBox(
-                  width: size.width > 500 ? 600 : size.width,
-                  child: CustomTextFormField(
-                    hintText: 'Facilities',
-                    maxLines: 1,
-                    ctrl: raisedFundsController,
-                    name: "create",
-                    formSubmitted: isFormSubmitted,
-                    validationMsg: 'Please enter facilities',
-                  ),
-                ),
-                const SizedBox(height: 10),
+                // SizedBox(
+                //   width: size.width > 500 ? 600 : size.width,
+                //   child: CustomTextFormField(
+                //     hintText: 'Facilities',
+                //     maxLines: 1,
+                //     ctrl: ,
+                //     name: "create",
+                //     formSubmitted: isFormSubmitted,
+                //     validationMsg: 'Please enter facilities',
+                //   ),
+                // ),
+                // const SizedBox(height: 10),
                 SizedBox(
                   width: size.width > 500 ? 600 : size.width,
                   child: CustomTextFormField(
                     hintText: 'Person',
                     maxLines: 1,
-                    ctrl: raisedFundsController,
+                    ctrl: personController,
                     name: "create",
                     formSubmitted: isFormSubmitted,
                     validationMsg: 'Please enter Person',
@@ -230,7 +241,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 buildTextWidget("Address"),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 1),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -243,7 +254,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                           }
                           return null;
                         },
-                        controller: street1Controller,
+                        controller: addressController,
                         textInputAction: TextInputAction.next,
                         onChanged: (value) => {
                           isTouched = true,
@@ -286,9 +297,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 ),
                 const SizedBox(height: 10),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: TypeAheadField<String>(
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  child: TypeAheadField<GetAllCountryDataModel>(
                     textFieldConfiguration: TextFieldConfiguration(
+                      controller: countryController,
                       decoration: InputDecoration(
                         fillColor: kWhiteColor,
                         filled: true,
@@ -336,17 +348,19 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       cursorColor: kPrimaryColor,
                     ),
                     suggestionsCallback: (pattern) {
-                      return countries.where((t) =>
-                          t.toLowerCase().contains(pattern.toLowerCase()));
+                      return LookupService.getcountries();
                     },
-                    itemBuilder: (context, String suggestion) {
+                    itemBuilder: (context, GetAllCountryDataModel suggestion) {
                       return ListTile(
-                        title: Text(suggestion),
+                        title: Text(suggestion.name.toString()),
                       );
                     },
-                    onSuggestionSelected: (String suggestion) {
+                    onSuggestionSelected: (GetAllCountryDataModel suggestion) {
                       // ignore: avoid_print
-                      print('Selected: $suggestion');
+                      setState(() {
+                        countryController.text = suggestion.name.toString();
+                        countryId = suggestion.id.toString();
+                      });
                     },
                     noItemsFoundBuilder: (context) => const Padding(
                       padding: EdgeInsets.all(8.0),
@@ -356,9 +370,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 ),
                 const SizedBox(height: 10),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: TypeAheadField<String>(
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  child: TypeAheadField<GetAllStateDataModel>(
                     textFieldConfiguration: TextFieldConfiguration(
+                      controller: stateController,
                       decoration: InputDecoration(
                         fillColor: kWhiteColor,
                         filled: true,
@@ -406,17 +421,19 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       cursorColor: kPrimaryColor,
                     ),
                     suggestionsCallback: (pattern) {
-                      return states.where((t) =>
-                          t.toLowerCase().contains(pattern.toLowerCase()));
+                      return LookupService.getState(countryId);
                     },
-                    itemBuilder: (context, String suggestion) {
+                    itemBuilder: (context, GetAllStateDataModel suggestion) {
                       return ListTile(
-                        title: Text(suggestion),
+                        title: Text(suggestion.name.toString()),
                       );
                     },
-                    onSuggestionSelected: (String suggestion) {
+                    onSuggestionSelected: (GetAllStateDataModel suggestion) {
                       // ignore: avoid_print
-                      print('Selected: $suggestion');
+                      setState(() {
+                        stateController.text = suggestion.name.toString();
+                        stateid = suggestion.id.toString();
+                      });
                     },
                     noItemsFoundBuilder: (context) => const Padding(
                       padding: EdgeInsets.all(8.0),
@@ -425,82 +442,31 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: TypeAheadField<String>(
-                    textFieldConfiguration: TextFieldConfiguration(
-                      decoration: InputDecoration(
-                        fillColor: kWhiteColor,
-                        filled: true,
-                        hintText: "City",
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                        hintStyle: const TextStyle(
-                          fontFamily: kCircularStdBook,
-                          fontWeight: FontWeight.w400,
-                          color: kPrimaryColor,
-                          fontSize: 14,
-                        ),
-                        hintMaxLines: 1,
-                        suffixIcon: Image.asset(
-                          "assets/icons/polygon_down.png",
-                          scale: 2,
-                          width: 5,
-                        ),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8.0),
-                          ),
-                          borderSide:
-                              BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              const BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: const BorderSide(
-                            color: kWhiteColor,
-                          ),
-                        ),
-                      ),
-                      style: const TextStyle(
-                        fontFamily: kCircularStdBook,
-                        fontWeight: FontWeight.w400,
-                        color: kPrimaryColor,
-                        fontSize: 14,
-                      ),
-                      autocorrect: true,
-                      cursorColor: kPrimaryColor,
-                    ),
-                    suggestionsCallback: (pattern) {
-                      return cities.where((city) =>
-                          city.toLowerCase().contains(pattern.toLowerCase()));
-                    },
-                    itemBuilder: (context, String suggestion) {
-                      return ListTile(
-                        title: Text(suggestion),
-                      );
-                    },
-                    onSuggestionSelected: (String suggestion) {
-                      // ignore: avoid_print
-                      print('Selected: $suggestion');
-                    },
-                    noItemsFoundBuilder: (context) => const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('No cities found'),
-                    ),
+                SizedBox(
+                  width: size.width > 500 ? 600 : size.width,
+                  child: CustomTextFormField(
+                    hintText: 'city',
+                    maxLines: 1,
+                    ctrl: cityController,
+                    name: "create",
+                    formSubmitted: isFormSubmitted,
+                    validationMsg: 'Please enter Person',
                   ),
                 ),
                 const SizedBox(height: 10),
                 AmenitiesView(
                   initialvalue: amenities,
-                  callbacklist: (val) {
+                  nameCallback: (val) {
                     if (mounted) {
                       setState(() {
                         amenities = val;
+                      });
+                    }
+                  },
+                  idCallback: (val) {
+                    if (mounted) {
+                      setState(() {
+                        amenitiesid = val;
                       });
                     }
                   },
@@ -652,7 +618,21 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        propertiesService.createProperties(
+                            propertyNameController.text,
+                            descriptionController.text,
+                            propertyPriceController.text,
+                            amenities,
+                            personController.text,
+                            addressController.text,
+                            countryId,
+                            stateid,
+                            cityController.text,
+                            "",
+                            "",
+                            imagefile);
+                      },
                       child: const Text(
                         "Create a Property",
                         style: TextStyle(color: kWhiteColor),

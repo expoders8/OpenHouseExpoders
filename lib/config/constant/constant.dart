@@ -1,6 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 
 const String baseUrl =
-    "https://1b7f-2409-40c1-1104-fa74-9049-f852-5c98-4137.ngrok-free.app";
+    "https://c46a-2409-40c1-10ff-dfd3-d5f-1811-ff69-9d81.ngrok-free.app";
 
 final getStorage = GetStorage();
