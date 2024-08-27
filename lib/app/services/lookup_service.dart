@@ -9,7 +9,7 @@ import '../models/get_amenities_model.dart';
 import '../models/state_model.dart';
 
 class LookupService {
-  static Future<List<GetAllAmenitiesDataModel>> getamenities() async {
+  Future<List<GetAllAmenitiesDataModel>> getamenities() async {
     try {
       var response = await http.get(Uri.parse('$baseUrl/api/getamenities'),
           headers: {'Content-type': 'application/json'});

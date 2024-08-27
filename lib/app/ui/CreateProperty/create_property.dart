@@ -456,20 +456,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 const SizedBox(height: 10),
                 AmenitiesView(
                   initialvalue: amenities,
-                  nameCallback: (val) {
-                    if (mounted) {
-                      setState(() {
-                        amenities = val;
-                      });
-                    }
-                  },
-                  idCallback: (val) {
-                    if (mounted) {
-                      setState(() {
-                        amenitiesid = val;
-                      });
-                    }
-                  },
                 ),
                 const SizedBox(height: 10),
                 imageList.isEmpty
@@ -619,19 +605,19 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                         ),
                       ),
                       onPressed: () {
-                        propertiesService.createProperties(
-                            propertyNameController.text,
-                            descriptionController.text,
-                            propertyPriceController.text,
-                            amenities,
-                            personController.text,
-                            addressController.text,
-                            countryId,
-                            stateid,
-                            cityController.text,
-                            "",
-                            "",
-                            imagefile);
+                        // propertiesService.createProperties(
+                        //     propertyNameController.text,
+                        //     descriptionController.text,
+                        //     propertyPriceController.text,
+                        //     amenities,
+                        //     personController.text,
+                        //     addressController.text,
+                        //     countryId,
+                        //     stateid,
+                        //     cityController.text,
+                        //     "",
+                        //     "",
+                        //     imageList);
                       },
                       child: const Text(
                         "Create a Property",
