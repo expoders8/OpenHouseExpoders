@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
@@ -29,50 +29,53 @@ class _HouseKeeperViewState extends State<HouseKeeperView> {
           const Divider(),
           const SizedBox(height: 5),
           tenanthistory(),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               SizedBox(
-                width: 150,
                 height: 40,
                 child: CupertinoButton(
                     borderRadius: BorderRadius.circular(15),
                     padding: EdgeInsets.zero,
-                    color: kBlack87Color,
-                    child: const Text(
-                      "Remove",
-                      style: TextStyle(
-                          color: kWhiteColor,
-                          fontFamily: kCircularStdNormal,
-                          fontSize: 12),
+                    color: kButtonColor,
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Text(
+                        "Remove",
+                        style: TextStyle(
+                            color: kWhiteColor,
+                            fontFamily: kCircularStdNormal,
+                            fontSize: 12),
+                      ),
                     ),
                     onPressed: () {}),
               ),
               const SizedBox(width: 10),
               Container(
                 decoration: BoxDecoration(
-                    border: Border.all(),
+                    border: Border.all(color: kButtonColor),
                     borderRadius: BorderRadius.circular(15)),
-                width: 150,
                 height: 40,
                 child: CupertinoButton(
                     padding: EdgeInsets.zero,
                     borderRadius: BorderRadius.circular(15),
                     color: kBackGroundColor,
-                    child: const Text(
-                      "Add",
-                      style: TextStyle(
-                          color: kPrimaryColor,
-                          fontFamily: kCircularStdNormal,
-                          fontSize: 12),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Text(
+                        "Add",
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontFamily: kCircularStdNormal,
+                            fontSize: 12),
+                      ),
                     ),
                     onPressed: () {}),
               ),
             ],
           ),
           const SizedBox(height: 10),
-          const SizedBox(height: 5),
           const Text(
             "Previous Housekeeper",
             style: TextStyle(

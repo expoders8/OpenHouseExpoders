@@ -11,7 +11,6 @@ import '../../../config/constant/font_constant.dart';
 import '../../../config/provider/loader_provider.dart';
 import '../../../config/provider/snackbar_provider.dart';
 import '../../services/auth_service.dart';
-import '../TabPage/tab_page.dart';
 // import '../../services/auth_service.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(

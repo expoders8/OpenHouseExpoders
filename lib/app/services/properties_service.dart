@@ -1,13 +1,17 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:openhome/app/models/getpropretyes_model.dart';
 
 import '../../config/constant/constant.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
+import '../controller/amenities_controller.dart';
 
 class PropertiesService {
+  final GetAllAmenitiesController getAllAmenitiesController =
+      Get.put(GetAllAmenitiesController());
   createProperties(
       String propertyname,
       String description,
@@ -37,7 +41,8 @@ class PropertiesService {
             ..fields['profile_picture'] = ""
             ..fields['created_by_id'] = ""
             ..fields['updated_by_id'] = ""
-            ..fields['amenity_id'] = amenityid;
+            ..fields['amenity_id'] =
+                getAllAmenitiesController.selectedAmenitis.string;
       if (file != null) {
         request.files.add(await http.MultipartFile.fromPath('file', file.path));
       }
@@ -45,7 +50,7 @@ class PropertiesService {
         'Content-Type': 'application/json',
       });
       response = await http.Response.fromStream(await request.send());
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         var decodedUser = jsonDecode(response.body);
         if (decodedUser['success']) {
           LoaderX.hide();

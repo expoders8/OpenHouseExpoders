@@ -7,6 +7,7 @@ import 'package:another_carousel_pro/another_carousel_pro.dart';
 import '../../view/nearby_view.dart';
 import '../../view/house_keeper_view.dart';
 import '../../view/property_details_view.dart';
+import '../../view/tenant_history_view.dart';
 import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -22,6 +23,7 @@ class NotLeasePropertyDetailPage extends StatefulWidget {
 class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool isPreviousTenantsSelected = true;
 
   @override
   void initState() {
@@ -190,7 +192,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                       children: [
                                         Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.end,
+                                              MainAxisAlignment.center,
                                           children: [
                                             CupertinoButton(
                                               padding: EdgeInsets.zero,
@@ -200,29 +202,114 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                               },
                                               child: Container(
                                                 height: 38,
-                                                width: Get.width - 200,
+                                                width: Get.width - 50,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             25),
                                                     border: Border.all(
                                                         color: kButtonColor),
-                                                    color: kBackGroundColor),
+                                                    color: kButtonColor),
                                                 child: const Center(
                                                   child: Text(
                                                     "Invite Tenant",
                                                     style: TextStyle(
-                                                        color: kPrimaryColor,
+                                                        color: kWhiteColor,
                                                         fontFamily:
-                                                            kCircularStdNormal,
-                                                        fontSize: 15),
+                                                            kCircularStdMedium,
+                                                        fontSize: 16),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ],
                                         ),
-                                        const HouseKeeperView(),
+                                        const SizedBox(height: 10),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  width: 150,
+                                                  height: 40,
+                                                  child: CupertinoButton(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    padding: EdgeInsets.zero,
+                                                    color:
+                                                        isPreviousTenantsSelected
+                                                            ? kBlack87Color
+                                                            : kWhiteColor,
+                                                    child: Text(
+                                                      "Previous Tenants",
+                                                      style: TextStyle(
+                                                        color:
+                                                            isPreviousTenantsSelected
+                                                                ? kWhiteColor
+                                                                : kBlack87Color,
+                                                        fontFamily:
+                                                            kCircularStdNormal,
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        isPreviousTenantsSelected =
+                                                            true;
+                                                      });
+                                                    },
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  width: 150,
+                                                  height: 40,
+                                                  child: CupertinoButton(
+                                                    padding: EdgeInsets.zero,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    color:
+                                                        isPreviousTenantsSelected
+                                                            ? kWhiteColor
+                                                            : kBlack87Color,
+                                                    child: Text(
+                                                      "Housekeepers",
+                                                      style: TextStyle(
+                                                        color:
+                                                            isPreviousTenantsSelected
+                                                                ? kBlack87Color
+                                                                : kWhiteColor,
+                                                        fontFamily:
+                                                            kCircularStdNormal,
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        isPreviousTenantsSelected =
+                                                            false;
+                                                      });
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 20),
+                                            isPreviousTenantsSelected
+                                                ? const TenantHistoryView()
+                                                : const HouseKeeperView(),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ),
