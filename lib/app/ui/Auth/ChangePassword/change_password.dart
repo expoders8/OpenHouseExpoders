@@ -95,13 +95,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         setState(() {
                           isFormSubmitted = true;
                         });
-                        if (_formKey.currentState?.validate() ?? false) {
-                          LoaderX.show(context, 60.0, 60.0);
-                          authService.changePassowrd(
-                              "userId",
-                              currentPasswordController.text,
-                              newPasswordController.text);
-                        } else {}
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        Future.delayed(const Duration(milliseconds: 100),
+                            () async {
+                          if (_formKey.currentState!.validate()) {
+                            LoaderX.show(context, 60.0, 60.0);
+
+                            authService.changePassowrd(
+                                "",
+                                currentPasswordController.text,
+                                newPasswordController.text);
+                          }
+                        });
                       },
                       child: Container(
                         height: 45,

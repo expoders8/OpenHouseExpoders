@@ -81,11 +81,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             setState(() {
                               isFormSubmitted = true;
                             });
-                            if (_forgotpasswordFormKey.currentState!
-                                .validate()) {
-                              LoaderX.show(context, 60.0, 60.0);
-                              authService.forgotPassword(emailController.text);
-                            }
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            Future.delayed(const Duration(milliseconds: 100),
+                                () async {
+                              if (_forgotpasswordFormKey.currentState!
+                                  .validate()) {
+                                LoaderX.show(context, 60.0, 60.0);
+                                authService
+                                    .forgotPassword(emailController.text);
+                              }
+                            });
                           },
                           child: Container(
                             height: 50,
