@@ -9,6 +9,7 @@ class GetAllAmenitiesController extends GetxController {
   LookupService lookupService = LookupService();
   RxString categoryId = "".obs;
   RxList selectedAmenitis = [].obs;
+  RxList selectedImages = [].obs;
 
   void fetchAllAmenites() async {
     try {

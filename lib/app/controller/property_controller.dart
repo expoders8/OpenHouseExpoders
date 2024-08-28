@@ -1,14 +1,20 @@
 import 'package:get/get.dart';
 
+import '../models/getpropretyes_model.dart';
 import '../services/properties_service.dart';
 
 class GetPropertyController extends GetxController {
+  var isLoading = true.obs;
+  var propertiesList = <List<GetAllPropertiesModel>>[].obs;
   PropertiesService propertiesService = PropertiesService();
 
-  Future<void> getAllProperties() async {
+  void fetchAllProperties() async {
     try {
-      await propertiesService.getAllProperties(
-          0, 100, "", "", "", "", "", true, "", "", "");
-    } finally {}
+      isLoading(true);
+      // var data = await propertiesService.getAllProperties();
+      // propertiesList.assign(data);
+    } finally {
+      isLoading(false);
+    }
   }
 }

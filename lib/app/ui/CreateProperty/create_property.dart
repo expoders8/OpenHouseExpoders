@@ -1,11 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:get/get.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 import 'package:openhome/app/view/amenities_view.dart';
+import 'package:path_provider/path_provider.dart';
 
+import '../../controller/amenities_controller.dart';
 import '../../models/country_model.dart';
 import '../../models/state_model.dart';
 import '../../services/lookup_service.dart';
@@ -33,15 +35,19 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController propertyPriceController = TextEditingController();
   PropertiesService propertiesService = PropertiesService();
+  // final GetAllAmenitiesController getAllAmenitiesController =
+  //     Get.put(GetAllAmenitiesController());
+  List<File> fileList = [];
+
   String countryId = "", stateid = "";
   final TextEditingController countryController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   bool isTouched = false;
-  File? imagefile;
   bool isFormSubmitted = false;
   List<Asset> images = <Asset>[];
   String error = 'No Error Dectected';
   List<Asset> imageList = <Asset>[];
+  List selctedImages = [];
   final List<String> cities = [
     'New York',
     'Los Angeles',
@@ -605,6 +611,11 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                         ),
                       ),
                       onPressed: () {
+                        // imageList.forEach(
+                        //     (i) => selctedImages.add(i.identifier.toString()));
+                        // getAllAmenitiesController.selectedImages(
+                        //   selctedImages,
+                        // );
                         // propertiesService.createProperties(
                         //     propertyNameController.text,
                         //     descriptionController.text,
@@ -671,9 +682,31 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
           selectCircleStrokeColor: kRedColor,
         ),
       );
+
+      for (var asset in imageList) {
+        final filePath = await getFilePathFromAsset(asset);
+        fileList.add(File(filePath));
+      }
       setState(() {});
     } on Exception catch (e) {
       error = e.toString();
     }
+  }
+
+  Future<String> getFilePathFromAsset(Asset asset) async {
+    final byteData = await asset.getByteData();
+    final buffer = byteData.buffer;
+
+    // Generate a unique temporary file path
+    String tempPath = (await getTemporaryDirectory()).path;
+    String filePath = '$tempPath/${asset.name}';
+
+    // Write the file
+    File file = File(filePath);
+    await file.writeAsBytes(
+      buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
+    );
+
+    return filePath;
   }
 }
