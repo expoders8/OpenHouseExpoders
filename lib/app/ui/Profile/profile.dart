@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,14 +20,30 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String selectedRoll = "";
+  String userName = "";
+  String email = "";
+  String phoneNo = "";
+  String image = "";
 
   @override
   void initState() {
     var roll = getStorage.read('roll') ?? "";
+    getuser();
     setState(() {
       selectedRoll = roll;
     });
     super.initState();
+  }
+
+  getuser() {
+    var user = getStorage.read('user');
+    var userData = jsonDecode(user);
+    if (userData != null) {
+      userName = userData["first_name"] + " " + userData["last_name"] ?? "";
+      email = userData["email"] ?? "";
+      phoneNo = userData["phone_number"] ?? "";
+      image = userData["profile_picture"] ?? "";
+    }
   }
 
   @override
@@ -91,9 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 padding: const EdgeInsets.only(
                                     right: 0.0, bottom: 10),
                                 child: Text(
-                                  selectedRoll == "tenant"
-                                      ? "Tenant Name"
-                                      : "Host Name",
+                                  userName,
                                   style: const TextStyle(
                                       color: kWhiteColor,
                                       fontFamily: kCircularStdBold,
@@ -115,38 +131,45 @@ class _ProfilePageState extends State<ProfilePage> {
                           borderRadius: BorderRadius.circular(1000)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: Image.asset(
-                          "assets/icons/boy 1.png",
+                        child: Image.network(
+                          image,
                           fit: BoxFit.cover,
-                          scale: 1.2,
                           height: 110,
                           width: 110,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              "assets/images/blank_profile.png",
+                              fit: BoxFit.cover,
+                              height: 110,
+                              width: 110,
+                            );
+                          },
                         ),
                       ),
                     ),
                   )
                 ],
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(right: 28.0, top: 10),
+                    padding: const EdgeInsets.only(right: 28.0, top: 10),
                     child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.phone,
                               size: 18,
                               color: kButtonColor,
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(
-                              "+91 9898567548",
-                              style: TextStyle(
+                              phoneNo,
+                              style: const TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: 15,
                                   fontFamily: kCircularStdMedium),
@@ -156,15 +179,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.email_outlined,
                               size: 18,
                               color: kButtonColor,
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(
-                              "test@google.com",
-                              style: TextStyle(
+                              email,
+                              style: const TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: 15,
                                   fontFamily: kCircularStdMedium),
@@ -177,77 +200,77 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               const SizedBox(height: 35),
-              selectedRoll == "tenant"
-                  ? CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.people,
-                                  size: 18,
-                                  color: kButtonColor,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  "Host Details",
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 16,
-                                      fontFamily: kCircularStdMedium),
-                                ),
-                              ],
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 13,
-                              color: kButtonColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        Get.toNamed(Routes.myTenantsPage);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.people,
-                                  size: 18,
-                                  color: kButtonColor,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  "My Tenants",
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 16,
-                                      fontFamily: kCircularStdMedium),
-                                ),
-                              ],
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 13,
-                              color: kButtonColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+              // selectedRoll == "tenant"
+              //     ? CupertinoButton(
+              //         padding: EdgeInsets.zero,
+              //         onPressed: () {},
+              //         child: const Padding(
+              //           padding: EdgeInsets.symmetric(horizontal: 15.0),
+              //           child: Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: [
+              //               Row(
+              //                 children: [
+              //                   Icon(
+              //                     Icons.people,
+              //                     size: 18,
+              //                     color: kButtonColor,
+              //                   ),
+              //                   SizedBox(width: 10),
+              //                   Text(
+              //                     "Host Details",
+              //                     style: TextStyle(
+              //                         color: kPrimaryColor,
+              //                         fontSize: 16,
+              //                         fontFamily: kCircularStdMedium),
+              //                   ),
+              //                 ],
+              //               ),
+              //               Icon(
+              //                 Icons.arrow_forward_ios,
+              //                 size: 13,
+              //                 color: kButtonColor,
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       )
+              //     : CupertinoButton(
+              //         padding: EdgeInsets.zero,
+              //         onPressed: () {
+              //           Get.toNamed(Routes.myTenantsPage);
+              //         },
+              //         child: const Padding(
+              //           padding: EdgeInsets.symmetric(horizontal: 15.0),
+              //           child: Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: [
+              //               Row(
+              //                 children: [
+              //                   Icon(
+              //                     Icons.people,
+              //                     size: 18,
+              //                     color: kButtonColor,
+              //                   ),
+              //                   SizedBox(width: 10),
+              //                   Text(
+              //                     "My Tenants",
+              //                     style: TextStyle(
+              //                         color: kPrimaryColor,
+              //                         fontSize: 16,
+              //                         fontFamily: kCircularStdMedium),
+              //                   ),
+              //                 ],
+              //               ),
+              //               Icon(
+              //                 Icons.arrow_forward_ios,
+              //                 size: 13,
+              //                 color: kButtonColor,
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
               SizedBox(height: selectedRoll == "tenant" ? 0 : 5),
               selectedRoll == "tenant"
                   ? Container()
@@ -507,9 +530,9 @@ class _ProfilePageState extends State<ProfilePage> {
           TextButton(
             onPressed: () async {
               // FirebaseAuthServices().signOut();
-              Get.back();
-              // getStorage.remove('user');
-              // getStorage.remove('authToken');
+              getStorage.remove('user');
+              getStorage.remove('authToken');
+              getStorage.remove('appFlow');
               // getStorage.write("index", 0);
               Get.offAll(() => const LoginPage());
             },

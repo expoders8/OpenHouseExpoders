@@ -209,7 +209,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            Get.toNamed(Routes.selectRollPage);
+                            onSignUpButtonPress();
                           },
                           child: Container(
                             height: 45,

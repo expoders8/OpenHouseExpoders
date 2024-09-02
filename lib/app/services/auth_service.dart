@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -23,16 +24,22 @@ class AuthService {
       if (response.statusCode == 200) {
         if (decodedUser['success']) {
           getStorage.write('user', jsonEncode(decodedUser["data"]));
+          getStorage.write('userid', decodedUser["data"]["id"]);
           getStorage.write('authToken', decodedUser["data"]['authToken']);
           getStorage.write('roll', decodedUser["data"]['type']);
+          getStorage.write('appFlow', 1);
           LoaderX.hide();
           Get.offAll(() => const TabPage());
         } else {
           LoaderX.hide();
           SnackbarUtils.showErrorSnackbar(
-              "Failed to login", decodedUser['message']);
+              "Failed to login", decodedUser['error']);
           return Future.error("Server Error");
         }
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar(
+            "Failed to login", decodedUser['error']);
       }
     } catch (e) {
       LoaderX.hide();
@@ -65,12 +72,14 @@ class AuthService {
             "updated_by_id": null,
           }),
           headers: {'Content-type': 'application/json'});
+      var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        var decodedUser = jsonDecode(response.body);
         if (decodedUser['success']) {
           getStorage.write('user', jsonEncode(decodedUser["data"]));
-          getStorage.write('authToken', decodedUser["data"]['authToken']);
+          getStorage.write('userid', decodedUser["data"]["id"]);
+          getStorage.write('authToken', decodedUser["data"]['auth_token']);
           getStorage.write('roll', decodedUser["data"]['type']);
+          getStorage.write('appFlow', 1);
           LoaderX.hide();
           Get.offAll(() => const TabPage());
         } else {
@@ -79,6 +88,11 @@ class AuthService {
               "Failed to signup", decodedUser['message']);
           return Future.error("Server Error");
         }
+      } else {
+        LoaderX.hide();
+        Get.back();
+        SnackbarUtils.showErrorSnackbar(
+            "Failed to signup", decodedUser['message']);
       }
     } catch (e) {
       LoaderX.hide();
@@ -129,22 +143,21 @@ class AuthService {
   }
 
   changePassowrd(String userId, String currentPass, String newPass) async {
-    var token = getStorage.read('authToken');
+    var user = getStorage.read('userid');
+
     try {
-      var response = await http.post(
-          Uri.parse('$baseUrl/api/User/UpdateUserPassword'),
+      var response = await http.post(Uri.parse('$baseUrl/api/change-password'),
           body: json.encode({
+            "id": user,
             "currentPassword": currentPass,
-            "newPassword": newPass,
-            "id": userId
+            "newPassword": newPass
           }),
-          headers: {
-            "Authorization": "Bearer $token",
-            'Content-type': 'application/json'
-          });
+          headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
-        LoaderX.hide();
         var decodedUser = jsonDecode(response.body);
+        LoaderX.hide();
+        Get.back();
+        SnackbarUtils.showSnackbar(decodedUser["message"], "");
         return decodedUser;
       } else {
         LoaderX.hide();
@@ -171,6 +184,8 @@ class AuthService {
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200) {
         LoaderX.hide();
+        Get.back();
+        SnackbarUtils.showSnackbar(decodedUser["message"], "");
         return decodedUser;
       } else {
         LoaderX.hide();

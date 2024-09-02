@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../models/get_amenities_model.dart';
 import '../services/lookup_service.dart';
+import '../models/get_amenities_model.dart';
 
 class GetAllAmenitiesController extends GetxController {
   var isLoading = true.obs;

@@ -6,8 +6,8 @@ import 'package:another_carousel_pro/another_carousel_pro.dart';
 
 import '../../view/nearby_view.dart';
 import '../../view/house_keeper_view.dart';
-import '../../view/property_details_view.dart';
 import '../../view/tenant_history_view.dart';
+import '../../view/property_details_view.dart';
 import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';

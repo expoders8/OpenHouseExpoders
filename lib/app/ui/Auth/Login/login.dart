@@ -2,14 +2,13 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../config/constant/constant.dart';
-import '../../../../config/provider/loader_provider.dart';
 import '../../../routes/app_pages.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/social_login_widget.dart';
 import '../../../controller/auth_controller.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
+import '../../../../config/provider/loader_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -120,8 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            getStorage.write('roll', "host");
-                            Get.toNamed(Routes.tabPage);
+                            onLoginButtonPress();
                           },
                           child: Container(
                             height: 50,

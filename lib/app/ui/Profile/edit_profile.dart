@@ -1,10 +1,14 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../widgets/custom_textfield.dart';
+import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/imagepicker_provider.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -17,10 +21,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
   bool selectEmail = true;
   bool isFormSubmitted = false;
   TextEditingController emailController = TextEditingController();
-  TextEditingController mobilenoController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
+  File? imagefile;
+  @override
+  void initState() {
+    getuser();
+    super.initState();
+  }
+
+  getuser() {
+    var user = getStorage.read('user');
+    var userData = jsonDecode(user);
+    if (userData != null) {
+      firstNameController.text = userData["first_name"] ?? "";
+      lastNameController.text = userData["last_name"] ?? "";
+      emailController.text = userData["email"] ?? "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,28 +80,57 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       children: [
                         Align(
                           alignment: Alignment.topCenter,
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 75),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: kWhiteColor, width: 2),
-                              borderRadius: BorderRadius.circular(1000),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: Image.asset(
-                                "assets/icons/boy 1.png",
-                                fit: BoxFit.cover,
-                                scale: 1.2,
-                                height: 110,
-                                width: 110,
-                              ),
-                            ),
-                          ),
+                          child: imagefile != null
+                              ? Container(
+                                  margin: const EdgeInsets.only(top: 75),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: kWhiteColor, width: 2),
+                                    borderRadius: BorderRadius.circular(1000),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.file(
+                                      imagefile!,
+                                      fit: BoxFit.cover,
+                                      scale: 1.2,
+                                      height: 110,
+                                      width: 110,
+                                    ),
+                                    // Image.asset(
+                                    //   "assets/icons/boy 1.png",
+                                    //   fit: BoxFit.cover,
+                                    //   scale: 1.2,
+                                    //   height: 110,
+                                    //   width: 110,
+                                    // ),
+                                  ),
+                                )
+                              : Container(
+                                  margin: const EdgeInsets.only(top: 75),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: kWhiteColor, width: 2),
+                                    borderRadius: BorderRadius.circular(1000),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.asset(
+                                      "assets/icons/boy 1.png",
+                                      fit: BoxFit.cover,
+                                      scale: 1.2,
+                                      height: 110,
+                                      width: 110,
+                                    ),
+                                  ),
+                                ),
                         ),
                         Align(
                           alignment: Alignment.topCenter,
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              pickImage();
+                            },
                             child: Container(
                               margin: const EdgeInsets.only(top: 150, left: 85),
                               padding: const EdgeInsets.all(5),
@@ -163,6 +212,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future pickImage() async {
+    await PickerUtils.pickImageFromGallery().then(
+      (pickedFile) async {
+        if (pickedFile == null) return;
+
+        await PickerUtils.cropSelectedImage(pickedFile.path).then(
+          (croppedFile) {
+            if (croppedFile == null) return;
+            setState(
+              () {
+                imagefile = File(croppedFile.path);
+              },
+            );
+          },
+        );
+      },
     );
   }
 }

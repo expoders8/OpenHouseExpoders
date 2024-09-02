@@ -1,15 +1,17 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:openhome/app/models/getpropretyes_model.dart';
 
 import '../../config/constant/constant.dart';
+import '../controller/amenities_controller.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
-import '../controller/amenities_controller.dart';
+import 'package:openhome/app/models/getpropretyes_model.dart';
 
 class PropertiesService {
+  late TabController _tabController;
   final GetAllAmenitiesController getAllAmenitiesController =
       Get.put(GetAllAmenitiesController());
   createProperties(
@@ -54,6 +56,7 @@ class PropertiesService {
         var decodedUser = jsonDecode(response.body);
         if (decodedUser['success']) {
           LoaderX.hide();
+          _tabController.animateTo(1);
           return decodedUser;
         } else {
           LoaderX.hide();

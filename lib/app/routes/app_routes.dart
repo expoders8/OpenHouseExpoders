@@ -6,7 +6,9 @@ abstract class Routes {
   static const tabPage = _Paths.tabPage;
   static const loginPage = _Paths.loginPage;
   static const signUpPage = _Paths.signUpPage;
+  static const profilePage = _Paths.profilePage;
   static const myTenantsPage = _Paths.myTenantsPage;
+  static const addExpensePage = _Paths.addExpensePage;
   static const selectRollPage = _Paths.selectRollPage;
   static const editProfilePage = _Paths.editProfilePage;
   static const inviteTenantPage = _Paths.inviteTenantPage;
@@ -19,15 +21,15 @@ abstract class Routes {
   static const inviteTenantDetailPage = _Paths.inviteTenantDetailPage;
   static const leasePropertyDetailPage = _Paths.leasePropertyDetailPage;
   static const notLeasePropertyDetailPage = _Paths.notLeasePropertyDetailPage;
-  static const profilePage = _Paths.profilePage;
-  static const addExpensePage = _Paths.addExpensePage;
 }
 
 abstract class _Paths {
   static const tabPage = '/tabPage';
   static const loginPage = '/loginPage';
   static const signUpPage = '/signUpPage';
+  static const profilePage = '/profilePage';
   static const myTenantsPage = '/myTenantsPage';
+  static const addExpensePage = '/addExpensePage';
   static const selectRollPage = '/selectRollPage';
   static const editProfilePage = '/editProfilePage';
   static const inviteTenantPage = '/inviteTenantPage';
@@ -40,6 +42,4 @@ abstract class _Paths {
   static const inviteTenantDetailPage = '/inviteTenantDetailPage';
   static const leasePropertyDetailPage = '/leasePropertyDetailPage';
   static const notLeasePropertyDetailPage = '/notLeasePropertyDetailPage';
-  static const profilePage = '/profilePage';
-  static const addExpensePage = '/addExpensePage';
 }

@@ -2,9 +2,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/routes/app_pages.dart';
+import 'package:openhome/app/view/tenant_history_view.dart';
 import 'package:openhome/app/view/property_details_view.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:openhome/app/view/tenant_history_view.dart';
 
 import '../../view/nearby_view.dart';
 import '../../view/house_keeper_view.dart';
@@ -274,7 +274,13 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    SizedBox(
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                      ),
                                                       width: 150,
                                                       height: 40,
                                                       child: CupertinoButton(
@@ -312,7 +318,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                         border: Border.all(),
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(15),
+                                                                .circular(16),
                                                       ),
                                                       width: 150,
                                                       height: 40,

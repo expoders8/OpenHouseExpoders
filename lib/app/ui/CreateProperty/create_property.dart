@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
-import 'package:path_provider/path_provider.dart';
 
-import '../../services/properties_service.dart';
 import '../widgets/custom_textfield.dart';
+import '../../services/properties_service.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -699,32 +699,29 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   }
 }
 
-
 //////////  Dynamic Code Create Property -------------------------------------------------------
 //////////  Dynamic Code Create Property -------------------------------------------------------
 //////////  Dynamic Code Create Property -------------------------------------------------------
 //////////  Dynamic Code Create Property -------------------------------------------------------
-
-
 
 // import 'dart:io';
+// import 'package:get/get.dart';
 // import 'package:flutter/material.dart';
 // import 'package:dotted_border/dotted_border.dart';
-// import 'package:flutter_typeahead/flutter_typeahead.dart';
-// import 'package:get/get.dart';
-// import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
-// import 'package:openhome/app/view/amenities_view.dart';
 // import 'package:path_provider/path_provider.dart';
+// import 'package:openhome/app/view/amenities_view.dart';
+// import 'package:flutter_typeahead/flutter_typeahead.dart';
+// import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
-// import '../../../config/provider/loader_provider.dart';
-// import '../../controller/amenities_controller.dart';
-// import '../../models/country_model.dart';
 // import '../../models/state_model.dart';
+// import '../../models/country_model.dart';
+// import '../widgets/custom_textfield.dart';
 // import '../../services/lookup_service.dart';
 // import '../../services/properties_service.dart';
-// import '../widgets/custom_textfield.dart';
+// import '../../controller/amenities_controller.dart';
 // import '../../../config/constant/font_constant.dart';
 // import '../../../config/constant/color_constant.dart';
+// import '../../../config/provider/loader_provider.dart';
 
 // class CreatePropertyPage extends StatefulWidget {
 //   final String? checkEdit;
@@ -847,7 +844,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
 //                                   TextFormField(
 //                                     controller: propertyNameController,
 //                                     textInputAction: TextInputAction.next,
-//                                     onChanged: ((value) {}),
+//                                     onChanged: (value) {},
 //                                     decoration: const InputDecoration(
 //                                       enabledBorder: UnderlineInputBorder(
 //                                         borderSide:
@@ -856,6 +853,14 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
 //                                       focusedBorder: UnderlineInputBorder(
 //                                         borderSide:
 //                                             BorderSide(color: kIconColor),
+//                                       ),
+//                                       errorBorder: UnderlineInputBorder(
+//                                         borderSide:
+//                                             BorderSide(color: kRedColor),
+//                                       ),
+//                                       focusedErrorBorder: UnderlineInputBorder(
+//                                         borderSide:
+//                                             BorderSide(color: kRedColor),
 //                                       ),
 //                                       contentPadding: EdgeInsets.only(top: 5),
 //                                       hintText: 'Property Name',
@@ -866,6 +871,12 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
 //                                         fontSize: 14,
 //                                       ),
 //                                     ),
+//                                     validator: (value) {
+//                                       if (value == null || value.isEmpty) {
+//                                         return 'Please enter property name';
+//                                       }
+//                                       return null;
+//                                     },
 //                                   ),
 //                                 ],
 //                               ),
@@ -906,6 +917,12 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
 //                                         fontSize: 14,
 //                                       ),
 //                                     ),
+//                                     validator: (value) {
+//                                       if (value == null || value.isEmpty) {
+//                                         return 'Please enter Description';
+//                                       }
+//                                       return null;
+//                                     },
 //                                   ),
 //                                 ],
 //                               ),
@@ -1167,7 +1184,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
 //                     ctrl: cityController,
 //                     name: "create",
 //                     formSubmitted: isFormSubmitted,
-//                     validationMsg: 'Please enter Person',
+//                     validationMsg: 'Please enter city',
 //                   ),
 //                 ),
 //                 const SizedBox(height: 10),
@@ -1324,25 +1341,34 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
 //                         ),
 //                       ),
 //                       onPressed: () {
-//                         LoaderX.show(context, 60.0, 60.0);
-//                         imageList.forEach(
-//                             (i) => selctedImages.add(i.identifier.toString()));
-//                         getAllAmenitiesController.selectedImages(
-//                           selctedImages,
-//                         );
-//                         propertiesService.createProperties(
-//                             propertyNameController.text,
-//                             descriptionController.text,
-//                             propertyPriceController.text,
-//                             facilitiesController.text,
-//                             personController.text,
-//                             addressController.text,
-//                             countryId,
-//                             stateid,
-//                             cityController.text,
-//                             "",
-//                             "",
-//                             fileList.first);
+//                         setState(() {
+//                           isFormSubmitted = true;
+//                         });
+//                         FocusScope.of(context).requestFocus(FocusNode());
+//                         Future.delayed(const Duration(milliseconds: 100),
+//                             () async {
+//                           if (_formKey.currentState!.validate()) {
+//                             LoaderX.show(context, 60.0, 60.0);
+//                             imageList.forEach((i) =>
+//                                 selctedImages.add(i.identifier.toString()));
+//                             getAllAmenitiesController.selectedImages(
+//                               selctedImages,
+//                             );
+//                             propertiesService.createProperties(
+//                                 propertyNameController.text,
+//                                 descriptionController.text,
+//                                 propertyPriceController.text,
+//                                 facilitiesController.text,
+//                                 personController.text,
+//                                 addressController.text,
+//                                 countryId,
+//                                 stateid,
+//                                 cityController.text,
+//                                 "",
+//                                 "",
+//                                 fileList.first);
+//                           }
+//                         });
 //                       },
 //                       child: const Text(
 //                         "Create a Property",
