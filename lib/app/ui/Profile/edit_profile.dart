@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../config/provider/loader_provider.dart';
+import '../../services/user_service.dart';
 import '../widgets/custom_textfield.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
@@ -24,6 +26,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
+  UserService userService = UserService();
   File? imagefile;
   @override
   void initState() {
@@ -185,7 +188,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       const SizedBox(height: 15),
                       CupertinoButton(
                         padding: EdgeInsets.zero,
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            isFormSubmitted = true;
+                          });
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          LoaderX.show(context, 60.0, 60.0);
+                          userService.updateProfile(
+                              firstNameController.text,
+                              lastNameController.text,
+                              emailController.text,
+                              imagefile);
+                        },
                         child: Container(
                           height: 45,
                           width: Get.width,

@@ -85,8 +85,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(Routes.editProfilePage);
+                                onTap: () async {
+                                  await Get.toNamed(Routes.editProfilePage)!
+                                      .then(
+                                    (value) {
+                                      setState(() {
+                                        getuser();
+                                      });
+                                    },
+                                  );
+
+                                  //Get.toNamed(Routes.editProfilePage);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 15.0),

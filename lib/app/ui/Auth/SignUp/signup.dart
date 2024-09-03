@@ -130,29 +130,43 @@ class _SignUpPageState extends State<SignUpPage> {
                           width: Get.width > 500 ? 600 : Get.width,
                           child: IntrinsicHeight(
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                      color: kBackGroundColor,
-                                      border: Border.all(
-                                          color: kSecondaryPrimaryColor),
-                                      borderRadius: BorderRadius.circular(50)),
-                                  child: CountryListPick(
-                                    theme: CountryTheme(
-                                      isShowFlag: false,
-                                      isShowTitle: false,
-                                      isShowCode: true,
-                                      isDownIcon: false,
-                                      showEnglishName: true,
-                                    ),
-                                    initialSelection: 'IN',
-                                    onChanged: (CountryCode? code) {
-                                      setState(() {
-                                        selectedCountrydialCode =
-                                            code!.dialCode.toString();
-                                      });
-                                    },
+                                    color: kBackGroundColor,
+                                    border: Border.all(
+                                        color: kSecondaryPrimaryColor),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      CountryListPick(
+                                        theme: CountryTheme(
+                                          isShowFlag: true,
+                                          isShowTitle: false,
+                                          isShowCode: false,
+                                          isDownIcon: false,
+                                          showEnglishName: true,
+                                        ),
+                                        initialSelection: 'IN',
+                                        onChanged: (CountryCode? code) {
+                                          setState(() {
+                                            selectedCountrydialCode =
+                                                code!.dialCode.toString();
+                                          });
+                                        },
+                                      ),
+                                      Text(
+                                        selectedCountrydialCode,
+                                        style: const TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      )
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(width: 10),

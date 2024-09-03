@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/constant/constant.dart';
@@ -10,8 +9,11 @@ import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
 import 'package:openhome/app/models/getpropretyes_model.dart';
 
+import '../controller/tab_controller.dart';
+
 class PropertiesService {
-  late TabController _tabController;
+  var userid = getStorage.read('userid');
+  final tabController = Get.put(TabCountController());
   final GetAllAmenitiesController getAllAmenitiesController =
       Get.put(GetAllAmenitiesController());
   createProperties(
@@ -41,7 +43,7 @@ class PropertiesService {
             ..fields['state_id'] = stateid
             ..fields['city_name'] = cityname
             ..fields['profile_picture'] = ""
-            ..fields['created_by_id'] = ""
+            ..fields['created_by_id'] = userid
             ..fields['updated_by_id'] = ""
             ..fields['amenity_id'] =
                 getAllAmenitiesController.selectedAmenitis.string;
@@ -56,7 +58,7 @@ class PropertiesService {
         var decodedUser = jsonDecode(response.body);
         if (decodedUser['success']) {
           LoaderX.hide();
-          _tabController.animateTo(1);
+          tabController.changeTabIndex(1);
           return decodedUser;
         } else {
           LoaderX.hide();
@@ -64,6 +66,8 @@ class PropertiesService {
               "Failed to login", decodedUser['message']);
           return Future.error("Server Error");
         }
+      } else {
+        LoaderX.hide();
       }
     } catch (e) {
       LoaderX.hide();
@@ -72,42 +76,35 @@ class PropertiesService {
     }
   }
 
-  getAllProperties(
-    int pagesize,
-    int pagenumber,
-    String searchtext,
-    String sortby,
-    String propertyid,
-    String userid,
-    String type,
-    bool onlease,
-    String countryid,
-    String stateid,
-    String cityname,
-  ) async {
+  getAllProperties(PropertiesRequestModel getRequest) async {
     try {
       var response = await http.post(Uri.parse('$baseUrl/api/getpropretyes'),
           body: json.encode({
-            "pagesize": pagesize,
-            "pagenumber": pagenumber,
-            "searchtext": searchtext,
-            "sortby": sortby,
-            "propertyid": propertyid,
-            "userid": userid,
-            "type": type,
-            "onlease": onlease,
-            "country_id": countryid,
-            "state_id": stateid,
-            "city_name": cityname
+            "pagesize": getRequest.pageSize,
+            "pagenumber": getRequest.pageNumber,
+            "searchtext": getRequest.searchText,
+            "sortby": getRequest.sortBy,
+            "propertyid": getRequest.propertyid,
+            "userid": getRequest.userId,
+            "type": getRequest.type,
+            "onlease": getRequest.onlease,
+            "country_id": getRequest.countryId,
+            "state_id": getRequest.stateId,
+            "city_name": getRequest.cityName
           }),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
-        var data = json.decode(response.body);
         LoaderX.hide();
-        final List<dynamic> fetchCategory = data['data'];
-        return fetchCategory
-            .map((json) => GetAllPropertiesDataModel.fromJson(json))
-            .toList();
+        var data = json.decode(response.body);
+        return GetAllPropertiesModel.fromJson(data);
+      } else if (response.statusCode == 401) {
+        LoaderX.hide();
+        return Future.error("Authentication Error");
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar("Server Error",
+            "Error while fetch Properties, Please try after some time.");
+        return Future.error("Server Error");
       }
     } catch (e) {
       LoaderX.hide();

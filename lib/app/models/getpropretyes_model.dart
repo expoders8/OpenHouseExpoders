@@ -92,7 +92,9 @@ class GetAllPropertiesDataModel {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    rentAmount = json['rent_amount'];
+    rentAmount = json['rent_amount'] is int
+        ? rentAmount = (json['rent_amount'] as int).toDouble()
+        : rentAmount = json['rent_amount'];
     facilities = json['facilities'];
     person = json['person'];
     addresh = json['addresh'];
@@ -149,4 +151,18 @@ class GetAllPropertiesDataModel {
     data['rent_amount_unit'] = rentAmountUnit;
     return data;
   }
+}
+
+class PropertiesRequestModel {
+  int? pageSize;
+  int? pageNumber;
+  String? searchText;
+  String? sortBy;
+  String? propertyid;
+  String? userId;
+  String? type;
+  bool? onlease;
+  String? countryId;
+  String? stateId;
+  String? cityName;
 }

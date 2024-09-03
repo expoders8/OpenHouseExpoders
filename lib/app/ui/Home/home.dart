@@ -22,7 +22,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String selectedRoll = "";
   final tabController = Get.put(TabCountController());
-  final TabCountController tabCountController = Get.find<TabCountController>();
   @override
   void initState() {
     var roll = getStorage.read('roll') ?? "";
@@ -385,7 +384,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           CupertinoButton(
                             onPressed: () {
-                              tabCountController.changeTabIndex(1);
+                              tabController.changeTabIndex(1);
                             },
                             child: const Text(
                               "View all",

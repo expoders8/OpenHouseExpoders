@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:openhome/app/controller/property_controller.dart';
 
 import '../../routes/app_pages.dart';
+import '../../services/properties_service.dart';
 import '../../view/lease_property_view.dart';
 import '../../../config/constant/constant.dart';
 import '../../view/previous_property_view.dart';

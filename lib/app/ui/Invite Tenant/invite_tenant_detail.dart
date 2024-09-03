@@ -20,7 +20,6 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
   bool checkedValue = false;
   final tabController = Get.put(TabCountController());
   TextEditingController amountController = TextEditingController();
-  final TabCountController tabCountController = Get.find<TabCountController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +110,7 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
                   child: CupertinoButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      tabCountController.changeTabIndex(2);
+                      tabController.changeTabIndex(2);
                     },
                     child: Container(
                       height: 45,
