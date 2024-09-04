@@ -48,6 +48,7 @@ class GetAvailablePropertyController extends GetxController {
   var isLoading = true.obs;
   var propertiesList = <GetAllPropertiesModel>[].obs;
   PropertiesService propertiesService = PropertiesService();
+  RxString searchText = "".obs;
 
   @override
   void onInit() {
@@ -72,7 +73,8 @@ class GetAvailablePropertyController extends GetxController {
     PropertiesRequestModel propertiesRequestModel = PropertiesRequestModel();
     propertiesRequestModel.pageSize = 100;
     propertiesRequestModel.pageNumber = 1;
-    propertiesRequestModel.searchText = null;
+    propertiesRequestModel.searchText =
+        searchText.value.isEmpty ? null : searchText.value;
     propertiesRequestModel.sortBy = null;
     propertiesRequestModel.propertyid = null;
     propertiesRequestModel.userId = null;

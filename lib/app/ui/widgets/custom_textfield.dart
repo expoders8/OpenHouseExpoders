@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -14,18 +13,18 @@ class CustomTextFormField extends StatefulWidget {
   final bool formSubmitted;
   final TextEditingController? confirmPasswordController;
 
-  const CustomTextFormField(
-      {Key? key,
-      this.ctrl,
-      this.hintText,
-      this.keyboardType,
-      this.prefixIcon,
-      this.maxLines,
-      this.formSubmitted = false,
-      this.name,
-      this.confirmPasswordController,
-      this.validationMsg})
-      : super(key: key);
+  const CustomTextFormField({
+    Key? key,
+    this.ctrl,
+    this.hintText,
+    this.keyboardType,
+    this.prefixIcon,
+    this.maxLines,
+    this.formSubmitted = false,
+    this.name,
+    this.confirmPasswordController,
+    this.validationMsg,
+  }) : super(key: key);
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -42,24 +41,24 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   }
 
   String? validateInput(String? value) {
-    if (isTouched || widget.formSubmitted) {
-      if (value != null && value.isNotEmpty) {
-        if (widget.name == 'email') {
-          const pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$)';
-          final regExp = RegExp(pattern);
-          if (!regExp.hasMatch(value)) {
-            return "Please enter a valid email";
-          }
-        }
-        if (widget.name == "confirmpassword") {
-          if (widget.ctrl?.text != widget.confirmPasswordController?.text) {
-            return 'Confirm Password do not match';
-          }
-        }
-        return null;
-      }
-      return widget.validationMsg;
+    if (value == null || value.isEmpty) {
+      return widget.validationMsg ?? 'This field cannot be empty';
     }
+
+    if (widget.name == 'email') {
+      const pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$';
+      final regExp = RegExp(pattern);
+      if (!regExp.hasMatch(value)) {
+        return 'Please enter a valid email';
+      }
+    }
+
+    if (widget.name == "confirmPassword") {
+      if (widget.ctrl?.text != widget.confirmPasswordController?.text) {
+        return 'Passwords do not match';
+      }
+    }
+
     return null;
   }
 
@@ -70,9 +69,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       controller: widget.ctrl,
       keyboardType: widget.keyboardType,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (value) {
-        return validateInput(value);
-      },
+      validator: (value) => validateInput(value),
       obscureText: widget.name == "password" ? !_passwordVisible : false,
       obscuringCharacter: '●',
       decoration: InputDecoration(
@@ -82,21 +79,22 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         contentPadding:
             EdgeInsets.fromLTRB(13, widget.maxLines == 4 ? 16 : 0, 10, 0),
         hintStyle: TextStyle(
-            color: widget.name == "create"
-                ? widget.hintText == "Describe you request"
-                    ? kSecondaryPrimaryColor
-                    : kPrimaryColor
-                : kSecondaryPrimaryColor,
-            fontFamily: kCircularStdNormal,
-            fontWeight: FontWeight.w400,
-            fontSize: widget.name == "password"
-                ? 16
-                : widget.name == "create"
-                    ? 14
-                    : 16),
+          color: widget.name == "create"
+              ? widget.hintText == "Describe your request"
+                  ? kSecondaryPrimaryColor
+                  : kPrimaryColor
+              : kSecondaryPrimaryColor,
+          fontFamily: kCircularStdNormal,
+          fontWeight: FontWeight.w400,
+          fontSize: widget.name == "password"
+              ? 16
+              : widget.name == "create"
+                  ? 14
+                  : 16,
+        ),
         prefixIcon: widget.prefixIcon != null
             ? Image.asset(
-                widget.prefixIcon.toString(),
+                widget.prefixIcon!,
                 color: kPrimaryColor,
                 scale: widget.name == "firstUser"
                     ? 11
@@ -138,23 +136,25 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           borderRadius:
               BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
           borderSide: BorderSide(
-              color: widget.name == "create"
-                  ? kWhiteColor
-                  : kSecondaryPrimaryColor,
-              width: 1.0),
+            color:
+                widget.name == "create" ? kWhiteColor : kSecondaryPrimaryColor,
+            width: 1.0,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius:
               BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
           borderSide: BorderSide(
-              color: widget.name == "create"
-                  ? kWhiteColor
-                  : kSecondaryPrimaryColor),
+            color:
+                widget.name == "create" ? kWhiteColor : kSecondaryPrimaryColor,
+          ),
         ),
       ),
       maxLines: widget.maxLines,
-      onChanged: (value) => {
-        isTouched = true,
+      onChanged: (value) {
+        setState(() {
+          isTouched = true;
+        });
       },
     );
   }

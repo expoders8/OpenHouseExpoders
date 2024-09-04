@@ -64,6 +64,7 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
         UserCredential result = await auth.signInWithCredential(authCredential);
         User? user = result.user;
         var userName = user?.displayName;
+        // ignore: unused_local_variable
         List<String> substrings = userName.toString().split(' ');
         // await authService
         //     .socialLogin(substrings[0], substrings[1], user!.email.toString(),

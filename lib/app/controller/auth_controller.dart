@@ -7,7 +7,6 @@ class LoginController extends GetxController {
   var email = ''.obs;
   final password = ''.obs;
   final fcmToken = ''.obs;
-
   final isSigningIn = false.obs;
 
   Future<void> login() async {
@@ -29,7 +28,6 @@ class SignUpController extends GetxController {
   final password = ''.obs;
   final fcmToken = ''.obs;
   final roll = ''.obs;
-
   final isSigningIn = false.obs;
 
   Future<void> signUp() async {

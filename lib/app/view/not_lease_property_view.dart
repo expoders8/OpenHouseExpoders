@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import '../controller/property_controller.dart';
 import '../routes/app_pages.dart';
+import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 
@@ -31,6 +31,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
               ),
             );
           } else {
+            // ignore: unnecessary_null_comparison
             if (getAvailablePropertyController.propertiesList[0].data! !=
                 null) {
               if (getAvailablePropertyController
@@ -74,6 +75,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                         data.rentAmount.toString(),
                         "${data.addresh} ${data.address1}",
                         data.person.toString(),
+                        data.name.toString(),
                       );
                     } else {
                       return const Center(
@@ -114,6 +116,7 @@ notLeaseProperty(
   price,
   address,
   person,
+  name,
 ) {
   return GestureDetector(
     onTap: () {
@@ -171,6 +174,26 @@ notLeaseProperty(
                           width: Get.width / 2.5,
                           child: Text(
                             address,
+                            style: const TextStyle(
+                                color: kSecondaryPrimaryColor,
+                                fontSize: 13,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.description_sharp,
+                          size: 16,
+                          color: kButtonColor,
+                        ),
+                        const SizedBox(width: 10),
+                        SizedBox(
+                          width: Get.width / 2.5,
+                          child: Text(
+                            name,
                             style: const TextStyle(
                                 color: kSecondaryPrimaryColor,
                                 fontSize: 13,

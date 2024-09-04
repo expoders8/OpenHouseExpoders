@@ -748,7 +748,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final GetAllAmenitiesController getAllAmenitiesController =
       Get.put(GetAllAmenitiesController());
   List<File> fileList = [];
-
+  bool isImagePickerError = false;
   String countryId = "", stateid = "";
   final TextEditingController countryController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
@@ -816,7 +816,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Form(
           key: _formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode: AutovalidateMode.always,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
@@ -834,202 +834,152 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
                         color: kWhiteColor),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: [
-                            const SizedBox(width: 20),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextFormField(
-                                    controller: propertyNameController,
-                                    textInputAction: TextInputAction.next,
-                                    onChanged: (value) {},
-                                    decoration: const InputDecoration(
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kIconColor),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kIconColor),
-                                      ),
-                                      errorBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kRedColor),
-                                      ),
-                                      focusedErrorBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kRedColor),
-                                      ),
-                                      contentPadding: EdgeInsets.only(top: 5),
-                                      hintText: 'Property Name',
-                                      hintStyle: TextStyle(
-                                        fontFamily: kCircularStdNormal,
-                                        fontWeight: FontWeight.w400,
-                                        color: kPrimaryColor,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter property name';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: propertyNameController,
+                            textInputAction: TextInputAction.next,
+                            onChanged: (value) {},
+                            decoration: const InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: kIconColor),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: kIconColor),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: kRedColor),
+                              ),
+                              focusedErrorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: kRedColor),
+                              ),
+                              contentPadding: EdgeInsets.only(top: 5),
+                              hintText: 'Property Name',
+                              hintStyle: TextStyle(
+                                fontFamily: kCircularStdNormal,
+                                fontWeight: FontWeight.w400,
+                                color: kPrimaryColor,
+                                fontSize: 14,
                               ),
                             ),
-                            const SizedBox(width: 20),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const SizedBox(width: 20),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextFormField(
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    // inputFormatters: [
-                                    //   LengthLimitingTextInputFormatter(40),
-                                    // ],
-                                    controller: descriptionController,
-                                    decoration: const InputDecoration(
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kIconColor),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: kIconColor),
-                                      ),
-                                      contentPadding: EdgeInsets.only(top: 5),
-                                      hintText: 'Description',
-                                      hintStyle: TextStyle(
-                                        fontFamily: kCircularStdNormal,
-                                        fontWeight: FontWeight.w400,
-                                        color: kPrimaryColor,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter Description';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ],
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter property name';
+                              }
+                              return null;
+                            },
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 3,
+                            minLines: 1,
+                            // inputFormatters: [
+                            //   LengthLimitingTextInputFormatter(40),
+                            // ],
+                            controller: descriptionController,
+                            decoration: const InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: kIconColor),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: kIconColor),
+                              ),
+                              contentPadding: EdgeInsets.only(top: 5),
+                              hintText: 'Description',
+                              hintStyle: TextStyle(
+                                fontFamily: kCircularStdNormal,
+                                fontWeight: FontWeight.w400,
+                                color: kPrimaryColor,
+                                fontSize: 14,
                               ),
                             ),
-                            const SizedBox(width: 20),
-                          ],
-                        ),
-                        const SizedBox(height: 25)
-                      ],
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter Description';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 15)
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 buildTextWidget("Property Price"),
-                SizedBox(
-                  width: size.width > 500 ? 600 : size.width,
-                  child: CustomTextFormField(
-                    hintText: '\$100',
-                    maxLines: 1,
-                    keyboardType: TextInputType.number,
-                    ctrl: propertyPriceController,
-                    name: "create",
-                    formSubmitted: isFormSubmitted,
-                    validationMsg: 'Please enter Property Price',
-                  ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SizedBox(
+                      width: constraints.maxWidth > 500
+                          ? 600
+                          : constraints.maxWidth,
+                      child: CustomTextFormField(
+                        hintText: '\$100',
+                        maxLines: 1,
+                        keyboardType: TextInputType.number,
+                        ctrl: propertyPriceController,
+                        name: "create",
+                        formSubmitted: isFormSubmitted,
+                        validationMsg: 'Please enter Property Price',
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 10),
-                SizedBox(
-                  width: size.width > 500 ? 600 : size.width,
-                  child: CustomTextFormField(
-                    hintText: 'Facilities',
-                    maxLines: 1,
-                    ctrl: facilitiesController,
-                    name: "create",
-                    formSubmitted: isFormSubmitted,
-                    validationMsg: 'Please enter facilities',
-                  ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SizedBox(
+                      width: constraints.maxWidth > 500
+                          ? 600
+                          : constraints.maxWidth,
+                      child: CustomTextFormField(
+                        hintText: 'Facilities',
+                        maxLines: 1,
+                        ctrl: facilitiesController,
+                        name: "create",
+                        formSubmitted: isFormSubmitted,
+                        validationMsg: 'Please enter facilities',
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 10),
-                SizedBox(
-                  width: size.width > 500 ? 600 : size.width,
-                  child: CustomTextFormField(
-                    hintText: 'Person',
-                    maxLines: 1,
-                    ctrl: personController,
-                    name: "create",
-                    formSubmitted: isFormSubmitted,
-                    validationMsg: 'Please enter Person',
-                  ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SizedBox(
+                      width: constraints.maxWidth > 500
+                          ? 600
+                          : constraints.maxWidth,
+                      child: CustomTextFormField(
+                        hintText: 'Person',
+                        maxLines: 1,
+                        ctrl: personController,
+                        name: "create",
+                        formSubmitted: isFormSubmitted,
+                        validationMsg: 'Please enter Person',
+                      ),
+                    );
+                  },
                 ),
                 buildTextWidget("Address"),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextFormField(
-                        validator: (value) {
-                          if (isTouched || isFormSubmitted) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter Address';
-                            }
-                          }
-                          return null;
-                        },
-                        controller: addressController,
-                        textInputAction: TextInputAction.next,
-                        onChanged: (value) => {
-                          isTouched = true,
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Flat / House No / Building",
-                          counterText: "",
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                          hintStyle: const TextStyle(
-                            fontFamily: kCircularStdBook,
-                            fontWeight: FontWeight.w400,
-                            color: kPrimaryColor,
-                            fontSize: 14,
-                          ),
-                          filled: true,
-                          fillColor: kWhiteColor,
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                            borderSide:
-                                BorderSide(color: kWhiteColor, width: 1.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                                color: kWhiteColor, width: 1.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                              color: kWhiteColor,
-                            ),
-                          ),
-                        ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SizedBox(
+                      width: constraints.maxWidth > 500
+                          ? 600
+                          : constraints.maxWidth,
+                      child: CustomTextFormField(
+                        hintText: 'Flat / House No / Building',
+                        maxLines: 1,
+                        ctrl: addressController,
+                        name: "create",
+                        formSubmitted: isFormSubmitted,
+                        validationMsg: 'Please enter Address',
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 10),
                 Padding(
@@ -1073,6 +1023,15 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                             color: kWhiteColor,
                           ),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              const BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
+                        errorText:
+                            isFormSubmitted && countryController.text.isEmpty
+                                ? 'Please select a country'
+                                : null,
                       ),
                       style: const TextStyle(
                         fontFamily: kCircularStdBook,
@@ -1110,6 +1069,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   child: TypeAheadField<GetAllStateDataModel>(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: stateController,
+                      enabled: countryId != "",
                       decoration: InputDecoration(
                         fillColor: kWhiteColor,
                         filled: true,
@@ -1135,7 +1095,17 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                           borderSide:
                               BorderSide(color: kWhiteColor, width: 1.0),
                         ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              const BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
                         enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              const BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide:
                               const BorderSide(color: kWhiteColor, width: 1.0),
@@ -1146,6 +1116,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                             color: kWhiteColor,
                           ),
                         ),
+                        errorText:
+                            isFormSubmitted && stateController.text.isEmpty
+                                ? 'Please select a state'
+                                : null,
                       ),
                       style: const TextStyle(
                         fontFamily: kCircularStdBook,
@@ -1293,6 +1267,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                         onTap: () {
                                           setState(() {
                                             imageList.removeAt(index);
+                                            if (imageList.isEmpty) {
+                                              isImagePickerError = true;
+                                            }
                                           });
                                         },
                                         child: const Icon(
@@ -1331,6 +1308,17 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                           }),
                         ),
                       ),
+                if (isImagePickerError)
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 3),
+                    child: Text(
+                      "Please upload at least one image",
+                      style: TextStyle(
+                          color: kErrorColor,
+                          fontSize: 13,
+                          fontFamily: kCircularStdNormal),
+                    ),
+                  ),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
@@ -1343,34 +1331,40 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                         ),
                       ),
                       onPressed: () {
-                        setState(() {
-                          isFormSubmitted = true;
-                        });
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        Future.delayed(const Duration(milliseconds: 100),
-                            () async {
-                          if (_formKey.currentState!.validate()) {
-                            LoaderX.show(context, 60.0, 60.0);
-                            imageList.forEach((i) =>
-                                selctedImages.add(i.identifier.toString()));
-                            getAllAmenitiesController.selectedImages(
-                              selctedImages,
-                            );
-                            propertiesService.createProperties(
-                                propertyNameController.text,
-                                descriptionController.text,
-                                propertyPriceController.text,
-                                facilitiesController.text,
-                                personController.text,
-                                addressController.text,
-                                countryId,
-                                stateid,
-                                cityController.text,
-                                "",
-                                "",
-                                fileList.first);
+                        if (_formKey.currentState?.validate() ?? false) {
+                          if (!isImagePickerError) {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            Future.delayed(const Duration(milliseconds: 100),
+                                () async {
+                              // ignore: use_build_context_synchronously
+                              LoaderX.show(context, 60.0, 60.0);
+                              // ignore: avoid_function_literals_in_foreach_calls
+                              imageList.forEach((i) =>
+                                  selctedImages.add(i.identifier.toString()));
+                              getAllAmenitiesController.selectedImages(
+                                selctedImages,
+                              );
+                              propertiesService.createProperties(
+                                  propertyNameController.text,
+                                  descriptionController.text,
+                                  propertyPriceController.text,
+                                  facilitiesController.text,
+                                  personController.text,
+                                  addressController.text,
+                                  countryId,
+                                  stateid,
+                                  cityController.text,
+                                  "",
+                                  "",
+                                  fileList.first);
+                            });
                           }
-                        });
+                        } else {
+                          setState(() {
+                            isFormSubmitted = true;
+                            isImagePickerError = imageList.isEmpty;
+                          });
+                        }
                       },
                       child: const Text(
                         "Create a Property",
@@ -1429,7 +1423,11 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         final filePath = await getFilePathFromAsset(asset);
         fileList.add(File(filePath));
       }
-      setState(() {});
+      setState(() {
+        if (imageList.isNotEmpty) {
+          isImagePickerError = false;
+        }
+      });
     } on Exception catch (e) {
       error = e.toString();
     }

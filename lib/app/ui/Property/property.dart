@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:openhome/app/controller/property_controller.dart';
 
 import '../../routes/app_pages.dart';
-import '../../services/properties_service.dart';
 import '../../view/lease_property_view.dart';
 import '../../../config/constant/constant.dart';
 import '../../view/previous_property_view.dart';
@@ -23,6 +22,8 @@ class _PropertyPageState extends State<PropertyPage>
   String selectedRoll = "";
   late TabController _tabController;
   var searchController = TextEditingController();
+  final GetAvailablePropertyController getAvailablePropertyController =
+      Get.put(GetAvailablePropertyController());
 
   @override
   void initState() {
@@ -270,6 +271,12 @@ class _PropertyPageState extends State<PropertyPage>
                                           const BorderSide(color: kWhiteColor),
                                     ),
                                   ),
+                                  onChanged: (value) {
+                                    getAvailablePropertyController
+                                        .searchText.value = value;
+                                    getAvailablePropertyController
+                                        .fetchAllProperties();
+                                  },
                                 ),
                                 const SizedBox(height: 10),
                                 const NotLeasePropertyView(),

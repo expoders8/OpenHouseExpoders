@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../controller/tab_controller.dart';
+import '../models/getpropretyes_model.dart';
 import '../../config/constant/constant.dart';
 import '../controller/amenities_controller.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
-import 'package:openhome/app/models/getpropretyes_model.dart';
-
-import '../controller/tab_controller.dart';
+import '../ui/Property Details/lease_property_details.dart';
 
 class PropertiesService {
   var userid = getStorage.read('userid');
@@ -113,33 +113,15 @@ class PropertiesService {
     }
   }
 
-  getByIdProperties(
-    String firstName,
-    String lastName,
-    String email,
-    String profilePicture,
-    String googleToken,
-    String provider,
-  ) async {
+  getByIdProperties(String id) async {
     try {
-      var response = await http.post(
-          Uri.parse(
-              '$baseUrl/api/Auth/propretyesgetbyid?id=1b580369-5380-4439-83e2-0d4f05570a4d'),
-          body: json.encode({
-            "firstName": firstName,
-            "lastName": lastName,
-            "email": email,
-            "profilePicture": profilePicture,
-            "googleToken": googleToken,
-            "provider": provider,
-            "currency": "",
-            "fcmToken": "",
-          }),
+      var response = await http.get(
+          Uri.parse('$baseUrl/api/propretyesgetbyid?id=$id'),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         var decodedUser = jsonDecode(response.body);
         if (decodedUser['success']) {
-          getStorage.write('user', jsonEncode(decodedUser["data"]));
+          Get.to(() => const LeasePropertyDetailPage());
           getStorage.write('authToken', decodedUser["data"]['authToken']);
           return decodedUser['success'];
         } else {
@@ -148,6 +130,8 @@ class PropertiesService {
               "Failed to Login", decodedUser['message']);
           return Future.error("Server Error");
         }
+      } else {
+        LoaderX.hide();
       }
     } catch (e) {
       LoaderX.hide();
