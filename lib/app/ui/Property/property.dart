@@ -22,8 +22,11 @@ class _PropertyPageState extends State<PropertyPage>
   String selectedRoll = "";
   late TabController _tabController;
   var searchController = TextEditingController();
+  var searchController1 = TextEditingController();
   final GetAvailablePropertyController getAvailablePropertyController =
       Get.put(GetAvailablePropertyController());
+  final GetLeasePropertyController getLeasePropertyController =
+      Get.put(GetLeasePropertyController());
 
   @override
   void initState() {
@@ -169,6 +172,7 @@ class _PropertyPageState extends State<PropertyPage>
                               ),
                               const SizedBox(height: 10),
                               const PreviousPropertyView(),
+                              const SizedBox(height: 30),
                             ],
                           ),
                         ],
@@ -199,7 +203,7 @@ class _PropertyPageState extends State<PropertyPage>
                               children: [
                                 const SizedBox(height: 10),
                                 TextFormField(
-                                  controller: searchController,
+                                  controller: searchController1,
                                   decoration: InputDecoration(
                                     contentPadding:
                                         const EdgeInsets.fromLTRB(13, 0, 10, 0),
@@ -228,6 +232,12 @@ class _PropertyPageState extends State<PropertyPage>
                                           const BorderSide(color: kWhiteColor),
                                     ),
                                   ),
+                                  onChanged: (value) {
+                                    getLeasePropertyController
+                                        .searchText.value = value;
+                                    getLeasePropertyController
+                                        .fetchAllProperties();
+                                  },
                                 ),
                                 const SizedBox(height: 10),
                                 const LeasePropertyView(),

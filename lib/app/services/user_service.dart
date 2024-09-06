@@ -8,9 +8,10 @@ import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
 
 class UserService {
-  var user = getStorage.read('userid');
   updateProfile(
       String firstName, String lastName, String email, File? file) async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
     try {
       http.Response response;
       var request =
@@ -19,7 +20,7 @@ class UserService {
             ..fields['last_name'] = lastName
             ..fields['email'] = email
             ..fields['profile_picture'] = null.toString()
-            ..fields['user_id'] = user;
+            ..fields['user_id'] = userid["id"];
       if (file != null) {
         request.files.add(await http.MultipartFile.fromPath('file', file.path));
       }

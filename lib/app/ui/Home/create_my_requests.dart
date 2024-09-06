@@ -6,6 +6,12 @@ import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+import '../../../config/provider/loader_provider.dart';
+import '../../controller/request_controller.dart';
+import '../../controller/tab_controller.dart';
+import '../../models/get_amenities_model.dart';
+import '../../services/lookup_service.dart';
+import '../../services/requests_service.dart';
 import '../widgets/custom_textfield.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -25,19 +31,16 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
   String selctesType = "normal";
   String selectdate = "YYYY/MM/DD";
   bool isTouched = false, timeError = false, dateError = false;
+  final GetAllRequestsController getAllRequestsController =
+      Get.put(GetAllRequestsController());
   final TextEditingController amenityController = TextEditingController();
   final TextEditingController raisedFundsController = TextEditingController();
+  LookupService lookupService = LookupService();
+  RequestsService requestsService = RequestsService();
+  final tabController = Get.put(TabCountController());
   bool isFormSubmitted = false;
-  final List<String> amenities = [
-    'Electricity',
-    'Gas',
-    'Water',
-    'Wifi',
-    'Parking',
-    'Washing Machine',
-    'CCTV Camera',
-    'Housekeeping',
-  ];
+  String amenitiesId = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +65,7 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                 buildTextWidget("Amenity"),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: TypeAheadField<String>(
+                  child: TypeAheadField<GetAllAmenitiesDataModel>(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: amenityController,
                       decoration: InputDecoration(
@@ -112,18 +115,20 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                       cursorColor: kPrimaryColor,
                     ),
                     suggestionsCallback: (pattern) {
-                      return amenities.where((t) =>
-                          t.toLowerCase().contains(pattern.toLowerCase()));
+                      return lookupService.getamenities();
                     },
-                    itemBuilder: (context, String suggestion) {
+                    itemBuilder:
+                        (context, GetAllAmenitiesDataModel suggestion) {
                       return ListTile(
-                        title: Text(suggestion),
+                        title: Text(suggestion.title.toString()),
                       );
                     },
-                    onSuggestionSelected: (String suggestion) {
+                    onSuggestionSelected:
+                        (GetAllAmenitiesDataModel suggestion) {
                       // ignore: avoid_print
                       setState(() {
-                        amenityController.text = suggestion;
+                        amenityController.text = suggestion.title.toString();
+                        amenitiesId = suggestion.id.toString();
                       });
                     },
                     noItemsFoundBuilder: (context) => const Padding(
@@ -441,7 +446,31 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          isFormSubmitted = true;
+                        });
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        Future.delayed(const Duration(milliseconds: 100),
+                            () async {
+                          if (_formKey.currentState!.validate()) {
+                            LoaderX.show(context, 60.0, 60.0);
+                            requestsService
+                                .addRequest(
+                                    amenitiesId,
+                                    raisedFundsController.text,
+                                    selctesType,
+                                    selectdate)
+                                .then((value) {
+                              if (value) {
+                                getAllRequestsController.getAllRequests();
+                                LoaderX.hide();
+                                tabController.changeTabIndex(0);
+                              }
+                            });
+                          }
+                        });
+                      },
                       child: const Text(
                         "Submit",
                         style: TextStyle(color: kWhiteColor),

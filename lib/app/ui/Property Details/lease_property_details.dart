@@ -6,7 +6,6 @@ import 'package:openhome/app/view/tenant_history_view.dart';
 import 'package:openhome/app/view/property_details_view.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
-import '../../controller/property_detail_controller.dart';
 import '../../view/nearby_view.dart';
 import '../../view/house_keeper_view.dart';
 import '../../view/payment_detail_view.dart';
@@ -14,6 +13,7 @@ import '../../../config/constant/constant.dart';
 import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../controller/property_detail_controller.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
   const LeasePropertyDetailPage({super.key});
@@ -30,7 +30,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
   bool isPreviousTenantsSelected = true;
   final GetDetailsPropertiesController getDetailsPropertiesController =
       Get.put(GetDetailsPropertiesController());
-  final ScrollController _scrollController = ScrollController();
+  List<ImageProvider> images = [];
 
   @override
   void initState() {
@@ -40,19 +40,15 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
       selectedRoll = roll;
     });
     _tabController = TabController(length: 5, vsync: this);
-    _scrollController.addListener(() {
-      // Add custom animation or logic based on scroll position
-      if (_scrollController.offset > 100) {
-        // Example: trigger an animation or change state
-        print('Scrolled past 100 pixels');
-      }
-    });
+    images = [
+      ...getDetailsPropertiesController.detailModel!.data!.images!
+          .map((imageUrl) => NetworkImage(imageUrl)),
+    ];
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -71,6 +67,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                 height: Get.height / 2.9,
                 width: double.infinity,
                 child: AnotherCarousel(
+                  // images: images,
                   images: const [
                     AssetImage("assets/icons/3.png"),
                     AssetImage("assets/icons/6.png"),
@@ -144,7 +141,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                               SizedBox(
                                                 width: Get.width - 100,
                                                 child: Text(
-                                                  propertydata!.name.toString(),
+                                                  propertydata.name.toString(),
                                                   style: const TextStyle(
                                                       color: kPrimaryColor,
                                                       fontSize: 18,

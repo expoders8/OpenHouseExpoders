@@ -58,6 +58,7 @@ class GetAllPropertiesDataModel {
   String? size;
   String? sizeunit;
   String? rentAmountUnit;
+  String? propertyImage;
 
   GetAllPropertiesDataModel(
       {this.id,
@@ -86,7 +87,8 @@ class GetAllPropertiesDataModel {
       this.subtype,
       this.size,
       this.sizeunit,
-      this.rentAmountUnit});
+      this.rentAmountUnit,
+      this.propertyImage});
 
   GetAllPropertiesDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -118,6 +120,7 @@ class GetAllPropertiesDataModel {
     size = json['size'];
     sizeunit = json['sizeunit'];
     rentAmountUnit = json['rent_amount_unit'];
+    propertyImage = json['property_image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -149,6 +152,7 @@ class GetAllPropertiesDataModel {
     data['size'] = size;
     data['sizeunit'] = sizeunit;
     data['rent_amount_unit'] = rentAmountUnit;
+    data['property_image'] = propertyImage;
     return data;
   }
 }

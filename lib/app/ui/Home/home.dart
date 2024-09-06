@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           CupertinoButton(
                             onPressed: () {
-                              Get.toNamed(Routes.tenantRequestPage);
+                              // Get.toNamed(Routes.tenantRequestPage);
                             },
                             child: const Text(
                               "View all",
@@ -243,7 +243,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      MyRequestView(isviewall: 0),
+                      SizedBox(
+                        height: 187,
+                        child: MyRequestView(isviewall: 0),
+                      ),
                       const SizedBox(height: 85)
                     ],
                   ),

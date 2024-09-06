@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/constant/constant.dart';
-import '../../config/provider/snackbar_provider.dart';
 import '../models/getbyid_property_model.dart';
+import '../../config/provider/snackbar_provider.dart';
 import '../ui/Property Details/lease_property_details.dart';
 
 class GetDetailsPropertiesController extends GetxController {

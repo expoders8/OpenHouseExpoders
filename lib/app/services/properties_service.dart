@@ -12,7 +12,6 @@ import '../../config/provider/snackbar_provider.dart';
 import '../ui/Property Details/lease_property_details.dart';
 
 class PropertiesService {
-  var userid = getStorage.read('userid');
   final tabController = Get.put(TabCountController());
   final GetAllAmenitiesController getAllAmenitiesController =
       Get.put(GetAllAmenitiesController());
@@ -29,6 +28,8 @@ class PropertiesService {
       String profilepicture,
       String amenityid,
       File? file) async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
     try {
       http.Response response;
       var request =
@@ -43,7 +44,7 @@ class PropertiesService {
             ..fields['state_id'] = stateid
             ..fields['city_name'] = cityname
             ..fields['profile_picture'] = ""
-            ..fields['created_by_id'] = userid
+            ..fields['created_by_id'] = userid["id"]
             ..fields['updated_by_id'] = ""
             ..fields['amenity_id'] =
                 getAllAmenitiesController.selectedAmenitis.string;

@@ -143,12 +143,13 @@ class AuthService {
   }
 
   changePassowrd(String userId, String currentPass, String newPass) async {
-    var user = getStorage.read('userid');
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
 
     try {
       var response = await http.post(Uri.parse('$baseUrl/api/change-password'),
           body: json.encode({
-            "id": user,
+            "id": userid["id"],
             "currentPassword": currentPass,
             "newPassword": newPass
           }),

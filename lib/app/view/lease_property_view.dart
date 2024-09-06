@@ -85,7 +85,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                           borderRadius:
                                               BorderRadius.circular(25),
                                           child: Image.network(
-                                            data.profilePicture.toString(),
+                                            data.propertyImage.toString(),
                                             fit: BoxFit.cover,
                                             scale: 1.2,
                                             height: 120,
