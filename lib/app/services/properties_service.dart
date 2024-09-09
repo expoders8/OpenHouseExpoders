@@ -140,4 +140,42 @@ class PropertiesService {
       throw e.toString();
     }
   }
+
+  getMyLeaseProperties(PropertiesRequestModel getRequest) async {
+    try {
+      var response = await http.post(Uri.parse('$baseUrl/api/getpropretyes'),
+          body: json.encode({
+            "pagesize": getRequest.pageSize,
+            "pagenumber": getRequest.pageNumber,
+            "searchtext": getRequest.searchText,
+            "sortby": getRequest.sortBy,
+            "propertyid": getRequest.propertyid,
+            "userid": getRequest.userId,
+            "type": getRequest.type,
+            "onlease": getRequest.onlease,
+            "country_id": getRequest.countryId,
+            "state_id": getRequest.stateId,
+            "city_name": getRequest.cityName,
+            "mylease": ""
+          }),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // LoaderX.hide();
+        // var data = json.decode(response.body);
+        // return GetAllPropertiesModel.fromJson(data);
+      } else if (response.statusCode == 401) {
+        LoaderX.hide();
+        return Future.error("Authentication Error");
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar("Server Error",
+            "Error while fetch Properties, Please try after some time.");
+        return Future.error("Server Error");
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
 }

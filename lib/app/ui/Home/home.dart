@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../controller/request_controller.dart';
 import '../../view/my_request.dart';
 import '../../routes/app_pages.dart';
 import '../../view/chechout_request.dart';
@@ -22,6 +23,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String selectedRoll = "";
   final tabController = Get.put(TabCountController());
+  final GetAllRequestsController getAllRequestsController =
+      Get.put(GetAllRequestsController());
   @override
   void initState() {
     var roll = getStorage.read('roll') ?? "";
@@ -219,32 +222,8 @@ class _HomePageState extends State<HomePage> {
                           "\$220",
                           "12-06-2021"),
                       const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "My Requests",
-                            style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 16,
-                                fontFamily: kCircularStdMedium),
-                          ),
-                          CupertinoButton(
-                            onPressed: () {
-                              // Get.toNamed(Routes.tenantRequestPage);
-                            },
-                            child: const Text(
-                              "View all",
-                              style: TextStyle(
-                                  color: kBlueColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdMedium),
-                            ),
-                          ),
-                        ],
-                      ),
                       SizedBox(
-                        height: 187,
+                        height: 235,
                         child: MyRequestView(isviewall: 0),
                       ),
                       const SizedBox(height: 85)
