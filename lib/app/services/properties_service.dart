@@ -64,7 +64,7 @@ class PropertiesService {
         } else {
           LoaderX.hide();
           SnackbarUtils.showErrorSnackbar(
-              "Failed to login", decodedUser['message']);
+              "Failed to Create Properties", decodedUser['message']);
           return Future.error("Server Error");
         }
       } else {
