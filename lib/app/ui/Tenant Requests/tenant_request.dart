@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:openhome/app/view/my_request.dart';
 
+import '../../view/my_request.dart';
 import '../../view/tenant_request_view.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
@@ -28,25 +28,26 @@ class _TenantRequestPageState extends State<TenantRequestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            selectedRoll == "tenant" ? "My Requests" : "Tenant Requests",
-            style: const TextStyle(fontFamily: kCircularStdBook),
-          ),
-          backgroundColor: kBackGroundColor,
-          centerTitle: true,
+      appBar: AppBar(
+        title: Text(
+          selectedRoll == "tenant" ? "My Requests" : "Tenant Requests",
+          style: const TextStyle(fontFamily: kCircularStdBook),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Column(
-              children: [
-                selectedRoll == "tenant"
-                    ? MyRequestView(isviewall: 1)
-                    : TenantRequestView(isviewall: 1)
-              ],
-            ),
+        backgroundColor: kBackGroundColor,
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            children: [
+              selectedRoll == "tenant"
+                  ? MyRequestView(isviewall: 1)
+                  : TenantRequestView(isviewall: 1)
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

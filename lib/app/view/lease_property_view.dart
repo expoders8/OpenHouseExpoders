@@ -126,7 +126,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                 SizedBox(
                                                   width: Get.width / 2.5,
                                                   child: Text(
-                                                    data.addresh.toString(),
+                                                    data.address.toString(),
                                                     style: const TextStyle(
                                                         color:
                                                             kSecondaryPrimaryColor,

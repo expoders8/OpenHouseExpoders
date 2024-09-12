@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:openhome/app/routes/app_pages.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
+import '../../routes/app_pages.dart';
 import '../../view/nearby_view.dart';
 import '../../view/house_keeper_view.dart';
 import '../../view/tenant_history_view.dart';

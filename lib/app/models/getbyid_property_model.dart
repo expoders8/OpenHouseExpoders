@@ -34,7 +34,7 @@
 //   double? rentAmount;
 //   String? facilities;
 //   String? person;
-//   String? addresh;
+//   String? address;
 //   String? countryId;
 //   String? stateId;
 //   String? cityName;
@@ -61,7 +61,7 @@
 //       this.rentAmount,
 //       this.facilities,
 //       this.person,
-//       this.addresh,
+//       this.address,
 //       this.countryId,
 //       this.stateId,
 //       this.cityName,
@@ -90,7 +90,7 @@
 //         : rentAmount = json['rent_amount'];
 //     facilities = json['facilities'];
 //     person = json['person'];
-//     addresh = json['addresh'];
+//     address = json['address'];
 //     countryId = json['country_id'];
 //     stateId = json['state_id'];
 //     cityName = json['city_name'];
@@ -121,7 +121,7 @@
 //     data['rent_amount'] = rentAmount;
 //     data['facilities'] = facilities;
 //     data['person'] = person;
-//     data['addresh'] = addresh;
+//     data['address'] = address;
 //     data['country_id'] = countryId;
 //     data['state_id'] = stateId;
 //     data['city_name'] = cityName;
@@ -231,7 +231,7 @@ class PropertyDetailDataModel {
   double? rentAmount;
   String? facilities;
   String? person;
-  String? addresh;
+  String? address;
   String? countryId;
   String? stateId;
   String? cityName;
@@ -259,7 +259,7 @@ class PropertyDetailDataModel {
       this.rentAmount,
       this.facilities,
       this.person,
-      this.addresh,
+      this.address,
       this.countryId,
       this.stateId,
       this.cityName,
@@ -289,7 +289,7 @@ class PropertyDetailDataModel {
         : rentAmount = json['rent_amount'];
     facilities = json['facilities'];
     person = json['person'];
-    addresh = json['addresh'];
+    address = json['address'];
     countryId = json['country_id'];
     stateId = json['state_id'];
     cityName = json['city_name'];
@@ -321,7 +321,7 @@ class PropertyDetailDataModel {
     data['rent_amount'] = rentAmount;
     data['facilities'] = facilities;
     data['person'] = person;
-    data['addresh'] = addresh;
+    data['address'] = address;
     data['country_id'] = countryId;
     data['state_id'] = stateId;
     data['city_name'] = cityName;

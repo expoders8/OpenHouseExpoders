@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../controller/notification_controller.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
@@ -11,6 +13,9 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+  final GetAllNotificationsController getAllNotificationsController =
+      Get.put(GetAllNotificationsController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,22 +28,106 @@ class _NotificationPageState extends State<NotificationPage> {
         centerTitle: true,
         backgroundColor: kBackGroundColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: Column(
-          children: [
-            notification("Notification", "assets/icons/boy 1.png", "Details"),
-            const SizedBox(height: 20),
-            notification(
-                "Notification title", "assets/icons/boy 2.png", "Details"),
-            const SizedBox(height: 20),
-            notification("Notification", "assets/icons/boy 3.png", "Details"),
-            const SizedBox(height: 20),
-          ],
-        ),
+      body: Obx(
+        () {
+          if (getAllNotificationsController.isLoading.value) {
+            return Container(
+              color: kBackGroundColor,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  color: kSelectedIconColor,
+                ),
+              ),
+            );
+          } else {
+            // ignore: unnecessary_null_comparison
+            if (getAllNotificationsController.notificationList.isNotEmpty &&
+                getAllNotificationsController.notificationList[0].data! !=
+                    null) {
+              if (getAllNotificationsController
+                  .notificationList[0].data!.isEmpty) {
+                return Container();
+              } else {
+                return ListView.builder(
+                  itemCount: getAllNotificationsController
+                      .notificationList[0].data!.length,
+                  itemBuilder: (context, index) {
+                    var requestData =
+                        getAllNotificationsController.notificationList[0].data!;
+                    if (requestData.isNotEmpty) {
+                      var data = requestData[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Column(
+                          children: [
+                            notification(
+                                data.title.toString(),
+                                "assets/icons/boy 1.png",
+                                data.decription.toString()),
+                            const SizedBox(height: 20),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const Center(
+                        child: Text(
+                          "No Notification",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 15,
+                              fontFamily: kCircularStdMedium),
+                        ),
+                      );
+                    }
+                  },
+                );
+              }
+            } else {
+              return const Center(
+                child: Text(
+                  "No Notification",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
+              );
+            }
+          }
+        },
       ),
     );
   }
+
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: const Text(
+  //         "Notification",
+  //         style: TextStyle(fontFamily: kCircularStdBook),
+  //       ),
+  //       automaticallyImplyLeading: false,
+  //       centerTitle: true,
+  //       backgroundColor: kBackGroundColor,
+  //     ),
+  //     body: Padding(
+  //       padding: const EdgeInsets.symmetric(horizontal: 15.0),
+  //       child: Column(
+  //         children: [
+  //           notification("Notification", "assets/icons/boy 1.png", "Details"),
+  //           const SizedBox(height: 20),
+  //           notification(
+  //               "Notification title", "assets/icons/boy 2.png", "Details"),
+  //           const SizedBox(height: 20),
+  //           notification("Notification", "assets/icons/boy 3.png", "Details"),
+  //           const SizedBox(height: 20),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   notification(String title, image, detail) {
     return Row(

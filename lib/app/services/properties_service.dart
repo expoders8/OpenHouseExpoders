@@ -33,13 +33,13 @@ class PropertiesService {
     try {
       http.Response response;
       var request =
-          http.MultipartRequest("POST", Uri.parse('$baseUrl/api/propertyadd'))
+          http.MultipartRequest("POST", Uri.parse('$baseUrl/api/addproperty'))
             ..fields['property_name'] = propertyname
             ..fields['description'] = description
             ..fields['property_price'] = propertyprice
             ..fields['facilities'] = facilities
             ..fields['person'] = person
-            ..fields['addresh'] = address
+            ..fields['address'] = address
             ..fields['country_id'] = countryid
             ..fields['state_id'] = stateid
             ..fields['city_name'] = cityname
@@ -79,7 +79,7 @@ class PropertiesService {
 
   getAllProperties(PropertiesRequestModel getRequest) async {
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/getpropretyes'),
+      var response = await http.post(Uri.parse('$baseUrl/api/getproperties'),
           body: json.encode({
             "pagesize": getRequest.pageSize,
             "pagenumber": getRequest.pageNumber,

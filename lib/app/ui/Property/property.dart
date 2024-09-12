@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:openhome/app/controller/property_controller.dart';
 
 import '../../routes/app_pages.dart';
 import '../../view/lease_property_view.dart';
 import '../../../config/constant/constant.dart';
 import '../../view/previous_property_view.dart';
 import '../../view/not_lease_property_view.dart';
+import '../../controller/property_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 

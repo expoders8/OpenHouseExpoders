@@ -27,7 +27,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
     );
   }
 
-  buildrequestwidget(name, addresh, contact, image) {
+  buildrequestwidget(name, address, contact, image) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Container(
@@ -85,7 +85,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
             Row(
               children: [
                 Text(
-                  addresh,
+                  address,
                   style: const TextStyle(
                       decoration: TextDecoration.underline,
                       decorationColor: kRedColor,

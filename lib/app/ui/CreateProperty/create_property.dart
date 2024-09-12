@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:openhome/app/view/amenities_view.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
 import '../../models/state_model.dart';
+import '../../view/amenities_view.dart';
 import '../../models/country_model.dart';
 import '../widgets/custom_textfield.dart';
 import '../../services/lookup_service.dart';

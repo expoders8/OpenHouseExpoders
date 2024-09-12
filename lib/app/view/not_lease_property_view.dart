@@ -73,7 +73,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                       return notLeaseProperty(
                         data.profilePicture.toString(),
                         data.rentAmount.toString(),
-                        "${data.addresh} ${data.address1}",
+                        "${data.address} ${data.address1}",
                         data.person.toString(),
                         data.name.toString(),
                       );

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:openhome/app/routes/app_pages.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 
+import '../../routes/app_pages.dart';
 import '../widgets/custom_textfield.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
