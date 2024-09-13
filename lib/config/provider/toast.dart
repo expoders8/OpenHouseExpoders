@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 void showToast(
-  BuildContext context,
   String message, {
   Color backgroundColor = Colors.white,
   Color textColor = Colors.black,
@@ -31,8 +30,6 @@ void showToast(
       ),
     ),
   );
-
-  Overlay.of(context).insert(overlayEntry);
 
   Timer(duration, () {
     overlayEntry.remove();

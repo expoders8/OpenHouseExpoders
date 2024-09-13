@@ -14,13 +14,13 @@ class UserService {
     var userid = jsonDecode(userdata);
     try {
       http.Response response;
-      var request =
-          http.MultipartRequest("POST", Uri.parse('$baseUrl/api/edit-profile'))
-            ..fields['first_name'] = firstName
-            ..fields['last_name'] = lastName
-            ..fields['email'] = email
-            ..fields['profile_picture'] = null.toString()
-            ..fields['user_id'] = userid["id"];
+      var request = http.MultipartRequest(
+          "POST", Uri.parse('$baseUrl/api/user/edit-profile'))
+        ..fields['first_name'] = firstName
+        ..fields['last_name'] = lastName
+        ..fields['email'] = email
+        ..fields['profile_picture'] = null.toString()
+        ..fields['user_id'] = userid["id"];
       if (file != null) {
         request.files.add(await http.MultipartFile.fromPath('file', file.path));
       }

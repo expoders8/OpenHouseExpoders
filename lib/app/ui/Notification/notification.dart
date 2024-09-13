@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -40,8 +40,8 @@ class _NotificationPageState extends State<NotificationPage> {
               ),
             );
           } else {
-            // ignore: unnecessary_null_comparison
             if (getAllNotificationsController.notificationList.isNotEmpty &&
+                // ignore: unnecessary_null_comparison
                 getAllNotificationsController.notificationList[0].data! !=
                     null) {
               if (getAllNotificationsController
@@ -100,34 +100,6 @@ class _NotificationPageState extends State<NotificationPage> {
       ),
     );
   }
-
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: const Text(
-  //         "Notification",
-  //         style: TextStyle(fontFamily: kCircularStdBook),
-  //       ),
-  //       automaticallyImplyLeading: false,
-  //       centerTitle: true,
-  //       backgroundColor: kBackGroundColor,
-  //     ),
-  //     body: Padding(
-  //       padding: const EdgeInsets.symmetric(horizontal: 15.0),
-  //       child: Column(
-  //         children: [
-  //           notification("Notification", "assets/icons/boy 1.png", "Details"),
-  //           const SizedBox(height: 20),
-  //           notification(
-  //               "Notification title", "assets/icons/boy 2.png", "Details"),
-  //           const SizedBox(height: 20),
-  //           notification("Notification", "assets/icons/boy 3.png", "Details"),
-  //           const SizedBox(height: 20),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   notification(String title, image, detail) {
     return Row(
