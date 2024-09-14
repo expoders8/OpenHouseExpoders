@@ -33,7 +33,7 @@ class PropertiesService {
     try {
       http.Response response;
       var request =
-          http.MultipartRequest("POST", Uri.parse('$baseUrl/api/property/add'))
+          http.MultipartRequest("POST", Uri.parse('$baseUrl/api/addproperties'))
             ..fields['property_name'] = propertyname
             ..fields['description'] = description
             ..fields['property_price'] = propertyprice
@@ -79,7 +79,7 @@ class PropertiesService {
 
   getAllProperties(PropertiesRequestModel getRequest) async {
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/property/getall'),
+      var response = await http.post(Uri.parse('$baseUrl/api/getallproperties'),
           body: json.encode({
             "pagesize": getRequest.pageSize,
             "pagenumber": getRequest.pageNumber,
@@ -117,7 +117,7 @@ class PropertiesService {
   getByIdProperties(String id) async {
     try {
       var response = await http.get(
-          Uri.parse('$baseUrl/api/property/getbyid?id=$id'),
+          Uri.parse('$baseUrl/api/propretyesgetbyid?id=$id'),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         var decodedUser = jsonDecode(response.body);

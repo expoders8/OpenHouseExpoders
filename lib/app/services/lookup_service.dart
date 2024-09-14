@@ -11,8 +11,7 @@ import '../../config/provider/snackbar_provider.dart';
 class LookupService {
   Future<List<GetAllAmenitiesDataModel>> getamenities() async {
     try {
-      var response = await http.get(
-          Uri.parse('$baseUrl/api/lookup/getamenities'),
+      var response = await http.get(Uri.parse('$baseUrl/api/getamenities'),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
@@ -34,8 +33,7 @@ class LookupService {
 
   static Future<List<GetAllCountryDataModel>> getcountries() async {
     try {
-      var response = await http.get(
-          Uri.parse('$baseUrl/api/lookup/getcountries'),
+      var response = await http.get(Uri.parse('$baseUrl/api/getcountries'),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
@@ -58,7 +56,7 @@ class LookupService {
   static Future<List<GetAllStateDataModel>> getState(String contryid) async {
     try {
       var response = await http.get(
-          Uri.parse('$baseUrl/api/lookup/getstates?country_id=$contryid'),
+          Uri.parse('$baseUrl/api/getstates?country_id=$contryid'),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         var data = json.decode(response.body);

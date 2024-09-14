@@ -12,7 +12,7 @@ class NotificationsService {
     var userid = jsonDecode(userdata);
     try {
       var response = await http.get(
-          Uri.parse('$baseUrl/api/notification/getall?userid=${userid["id"]}'),
+          Uri.parse('$baseUrl/api/getallnotification?userid=${userid["id"]}'),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
