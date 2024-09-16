@@ -61,8 +61,17 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         ageMonth = calculateAgeMonth(DateTime.now(), picked);
       });
       widget.selectedAgeYear!(ageYear);
+      widget.selectedDate!(selectedFormateDate);
       widget.selectedAgeMonth!(ageMonth);
       widget.selectedFormateDate!(selectedFormateDate);
+      // if (widget.selectedDate != null) {
+      //   widget.selectedDate!(selectedDate);
+      // }
+
+      // // If necessary, pass the formatted date and age information to the respective callbacks
+      // if (widget.selectedFormateDate != null) {
+      //   widget.selectedFormateDate!(selectedFormateDate);
+      // }
     }
   }
 

@@ -1,9 +1,10 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
-import '../widgets/custom_textfield.dart';
 import '../../controller/tab_controller.dart';
+import '../widgets/custom_textfield.dart';
+import '../../services/tenant_service.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../../config/provider/custom_datepicker.dart';
@@ -16,10 +17,12 @@ class InviteTenantDetailPage extends StatefulWidget {
 }
 
 class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
-  int userAge = 0;
+  String startdate = "";
+  String enddate = "";
   bool checkedValue = false;
   final tabController = Get.put(TabCountController());
   TextEditingController amountController = TextEditingController();
+  TenantService tenantService = TenantService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +41,9 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
             const SizedBox(height: 40),
             CustomDatePicker(
               hintText: "Start date",
-              selectedAgeYear: (newValue) {
+              selectedDate: (newValue) {
                 setState(() {
-                  userAge = newValue;
+                  startdate = newValue;
                 });
               },
               birthDateError: false,
@@ -48,9 +51,9 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
             const SizedBox(height: 15),
             CustomDatePicker(
               hintText: "End date",
-              selectedAgeYear: (newValue) {
+              selectedDate: (newValue) {
                 setState(() {
-                  userAge = newValue;
+                  startdate = newValue;
                 });
               },
               birthDateError: false,
@@ -60,8 +63,8 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
               hintText: 'Amount',
               maxLines: 1,
               ctrl: amountController,
-              name: "email",
-              validationMsg: 'Please enter email',
+              name: "",
+              validationMsg: 'Please enter amount',
             ),
             const SizedBox(height: 15),
             Row(
@@ -83,54 +86,29 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
               ],
             ),
             const SizedBox(height: 15),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    height: 45,
-                    width: 45,
-                    decoration: BoxDecoration(
-                        color: kBorderColor,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 9.0),
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: kPrimaryColor,
-                        size: 20,
-                      ),
-                    ),
+            CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                tabController.changeTabIndex(2);
+                // tenantService.inviteTenant(startdate.toString(),
+                //     enddate.toString(), amountController.value.text);
+              },
+              child: Container(
+                height: 45,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    border: Border.all(color: kWhiteColor),
+                    color: kButtonColor),
+                child: const Center(
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                        color: kWhiteColor,
+                        fontFamily: kCircularStdNormal,
+                        fontSize: 18),
                   ),
                 ),
-                const SizedBox(width: 50),
-                Expanded(
-                  child: CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      tabController.changeTabIndex(2);
-                    },
-                    child: Container(
-                      height: 45,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: kWhiteColor),
-                          color: kButtonColor),
-                      child: const Center(
-                        child: Text(
-                          "Next",
-                          style: TextStyle(
-                              color: kWhiteColor,
-                              fontFamily: kCircularStdNormal,
-                              fontSize: 18),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ],
         ),

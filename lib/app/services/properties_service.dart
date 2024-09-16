@@ -33,7 +33,7 @@ class PropertiesService {
     try {
       http.Response response;
       var request =
-          http.MultipartRequest("POST", Uri.parse('$baseUrl/api/addproperties'))
+          http.MultipartRequest("POST", Uri.parse('$baseUrl/api/property/add'))
             ..fields['property_name'] = propertyname
             ..fields['description'] = description
             ..fields['property_price'] = propertyprice
@@ -79,7 +79,7 @@ class PropertiesService {
 
   getAllProperties(PropertiesRequestModel getRequest) async {
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/getallproperties'),
+      var response = await http.post(Uri.parse('$baseUrl/api/property/getall'),
           body: json.encode({
             "pagesize": getRequest.pageSize,
             "pagenumber": getRequest.pageNumber,
@@ -117,7 +117,7 @@ class PropertiesService {
   getByIdProperties(String id) async {
     try {
       var response = await http.get(
-          Uri.parse('$baseUrl/api/propretyesgetbyid?id=$id'),
+          Uri.parse('$baseUrl/api/property/getbyid?id=$id'),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         var decodedUser = jsonDecode(response.body);
@@ -143,22 +143,23 @@ class PropertiesService {
 
   getMyLeaseProperties(PropertiesRequestModel getRequest) async {
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/getpropretyes'),
-          body: json.encode({
-            "pagesize": getRequest.pageSize,
-            "pagenumber": getRequest.pageNumber,
-            "searchtext": getRequest.searchText,
-            "sortby": getRequest.sortBy,
-            "propertyid": getRequest.propertyid,
-            "userid": getRequest.userId,
-            "type": getRequest.type,
-            "onlease": getRequest.onlease,
-            "country_id": getRequest.countryId,
-            "state_id": getRequest.stateId,
-            "city_name": getRequest.cityName,
-            "mylease": ""
-          }),
-          headers: {'Content-type': 'application/json'});
+      var response =
+          await http.post(Uri.parse('$baseUrl/api/property/getpropretyes'),
+              body: json.encode({
+                "pagesize": getRequest.pageSize,
+                "pagenumber": getRequest.pageNumber,
+                "searchtext": getRequest.searchText,
+                "sortby": getRequest.sortBy,
+                "propertyid": getRequest.propertyid,
+                "userid": getRequest.userId,
+                "type": getRequest.type,
+                "onlease": getRequest.onlease,
+                "country_id": getRequest.countryId,
+                "state_id": getRequest.stateId,
+                "city_name": getRequest.cityName,
+                "mylease": ""
+              }),
+              headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
         // LoaderX.hide();
         // var data = json.decode(response.body);

@@ -67,12 +67,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                 height: Get.height / 2.9,
                 width: double.infinity,
                 child: AnotherCarousel(
-                  // images: images,
-                  images: const [
-                    AssetImage("assets/icons/3.png"),
-                    AssetImage("assets/icons/6.png"),
-                    AssetImage("assets/icons/7.png"),
-                  ],
+                  images: images,
                   dotSize: 6,
                   autoplay: false,
                   borderRadius: true,

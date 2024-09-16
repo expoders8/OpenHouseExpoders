@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../controller/payment_controller.dart';
 import '../../routes/app_pages.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
@@ -16,12 +19,21 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   String selectedRoll = "";
-
+  final GetPaymentController getPaymentController =
+      Get.put(GetPaymentController());
+  int totalamount = 0;
+  int dueamount = 0;
   @override
   void initState() {
     var roll = getStorage.read('roll') ?? "";
     setState(() {
       selectedRoll = roll;
+    });
+    var userdata = getStorage.read('user');
+    var user = jsonDecode(userdata);
+    setState(() {
+      totalamount = user['total_amount'] ?? 0;
+      dueamount = user['due_amount'] ?? 0;
     });
     super.initState();
   }
@@ -57,122 +69,202 @@ class _PaymentPageState extends State<PaymentPage> {
       ),
       body: SafeArea(
         child: selectedRoll == "tenant"
-            ? SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: Get.width / 2.250,
-                            decoration: BoxDecoration(
-                              color: kWhiteColor,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 15.0,
-                                  right: 15.0,
-                                  top: 20,
-                                  bottom: 20.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Total Amount",
-                                    style: TextStyle(
-                                        fontFamily: kCircularStdMedium,
-                                        fontSize: 15,
-                                        color: kPrimaryColor),
-                                  ),
-                                  Text(
-                                    "\$5420",
-                                    style: TextStyle(
-                                        fontFamily: kCircularStdMedium,
-                                        fontSize: 25,
-                                        color: kPrimaryColor),
-                                  ),
-                                ],
-                              ),
-                            ),
+            ? Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: Get.width / 2.250,
+                          decoration: BoxDecoration(
+                            color: kWhiteColor,
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          const SizedBox(width: 10),
-                          Container(
-                            width: Get.width / 2.250,
-                            decoration: BoxDecoration(
-                              color: kButtonColor,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 15.0,
-                                  right: 15.0,
-                                  top: 20,
-                                  bottom: 20.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Pending Amount",
-                                    style: TextStyle(
-                                        fontFamily: kCircularStdMedium,
-                                        fontSize: 15,
-                                        color: kWhiteColor),
-                                  ),
-                                  Text(
-                                    "\$1952",
-                                    style: TextStyle(
-                                        fontFamily: kCircularStdMedium,
-                                        fontSize: 25,
-                                        color: kWhiteColor),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 15),
-                      payment(
-                          "assets/icons/boy 2.png",
-                          "\$1850",
-                          "101 Main Street",
-                          "Pending",
-                          "Host Name",
-                          "+91 9898758462",
-                          "\$250",
-                          "25-06-2025"),
-                      const SizedBox(height: 15),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          child: Container(
-                            height: 45,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                border: Border.all(color: kWhiteColor),
-                                color: kButtonColor),
-                            child: const Center(
-                              child: Text(
-                                "Pay Now",
-                                style: TextStyle(
-                                    color: kWhiteColor,
-                                    fontFamily: kCircularStdNormal,
-                                    fontSize: 18),
-                              ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 15.0, right: 15.0, top: 20, bottom: 20.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Total Amount",
+                                  style: TextStyle(
+                                      fontFamily: kCircularStdMedium,
+                                      fontSize: 15,
+                                      color: kPrimaryColor),
+                                ),
+                                Text(
+                                  "\$$totalamount",
+                                  style: const TextStyle(
+                                      fontFamily: kCircularStdMedium,
+                                      fontSize: 25,
+                                      color: kPrimaryColor),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 10),
+                        Container(
+                          width: Get.width / 2.250,
+                          decoration: BoxDecoration(
+                            color: kButtonColor,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 15.0, right: 15.0, top: 20, bottom: 20.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Pending Amount",
+                                  style: TextStyle(
+                                      fontFamily: kCircularStdMedium,
+                                      fontSize: 15,
+                                      color: kWhiteColor),
+                                ),
+                                Text(
+                                  "\$$dueamount",
+                                  style: const TextStyle(
+                                      fontFamily: kCircularStdMedium,
+                                      fontSize: 25,
+                                      color: kWhiteColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 15),
+                  Flexible(
+                    child: Obx(
+                      () {
+                        if (getPaymentController.isLoading.value) {
+                          return Container(
+                            color: kBackGroundColor,
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                color: kSelectedIconColor,
+                              ),
+                            ),
+                          );
+                        } else {
+                          if (getPaymentController.paymentList.isNotEmpty &&
+                              // ignore: unnecessary_null_comparison
+                              getPaymentController.paymentList[0].data! !=
+                                  null) {
+                            if (getPaymentController
+                                .paymentList[0].data!.isEmpty) {
+                              return Container();
+                            } else {
+                              return Column(
+                                children: [
+                                  Flexible(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0),
+                                      itemCount: getPaymentController
+                                          .paymentList[0].data!.length,
+                                      itemBuilder: (context, index) {
+                                        var requestData = getPaymentController
+                                            .paymentList[0].data!;
+                                        if (requestData.isNotEmpty) {
+                                          var data = requestData[index];
+                                          return payment(
+                                              "assets/icons/boy 2.png",
+                                              "\$${data.totalPayment}",
+                                              data.address,
+                                              "Pending",
+                                              data.name,
+                                              data.mobileNo,
+                                              "\$250",
+                                              "25-06-2025");
+                                        } else {
+                                          return const Center(
+                                            child: Text(
+                                              "No Payments",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 15,
+                                                  fontFamily:
+                                                      kCircularStdMedium),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20.0),
+                                      child: CupertinoButton(
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {},
+                                        child: Container(
+                                          height: 45,
+                                          width: Get.width,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              border: Border.all(
+                                                  color: kWhiteColor),
+                                              color: kButtonColor),
+                                          child: const Center(
+                                            child: Text(
+                                              "Pay Now",
+                                              style: TextStyle(
+                                                  color: kWhiteColor,
+                                                  fontFamily:
+                                                      kCircularStdNormal,
+                                                  fontSize: 18),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+                          } else {
+                            return const Center(
+                              child: Text(
+                                "No Payments",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
               )
+
+            // SingleChildScrollView(
+            //     child: Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            //       child: Column(
+            //         children: [
+
+            //           const SizedBox(height: 15),
+
+            //         ],
+            //       ),
+            //     ),
+            //   )
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),

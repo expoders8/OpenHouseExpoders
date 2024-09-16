@@ -49,7 +49,7 @@ class CustomSuccessToast extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "success",
                     style: TextStyle(color: kWhiteColor),
                   ),
@@ -58,7 +58,7 @@ class CustomSuccessToast extends StatelessWidget {
                   ),
                   Text(
                     message,
-                    style: TextStyle(color: kWhiteColor),
+                    style: const TextStyle(color: kWhiteColor),
                   ),
                 ],
               ),

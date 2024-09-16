@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
@@ -61,8 +62,9 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                       var data = propertyData[index];
                       return Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
+                          CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
                               getDetailsPropertiesController
                                   .conferanceId(data.id);
                               getDetailsPropertiesController
@@ -115,28 +117,31 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                   fontFamily:
                                                       kCircularStdMedium),
                                             ),
-                                            Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.location_on,
-                                                  size: 16,
-                                                  color: kButtonColor,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                SizedBox(
-                                                  width: Get.width / 2.5,
-                                                  child: Text(
-                                                    data.address.toString(),
-                                                    style: const TextStyle(
-                                                        color:
-                                                            kSecondaryPrimaryColor,
-                                                        fontSize: 13,
-                                                        fontFamily:
-                                                            kCircularStdMedium),
+                                            data.address.toString() == "null"
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.location_on,
+                                                        size: 16,
+                                                        color: kButtonColor,
+                                                      ),
+                                                      const SizedBox(width: 10),
+                                                      SizedBox(
+                                                        width: Get.width / 2.5,
+                                                        child: Text(
+                                                          data.address
+                                                              .toString(),
+                                                          style: const TextStyle(
+                                                              color:
+                                                                  kSecondaryPrimaryColor,
+                                                              fontSize: 13,
+                                                              fontFamily:
+                                                                  kCircularStdMedium),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ),
-                                              ],
-                                            ),
                                             Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -241,7 +246,12 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                     color: kPrimaryColor),
                                               ),
                                               Text(
-                                                data.rentAmountUnit.toString(),
+                                                data.rentAmountUnit
+                                                            .toString() ==
+                                                        "null"
+                                                    ? "\$0"
+                                                    : data.rentAmountUnit
+                                                        .toString(),
                                                 style: const TextStyle(
                                                     fontFamily:
                                                         kCircularStdMedium,

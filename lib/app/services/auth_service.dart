@@ -14,7 +14,7 @@ class AuthService {
     String password,
   ) async {
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/login'),
+      var response = await http.post(Uri.parse('$baseUrl/api/auth/login'),
           body: json.encode({
             "email": email,
             "password": password,
@@ -57,7 +57,7 @@ class AuthService {
     String roll,
   ) async {
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/register'),
+      var response = await http.post(Uri.parse('$baseUrl/api/auth/register'),
           body: json.encode({
             "first_name": firstName,
             "last_name": lastName,
@@ -110,18 +110,19 @@ class AuthService {
     String provider,
   ) async {
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/social-login'),
-          body: json.encode({
-            "firstName": firstName,
-            "lastName": lastName,
-            "email": email,
-            "profilePicture": profilePicture,
-            "googleToken": googleToken,
-            "provider": provider,
-            "currency": "",
-            "fcmToken": "",
-          }),
-          headers: {'Content-type': 'application/json'});
+      var response =
+          await http.post(Uri.parse('$baseUrl/api/auth/social-login'),
+              body: json.encode({
+                "firstName": firstName,
+                "lastName": lastName,
+                "email": email,
+                "profilePicture": profilePicture,
+                "googleToken": googleToken,
+                "provider": provider,
+                "currency": "",
+                "fcmToken": "",
+              }),
+              headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         var decodedUser = jsonDecode(response.body);
         if (decodedUser['success']) {
@@ -147,7 +148,8 @@ class AuthService {
     var userid = jsonDecode(userdata);
 
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/change-password'),
+      var response = await http.post(
+          Uri.parse('$baseUrl/api/auth/change-password'),
           body: json.encode({
             "id": userid["id"],
             "currentPassword": currentPass,
@@ -177,11 +179,12 @@ class AuthService {
     String email,
   ) async {
     try {
-      var response = await http.post(Uri.parse('$baseUrl/api/forgot-password'),
-          body: json.encode({
-            "email": email,
-          }),
-          headers: {'Content-type': 'application/json'});
+      var response =
+          await http.post(Uri.parse('$baseUrl/api/auth/forgot-password'),
+              body: json.encode({
+                "email": email,
+              }),
+              headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200) {
         LoaderX.hide();

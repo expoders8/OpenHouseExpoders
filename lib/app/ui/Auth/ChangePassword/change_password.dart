@@ -100,7 +100,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             () async {
                           if (_formKey.currentState!.validate()) {
                             LoaderX.show(context, 60.0, 60.0);
-
                             authService.changePassowrd(
                                 "",
                                 currentPasswordController.text,

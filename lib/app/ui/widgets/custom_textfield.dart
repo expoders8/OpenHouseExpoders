@@ -12,6 +12,7 @@ class CustomTextFormField extends StatefulWidget {
   final int? maxLines;
   final bool formSubmitted;
   final TextEditingController? confirmPasswordController;
+  final Function(String)? onChanged;
 
   const CustomTextFormField({
     Key? key,
@@ -24,6 +25,7 @@ class CustomTextFormField extends StatefulWidget {
     this.name,
     this.confirmPasswordController,
     this.validationMsg,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -155,6 +157,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         setState(() {
           isTouched = true;
         });
+        if (widget.onChanged != null) {
+          widget.onChanged!(value);
+        }
       },
     );
   }

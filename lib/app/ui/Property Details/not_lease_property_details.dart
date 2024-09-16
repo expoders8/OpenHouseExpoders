@@ -11,6 +11,7 @@ import '../../view/property_details_view.dart';
 import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../controller/property_detail_controller.dart';
 
 class NotLeasePropertyDetailPage extends StatefulWidget {
   const NotLeasePropertyDetailPage({super.key});
@@ -24,11 +25,19 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool isPreviousTenantsSelected = true;
+  final GetnotleaseDetailsPropertiesController
+      getnotleaseDetailsPropertiesController =
+      Get.put(GetnotleaseDetailsPropertiesController());
+  List<ImageProvider> images = [];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    images = [
+      ...getnotleaseDetailsPropertiesController.detailModel!.data!.images!
+          .map((imageUrl) => NetworkImage(imageUrl)),
+    ];
   }
 
   @override
@@ -39,20 +48,26 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      children: [
-        Stack(
+    return Scaffold(body: Obx(() {
+      if (getnotleaseDetailsPropertiesController.isLoading.value) {
+        return const Center(
+            child: CircularProgressIndicator(color: kSelectedIconColor));
+      } else {
+        var propertydata =
+            getnotleaseDetailsPropertiesController.detailModel!.data;
+
+        return Stack(
           children: [
             SizedBox(
               height: Get.height / 2.9,
               width: double.infinity,
               child: AnotherCarousel(
-                images: const [
-                  AssetImage("assets/icons/3.png"),
-                  AssetImage("assets/icons/6.png"),
-                  AssetImage("assets/icons/7.png"),
-                ],
+                images: images,
+                // images: const [
+                //   AssetImage("assets/icons/3.png"),
+                //   AssetImage("assets/icons/6.png"),
+                //   AssetImage("assets/icons/7.png"),
+                // ],
                 dotSize: 6,
                 autoplay: false,
                 borderRadius: true,
@@ -87,109 +102,127 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                 )),
             Positioned(
               child: Container(
-                height: Get.height - 225,
+                padding: const EdgeInsets.symmetric(horizontal: 13.0),
                 margin: const EdgeInsets.only(top: 225),
                 decoration: BoxDecoration(
                   color: kBackGroundColor,
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 13.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: Get.width - 100,
-                                    child: const Text(
-                                      "3545 Robson St, Vancouver",
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 18,
-                                          fontFamily: kCircularStdMedium),
+                    const SizedBox(height: 15),
+                    Flexible(
+                      child: NestedScrollView(
+                        headerSliverBuilder:
+                            (BuildContext context, bool innerBoxIsScrolled) {
+                          return <Widget>[
+                            SliverAppBar(
+                                automaticallyImplyLeading: false,
+                                backgroundColor: kBackGroundColor,
+                                expandedHeight: 0,
+                                floating: false,
+                                flexibleSpace: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: Get.width - 100,
+                                              child: Text(
+                                                propertydata!.name.toString(),
+                                                style: const TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 18,
+                                                    fontFamily:
+                                                        kCircularStdMedium),
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "\$${propertydata.rentAmount.toString()}",
+                                                  style: const TextStyle(
+                                                      color: kButtonColor,
+                                                      fontSize: 18,
+                                                      fontFamily:
+                                                          kCircularStdMedium),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                const Text(
+                                                  "per month",
+                                                  style: TextStyle(
+                                                      color:
+                                                          kSecondaryPrimaryColor,
+                                                      fontSize: 13,
+                                                      fontFamily:
+                                                          kCircularStdMedium),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.to(() =>
+                                                const CreatePropertyPage(
+                                                    checkEdit: "edit"));
+                                          },
+                                          child: Container(
+                                            height: 45,
+                                            width: 45,
+                                            decoration: BoxDecoration(
+                                                color: kBorderColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            child: const Icon(
+                                              Icons.edit,
+                                              color: kPrimaryColor,
+                                              size: 20,
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  ),
-                                  const Row(
-                                    children: [
-                                      Text(
-                                        "\$2513",
-                                        style: TextStyle(
-                                            color: kButtonColor,
-                                            fontSize: 18,
-                                            fontFamily: kCircularStdMedium),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        "per month",
-                                        style: TextStyle(
-                                            color: kSecondaryPrimaryColor,
-                                            fontSize: 13,
-                                            fontFamily: kCircularStdMedium),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => const CreatePropertyPage(
-                                      checkEdit: "edit"));
-                                },
-                                child: Container(
-                                  height: 45,
-                                  width: 45,
-                                  decoration: BoxDecoration(
-                                      color: kBorderColor,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: const Icon(
-                                    Icons.edit,
-                                    color: kPrimaryColor,
-                                    size: 20,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: List.generate(4, (index) {
-                              return const Icon(Icons.star,
-                                  color: Color.fromARGB(255, 255, 230, 0));
-                            })
-                              ..add(const Icon(Icons.star_half,
-                                  color: Color.fromARGB(255, 255, 230, 0))),
-                          ),
-                          TabBar(
-                            controller: _tabController,
-                            indicatorColor: kButtonColor,
-                            labelColor: kPrimaryColor,
-                            tabs: const [
-                              Tab(text: 'Tenants'),
-                              Tab(text: 'Overview'),
-                              Tab(text: 'Near By'),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Get.height / 2.02825,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 0.0, vertical: 10),
+                                    Row(
+                                      children: List.generate(4, (index) {
+                                        return const Icon(Icons.star,
+                                            color: Color.fromARGB(
+                                                255, 255, 230, 0));
+                                      })
+                                        ..add(const Icon(Icons.star_half,
+                                            color: Color.fromARGB(
+                                                255, 255, 230, 0))),
+                                    ),
+                                  ],
+                                )),
+                          ];
+                        },
+                        body: Column(
+                          children: [
+                            TabBar(
+                              controller: _tabController,
+                              indicatorColor: kButtonColor,
+                              labelColor: kPrimaryColor,
+                              tabs: const [
+                                Tab(text: 'Tenants'),
+                                Tab(text: 'Overview'),
+                                Tab(text: 'Near By'),
+                              ],
+                            ),
+                            Flexible(
                               child: TabBarView(
                                 controller: _tabController,
                                 children: [
                                   SingleChildScrollView(
                                     child: Column(
                                       children: [
+                                        const SizedBox(height: 10),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -318,8 +351,8 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                 ],
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -327,9 +360,9 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
               ),
             )
           ],
-        ),
-      ],
-    ));
+        );
+      }
+    }));
   }
 
   tenanthistory() {

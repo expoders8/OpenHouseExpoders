@@ -48,7 +48,7 @@ class CustomEErrorToast extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "error",
                     style: TextStyle(color: kWhiteColor),
                   ),
@@ -57,7 +57,7 @@ class CustomEErrorToast extends StatelessWidget {
                   ),
                   Text(
                     message,
-                    style: TextStyle(color: kWhiteColor),
+                    style: const TextStyle(color: kWhiteColor),
                   ),
                 ],
               ),

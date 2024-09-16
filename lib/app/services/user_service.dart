@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../config/constant/constant.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
+import '../models/getall_tenant_model.dart';
 
 class UserService {
   updateProfile(
@@ -14,13 +15,13 @@ class UserService {
     var userid = jsonDecode(userdata);
     try {
       http.Response response;
-      var request =
-          http.MultipartRequest("POST", Uri.parse('$baseUrl/api/edit-profile'))
-            ..fields['first_name'] = firstName
-            ..fields['last_name'] = lastName
-            ..fields['email'] = email
-            ..fields['profile_picture'] = null.toString()
-            ..fields['user_id'] = userid["id"];
+      var request = http.MultipartRequest(
+          "POST", Uri.parse('$baseUrl/api/user/edit-profile'))
+        ..fields['first_name'] = firstName
+        ..fields['last_name'] = lastName
+        ..fields['email'] = email
+        ..fields['profile_picture'] = null.toString()
+        ..fields['user_id'] = userid["id"];
       if (file != null) {
         request.files.add(await http.MultipartFile.fromPath('file', file.path));
       }

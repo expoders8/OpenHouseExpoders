@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../main.dart';
-import 'custom_error_toast.dart';
-import 'custom_success_toast.dart';
-
 /// Toast showing in app
 ///
 class CustomToast {
