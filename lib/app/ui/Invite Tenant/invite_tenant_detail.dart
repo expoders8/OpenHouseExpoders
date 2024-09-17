@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../controller/tab_controller.dart';
+import '../../controller/tenants_controller.dart';
 import '../widgets/custom_textfield.dart';
 import '../../services/tenant_service.dart';
 import '../../../config/constant/font_constant.dart';
@@ -17,11 +18,13 @@ class InviteTenantDetailPage extends StatefulWidget {
 }
 
 class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
-  String startdate = "";
-  String enddate = "";
+  DateTime? startdate;
+  DateTime? enddate;
   bool checkedValue = false;
   final tabController = Get.put(TabCountController());
   TextEditingController amountController = TextEditingController();
+  final GetAllTenantController getAllTenantController =
+      Get.put(GetAllTenantController());
   TenantService tenantService = TenantService();
   @override
   Widget build(BuildContext context) {
@@ -39,23 +42,15 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
         child: Column(
           children: [
             const SizedBox(height: 40),
-            CustomDatePicker(
+            const CustomDatePicker(
               hintText: "Start date",
-              selectedDate: (newValue) {
-                setState(() {
-                  startdate = newValue;
-                });
-              },
+              name: "start",
               birthDateError: false,
             ),
             const SizedBox(height: 15),
-            CustomDatePicker(
+            const CustomDatePicker(
               hintText: "End date",
-              selectedDate: (newValue) {
-                setState(() {
-                  startdate = newValue;
-                });
-              },
+              name: "end",
               birthDateError: false,
             ),
             const SizedBox(height: 15),
@@ -89,7 +84,8 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
             CupertinoButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                tabController.changeTabIndex(2);
+                getAllTenantController.rentAmount(amountController.text);
+                tenantService.inviteTenant();
                 // tenantService.inviteTenant(startdate.toString(),
                 //     enddate.toString(), amountController.value.text);
               },

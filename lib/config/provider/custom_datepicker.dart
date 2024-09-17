@@ -1,29 +1,29 @@
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
+import '../../app/controller/tenants_controller.dart';
 import '../constant/font_constant.dart';
 import '../constant/color_constant.dart';
 
 class CustomDatePicker extends StatefulWidget {
-  final Function? selectedAgeYear;
-  final Function? selectedAgeMonth;
   final Function? selectedDate;
   final DateTime? initialvalue;
   final String? checktext;
   final Function? selectedFormateDate;
   final bool birthDateError;
   final String? hintText;
+  final String? name;
 
   const CustomDatePicker({
     Key? key,
-    this.selectedAgeYear,
-    this.selectedAgeMonth,
     this.selectedDate,
     this.selectedFormateDate,
     required this.birthDateError,
     this.initialvalue,
     this.checktext,
     this.hintText,
+    this.name,
   }) : super(key: key);
 
   @override
@@ -31,6 +31,8 @@ class CustomDatePicker extends StatefulWidget {
 }
 
 class _CustomDatePickerState extends State<CustomDatePicker> {
+  final GetAllTenantController getAllTenantController =
+      Get.put(GetAllTenantController());
   int ageYear = 0;
   int ageMonth = 0;
   String selectedDate = "dd/mm/yyyy";
@@ -48,30 +50,23 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: currentDate,
-        // initialDatePickerMode: DatePickerMode.year,
         firstDate: DateTime(1901),
-        lastDate: DateTime.now());
+        lastDate: DateTime(2100));
     if (picked != null && picked != currentDate) {
       setState(() {
         currentDate = picked;
         selectedDate = DateFormat('dd/MM/yyyy').format(picked);
-
-        selectedFormateDate = DateFormat('yyyy-MM-dd').format(picked);
+        selectedFormateDate =
+            DateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS'+00'").format(picked);
         ageYear = calculateAgeYear(DateTime.now(), picked);
         ageMonth = calculateAgeMonth(DateTime.now(), picked);
       });
-      widget.selectedAgeYear!(ageYear);
-      widget.selectedDate!(selectedFormateDate);
-      widget.selectedAgeMonth!(ageMonth);
-      widget.selectedFormateDate!(selectedFormateDate);
-      // if (widget.selectedDate != null) {
-      //   widget.selectedDate!(selectedDate);
-      // }
-
-      // // If necessary, pass the formatted date and age information to the respective callbacks
-      // if (widget.selectedFormateDate != null) {
-      //   widget.selectedFormateDate!(selectedFormateDate);
-      // }
+      if (selectedDate != "" && widget.name == "start") {
+        getAllTenantController.startDate(selectedFormateDate);
+      }
+      if (selectedDate != "" && widget.name == "end") {
+        getAllTenantController.endDate(selectedFormateDate);
+      }
     }
   }
 

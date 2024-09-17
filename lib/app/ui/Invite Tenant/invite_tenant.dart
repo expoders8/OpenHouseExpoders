@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 import 'package:country_list_pick/country_list_pick.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../../../config/constant/constant.dart';
-import '../../models/getall_tenant_model.dart';
-import '../../routes/app_pages.dart';
 import '../../services/tenant_service.dart';
-import '../widgets/custom_textfield.dart';
+import '../../models/getall_tenant_model.dart';
 import '../../controller/tenants_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -23,41 +19,11 @@ class InviteTenantPage extends StatefulWidget {
 
 class _InviteTenantPageState extends State<InviteTenantPage> {
   bool isFormSubmitted = false;
-  final RxString mobileno = ''.obs;
   String selectedCountrydialCode = "+91";
   final TextEditingController mobilenoController = TextEditingController();
   final GetAllTenantController getAllTenantController =
       Get.put(GetAllTenantController());
-  String image = "", address = "", name = "";
-  TenantService tenantService = TenantService();
-  var selectedTenant;
-
-  @override
-  void initState() {
-    super.initState();
-    mobilenoController.addListener(() {
-      mobileno.value = mobilenoController.text;
-    });
-    var propertydata = getStorage.read('NotLeaseProperty');
-    var property = jsonDecode(propertydata);
-    setState(() {
-      image = property['images'][0];
-      name = property['Hostdetails']['first_name'] +
-          " " +
-          property['Hostdetails']['last_name'];
-      address = property['name'];
-      // tenantService.propertyid = property['id'];
-    });
-  }
-
-  void handleTenantSelection(GetAllTenantDataModel data) {
-    setState(() {
-      selectedTenant = data;
-      tenantService.email.value = selectedTenant.email.toString();
-      tenantService.phoneno.value = selectedTenant.phoneNumber.toString();
-      tenantService.tenantId.value = selectedTenant.id.toString();
-    });
-  }
+  final TextEditingController tenantController = TextEditingController();
 
   @override
   void dispose() {
@@ -90,7 +56,7 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: Image.network(
-                        image,
+                        getAllTenantController.propertyImage.value,
                         fit: BoxFit.cover,
                         scale: 1.2,
                         height: 55,
@@ -122,7 +88,7 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                             SizedBox(
                               width: Get.width / 1.7,
                               child: Text(
-                                address,
+                                getAllTenantController.propertyAddress.value,
                                 style: const TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: 15,
@@ -143,7 +109,7 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                             SizedBox(
                               width: Get.width - 220,
                               child: Text(
-                                name,
+                                getAllTenantController.propertyName.value,
                                 style: const TextStyle(
                                     color: kSecondaryPrimaryColor,
                                     fontSize: 13,
@@ -157,229 +123,144 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                   ],
                 ),
                 const SizedBox(height: 15),
-                SizedBox(
-                  width: Get.width > 500 ? 600 : Get.width,
-                  child: IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: kBackGroundColor,
-                              border: Border.all(color: kSecondaryPrimaryColor),
-                              borderRadius: BorderRadius.circular(50)),
-                          child: CountryListPick(
-                            theme: CountryTheme(
-                              isShowFlag: false,
-                              isShowTitle: false,
-                              isShowCode: true,
-                              isDownIcon: false,
-                              showEnglishName: true,
-                            ),
-                            initialSelection: 'IN',
-                            onChanged: (CountryCode? code) {
-                              setState(() {
-                                selectedCountrydialCode =
-                                    code!.dialCode.toString();
-                              });
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomTextFormField(
-                                hintText: 'PhoneNo',
-                                maxLines: 1,
-                                ctrl: mobilenoController,
-                                keyboardType: TextInputType.phone,
-                                name: "phoneno",
-                                formSubmitted: isFormSubmitted,
-                                validationMsg: "Enter Phone no.",
-                                onChanged: (value) {
-                                  getAllTenantController.searchText(value);
-                                  setState(() {
-                                    mobileno.value = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                mobileno.isNotEmpty
-                    ? selectedTenant != null
-                        ? Container(
-                            height: 75,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                              color: kBackGroundColor,
-                              border: Border.all(color: kPrimaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 10),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        searchresult(
-                                          selectedTenant.profilePicture
-                                              .toString(),
-                                          selectedTenant.firstName,
-                                          selectedTenant.phoneNumber,
-                                        ),
-                                        IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                selectedTenant = null;
-                                              });
-                                            },
-                                            icon: const Icon(Icons.remove))
-                                      ],
-                                    )
-                                  ],
-                                )),
-                          )
-                        : Container(
-                            height: 250,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                              color: kBackGroundColor,
-                              border: Border.all(color: kPrimaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Obx(
-                              () {
-                                if (getAllTenantController.isLoading.value) {
-                                  return Container(
-                                    color: kBackGroundColor,
-                                    child: const Center(
-                                      child: CircularProgressIndicator(
-                                        color: kSelectedIconColor,
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  // ignore: unnecessary_null_comparison
-                                  if (getAllTenantController
-                                          .tenantssList[0].data! !=
-                                      null) {
-                                    if (getAllTenantController
-                                        .tenantssList[0].data!.isEmpty) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: Get.width - 80,
-                                          child: const Text(
-                                            "No Tenants",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: kPrimaryColor,
-                                                fontSize: 15,
-                                                fontFamily: kCircularStdMedium),
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      return ListView.builder(
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: getAllTenantController
-                                            .tenantssList[0].data!.length,
-                                        itemBuilder: (context, index) {
-                                          var tenantData =
-                                              getAllTenantController
-                                                  .tenantssList[0].data!;
-                                          if (tenantData.isNotEmpty) {
-                                            var data = tenantData[index];
-                                            return CupertinoButton(
-                                              padding: EdgeInsets.zero,
-                                              onPressed: () {
-                                                handleTenantSelection(data);
-                                              },
-                                              child: SingleChildScrollView(
-                                                child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10.0,
-                                                        vertical: 10),
-                                                    child: Column(
-                                                      children: [
-                                                        searchresult(
-                                                            data.profilePicture
-                                                                .toString(),
-                                                            data.firstName,
-                                                            data.phoneNumber),
-                                                      ],
-                                                    )),
-                                              ),
-                                            );
-                                          } else {
-                                            return const Center(
-                                              child: Text(
-                                                "No Tenants",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: kPrimaryColor,
-                                                    fontSize: 15,
-                                                    fontFamily:
-                                                        kCircularStdMedium),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      );
-                                    }
-                                  } else {
-                                    return const Center(
-                                      child: Text(
-                                        "No Tenants",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: kPrimaryColor,
-                                            fontSize: 15,
-                                            fontFamily: kCircularStdMedium),
-                                      ),
-                                    );
-                                  }
-                                }
-                              },
-                            ),
-                          )
-                    : Container(),
-                const SizedBox(height: 10),
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    mobileno.isNotEmpty && selectedTenant != null
-                        ? Get.toNamed(Routes.inviteTenantDetailPage)
-                        : Container();
-                  },
-                  child: Container(
-                    height: 45,
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: kWhiteColor),
-                        color: kButtonColor),
-                    child: const Center(
-                      child: Text(
-                        "Next",
-                        style: TextStyle(
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
                             color: kWhiteColor,
-                            fontFamily: kCircularStdNormal,
-                            fontSize: 18),
+                            borderRadius: BorderRadius.circular(0)),
+                        child: CountryListPick(
+                          theme: CountryTheme(
+                            isShowFlag: false,
+                            isShowTitle: false,
+                            isShowCode: true,
+                            isDownIcon: false,
+                            showEnglishName: true,
+                          ),
+                          initialSelection: 'IN',
+                          onChanged: (CountryCode? code) {
+                            setState(() {
+                              selectedCountrydialCode =
+                                  code!.dialCode.toString();
+                            });
+                          },
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        flex: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                          child: TypeAheadField<GetAllTenantDataModel>(
+                              textFieldConfiguration: TextFieldConfiguration(
+                                keyboardType: TextInputType.number,
+                                controller: tenantController,
+                                decoration: InputDecoration(
+                                  fillColor: kWhiteColor,
+                                  filled: true,
+                                  hintText: "PhoneNo",
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                                  hintStyle: const TextStyle(
+                                    fontFamily: kCircularStdBook,
+                                    fontWeight: FontWeight.w400,
+                                    color: kPrimaryColor,
+                                    fontSize: 14,
+                                  ),
+                                  hintMaxLines: 1,
+                                  border: const OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: kWhiteColor, width: 1.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(0.0),
+                                    borderSide: const BorderSide(
+                                        color: kWhiteColor, width: 1.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(0.0),
+                                    borderSide: const BorderSide(
+                                      color: kWhiteColor,
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: const BorderSide(
+                                        color: kWhiteColor, width: 1.0),
+                                  ),
+                                  errorText: isFormSubmitted &&
+                                          tenantController.text.isEmpty
+                                      ? 'Please select a Tenants'
+                                      : null,
+                                ),
+                                style: const TextStyle(
+                                  fontFamily: kCircularStdBook,
+                                  fontWeight: FontWeight.w400,
+                                  color: kPrimaryColor,
+                                  fontSize: 14,
+                                ),
+                                autocorrect: true,
+                                cursorColor: kPrimaryColor,
+                              ),
+                              noItemsFoundBuilder: (context) => const SizedBox(
+                                    child: Center(
+                                      child: Text('No Tenants found'),
+                                    ),
+                                  ),
+                              suggestionsCallback: (pattern) async {
+                                final tenants =
+                                    await TenantService.getallTenant(pattern);
+                                return tenants;
+                              },
+                              itemBuilder:
+                                  (context, GetAllTenantDataModel? suggestion) {
+                                return ListTile(
+                                  leading: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.network(
+                                      suggestion!.profilePicture.toString(),
+                                      width: 50.0,
+                                      height: 50.0,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          "assets/images/blank_profile.png",
+                                          fit: BoxFit.cover,
+                                          height: 50.0,
+                                          width: 50.0,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  subtitle:
+                                      Text(suggestion.phoneNumber.toString()),
+                                  title: Text(suggestion.firstName.toString()),
+                                );
+                              },
+                              // transitionBuilder:
+                              //     (context, suggestionsBox, controller) {
+                              //   return suggestionsBox;
+                              // },
+                              onSuggestionSelected:
+                                  (GetAllTenantDataModel? suggestion) {
+                                setState(() {
+                                  getAllTenantController
+                                      .email(suggestion!.email);
+                                  getAllTenantController
+                                      .phoneNo(suggestion.phoneNumber);
+                                  getAllTenantController
+                                      .tenantId(suggestion.id);
+                                });
+                                Get.toNamed(Routes.inviteTenantDetailPage);
+                              }),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -387,57 +268,6 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
           ),
         ),
       ),
-    );
-  }
-
-  searchresult(String image, name, number) {
-    return Row(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(25),
-          child: Image.network(
-            image,
-            fit: BoxFit.cover,
-            scale: 1.2,
-            height: 50,
-            width: 50,
-            errorBuilder: (context, error, stackTrace) {
-              return Image.asset(
-                "assets/images/blank_profile.png",
-                fit: BoxFit.cover,
-                scale: 1.2,
-                height: 50,
-                width: 50,
-              );
-            },
-          ),
-        ),
-        const SizedBox(width: 10),
-        Column(
-          children: [
-            SizedBox(
-              width: Get.width - 220,
-              child: Text(
-                name,
-                style: const TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 17,
-                    fontFamily: kCircularStdMedium),
-              ),
-            ),
-            SizedBox(
-              width: Get.width - 220,
-              child: Text(
-                number,
-                style: const TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 13,
-                    fontFamily: kCircularStdBook),
-              ),
-            ),
-          ],
-        )
-      ],
     );
   }
 }

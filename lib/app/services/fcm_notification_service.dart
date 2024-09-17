@@ -21,12 +21,18 @@ class FCMNotificationServices {
         sound: true);
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print("user granted permission");
+      if (kDebugMode) {
+        print("user granted permission");
+      }
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print("user granted provisional permission");
+      if (kDebugMode) {
+        print("user granted provisional permission");
+      }
     } else {
-      print("user denied permission");
+      if (kDebugMode) {
+        print("user denied permission");
+      }
     }
   }
 

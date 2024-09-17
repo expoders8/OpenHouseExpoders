@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import '../../config/constant/constant.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
-import '../models/getall_tenant_model.dart';
 
 class UserService {
   updateProfile(

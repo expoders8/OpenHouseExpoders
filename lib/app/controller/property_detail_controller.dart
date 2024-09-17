@@ -71,9 +71,6 @@ class GetnotleaseDetailsPropertiesController extends GetxController {
               "$baseUrl/api/property/getbyid?id=${conferanceId.toString()}"),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
-        var decodedUser = jsonDecode(response.body);
-        getStorage.write('NotLeaseProperty', jsonEncode(decodedUser["data"]));
-
         detailModel = PropertyDetailModel.fromJson(jsonDecode(response.body));
         Get.to(() => const NotLeasePropertyDetailPage());
       } else {

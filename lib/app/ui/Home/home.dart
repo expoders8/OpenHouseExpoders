@@ -8,6 +8,7 @@ import '../../view/chechout_request.dart';
 import '../../view/tenant_request_view.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/constant.dart';
+import '../../view/tenant_invitation_view.dart';
 import '../../controller/request_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -87,122 +88,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 15),
-                      const Text(
-                        "Invitations",
-                        style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 16,
-                            fontFamily: kCircularStdMedium),
-                      ),
-                      const SizedBox(height: 10),
-                      Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          width: Get.width,
-                          decoration: BoxDecoration(
-                            color: kWhiteColor,
-                            borderRadius: BorderRadius.circular(11),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "You have received a house rent invitation from",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 14,
-                                    fontFamily: kCircularStdNormal),
-                              ),
-                              const Row(
-                                children: [
-                                  Text(
-                                    "Jons jacko",
-                                    style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: kRedColor,
-                                        color: kRedColor,
-                                        fontSize: 14,
-                                        fontFamily: kCircularStdNormal),
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    "for",
-                                    style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontSize: 14,
-                                        fontFamily: kCircularStdNormal),
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    "6001 Main Street",
-                                    style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: kRedColor,
-                                        color: kRedColor,
-                                        fontSize: 14,
-                                        fontFamily: kCircularStdNormal),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "End On 16-06-2022",
-                                    style: TextStyle(
-                                        color: kGreyColor,
-                                        fontSize: 13,
-                                        fontFamily: kCircularStdNormal),
-                                  ),
-                                  Row(
-                                    children: [
-                                      CupertinoButton(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () {},
-                                        child: Container(
-                                          padding: const EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: kGreenColor, width: 1),
-                                              borderRadius:
-                                                  BorderRadius.circular(25)),
-                                          child: const Icon(
-                                            Icons.check,
-                                            color: kGreenColor,
-                                            size: 19,
-                                          ),
-                                        ),
-                                      ),
-                                      CupertinoButton(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () {
-                                          invitationDialog();
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color:
-                                                      const Color(0xFFFF1100),
-                                                  width: 1),
-                                              borderRadius:
-                                                  BorderRadius.circular(25)),
-                                          child: const Icon(
-                                            Icons.close,
-                                            color: Color(0xFFFF1100),
-                                            size: 19,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 25),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ],
-                          )),
+                      TenantInvitationView(),
                       const SizedBox(height: 10),
                       const Text(
                         "My Lease",
@@ -236,88 +122,6 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     GestureDetector(
-                      //       onTap: () {
-                      //         Get.toNamed(Routes.totalAmountDetailPage);
-                      //       },
-                      //       child: Container(
-                      //         width: Get.width / 2.250,
-                      //         decoration: BoxDecoration(
-                      //           color: kButtonColor,
-                      //           borderRadius: BorderRadius.circular(15),
-                      //         ),
-                      //         child: const Padding(
-                      //           padding: EdgeInsets.only(
-                      //               left: 15.0,
-                      //               right: 15.0,
-                      //               top: 20,
-                      //               bottom: 20.0),
-                      //           child: Column(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children: [
-                      //               Text(
-                      //                 "Total Amount",
-                      //                 style: TextStyle(
-                      //                     fontFamily: kCircularStdMedium,
-                      //                     fontSize: 15,
-                      //                     color: kWhiteColor),
-                      //               ),
-                      //               Text(
-                      //                 "\$50,000",
-                      //                 style: TextStyle(
-                      //                     fontFamily: kCircularStdMedium,
-                      //                     fontSize: 25,
-                      //                     color: kWhiteColor),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     const SizedBox(width: 10),
-                      //     GestureDetector(
-                      //       onTap: () {
-                      //         tabCountController.changeTabIndex(3);
-                      //       },
-                      //       child: Container(
-                      //         width: Get.width / 2.250,
-                      //         decoration: BoxDecoration(
-                      //           color: kWhiteColor,
-                      //           borderRadius: BorderRadius.circular(15),
-                      //         ),
-                      //         child: const Padding(
-                      //           padding: EdgeInsets.only(
-                      //               left: 15.0,
-                      //               right: 15.0,
-                      //               top: 20,
-                      //               bottom: 20.0),
-                      //           child: Column(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children: [
-                      //               Text(
-                      //                 "Month Due",
-                      //                 style: TextStyle(
-                      //                     fontFamily: kCircularStdMedium,
-                      //                     fontSize: 15,
-                      //                     color: kPrimaryColor),
-                      //               ),
-                      //               Text(
-                      //                 "\$1952",
-                      //                 style: TextStyle(
-                      //                     fontFamily: kCircularStdMedium,
-                      //                     fontSize: 25,
-                      //                     color: kPrimaryColor),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       const SizedBox(height: 10),
                       const Text(
                         "Checkout Requests",
@@ -328,30 +132,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const CheckOutRequestView(),
                       const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Tenant Requests",
-                            style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 16,
-                                fontFamily: kCircularStdMedium),
-                          ),
-                          CupertinoButton(
-                            onPressed: () {
-                              Get.toNamed(Routes.tenantRequestPage);
-                            },
-                            child: const Text(
-                              "View all",
-                              style: TextStyle(
-                                  color: kBlueColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdMedium),
-                            ),
-                          ),
-                        ],
-                      ),
                       TenantRequestView(isviewall: 0),
                       const SizedBox(height: 10),
                       Row(

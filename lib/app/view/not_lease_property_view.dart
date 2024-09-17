@@ -6,6 +6,7 @@ import '../controller/property_detail_controller.dart';
 import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../controller/tenants_controller.dart';
 
 class NotLeasePropertyView extends StatefulWidget {
   const NotLeasePropertyView({super.key});
@@ -116,9 +117,17 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
   }
 
   notLeaseProperty(String image, price, address, person, name, id) {
+    final GetAllTenantController getAllTenantController =
+        Get.put(GetAllTenantController());
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
+        setState(() {
+          getAllTenantController.propertyId.value = id;
+          getAllTenantController.propertyName.value = name;
+          getAllTenantController.propertyAddress.value = address;
+          getAllTenantController.propertyImage.value = image;
+        });
         getnotleaseDetailsPropertiesController.conferanceId(id);
         getnotleaseDetailsPropertiesController.fetchPropertyDetail();
       },
