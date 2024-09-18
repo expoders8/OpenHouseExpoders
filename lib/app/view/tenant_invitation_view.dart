@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../controller/invitation_controller.dart';
 import '../../config/constant/font_constant.dart';
+import '../controller/invitation_controller.dart';
 import '../../config/constant/color_constant.dart';
 
 // ignore: must_be_immutable

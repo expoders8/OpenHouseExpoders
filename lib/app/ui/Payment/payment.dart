@@ -160,7 +160,16 @@ class _PaymentPageState extends State<PaymentPage> {
                                   null) {
                             if (getPaymentController
                                 .paymentList[0].data!.isEmpty) {
-                              return Container();
+                              return const Center(
+                                child: Text(
+                                  "No Payments",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                              );
                             } else {
                               return Column(
                                 children: [

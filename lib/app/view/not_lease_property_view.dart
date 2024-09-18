@@ -2,11 +2,11 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../controller/property_detail_controller.dart';
+import '../controller/tenants_controller.dart';
 import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
-import '../controller/tenants_controller.dart';
+import '../controller/property_detail_controller.dart';
 
 class NotLeasePropertyView extends StatefulWidget {
   const NotLeasePropertyView({super.key});

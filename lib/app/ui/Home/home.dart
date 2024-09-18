@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 15),
-                      TenantInvitationView(),
+                      const TenantInvitationView(),
                       const SizedBox(height: 10),
                       const Text(
                         "My Lease",
