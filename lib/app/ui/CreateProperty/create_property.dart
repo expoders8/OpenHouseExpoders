@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -43,6 +44,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   bool isImagePickerError = false;
   String countryId = "", stateid = "";
   final TextEditingController countryController = TextEditingController();
+  final TextEditingController capacityController = TextEditingController();
+  final TextEditingController washRoomsController = TextEditingController();
+  final TextEditingController bedRoomsController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   bool isTouched = false;
   bool isFormSubmitted = false;
@@ -50,6 +54,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   String error = 'No Error Dectected';
   List<Asset> imageList = <Asset>[];
   List selctedImages = [];
+  String selctesType = "included";
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +163,382 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       ),
                     ),
                   ),
+                ),
+                buildTextWidget("Property Details"),
+                SizedBox(
+                  width: Get.width,
+                  height: 65,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                            flex: 5,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              child: TypeAheadField<int>(
+                                textFieldConfiguration: TextFieldConfiguration(
+                                  controller: bedRoomsController,
+                                  decoration: InputDecoration(
+                                    fillColor: kWhiteColor,
+                                    filled: true,
+                                    hintText: "Bedrooms",
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        15, 15, 15, 0),
+                                    hintStyle: const TextStyle(
+                                      fontFamily: kCircularStdBook,
+                                      fontWeight: FontWeight.w400,
+                                      color: kPrimaryColor,
+                                      fontSize: 14,
+                                    ),
+                                    hintMaxLines: 1,
+                                    suffixIcon: Image.asset(
+                                      "assets/icons/polygon_down.png",
+                                      scale: 2,
+                                      width: 5,
+                                    ),
+                                    border: const OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: kWhiteColor, width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                          color: kWhiteColor, width: 1.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                        color: kWhiteColor,
+                                      ),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                          color: kWhiteColor, width: 1.0),
+                                    ),
+                                    errorText: isFormSubmitted &&
+                                            bedRoomsController.text.isEmpty
+                                        ? 'Please select a Bedroom'
+                                        : null,
+                                  ),
+                                  style: const TextStyle(
+                                    fontFamily: kCircularStdBook,
+                                    fontWeight: FontWeight.w400,
+                                    color: kPrimaryColor,
+                                    fontSize: 14,
+                                  ),
+                                  autocorrect: true,
+                                  cursorColor: kPrimaryColor,
+                                ),
+                                suggestionsCallback: (pattern) {
+                                  // Create a static list of numbers from 1 to 10
+                                  List<int> numbers = List<int>.generate(
+                                      10, (index) => index + 1);
+
+                                  // Filter the list based on the user input
+                                  return numbers
+                                      .where((number) => number
+                                          .toString()
+                                          .contains(
+                                              pattern)) // Filter suggestion
+                                      .toList();
+                                },
+                                itemBuilder: (context, int suggestion) {
+                                  return ListTile(
+                                    title: Text(suggestion.toString()),
+                                  );
+                                },
+                                onSuggestionSelected: (int suggestion) {
+                                  setState(() {
+                                    bedRoomsController.text =
+                                        suggestion.toString();
+                                  });
+                                },
+                                noItemsFoundBuilder: (context) => const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('No Bedrooms found'),
+                                ),
+                              ),
+                            )),
+                        const SizedBox(width: 10),
+                        Flexible(
+                            flex: 5,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              child: TypeAheadField<int>(
+                                textFieldConfiguration: TextFieldConfiguration(
+                                  controller: washRoomsController,
+                                  decoration: InputDecoration(
+                                    fillColor: kWhiteColor,
+                                    filled: true,
+                                    hintText: "Washrooms",
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        15, 15, 15, 0),
+                                    hintStyle: const TextStyle(
+                                      fontFamily: kCircularStdBook,
+                                      fontWeight: FontWeight.w400,
+                                      color: kPrimaryColor,
+                                      fontSize: 14,
+                                    ),
+                                    hintMaxLines: 1,
+                                    suffixIcon: Image.asset(
+                                      "assets/icons/polygon_down.png",
+                                      scale: 2,
+                                      width: 5,
+                                    ),
+                                    border: const OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: kWhiteColor, width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                          color: kWhiteColor, width: 1.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                        color: kWhiteColor,
+                                      ),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                          color: kWhiteColor, width: 1.0),
+                                    ),
+                                    errorText: isFormSubmitted &&
+                                            washRoomsController.text.isEmpty
+                                        ? 'Please select a Washrooms'
+                                        : null,
+                                  ),
+                                  style: const TextStyle(
+                                    fontFamily: kCircularStdBook,
+                                    fontWeight: FontWeight.w400,
+                                    color: kPrimaryColor,
+                                    fontSize: 14,
+                                  ),
+                                  autocorrect: true,
+                                  cursorColor: kPrimaryColor,
+                                ),
+                                suggestionsCallback: (pattern) {
+                                  List<int> numbers = List<int>.generate(
+                                      10, (index) => index + 1);
+                                  return numbers
+                                      .where((number) =>
+                                          number.toString().contains(pattern))
+                                      .toList();
+                                },
+                                itemBuilder: (context, int suggestion) {
+                                  return ListTile(
+                                    title: Text(suggestion.toString()),
+                                  );
+                                },
+                                onSuggestionSelected: (int suggestion) {
+                                  setState(() {
+                                    washRoomsController.text =
+                                        suggestion.toString();
+                                  });
+                                },
+                                noItemsFoundBuilder: (context) => const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('No Washrooms found'),
+                                ),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  child: TypeAheadField<int>(
+                    textFieldConfiguration: TextFieldConfiguration(
+                      controller: capacityController,
+                      decoration: InputDecoration(
+                        fillColor: kWhiteColor,
+                        filled: true,
+                        hintText: "Capacity",
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                        hintStyle: const TextStyle(
+                          fontFamily: kCircularStdBook,
+                          fontWeight: FontWeight.w400,
+                          color: kPrimaryColor,
+                          fontSize: 14,
+                        ),
+                        hintMaxLines: 1,
+                        suffixIcon: Image.asset(
+                          "assets/icons/polygon_down.png",
+                          scale: 2,
+                          width: 5,
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                          borderSide:
+                              BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              const BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: kWhiteColor,
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              const BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
+                        errorText:
+                            isFormSubmitted && capacityController.text.isEmpty
+                                ? 'Please select a Capacity'
+                                : null,
+                      ),
+                      style: const TextStyle(
+                        fontFamily: kCircularStdBook,
+                        fontWeight: FontWeight.w400,
+                        color: kPrimaryColor,
+                        fontSize: 14,
+                      ),
+                      autocorrect: true,
+                      cursorColor: kPrimaryColor,
+                    ),
+                    suggestionsCallback: (pattern) {
+                      List<int> numbers =
+                          List<int>.generate(10, (index) => index + 1);
+                      return numbers
+                          .where(
+                              (number) => number.toString().contains(pattern))
+                          .toList();
+                    },
+                    itemBuilder: (context, int suggestion) {
+                      return ListTile(
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    onSuggestionSelected: (int suggestion) {
+                      setState(() {
+                        capacityController.text = suggestion.toString();
+                      });
+                    },
+                    noItemsFoundBuilder: (context) => const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('No Capacity found'),
+                    ),
+                  ),
+                ),
+                buildTextWidget("Property Bills"),
+                Row(
+                  children: [
+                    const SizedBox(width: 10),
+                    CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        setState(() {
+                          selctesType = "included";
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(25)),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(3),
+                              height: 15,
+                              width: 15,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: kPrimaryColor),
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: Container(
+                                height: 5,
+                                width: 5,
+                                decoration: BoxDecoration(
+                                    color: selctesType == "included"
+                                        ? kPrimaryColor
+                                        : kWhiteColor,
+                                    borderRadius: BorderRadius.circular(25)),
+                              ),
+                            ),
+                            const SizedBox(width: 15),
+                            const Text(
+                              "Included",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: kPrimaryColor,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        setState(() {
+                          selctesType = "notincluded";
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 5),
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Center(
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(3),
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: kPrimaryColor),
+                                    borderRadius: BorderRadius.circular(25)),
+                                child: Container(
+                                  height: 5,
+                                  width: 5,
+                                  decoration: BoxDecoration(
+                                      color: selctesType == "notincluded"
+                                          ? kPrimaryColor
+                                          : kWhiteColor,
+                                      borderRadius: BorderRadius.circular(25)),
+                                ),
+                              ),
+                              const SizedBox(width: 15),
+                              const Text(
+                                "Not Included",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: kPrimaryColor,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 buildTextWidget("Property Price"),
                 LayoutBuilder(
@@ -607,6 +988,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                   cityController.text,
                                   "",
                                   "",
+                                  capacityController.text,
+                                  bedRoomsController.text,
+                                  washRoomsController.text,
                                   fileList.first);
                             });
                           }

@@ -98,6 +98,7 @@ class _AmenitiesViewState extends State<AmenitiesView> {
             ),
             separateSelectedItems: true,
             onConfirm: (values) {
+              selectedValues = values;
               getAllAmenitiesController.selectedAmenitis(values);
             },
             title: const Text(
@@ -131,6 +132,12 @@ class _AmenitiesViewState extends State<AmenitiesView> {
                 fontSize: 14,
               ),
             ),
+            validator: (values) {
+              if (values == null || values.isEmpty) {
+                return "Please select at least one Amenity";
+              }
+              return null;
+            },
           );
         } else {
           return const Center(

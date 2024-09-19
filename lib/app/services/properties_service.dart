@@ -7,6 +7,7 @@ import '../controller/tab_controller.dart';
 import '../models/getpropretyes_model.dart';
 import '../../config/constant/constant.dart';
 import '../controller/amenities_controller.dart';
+import '../controller/invitation_controller.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
 import '../ui/Property Details/lease_property_details.dart';
@@ -15,6 +16,7 @@ class PropertiesService {
   final tabController = Get.put(TabCountController());
   final GetAllAmenitiesController getAllAmenitiesController =
       Get.put(GetAllAmenitiesController());
+
   createProperties(
       String propertyname,
       String description,
@@ -27,6 +29,9 @@ class PropertiesService {
       String cityname,
       String profilepicture,
       String amenityid,
+      String capacity,
+      String bedrooms,
+      String bathrooms,
       File? file) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
@@ -171,6 +176,44 @@ class PropertiesService {
         LoaderX.hide();
         SnackbarUtils.showErrorSnackbar("Server Error",
             "Error while fetch Properties, Please try after some time.");
+        return Future.error("Server Error");
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  bookProperties(String propertyId, invitationId) async {
+    final GetAllInvitationController getAllInvitationController =
+        Get.put(GetAllInvitationController());
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
+    try {
+      var response = await http.post(Uri.parse('$baseUrl/api/property/book'),
+          body: json.encode({
+            "id": invitationId,
+            "user_id": userid["id"],
+            "property_id": propertyId,
+            "created_by_id": null,
+            "updated_by_id": null,
+            "is_active": true
+          }),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        LoaderX.hide();
+        var data = json.decode(response.body);
+        getAllInvitationController.getAllInvitations();
+        tabController.changeTabIndex(1);
+        return GetAllPropertiesModel.fromJson(data);
+      } else if (response.statusCode == 401) {
+        LoaderX.hide();
+        return Future.error("Authentication Error");
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar("Server Error",
+            "Error while Book Properties, Please try after some time.");
         return Future.error("Server Error");
       }
     } catch (e) {

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../models/getpropretyes_model.dart';
 
 class GetAllMyTenantsController extends GetxController {

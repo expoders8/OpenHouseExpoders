@@ -10,11 +10,11 @@ import '../ui/Property Details/not_lease_property_details.dart';
 
 class GetDetailsPropertiesController extends GetxController {
   var isLoading = true.obs;
-  RxString conferanceId = "".obs;
+  RxString propertyId = "".obs;
   PropertyDetailModel? detailModel;
 
   void feachconferanceId(String newValue) {
-    conferanceId.value = newValue;
+    propertyId.value = newValue;
     fetchPropertyDetail();
   }
 
@@ -29,7 +29,7 @@ class GetDetailsPropertiesController extends GetxController {
       isLoading(true);
       var response = await http.get(
           Uri.parse(
-              "$baseUrl/api/property/getbyid?id=${conferanceId.toString()}"),
+              "$baseUrl/api/property/getbyid?id=${propertyId.toString()}"),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         detailModel = PropertyDetailModel.fromJson(jsonDecode(response.body));

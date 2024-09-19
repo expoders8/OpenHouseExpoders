@@ -119,162 +119,167 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
   notLeaseProperty(String image, price, address, person, name, id) {
     final GetAllTenantController getAllTenantController =
         Get.put(GetAllTenantController());
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      onPressed: () {
-        setState(() {
-          getAllTenantController.propertyId.value = id;
-          getAllTenantController.propertyName.value = name;
-          getAllTenantController.propertyAddress.value = address;
-          getAllTenantController.propertyImage.value = image;
-        });
-        getnotleaseDetailsPropertiesController.conferanceId(id);
-        getnotleaseDetailsPropertiesController.fetchPropertyDetail();
-      },
-      child: Container(
-        width: Get.width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25), color: kWhiteColor),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Row(
+    return Column(
+      children: [
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            setState(() {
+              getAllTenantController.propertyId.value = id;
+              getAllTenantController.propertyName.value = name;
+              getAllTenantController.propertyAddress.value = address;
+              getAllTenantController.propertyImage.value = image;
+            });
+            getnotleaseDetailsPropertiesController.conferanceId(id);
+            getnotleaseDetailsPropertiesController.fetchPropertyDetail();
+          },
+          child: Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25), color: kWhiteColor),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Image.network(
-                      image,
-                      fit: BoxFit.cover,
-                      scale: 1.2,
-                      height: 95,
-                      width: 95,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          "assets/images/samplehouse.jpeg",
+                  Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: Image.network(
+                          image,
                           fit: BoxFit.cover,
+                          scale: 1.2,
                           height: 95,
                           width: 95,
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 15),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        price,
-                        style: const TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 25,
-                            fontFamily: kCircularStdMedium),
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              "assets/images/samplehouse.jpeg",
+                              fit: BoxFit.cover,
+                              height: 95,
+                              width: 95,
+                            );
+                          },
+                        ),
                       ),
-                      address != ""
-                          ? Row(
-                              children: [
-                                const Icon(
-                                  Icons.location_on,
-                                  size: 16,
-                                  color: kButtonColor,
-                                ),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  width: Get.width / 2.5,
-                                  child: Text(
-                                    address,
-                                    style: const TextStyle(
-                                        color: kSecondaryPrimaryColor,
-                                        fontSize: 13,
-                                        fontFamily: kCircularStdMedium),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Container(),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.description_sharp,
-                            size: 16,
-                            color: kButtonColor,
-                          ),
-                          const SizedBox(width: 10),
-                          SizedBox(
-                            width: Get.width / 2.5,
-                            child: Text(
-                              name,
-                              style: const TextStyle(
-                                  color: kSecondaryPrimaryColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdMedium),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
+                      const SizedBox(width: 15),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(
-                            Icons.bed_outlined,
-                            size: 16,
-                            color: kButtonColor,
+                          Text(
+                            price,
+                            style: const TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 25,
+                                fontFamily: kCircularStdMedium),
                           ),
-                          const SizedBox(width: 10),
-                          SizedBox(
-                            width: Get.width - 220,
-                            child: Text(
-                              person,
-                              style: const TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdBold),
-                            ),
+                          address != ""
+                              ? Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.location_on,
+                                      size: 16,
+                                      color: kButtonColor,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    SizedBox(
+                                      width: Get.width / 2.5,
+                                      child: Text(
+                                        address,
+                                        style: const TextStyle(
+                                            color: kSecondaryPrimaryColor,
+                                            fontSize: 13,
+                                            fontFamily: kCircularStdMedium),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.description_sharp,
+                                size: 16,
+                                color: kButtonColor,
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: Get.width / 2.5,
+                                child: Text(
+                                  name,
+                                  style: const TextStyle(
+                                      color: kSecondaryPrimaryColor,
+                                      fontSize: 13,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.bed_outlined,
+                                size: 16,
+                                color: kButtonColor,
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text(
+                                  person,
+                                  style: const TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 13,
+                                      fontFamily: kCircularStdBold),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Row(
+                            children: [
+                              Icon(
+                                Icons.wifi,
+                                size: 16,
+                                color: kSecondaryPrimaryColor,
+                              ),
+                              SizedBox(width: 5),
+                              Icon(
+                                Icons.gas_meter_rounded,
+                                size: 16,
+                                color: kSecondaryPrimaryColor,
+                              ),
+                              SizedBox(width: 5),
+                              Icon(
+                                Icons.electric_bolt_sharp,
+                                size: 16,
+                                color: kSecondaryPrimaryColor,
+                              ),
+                              SizedBox(width: 5),
+                              Icon(
+                                Icons.local_parking,
+                                size: 16,
+                                color: kSecondaryPrimaryColor,
+                              ),
+                              SizedBox(width: 5),
+                              Icon(
+                                Icons.nest_cam_wired_stand_sharp,
+                                size: 16,
+                                color: kSecondaryPrimaryColor,
+                              ),
+                            ],
                           ),
                         ],
-                      ),
-                      const Row(
-                        children: [
-                          Icon(
-                            Icons.wifi,
-                            size: 16,
-                            color: kSecondaryPrimaryColor,
-                          ),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.gas_meter_rounded,
-                            size: 16,
-                            color: kSecondaryPrimaryColor,
-                          ),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.electric_bolt_sharp,
-                            size: 16,
-                            color: kSecondaryPrimaryColor,
-                          ),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.local_parking,
-                            size: 16,
-                            color: kSecondaryPrimaryColor,
-                          ),
-                          SizedBox(width: 5),
-                          Icon(
-                            Icons.nest_cam_wired_stand_sharp,
-                            size: 16,
-                            color: kSecondaryPrimaryColor,
-                          ),
-                        ],
-                      ),
+                      )
                     ],
-                  )
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
-      ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 }

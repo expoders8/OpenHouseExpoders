@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
       rentdue, expiredate) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const LeasePropertyDetailPage());
+        // Get.to(() => const LeasePropertyDetailPage());
       },
       child: Container(
         width: Get.width,

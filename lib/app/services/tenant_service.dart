@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../controller/tab_controller.dart';
-import '../models/get_invitation_model.dart';
 import '../models/getall_tenant_model.dart';
+import '../models/get_invitation_model.dart';
 import '../../config/constant/constant.dart';
 import '../controller/tenants_controller.dart';
 import '../../config/provider/loader_provider.dart';

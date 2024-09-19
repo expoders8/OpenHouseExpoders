@@ -7,14 +7,14 @@ import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../controller/property_detail_controller.dart';
 
-class LeasePropertyView extends StatefulWidget {
-  const LeasePropertyView({super.key});
+class CurrentPropertyView extends StatefulWidget {
+  const CurrentPropertyView({super.key});
 
   @override
-  State<LeasePropertyView> createState() => _LeasePropertyViewState();
+  State<CurrentPropertyView> createState() => _CurrentPropertyViewState();
 }
 
-class _LeasePropertyViewState extends State<LeasePropertyView> {
+class _CurrentPropertyViewState extends State<CurrentPropertyView> {
   final GetLeasePropertyController getLeasePropertyController =
       Get.put(GetLeasePropertyController());
   final GetDetailsPropertiesController getDetailsPropertiesController =

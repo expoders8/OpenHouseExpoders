@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../routes/app_pages.dart';
 import '../../view/lease_property_view.dart';
+import '../../view/current_property_view.dart';
 import '../../../config/constant/constant.dart';
 import '../../view/previous_property_view.dart';
 import '../../view/not_lease_property_view.dart';
@@ -21,8 +22,10 @@ class _PropertyPageState extends State<PropertyPage>
     with SingleTickerProviderStateMixin {
   String selectedRoll = "";
   late TabController _tabController;
-  var searchController = TextEditingController();
-  var searchController1 = TextEditingController();
+  var currentsearchController = TextEditingController();
+  var previoussearchController = TextEditingController();
+  var leasesearchController = TextEditingController();
+  var notleasesearchController = TextEditingController();
   final GetAvailablePropertyController getAvailablePropertyController =
       Get.put(GetAvailablePropertyController());
   final GetLeasePropertyController getLeasePropertyController =
@@ -101,7 +104,7 @@ class _PropertyPageState extends State<PropertyPage>
                               children: [
                                 const SizedBox(height: 10),
                                 TextFormField(
-                                  controller: searchController,
+                                  controller: currentsearchController,
                                   decoration: InputDecoration(
                                     contentPadding:
                                         const EdgeInsets.fromLTRB(13, 0, 10, 0),
@@ -132,7 +135,7 @@ class _PropertyPageState extends State<PropertyPage>
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                const LeasePropertyView(),
+                                const CurrentPropertyView(),
                               ],
                             ),
                           ),
@@ -140,7 +143,7 @@ class _PropertyPageState extends State<PropertyPage>
                             children: [
                               const SizedBox(height: 10),
                               TextFormField(
-                                controller: searchController,
+                                controller: previoussearchController,
                                 decoration: InputDecoration(
                                   contentPadding:
                                       const EdgeInsets.fromLTRB(13, 0, 10, 0),
@@ -203,7 +206,7 @@ class _PropertyPageState extends State<PropertyPage>
                               children: [
                                 const SizedBox(height: 10),
                                 TextFormField(
-                                  controller: searchController1,
+                                  controller: leasesearchController,
                                   decoration: InputDecoration(
                                     contentPadding:
                                         const EdgeInsets.fromLTRB(13, 0, 10, 0),
@@ -252,7 +255,7 @@ class _PropertyPageState extends State<PropertyPage>
                               children: [
                                 const SizedBox(height: 10),
                                 TextFormField(
-                                  controller: searchController,
+                                  controller: notleasesearchController,
                                   decoration: InputDecoration(
                                     contentPadding:
                                         const EdgeInsets.fromLTRB(13, 0, 10, 0),

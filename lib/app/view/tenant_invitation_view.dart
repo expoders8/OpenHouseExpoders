@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
+import '../services/properties_service.dart';
 import '../../config/constant/font_constant.dart';
 import '../controller/invitation_controller.dart';
 import '../../config/constant/color_constant.dart';
@@ -17,6 +19,8 @@ class TenantInvitationView extends StatefulWidget {
 class _TenantInvitationViewtate extends State<TenantInvitationView> {
   final GetAllInvitationController getAllInvitationController =
       Get.put(GetAllInvitationController());
+  PropertiesService propertiesService = PropertiesService();
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -60,6 +64,11 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
                             getAllInvitationController.invitationList[0].data!;
                         if (requestData.isNotEmpty) {
                           var data = requestData[index];
+                          DateTime dateTime =
+                              DateTime.parse(data.endDate.toString());
+
+                          String formattedDate =
+                              DateFormat('dd MMM yyyy').format(dateTime);
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: Container(
@@ -118,9 +127,9 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text(
-                                          "End On 16-06-2022",
-                                          style: TextStyle(
+                                        Text(
+                                          "End On $formattedDate",
+                                          style: const TextStyle(
                                               color: kGreyColor,
                                               fontSize: 13,
                                               fontFamily: kCircularStdNormal),
@@ -129,7 +138,13 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
                                           children: [
                                             CupertinoButton(
                                               padding: EdgeInsets.zero,
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                propertiesService
+                                                    .bookProperties(
+                                                        data.propertyId
+                                                            .toString(),
+                                                        data.id.toString());
+                                              },
                                               child: Container(
                                                 padding:
                                                     const EdgeInsets.all(5),
