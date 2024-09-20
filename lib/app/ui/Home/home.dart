@@ -12,7 +12,6 @@ import '../../view/tenant_invitation_view.dart';
 import '../../controller/request_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../Property Details/lease_property_details.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -211,8 +210,9 @@ class _HomePageState extends State<HomePage> {
 
   leaseproperty(String image, price, address, person, tenantname, balancedue,
       rentdue, expiredate) {
-    return GestureDetector(
-      onTap: () {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
         // Get.to(() => const LeasePropertyDetailPage());
       },
       child: Container(

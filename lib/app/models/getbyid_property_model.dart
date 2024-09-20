@@ -52,6 +52,7 @@ class PropertyDetailDataModel {
   String? size;
   String? sizeunit;
   String? rentAmountUnit;
+  List<Amenitys>? amenitys;
   List<String>? images;
   Hostdetails? hostdetails;
 
@@ -80,6 +81,7 @@ class PropertyDetailDataModel {
       this.size,
       this.sizeunit,
       this.rentAmountUnit,
+      this.amenitys,
       this.images,
       this.hostdetails});
 
@@ -87,9 +89,7 @@ class PropertyDetailDataModel {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    rentAmount = json['rent_amount'] is int
-        ? rentAmount = (json['rent_amount'] as int).toDouble()
-        : rentAmount = json['rent_amount'];
+    rentAmount = json['rent_amount'];
     facilities = json['facilities'];
     person = json['person'];
     address = json['address'];
@@ -110,6 +110,12 @@ class PropertyDetailDataModel {
     size = json['size'];
     sizeunit = json['sizeunit'];
     rentAmountUnit = json['rent_amount_unit'];
+    if (json['amenitys'] != null) {
+      amenitys = <Amenitys>[];
+      json['amenitys'].forEach((v) {
+        amenitys!.add(Amenitys.fromJson(v));
+      });
+    }
     images = json['images'].cast<String>();
     hostdetails = json['Hostdetails'] != null
         ? Hostdetails.fromJson(json['Hostdetails'])
@@ -142,10 +148,35 @@ class PropertyDetailDataModel {
     data['size'] = size;
     data['sizeunit'] = sizeunit;
     data['rent_amount_unit'] = rentAmountUnit;
+    if (amenitys != null) {
+      data['amenitys'] = amenitys!.map((v) => v.toJson()).toList();
+    }
     data['images'] = images;
     if (hostdetails != null) {
       data['Hostdetails'] = hostdetails!.toJson();
     }
+    return data;
+  }
+}
+
+class Amenitys {
+  String? id;
+  String? title;
+  String? icon;
+
+  Amenitys({this.id, this.title, this.icon});
+
+  Amenitys.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    icon = json['icon'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['icon'] = icon;
     return data;
   }
 }

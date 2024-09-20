@@ -27,9 +27,8 @@ class CreatePropertyPage extends StatefulWidget {
 }
 
 class _CreatePropertyPageState extends State<CreatePropertyPage> {
-  String amenities = "", amenitiesid = "";
+  String amenities = "";
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController sellController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController personController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -48,7 +47,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController washRoomsController = TextEditingController();
   final TextEditingController bedRoomsController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
-  bool isTouched = false;
+  LookupService lookupService = LookupService();
   bool isFormSubmitted = false;
   List<Asset> images = <Asset>[];
   String error = 'No Error Dectected';
@@ -675,7 +674,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       cursorColor: kPrimaryColor,
                     ),
                     suggestionsCallback: (pattern) {
-                      return LookupService.getcountries();
+                      return lookupService.getcountries();
                     },
                     itemBuilder: (context, GetAllCountryDataModel suggestion) {
                       return ListTile(
@@ -763,7 +762,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       cursorColor: kPrimaryColor,
                     ),
                     suggestionsCallback: (pattern) {
-                      return LookupService.getState(countryId);
+                      return lookupService.getState(countryId);
                     },
                     itemBuilder: (context, GetAllStateDataModel suggestion) {
                       return ListTile(

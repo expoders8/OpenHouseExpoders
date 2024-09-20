@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../widgets/custom_textfield.dart';
+import '../../services/lookup_service.dart';
+import '../../models/get_amenities_model.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -15,25 +17,12 @@ class AddExpensePage extends StatefulWidget {
 
 class _AddExpensePageState extends State<AddExpensePage> {
   final _formKey = GlobalKey<FormState>();
-  String pickedDate = "";
-  String pickedTime = "";
-  String selectTime = "Time";
-  String selctesType = "normal";
-  String selectdate = "YYYY/MM/DD";
-  bool isTouched = false, timeError = false, dateError = false;
   final TextEditingController amenityController = TextEditingController();
   final TextEditingController raisedFundsController = TextEditingController();
+  LookupService lookupService = LookupService();
+  String amenitiesId = "";
   bool isFormSubmitted = false;
-  final List<String> amenities = [
-    'Electricity',
-    'Gas',
-    'Water',
-    'Wifi',
-    'Parking',
-    'Washing Machine',
-    'CCTV Camera',
-    'Housekeeping',
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +47,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 buildTextWidget("Amenity"),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: TypeAheadField<String>(
+                  child: TypeAheadField<GetAllAmenitiesDataModel>(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: amenityController,
                       decoration: InputDecoration(
@@ -108,18 +97,20 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       cursorColor: kPrimaryColor,
                     ),
                     suggestionsCallback: (pattern) {
-                      return amenities.where((t) =>
-                          t.toLowerCase().contains(pattern.toLowerCase()));
+                      return lookupService.getamenities();
                     },
-                    itemBuilder: (context, String suggestion) {
+                    itemBuilder:
+                        (context, GetAllAmenitiesDataModel suggestion) {
                       return ListTile(
-                        title: Text(suggestion),
+                        title: Text(suggestion.title.toString()),
                       );
                     },
-                    onSuggestionSelected: (String suggestion) {
+                    onSuggestionSelected:
+                        (GetAllAmenitiesDataModel suggestion) {
                       // ignore: avoid_print
                       setState(() {
-                        amenityController.text = suggestion;
+                        amenityController.text = suggestion.title.toString();
+                        amenitiesId = suggestion.id.toString();
                       });
                     },
                     noItemsFoundBuilder: (context) => const Padding(

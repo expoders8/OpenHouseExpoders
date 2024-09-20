@@ -19,7 +19,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  bool selectEmail = true;
   bool isFormSubmitted = false;
   String selectedCountrydialCode = "+91";
   final _signupFormKey = GlobalKey<FormState>();
@@ -163,9 +162,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                           fontSize: 16,
                                         ),
                                       ),
-                                      const SizedBox(
-                                        width: 10,
-                                      )
+                                      const SizedBox(width: 10)
                                     ],
                                   ),
                                 ),

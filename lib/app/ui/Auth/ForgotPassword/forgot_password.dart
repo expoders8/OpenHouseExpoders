@@ -17,7 +17,6 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  bool selectEmail = true;
   bool isFormSubmitted = false;
   AuthService authService = AuthService();
   final _forgotpasswordFormKey = GlobalKey<FormState>();

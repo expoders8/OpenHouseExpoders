@@ -33,8 +33,8 @@ class _TanantRequestViewState extends State<TenantRequestView> {
             ),
           );
         } else {
-          // ignore: unnecessary_null_comparison
           if (getAllRequestsController.requestList.isNotEmpty &&
+              // ignore: unnecessary_null_comparison
               getAllRequestsController.requestList[0].data! != null) {
             if (getAllRequestsController.requestList[0].data!.isEmpty) {
               return Container();

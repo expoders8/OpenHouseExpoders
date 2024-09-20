@@ -16,7 +16,6 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
-  bool selectEmail = true;
   bool isFormSubmitted = false;
   AuthService authService = AuthService();
   final _formKey = GlobalKey<FormState>();

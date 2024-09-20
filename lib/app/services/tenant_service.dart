@@ -93,8 +93,9 @@ class TenantService {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
-      var response = await http.get(
-          Uri.parse('$baseUrl/api/tenant/getinvitation?userid=${userid["id"]}'),
+      var response = await http.post(
+          Uri.parse('$baseUrl/api/tenant/getinvitation'),
+          body: json.encode({"userid": userid["id"], "status": "Pending"}),
           headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {

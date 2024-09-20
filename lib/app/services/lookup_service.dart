@@ -32,7 +32,7 @@ class LookupService {
     }
   }
 
-  static Future<List<GetAllCountryDataModel>> getcountries() async {
+  Future<List<GetAllCountryDataModel>> getcountries() async {
     try {
       var response = await http.get(
           Uri.parse('$baseUrl/api/lookup/getcountries'),
@@ -55,7 +55,7 @@ class LookupService {
     }
   }
 
-  static Future<List<GetAllStateDataModel>> getState(String contryid) async {
+  Future<List<GetAllStateDataModel>> getState(String contryid) async {
     try {
       var response = await http.get(
           Uri.parse('$baseUrl/api/lookup/getstates?country_id=$contryid'),

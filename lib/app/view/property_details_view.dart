@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../controller/property_detail_controller.dart';
 
 class PropertyDetailsView extends StatefulWidget {
   const PropertyDetailsView({super.key});
@@ -12,6 +13,9 @@ class PropertyDetailsView extends StatefulWidget {
 }
 
 class _PropertyDetailsViewState extends State<PropertyDetailsView> {
+  final GetDetailsPropertiesController getDetailsPropertiesController =
+      Get.put(GetDetailsPropertiesController());
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

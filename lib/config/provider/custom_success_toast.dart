@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../constant/color_constant.dart';
 
 class CustomSuccessToast extends StatelessWidget {
