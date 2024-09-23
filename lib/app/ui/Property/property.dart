@@ -244,6 +244,11 @@ class _PropertyPageState extends State<PropertyPage>
                                 ),
                                 const SizedBox(height: 10),
                                 const LeasePropertyView(),
+                                SizedBox(
+                                    height:
+                                        leasesearchController.value.text == ""
+                                            ? 80
+                                            : 0),
                               ],
                             ),
                           ),
@@ -293,6 +298,12 @@ class _PropertyPageState extends State<PropertyPage>
                                 ),
                                 const SizedBox(height: 10),
                                 const NotLeasePropertyView(),
+                                SizedBox(
+                                    height:
+                                        notleasesearchController.value.text ==
+                                                ""
+                                            ? 80
+                                            : 0),
                               ],
                             ),
                           ),

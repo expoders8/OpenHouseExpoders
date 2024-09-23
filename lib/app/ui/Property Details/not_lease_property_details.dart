@@ -44,6 +44,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
   @override
   void dispose() {
     _tabController.dispose();
+    getnotleaseDetailsPropertiesController.dispose();
     super.dispose();
   }
 
@@ -56,7 +57,6 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
       } else {
         var propertydata =
             getnotleaseDetailsPropertiesController.detailModel!.data;
-
         return Stack(
           children: [
             SizedBox(
@@ -347,7 +347,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                       ],
                                     ),
                                   ),
-                                  const PropertyDetailsView(),
+                                  const NotLeasePropertyDetailsView(),
                                   const NearByAmenitiesView(),
                                 ],
                               ),

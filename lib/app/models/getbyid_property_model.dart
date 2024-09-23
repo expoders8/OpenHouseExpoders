@@ -89,7 +89,9 @@ class PropertyDetailDataModel {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    rentAmount = json['rent_amount'];
+    rentAmount = json['rent_amount'] is int
+        ? rentAmount = (json['rent_amount'] as int).toDouble()
+        : rentAmount = json['rent_amount'];
     facilities = json['facilities'];
     person = json['person'];
     address = json['address'];

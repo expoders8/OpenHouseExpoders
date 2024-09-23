@@ -49,6 +49,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
   @override
   void dispose() {
     _tabController.dispose();
+    getDetailsPropertiesController.dispose();
     super.dispose();
   }
 

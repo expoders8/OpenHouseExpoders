@@ -682,7 +682,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       );
                     },
                     onSuggestionSelected: (GetAllCountryDataModel suggestion) {
-                      // ignore: avoid_print
                       setState(() {
                         countryController.text = suggestion.name.toString();
                         countryId = suggestion.id.toString();
@@ -770,7 +769,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       );
                     },
                     onSuggestionSelected: (GetAllStateDataModel suggestion) {
-                      // ignore: avoid_print
                       setState(() {
                         stateController.text = suggestion.name.toString();
                         stateid = suggestion.id.toString();
@@ -990,6 +988,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                   capacityController.text,
                                   bedRoomsController.text,
                                   washRoomsController.text,
+                                  selctesType,
                                   fileList.first);
                             });
                           }

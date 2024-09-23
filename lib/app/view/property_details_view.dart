@@ -18,6 +18,7 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
 
   @override
   Widget build(BuildContext context) {
+    var propertydata = getDetailsPropertiesController.detailModel!.data!;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,63 +135,257 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
                 fontFamily: kCircularStdMedium),
           ),
           const Divider(),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  amenities("Parking"),
-                  const SizedBox(height: 5),
-                  amenities("Wifi"),
-                  const SizedBox(height: 5),
-                  amenities("Garden"),
-                  const SizedBox(height: 5),
-                  amenities("Washing machine"),
-                  const SizedBox(height: 5),
-                  amenities("TV"),
-                  const SizedBox(height: 5),
-                  amenities("Furnished"),
-                ],
-              ),
-            ],
+          SizedBox(
+            width: Get.width - 30,
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: propertydata!.amenitys!.length,
+              itemBuilder: (context, index) {
+                if (propertydata.amenitys!.isNotEmpty) {
+                  return Column(
+                    children: [
+                      amenities(
+                          propertydata.amenitys![index].title!.toString()),
+                      const SizedBox(height: 5),
+                    ],
+                  );
+                } else {
+                  return const Center(
+                    child: Text(
+                      "No Amenities",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 15,
+                          fontFamily: kCircularStdMedium),
+                    ),
+                  );
+                }
+              },
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget amenities(String text) {
+  amenities(String text) {
     return SizedBox(
       width: Get.width - 30,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Image.asset(
+            "assets/icons/correct.png",
+            fit: BoxFit.cover,
+            height: 15,
+            width: 15,
+          ),
+          const SizedBox(width: 10),
+          Text(
+            text[0].toUpperCase() + text.substring(1),
+            style: const TextStyle(
+              color: kPrimaryColor,
+              fontSize: 14,
+              fontFamily: kCircularStdNormal,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NotLeasePropertyDetailsView extends StatefulWidget {
+  const NotLeasePropertyDetailsView({super.key});
+
+  @override
+  State<NotLeasePropertyDetailsView> createState() =>
+      _NotLeasePropertyDetailsViewState();
+}
+
+class _NotLeasePropertyDetailsViewState
+    extends State<NotLeasePropertyDetailsView> {
+  final GetnotleaseDetailsPropertiesController
+      getnotleaseDetailsPropertiesController =
+      Get.put(GetnotleaseDetailsPropertiesController());
+
+  @override
+  Widget build(BuildContext context) {
+    var propertydata =
+        getnotleaseDetailsPropertiesController.detailModel!.data!;
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 10),
+          const Text(
+            "Property details",
+            style: TextStyle(
+                color: kPrimaryColor,
+                fontSize: 17,
+                fontFamily: kCircularStdMedium),
+          ),
+          const Divider(),
+          const SizedBox(height: 5),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Image.asset(
-                "assets/icons/correct.png",
-                fit: BoxFit.cover,
-                height: 15,
-                width: 15,
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Bedrooms",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdNormal),
+                  ),
+                  Text(
+                    "1 Single",
+                    style: TextStyle(
+                        color: kSecondaryPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdBook),
+                  ),
+                  Text(
+                    "1 Double",
+                    style: TextStyle(
+                        color: kSecondaryPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdBook),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Capacity",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdNormal),
+                  ),
+                  Text(
+                    "3 Person",
+                    style: TextStyle(
+                        color: kSecondaryPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdBook),
+                  ),
+                ],
               ),
-              const SizedBox(width: 10),
-              Text(
-                text,
-                style: const TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 14,
-                    fontFamily: kCircularStdNormal),
+              Image.asset(
+                "assets/icons/line_vertical.png",
+                fit: BoxFit.cover,
+                scale: 0.7,
+                color: kSecondaryColor,
+              ),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Bathrooms",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdNormal),
+                  ),
+                  Text(
+                    "1 full bathroom",
+                    style: TextStyle(
+                        color: kSecondaryPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdBook),
+                  ),
+                  Text(
+                    "1 toilet",
+                    style: TextStyle(
+                        color: kSecondaryPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdBook),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Bills",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdNormal),
+                  ),
+                  Text(
+                    "included",
+                    style: TextStyle(
+                        color: kSecondaryPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdBook),
+                  ),
+                ],
               ),
             ],
           ),
+          const SizedBox(height: 20),
           const Text(
-            "How to.?",
+            "Room & Property amenities",
             style: TextStyle(
-                color: kBlueColor,
-                fontSize: 10,
-                fontFamily: kCircularStdNormal),
+                color: kPrimaryColor,
+                fontSize: 17,
+                fontFamily: kCircularStdMedium),
+          ),
+          const Divider(),
+          SizedBox(
+            width: Get.width - 30,
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: propertydata!.amenitys!.length,
+              itemBuilder: (context, index) {
+                if (propertydata.amenitys!.isNotEmpty) {
+                  return Column(
+                    children: [
+                      amenities(
+                          propertydata.amenitys![index].title!.toString()),
+                      const SizedBox(height: 5),
+                    ],
+                  );
+                } else {
+                  return const Center(
+                    child: Text(
+                      "No Amenities",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 15,
+                          fontFamily: kCircularStdMedium),
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  amenities(String text) {
+    return SizedBox(
+      width: Get.width - 30,
+      child: Row(
+        children: [
+          Image.asset(
+            "assets/icons/correct.png",
+            fit: BoxFit.cover,
+            height: 15,
+            width: 15,
+          ),
+          const SizedBox(width: 10),
+          Text(
+            text[0].toUpperCase() + text.substring(1),
+            style: const TextStyle(
+              color: kPrimaryColor,
+              fontSize: 14,
+              fontFamily: kCircularStdNormal,
+            ),
           ),
         ],
       ),

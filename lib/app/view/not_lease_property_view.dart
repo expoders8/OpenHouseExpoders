@@ -77,9 +77,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                       return notLeaseProperty(
                           data.propertyImage.toString(),
                           data.rentAmount.toString(),
-                          "${data.address} ${data.address1}" == "null null"
-                              ? ""
-                              : "${data.address} ${data.address1}",
+                          data.address.toString(),
                           data.person.toString(),
                           data.name.toString(),
                           data.id.toString());
@@ -130,7 +128,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
               getAllTenantController.propertyAddress.value = address;
               getAllTenantController.propertyImage.value = image;
             });
-            getnotleaseDetailsPropertiesController.conferanceId(id);
+            getnotleaseDetailsPropertiesController.propertyId(id);
             getnotleaseDetailsPropertiesController.fetchPropertyDetail();
           },
           child: Container(
@@ -173,7 +171,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                                 fontSize: 25,
                                 fontFamily: kCircularStdMedium),
                           ),
-                          address != ""
+                          address != "" && address != "null"
                               ? Row(
                                   children: [
                                     const Icon(

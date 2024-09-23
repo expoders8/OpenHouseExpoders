@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../controller/property_controller.dart';
 import '../controller/tab_controller.dart';
 import '../models/getpropretyes_model.dart';
 import '../../config/constant/constant.dart';
@@ -32,9 +33,12 @@ class PropertiesService {
       String capacity,
       String bedrooms,
       String bathrooms,
+      String billtype,
       File? file) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
+    final GetAvailablePropertyController getAvailablePropertyController =
+        Get.put(GetAvailablePropertyController());
     try {
       http.Response response;
       var request =
@@ -64,6 +68,7 @@ class PropertiesService {
         var decodedUser = jsonDecode(response.body);
         if (decodedUser['success']) {
           LoaderX.hide();
+          getAvailablePropertyController.fetchAllProperties();
           tabController.changeTabIndex(1);
           return decodedUser;
         } else {
@@ -83,6 +88,8 @@ class PropertiesService {
   }
 
   getAllProperties(PropertiesRequestModel getRequest) async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
     try {
       var response = await http.post(Uri.parse('$baseUrl/api/property/getall'),
           body: json.encode({
@@ -91,7 +98,7 @@ class PropertiesService {
             "searchtext": getRequest.searchText,
             "sortby": getRequest.sortBy,
             "propertyid": getRequest.propertyid,
-            "userid": getRequest.userId,
+            "userid": userid["id"],
             "type": getRequest.type,
             "onlease": getRequest.onlease,
             "country_id": getRequest.countryId,
