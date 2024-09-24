@@ -93,8 +93,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                       });
                                     },
                                   );
-
-                                  //Get.toNamed(Routes.editProfilePage);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 15.0),

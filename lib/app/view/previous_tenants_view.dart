@@ -18,23 +18,12 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            currentTenants(
-              "assets/icons/boy 3.png",
-              "Leo",
-              "+91 9898567452",
-            ),
+            currentTenants("assets/icons/boy 3.png", "Leo", "+91 9898567452"),
+            const SizedBox(height: 15),
+            currentTenants("assets/icons/boy 2.png", "Rowan", "+91 9898567452"),
             const SizedBox(height: 15),
             currentTenants(
-              "assets/icons/boy 2.png",
-              "Rowan",
-              "+91 9898567452",
-            ),
-            const SizedBox(height: 15),
-            currentTenants(
-              "assets/icons/boy 1.png",
-              "James jacko",
-              "+91 9898567452",
-            ),
+                "assets/icons/boy 1.png", "James jacko", "+91 9898567452"),
             const SizedBox(height: 15),
           ],
         ),
@@ -42,11 +31,7 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
     );
   }
 
-  Widget currentTenants(
-    String image,
-    name,
-    contact,
-  ) {
+  Widget currentTenants(String image, name, contact) {
     return GestureDetector(
       onTap: () {},
       child: Container(

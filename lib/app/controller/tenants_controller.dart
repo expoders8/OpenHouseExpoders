@@ -7,17 +7,17 @@ class GetAllTenantController extends GetxController {
   var isLoading = true.obs;
   var tenantssList = <GetAllTenantModel>[].obs;
   TenantService tenantService = TenantService();
-  RxString searchText = "".obs;
-  RxString tenantId = "".obs;
   RxString email = "".obs;
   RxString phoneNo = "".obs;
-  RxString propertyId = "".obs;
-  RxString propertyName = "".obs;
-  RxString propertyAddress = "".obs;
-  RxString propertyImage = "".obs;
-  RxString startDate = "".obs;
   RxString endDate = "".obs;
+  RxString tenantId = "".obs;
+  RxString startDate = "".obs;
+  RxString searchText = "".obs;
+  RxString propertyId = "".obs;
   RxString rentAmount = "".obs;
+  RxString propertyName = "".obs;
+  RxString propertyImage = "".obs;
+  RxString propertyAddress = "".obs;
 
   // @override
   // void onInit() {

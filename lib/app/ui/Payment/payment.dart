@@ -153,10 +153,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             ),
                           );
                         } else {
-                          if (getPaymentController.paymentList.isNotEmpty &&
-                              // ignore: unnecessary_null_comparison
-                              getPaymentController.paymentList[0].data! !=
-                                  null) {
+                          if (getPaymentController.paymentList.isNotEmpty) {
                             if (getPaymentController
                                 .paymentList[0].data!.isEmpty) {
                               return const Center(
@@ -260,19 +257,6 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                 ],
               )
-
-            // SingleChildScrollView(
-            //     child: Padding(
-            //       padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            //       child: Column(
-            //         children: [
-
-            //           const SizedBox(height: 15),
-
-            //         ],
-            //       ),
-            //     ),
-            //   )
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),

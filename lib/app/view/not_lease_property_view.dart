@@ -69,9 +69,8 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                       // DateTime myDateStartTime =
                       //     DateTime.parse(dateStartString);
                       // DateTime myDateEndTime = DateTime.parse(dateEndString);
-
                       // String startTime =
-                      //     DateFormat('hh:mm a').format(myDateStartTime);
+                      //   DateFormat('hh:mm a').format(myDateStartTime);
                       // String endTime =
                       //     DateFormat('hh:mm a').format(myDateEndTime);
                       return notLeaseProperty(

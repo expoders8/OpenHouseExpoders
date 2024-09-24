@@ -37,7 +37,7 @@ class _TenantHistoryViewState extends State<TenantHistoryView> {
     );
   }
 
-  Widget tenanthistory() {
+  tenanthistory() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

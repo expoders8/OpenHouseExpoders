@@ -40,10 +40,7 @@ class _NotificationPageState extends State<NotificationPage> {
               ),
             );
           } else {
-            if (getAllNotificationsController.notificationList.isNotEmpty &&
-                // ignore: unnecessary_null_comparison
-                getAllNotificationsController.notificationList[0].data! !=
-                    null) {
+            if (getAllNotificationsController.notificationList.isNotEmpty) {
               if (getAllNotificationsController
                   .notificationList[0].data!.isEmpty) {
                 return Container();

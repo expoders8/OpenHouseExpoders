@@ -16,12 +16,12 @@ class AddExpensePage extends StatefulWidget {
 }
 
 class _AddExpensePageState extends State<AddExpensePage> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController amenityController = TextEditingController();
-  final TextEditingController raisedFundsController = TextEditingController();
-  LookupService lookupService = LookupService();
   String amenitiesId = "";
   bool isFormSubmitted = false;
+  final _formKey = GlobalKey<FormState>();
+  LookupService lookupService = LookupService();
+  final TextEditingController amenityController = TextEditingController();
+  final TextEditingController raisedFundsController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
                     },
                     onSuggestionSelected:
                         (GetAllAmenitiesDataModel suggestion) {
-                      // ignore: avoid_print
                       setState(() {
                         amenityController.text = suggestion.title.toString();
                         amenitiesId = suggestion.id.toString();

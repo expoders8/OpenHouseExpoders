@@ -24,22 +24,24 @@ class CreateMyRequestsPage extends StatefulWidget {
 }
 
 class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
-  final _formKey = GlobalKey<FormState>();
   String pickedDate = "";
   String pickedTime = "";
+  String amenitiesId = "";
   String selectTime = "Time";
   String selctesType = "normal";
   String selectdate = "YYYY/MM/DD";
-  bool isTouched = false, timeError = false, dateError = false;
+  bool isTouched = false,
+      timeError = false,
+      dateError = false,
+      isFormSubmitted = false;
+  final _formKey = GlobalKey<FormState>();
   final GetAllRequestsController getAllRequestsController =
       Get.put(GetAllRequestsController());
-  final TextEditingController amenityController = TextEditingController();
-  final TextEditingController raisedFundsController = TextEditingController();
   LookupService lookupService = LookupService();
   RequestsService requestsService = RequestsService();
   final tabController = Get.put(TabCountController());
-  bool isFormSubmitted = false;
-  String amenitiesId = "";
+  final TextEditingController amenityController = TextEditingController();
+  final TextEditingController raisedFundsController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +127,6 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                     },
                     onSuggestionSelected:
                         (GetAllAmenitiesDataModel suggestion) {
-                      // ignore: avoid_print
                       setState(() {
                         amenityController.text = suggestion.title.toString();
                         amenitiesId = suggestion.id.toString();

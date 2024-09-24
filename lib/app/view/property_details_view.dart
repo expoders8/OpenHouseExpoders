@@ -141,7 +141,7 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: propertydata!.amenitys!.length,
+              itemCount: propertydata.amenitys!.length,
               itemBuilder: (context, index) {
                 if (propertydata.amenitys!.isNotEmpty) {
                   return Column(
@@ -337,7 +337,7 @@ class _NotLeasePropertyDetailsViewState
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: propertydata!.amenitys!.length,
+              itemCount: propertydata.amenitys!.length,
               itemBuilder: (context, index) {
                 if (propertydata.amenitys!.isNotEmpty) {
                   return Column(

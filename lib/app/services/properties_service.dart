@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../controller/property_controller.dart';
 import '../controller/tab_controller.dart';
 import '../models/getpropretyes_model.dart';
 import '../../config/constant/constant.dart';
+import '../controller/property_controller.dart';
 import '../controller/amenities_controller.dart';
 import '../controller/invitation_controller.dart';
 import '../../config/provider/loader_provider.dart';

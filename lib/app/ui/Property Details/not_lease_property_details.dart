@@ -25,7 +25,6 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool isPreviousTenantsSelected = true;
-
   final GetnotleaseDetailsPropertiesController
       getnotleaseDetailsPropertiesController =
       Get.put(GetnotleaseDetailsPropertiesController());

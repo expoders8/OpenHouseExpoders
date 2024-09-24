@@ -20,11 +20,11 @@ class AmenitiesView extends StatefulWidget {
 }
 
 class _AmenitiesViewState extends State<AmenitiesView> {
-  final GetAllAmenitiesController getAllAmenitiesController =
-      Get.put(GetAllAmenitiesController());
-  List<AmenitiesModel> amenitiesModel = [];
   var selectedValues = [];
   List<dynamic> separatedList = [];
+  List<AmenitiesModel> amenitiesModel = [];
+  final GetAllAmenitiesController getAllAmenitiesController =
+      Get.put(GetAllAmenitiesController());
 
   @override
   void initState() {

@@ -59,31 +59,18 @@ class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
           nearby("assets/icons/market1.jpeg", "Yaya center supermarket",
               "Robson St, Vancouver", "Supermarket"),
           const SizedBox(height: 5),
-          nearby(
-            "assets/icons/hospital.jpeg",
-            "Central Hospital",
-            "224 Robson St",
-            "General Hospital",
-          ),
+          nearby("assets/icons/hospital.jpeg", "Central Hospital",
+              "224 Robson St", "General Hospital"),
           const SizedBox(height: 5),
-          nearby(
-            "assets/icons/market2.jpeg",
-            "Supermarket",
-            "502 Robson St",
-            "Grocery Store",
-          ),
+          nearby("assets/icons/market2.jpeg", "Supermarket", "502 Robson St",
+              "Grocery Store"),
           const SizedBox(height: 5),
-          // amenities("Mall"),
-          // const SizedBox(height: 5),
-          // amenities("Market"),
-          // const SizedBox(height: 5),
-          // amenities("Hospital"),
         ],
       ),
     );
   }
 
-  Widget nearby(String image, title, address, type) {
+  nearby(String image, title, address, type) {
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -136,30 +123,6 @@ class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget amenities(String text) {
-    return SizedBox(
-      width: Get.width - 30,
-      child: Row(
-        children: [
-          Image.asset(
-            "assets/icons/correct.png",
-            fit: BoxFit.cover,
-            height: 15,
-            width: 15,
-          ),
-          const SizedBox(width: 10),
-          Text(
-            text,
-            style: const TextStyle(
-                color: kPrimaryColor,
-                fontSize: 14,
-                fontFamily: kCircularStdNormal),
-          ),
-        ],
       ),
     );
   }

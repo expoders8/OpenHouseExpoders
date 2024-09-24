@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:openhome/config/constant/font_constant.dart';
-import 'package:openhome/config/constant/color_constant.dart';
+
+import '../../config/constant/font_constant.dart';
+import '../../config/constant/color_constant.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({super.key});
@@ -18,36 +19,14 @@ class _PaymentViewState extends State<PaymentView> {
         child: Column(
           children: [
             const SizedBox(height: 10),
-            payment(
-              "assets/icons/boy 2.png",
-              "\$1850",
-              "Pending",
-              "Tenant Name",
-              "+91 9898758462",
-              "\$300",
-              "25-07-2024",
-            ),
+            payment("assets/icons/boy 2.png", "\$1850", "Pending",
+                "Tenant Name", "+91 9898758462", "\$300", "25-07-2024"),
             const SizedBox(height: 10),
-            paymenthistory(
-              "Paid",
-              "Tenant Name",
-              "\$1850",
-              "10-06-2024",
-            ),
+            paymenthistory("Paid", "Tenant Name", "\$1850", "10-06-2024"),
             const SizedBox(height: 10),
-            paymenthistory(
-              "Paid",
-              "Tenant Name",
-              "\$1850",
-              "10-05-2024",
-            ),
+            paymenthistory("Paid", "Tenant Name", "\$1850", "10-05-2024"),
             const SizedBox(height: 10),
-            paymenthistory(
-              "Paid",
-              "Tenant Name",
-              "\$1850",
-              "10-04-2024",
-            ),
+            paymenthistory("Paid", "Tenant Name", "\$1850", "10-04-2024"),
           ],
         ),
       ),

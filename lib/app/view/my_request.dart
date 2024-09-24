@@ -33,7 +33,6 @@ class _MyRequestViewState extends State<MyRequestView> {
             ),
           );
         } else {
-          // ignore: unnecessary_null_comparison
           if (getAllRequestsController.requestList.isNotEmpty &&
               // ignore: unnecessary_null_comparison
               getAllRequestsController.requestList[0].data! != null) {

@@ -24,10 +24,7 @@ class UserService {
       if (file != null) {
         request.files.add(await http.MultipartFile.fromPath('file', file.path));
       }
-      request.headers.addAll({
-        'Content-Type': 'application/json',
-      });
-
+      request.headers.addAll({'Content-Type': 'application/json'});
       response = await http.Response.fromStream(await request.send());
       if (response.statusCode == 200 || response.statusCode == 201) {
         var decodedUser = jsonDecode(response.body);

@@ -7,7 +7,7 @@
 // import '../../config/provider/snackbar_provider.dart';
 
 // class MyTenantService {
-//   currentTenants(Model getRequest) async {
+//   currentTenants() async {
 //     try {
 //       var response = await http.post(Uri.parse('$baseUrl/api/api'),
 //           body: json.encode({
@@ -33,7 +33,7 @@
 //     }
 //   }
 
-//   previousTenants(Model getRequest) async {
+//   previousTenants() async {
 //     try {
 //       var response = await http.post(Uri.parse('$baseUrl/api/api'),
 //           body: json.encode({

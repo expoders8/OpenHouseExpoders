@@ -99,14 +99,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       scale: 1.2,
                                       height: 110,
                                       width: 110,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          "assets/images/blank_profile.png",
+                                          fit: BoxFit.cover,
+                                          height: 110,
+                                          width: 110,
+                                        );
+                                      },
                                     ),
-                                    // Image.asset(
-                                    //   "assets/icons/boy 1.png",
-                                    //   fit: BoxFit.cover,
-                                    //   scale: 1.2,
-                                    //   height: 110,
-                                    //   width: 110,
-                                    // ),
                                   ),
                                 )
                               : Container(
@@ -119,7 +121,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
                                     child: Image.asset(
-                                      "assets/icons/boy 1.png",
+                                      "assets/images/blank_profile.png",
                                       fit: BoxFit.cover,
                                       scale: 1.2,
                                       height: 110,
@@ -233,7 +235,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     await PickerUtils.pickImageFromGallery().then(
       (pickedFile) async {
         if (pickedFile == null) return;
-
         await PickerUtils.cropSelectedImage(pickedFile.path).then(
           (croppedFile) {
             if (croppedFile == null) return;

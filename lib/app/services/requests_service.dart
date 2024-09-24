@@ -9,11 +9,7 @@ import '../../config/provider/snackbar_provider.dart';
 
 class RequestsService {
   addRequest(
-    String amenityId,
-    String description,
-    String type,
-    String date,
-  ) async {
+      String amenityId, String description, String type, String date) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {

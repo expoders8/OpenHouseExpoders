@@ -22,9 +22,9 @@ class _PropertyPageState extends State<PropertyPage>
     with SingleTickerProviderStateMixin {
   String selectedRoll = "";
   late TabController _tabController;
+  var leasesearchController = TextEditingController();
   var currentsearchController = TextEditingController();
   var previoussearchController = TextEditingController();
-  var leasesearchController = TextEditingController();
   var notleasesearchController = TextEditingController();
   final GetAvailablePropertyController getAvailablePropertyController =
       Get.put(GetAvailablePropertyController());

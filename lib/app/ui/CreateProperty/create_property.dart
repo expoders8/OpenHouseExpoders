@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -28,32 +28,32 @@ class CreatePropertyPage extends StatefulWidget {
 
 class _CreatePropertyPageState extends State<CreatePropertyPage> {
   String amenities = "";
+  List selctedImages = [];
+  List<File> fileList = [];
+  bool isFormSubmitted = false;
+  List<Asset> images = <Asset>[];
+  String selctesType = "included";
+  bool isImagePickerError = false;
+  List<Asset> imageList = <Asset>[];
+  String error = 'No Error Dectected';
+  String countryId = "", stateid = "";
   final _formKey = GlobalKey<FormState>();
+  LookupService lookupService = LookupService();
+  PropertiesService propertiesService = PropertiesService();
+  final GetAllAmenitiesController getAllAmenitiesController =
+      Get.put(GetAllAmenitiesController());
   final TextEditingController cityController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
   final TextEditingController personController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  final TextEditingController countryController = TextEditingController();
+  final TextEditingController bedRoomsController = TextEditingController();
+  final TextEditingController capacityController = TextEditingController();
+  final TextEditingController washRoomsController = TextEditingController();
   final TextEditingController facilitiesController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController propertyNameController = TextEditingController();
   final TextEditingController propertyPriceController = TextEditingController();
-  PropertiesService propertiesService = PropertiesService();
-  final GetAllAmenitiesController getAllAmenitiesController =
-      Get.put(GetAllAmenitiesController());
-  List<File> fileList = [];
-  bool isImagePickerError = false;
-  String countryId = "", stateid = "";
-  final TextEditingController countryController = TextEditingController();
-  final TextEditingController capacityController = TextEditingController();
-  final TextEditingController washRoomsController = TextEditingController();
-  final TextEditingController bedRoomsController = TextEditingController();
-  final TextEditingController stateController = TextEditingController();
-  LookupService lookupService = LookupService();
-  bool isFormSubmitted = false;
-  List<Asset> images = <Asset>[];
-  String error = 'No Error Dectected';
-  List<Asset> imageList = <Asset>[];
-  List selctedImages = [];
-  String selctesType = "included";
 
   @override
   Widget build(BuildContext context) {
@@ -130,9 +130,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                             keyboardType: TextInputType.multiline,
                             maxLines: 3,
                             minLines: 1,
-                            // inputFormatters: [
-                            //   LengthLimitingTextInputFormatter(40),
-                            // ],
                             controller: descriptionController,
                             decoration: const InputDecoration(
                               enabledBorder: UnderlineInputBorder(
@@ -235,16 +232,11 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                   cursorColor: kPrimaryColor,
                                 ),
                                 suggestionsCallback: (pattern) {
-                                  // Create a static list of numbers from 1 to 10
                                   List<int> numbers = List<int>.generate(
                                       10, (index) => index + 1);
-
-                                  // Filter the list based on the user input
                                   return numbers
-                                      .where((number) => number
-                                          .toString()
-                                          .contains(
-                                              pattern)) // Filter suggestion
+                                      .where((number) =>
+                                          number.toString().contains(pattern))
                                       .toList();
                                 },
                                 itemBuilder: (context, int suggestion) {
@@ -1069,12 +1061,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   Future<String> getFilePathFromAsset(Asset asset) async {
     final byteData = await asset.getByteData();
     final buffer = byteData.buffer;
-
-    // Generate a unique temporary file path
     String tempPath = (await getTemporaryDirectory()).path;
     String filePath = '$tempPath/${asset.name}';
-
-    // Write the file
     File file = File(filePath);
     await file.writeAsBytes(
       buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),

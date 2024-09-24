@@ -230,7 +230,6 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                 label: 'Home',
                 backgroundColor: kBackGroundColor,
               ),
-
               BottomNavigationBarItem(
                 icon: Container(
                   margin: const EdgeInsets.only(bottom: 11, top: 6),
@@ -257,18 +256,6 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                 ),
                 label: 'e',
               ),
-              // BottomNavigationBarItem(
-              //   icon: Container(
-              //     margin: const EdgeInsets.only(bottom: 0, top: 0),
-              //     child: Image.asset(
-              //       "assets/icons/create.png",
-              //       height: 38,
-              //       width: 38,
-              //     ),
-              //   ),
-              //   label: 'Create',
-              //   backgroundColor: kBackGroundColor,
-              // ),
               BottomNavigationBarItem(
                 icon: Container(
                   margin: const EdgeInsets.only(bottom: 10, top: 5),

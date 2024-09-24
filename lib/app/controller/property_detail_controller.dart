@@ -18,12 +18,6 @@ class GetDetailsPropertiesController extends GetxController {
     fetchPropertyDetail();
   }
 
-  // @override
-  // void onInit() {
-  //   fetchPropertyDetail();
-  //   super.onInit();
-  // }
-
   fetchPropertyDetail() async {
     try {
       isLoading(true);
@@ -56,12 +50,6 @@ class GetnotleaseDetailsPropertiesController extends GetxController {
     propertyId.value = newValue;
     fetchPropertyDetail();
   }
-
-  // @override
-  // void onInit() {
-  //   fetchPropertyDetail();
-  //   super.onInit();
-  // }
 
   fetchPropertyDetail() async {
     try {
