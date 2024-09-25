@@ -11,6 +11,7 @@ import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../../config/provider/loader_provider.dart';
 import '../../../config/provider/snackbar_provider.dart';
+import '../TabPage/tab_page.dart';
 // import '../../services/auth_service.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -66,22 +67,22 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
         var userName = user?.displayName;
         // ignore: unused_local_variable
         List<String> substrings = userName.toString().split(' ');
-        // await authService
-        //     .socialLogin(substrings[0], substrings[1], user!.email.toString(),
-        //         user.photoURL.toString(), idToken, "Google")
-        //     .then(
-        //   (value) async {
-        //     if (value) {
-        //       LoaderX.hide();
-        //       Get.offAll(() => const TabPage());
-        //     } else {
-        //       LoaderX.hide();
-        //       SnackbarUtils.showErrorSnackbar(
-        //           "Failed to Login", value.message.toString());
-        //     }
-        //     return null;
-        //   },
-        // );
+        await authService
+            .socialLogin(substrings[0], substrings[1], user!.email.toString(),
+                user.photoURL.toString(), idToken, "Google")
+            .then(
+          (value) async {
+            if (value) {
+              LoaderX.hide();
+              Get.offAll(() => const TabPage());
+            } else {
+              LoaderX.hide();
+              SnackbarUtils.showErrorSnackbar(
+                  "Failed to Login", value.message.toString());
+            }
+            return null;
+          },
+        );
       }
     } catch (error) {
       LoaderX.hide();

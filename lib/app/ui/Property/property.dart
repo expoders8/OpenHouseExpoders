@@ -38,7 +38,7 @@ class _PropertyPageState extends State<PropertyPage>
     setState(() {
       selectedRoll = roll;
     });
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 1);
   }
 
   @override

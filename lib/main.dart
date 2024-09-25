@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:openhome/config/constant/constant.dart';
 
 import 'app/routes/app_pages.dart';
+import 'config/constant/constant.dart';
 import 'config/provider/theme_provider.dart';
 
 int? appflow = 0;

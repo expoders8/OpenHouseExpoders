@@ -130,39 +130,49 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: IntrinsicHeight(
                             child: Row(
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: kBackGroundColor,
-                                    border: Border.all(
-                                        color: kSecondaryPrimaryColor),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: Row(
+                                Flexible(
+                                  flex: 3,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      CountryListPick(
-                                        theme: CountryTheme(
-                                          isShowFlag: true,
-                                          isShowTitle: false,
-                                          isShowCode: false,
-                                          isDownIcon: false,
-                                          showEnglishName: true,
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: kBackGroundColor,
+                                          border: Border.all(
+                                              color: kSecondaryPrimaryColor),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                         ),
-                                        initialSelection: 'IN',
-                                        onChanged: (CountryCode? code) {
-                                          setState(() {
-                                            selectedCountrydialCode =
-                                                code!.dialCode.toString();
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        selectedCountrydialCode,
-                                        style: const TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 16,
+                                        child: Row(
+                                          children: [
+                                            CountryListPick(
+                                              theme: CountryTheme(
+                                                isShowFlag: true,
+                                                isShowTitle: false,
+                                                isShowCode: false,
+                                                isDownIcon: false,
+                                                showEnglishName: true,
+                                              ),
+                                              initialSelection: 'IN',
+                                              onChanged: (CountryCode? code) {
+                                                setState(() {
+                                                  selectedCountrydialCode =
+                                                      code!.dialCode.toString();
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              selectedCountrydialCode,
+                                              style: const TextStyle(
+                                                color: kPrimaryColor,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10)
+                                          ],
                                         ),
                                       ),
-                                      const SizedBox(width: 10)
                                     ],
                                   ),
                                 ),

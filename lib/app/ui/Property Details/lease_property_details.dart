@@ -49,7 +49,6 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
   @override
   void dispose() {
     _tabController.dispose();
-    getDetailsPropertiesController.dispose();
     super.dispose();
   }
 
@@ -808,7 +807,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                     Text(
                       selectedRoll == "tenant"
                           ? "$firstname $lastname"
-                          : "Tenant Name",
+                          : "$firstname $lastname",
                       style: const TextStyle(
                           color: kPrimaryColor,
                           fontSize: 18,

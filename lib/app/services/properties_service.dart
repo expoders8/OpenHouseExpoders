@@ -34,7 +34,7 @@ class PropertiesService {
       String bedrooms,
       String bathrooms,
       String billtype,
-      File? file) async {
+      List<File> fileList) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     final GetAvailablePropertyController getAvailablePropertyController =
@@ -57,8 +57,11 @@ class PropertiesService {
             ..fields['updated_by_id'] = ""
             ..fields['amenity_id'] =
                 getAllAmenitiesController.selectedAmenitis.string;
-      if (file != null) {
-        request.files.add(await http.MultipartFile.fromPath('file', file.path));
+      for (File file in fileList) {
+        if (file != null) {
+          request.files
+              .add(await http.MultipartFile.fromPath('files[]', file.path));
+        }
       }
       request.headers.addAll({
         'Content-Type': 'application/json',
@@ -70,7 +73,7 @@ class PropertiesService {
           LoaderX.hide();
           getAvailablePropertyController.fetchAllProperties();
           tabController.changeTabIndex(1);
-          return decodedUser;
+          return true;
         } else {
           LoaderX.hide();
           SnackbarUtils.showErrorSnackbar(

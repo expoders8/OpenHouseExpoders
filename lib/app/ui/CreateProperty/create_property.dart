@@ -953,7 +953,12 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       ),
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
-                          if (!isImagePickerError) {
+                          if (!isImagePickerError &&
+                              bedRoomsController.value.text != "" &&
+                              capacityController.value.text != "" &&
+                              countryController.value.text != "" &&
+                              stateController.value.text != "" &&
+                              washRoomsController.value.text != "") {
                             FocusScope.of(context).requestFocus(FocusNode());
                             Future.delayed(const Duration(milliseconds: 100),
                                 () async {
@@ -965,23 +970,49 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                               getAllAmenitiesController.selectedImages(
                                 selctedImages,
                               );
-                              propertiesService.createProperties(
-                                  propertyNameController.text,
-                                  descriptionController.text,
-                                  propertyPriceController.text,
-                                  facilitiesController.text,
-                                  personController.text,
-                                  addressController.text,
-                                  countryId,
-                                  stateid,
-                                  cityController.text,
-                                  "",
-                                  "",
-                                  capacityController.text,
-                                  bedRoomsController.text,
-                                  washRoomsController.text,
-                                  selctesType,
-                                  fileList.first);
+                              propertiesService
+                                  .createProperties(
+                                      propertyNameController.text,
+                                      descriptionController.text,
+                                      propertyPriceController.text,
+                                      facilitiesController.text,
+                                      personController.text,
+                                      addressController.text,
+                                      countryId,
+                                      stateid,
+                                      cityController.text,
+                                      "",
+                                      "",
+                                      capacityController.text,
+                                      bedRoomsController.text,
+                                      washRoomsController.text,
+                                      selctesType,
+                                      fileList)
+                                  .then((value) {
+                                if (value) {
+                                  propertyNameController.dispose();
+                                  descriptionController.dispose();
+                                  propertyPriceController.dispose();
+                                  facilitiesController.dispose();
+                                  personController.dispose();
+                                  addressController.dispose();
+                                  countryId = "";
+                                  stateid = "";
+                                  cityController.dispose();
+                                  countryController.dispose();
+                                  stateController.dispose();
+                                  capacityController.dispose();
+                                  bedRoomsController.dispose();
+                                  washRoomsController.dispose();
+                                  selctesType = "";
+                                  fileList = [];
+                                }
+                              });
+                            });
+                          } else {
+                            setState(() {
+                              isFormSubmitted = true;
+                              isImagePickerError = imageList.isEmpty;
                             });
                           }
                         } else {
