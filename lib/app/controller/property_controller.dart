@@ -94,6 +94,10 @@ class GetCurrentPropertyController extends GetxController {
   PropertiesService propertiesService = PropertiesService();
   var propertiesList = <GetAllPropertiesModel>[].obs;
   RxString searchText = "".obs;
+  RxString image = "".obs;
+  RxString name = "".obs;
+  RxString address = "".obs;
+  RxString propertyId = "".obs;
 
   @override
   void onInit() {
@@ -104,31 +108,13 @@ class GetCurrentPropertyController extends GetxController {
   void fetchAllProperties() async {
     try {
       isLoading(true);
-      var properties =
-          await propertiesService.getAllProperties(createRequest());
+      var properties = await propertiesService.getAllCurrentProperties();
       if (properties.data != null) {
         propertiesList.assign(properties);
       }
     } finally {
       isLoading(false);
     }
-  }
-
-  createRequest() {
-    PropertiesRequestModel propertiesRequestModel = PropertiesRequestModel();
-    propertiesRequestModel.pageSize = 100;
-    propertiesRequestModel.pageNumber = 1;
-    propertiesRequestModel.searchText =
-        searchText.value.isEmpty ? null : searchText.value;
-    propertiesRequestModel.sortBy = null;
-    propertiesRequestModel.propertyid = null;
-    propertiesRequestModel.userId = null;
-    propertiesRequestModel.type = null;
-    propertiesRequestModel.onlease = true;
-    propertiesRequestModel.countryId = null;
-    propertiesRequestModel.stateId = null;
-    propertiesRequestModel.cityName = null;
-    return propertiesRequestModel;
   }
 }
 

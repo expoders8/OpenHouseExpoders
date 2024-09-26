@@ -12,6 +12,7 @@ import '../../controller/tab_controller.dart';
 import '../../services/requests_service.dart';
 import '../../models/get_amenities_model.dart';
 import '../../controller/request_controller.dart';
+import '../../controller/property_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../../config/provider/loader_provider.dart';
@@ -42,6 +43,28 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
   final tabController = Get.put(TabCountController());
   final TextEditingController amenityController = TextEditingController();
   final TextEditingController raisedFundsController = TextEditingController();
+  final GetCurrentPropertyController getCurrentPropertyController =
+      Get.put(GetCurrentPropertyController());
+  String image = "", name = "", addres = "", propertyId = "";
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 5), () {
+      getpropertydata();
+    });
+  }
+
+  getpropertydata() {
+    var propertyData = getCurrentPropertyController.propertiesList[0].data!;
+    setState(() {
+      var data = propertyData[0];
+      image = data.propertyImage.toString();
+      name = data.name.toString();
+      addres = data.address.toString();
+      propertyId = data.id.toString();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +87,81 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                buildTextWidget("Property"),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.network(
+                          image,
+                          fit: BoxFit.cover,
+                          scale: 1.2,
+                          height: 55,
+                          width: 55,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              "assets/images/samplehouse.jpeg",
+                              fit: BoxFit.cover,
+                              scale: 1.2,
+                              height: 55,
+                              width: 55,
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.home,
+                                size: 16,
+                                color: kButtonColor,
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: Get.width / 1.7,
+                                child: Text(
+                                  addres,
+                                  style: const TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.person,
+                                size: 16,
+                                color: kButtonColor,
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: Get.width - 220,
+                                child: Text(
+                                  name,
+                                  style: const TextStyle(
+                                      color: kSecondaryPrimaryColor,
+                                      fontSize: 13,
+                                      fontFamily: kCircularStdBold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
                 buildTextWidget("Amenity"),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -334,105 +432,6 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                           ),
                         ],
                       ),
-                      // const SizedBox(
-                      //   width: 10
-                      // ),
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Container(
-                      //       height: 45,
-                      //       margin: const EdgeInsets.only(top: 5),
-                      //       width: MediaQuery.of(context).size.width * 0.43,
-                      //       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                      //       decoration: BoxDecoration(
-                      //           color: kWhiteColor,
-                      //           borderRadius: BorderRadius.circular(8),
-                      //           border: Border.all(
-                      //               color: timeError == true
-                      //                   ? kErrorColor
-                      //                   : kWhiteColor)),
-                      //       child: InkWell(
-                      //         onTap: () {
-                      //           FocusScope.of(context)
-                      //               .requestFocus(FocusNode());
-                      //           BottomPicker.time(
-                      //             // initialTime: DateTime.now(),
-                      //             initialTime: Time(
-                      //               minutes: DateTime.now().minute,
-                      //               hours: DateTime.now().hour,
-                      //             ),
-                      //             pickerTitle: const Text(""),
-                      //             onSubmit: (index) {
-                      //               String convertedTime =
-                      //                   DateFormat("hh:mm a").format(index);
-                      //               String formattedTime =
-                      //                   DateFormat('HH:mm:ss').format(index);
-                      //               if (mounted) {
-                      //                 setState(() {
-                      //                   selectTime = convertedTime;
-                      //                   pickedTime = formattedTime;
-                      //                   timeError = false;
-                      //                 });
-                      //               }
-                      //             },
-                      //             onClose: () {
-                      //               Navigator.of(context).pop();
-                      //             },
-                      //             pickerTextStyle: const TextStyle(
-                      //                 color: kPrimaryColor, fontSize: 15),
-                      //             bottomPickerTheme:
-                      //                 BottomPickerTheme.plumPlate,
-                      //             buttonAlignment: MainAxisAlignment.center,
-                      //             buttonContent: const Center(
-                      //                 child: Text(
-                      //               "Save",
-                      //               style: TextStyle(color: kWhiteColor),
-                      //             )),
-                      //             buttonStyle: BoxDecoration(
-                      //                 color: kButtonColor,
-                      //                 borderRadius: BorderRadius.circular(15)),
-                      //             closeIconColor: kPrimaryColor,
-                      //             closeIconSize: 25,
-                      //             use24hFormat: false,
-                      //           ).show(context);
-                      //         },
-                      //         child: Row(
-                      //           mainAxisAlignment:
-                      //               MainAxisAlignment.spaceBetween,
-                      //           children: [
-                      //             Text(
-                      //               selectTime,
-                      //               style: const TextStyle(
-                      //                 fontFamily: kCircularStdBook,
-                      //                 fontWeight: FontWeight.w400,
-                      //                 color: kPrimaryColor,
-                      //                 fontSize: 14,
-                      //               ),
-                      //             ),
-                      //             Image.asset(
-                      //               "assets/icons/polygon_down.png",
-                      //               scale: 2,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     timeError == true
-                      //         ? const Padding(
-                      //             padding: EdgeInsets.only(left: 10, top: 6),
-                      //             child: Text(
-                      //               "Time is required",
-                      //               style: TextStyle(
-                      //                 color: kErrorColor,
-                      //                 fontSize: 11,
-                      //                 fontFamily: kCircularStdBook,
-                      //               ),
-                      //             ),
-                      //           )
-                      //         : Container(),
-                      //   ],
-                      // )
                     ],
                   ),
                 ),
@@ -461,7 +460,8 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                                     amenitiesId,
                                     raisedFundsController.text,
                                     selctesType,
-                                    selectdate)
+                                    selectdate,
+                                    propertyId)
                                 .then((value) {
                               if (value) {
                                 getAllRequestsController.getAllRequests();

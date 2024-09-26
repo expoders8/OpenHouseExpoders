@@ -34,6 +34,7 @@ class PropertiesService {
       String bedrooms,
       String bathrooms,
       String billtype,
+      String id,
       List<File> fileList) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
@@ -41,26 +42,27 @@ class PropertiesService {
         Get.put(GetAvailablePropertyController());
     try {
       http.Response response;
-      var request =
-          http.MultipartRequest("POST", Uri.parse('$baseUrl/api/property/add'))
-            ..fields['property_name'] = propertyname
-            ..fields['description'] = description
-            ..fields['property_price'] = propertyprice
-            ..fields['facilities'] = facilities
-            ..fields['person'] = person
-            ..fields['address'] = address
-            ..fields['country_id'] = countryid
-            ..fields['state_id'] = stateid
-            ..fields['city_name'] = cityname
-            ..fields['profile_picture'] = ""
-            ..fields['created_by_id'] = userid["id"]
-            ..fields['updated_by_id'] = ""
-            ..fields['amenity_id'] =
-                getAllAmenitiesController.selectedAmenitis.string;
+      var request = http.MultipartRequest(
+          "POST", Uri.parse('$baseUrl/api/property/addedit'))
+        ..fields['property_name'] = propertyname
+        ..fields['description'] = description
+        ..fields['property_price'] = propertyprice
+        ..fields['facilities'] = facilities
+        ..fields['person'] = person
+        ..fields['address'] = address
+        ..fields['country_id'] = countryid
+        ..fields['state_id'] = stateid
+        ..fields['city_name'] = cityname
+        ..fields['profile_picture'] = ""
+        ..fields['created_by_id'] = userid["id"]
+        ..fields['updated_by_id'] = ""
+        ..fields['amenity_id'] =
+            getAllAmenitiesController.selectedAmenitis.string
+        ..fields['id'] = id;
       for (File file in fileList) {
         if (file != null) {
           request.files
-              .add(await http.MultipartFile.fromPath('files[]', file.path));
+              .add(await http.MultipartFile.fromPath('file', file.path));
         }
       }
       request.headers.addAll({
@@ -224,6 +226,34 @@ class PropertiesService {
         LoaderX.hide();
         SnackbarUtils.showErrorSnackbar("Server Error",
             "Error while Book Properties, Please try after some time.");
+        return Future.error("Server Error");
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  getAllCurrentProperties() async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
+    try {
+      var response = await http.get(
+          Uri.parse(
+              '$baseUrl/api/property/getallcurrentproperty?userid=${userid["id"]}'),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        LoaderX.hide();
+        var data = json.decode(response.body);
+        return GetAllPropertiesModel.fromJson(data);
+      } else if (response.statusCode == 401) {
+        LoaderX.hide();
+        return Future.error("Authentication Error");
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar("Server Error",
+            "Error while fetch Properties, Please try after some time.");
         return Future.error("Server Error");
       }
     } catch (e) {

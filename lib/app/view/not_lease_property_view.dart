@@ -163,12 +163,35 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            price,
-                            style: const TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 25,
-                                fontFamily: kCircularStdMedium),
+                          SizedBox(
+                            width: Get.width - 170,
+                            child: Text(
+                              name,
+                              style: const TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  color: kPrimaryColor,
+                                  fontSize: 17,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.request_page_sharp,
+                                size: 16,
+                                color: kButtonColor,
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                price,
+                                style: const TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: kPrimaryColor,
+                                    fontSize: 17,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            ],
                           ),
                           address != "" && address != "null"
                               ? Row(
@@ -192,26 +215,6 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                                   ],
                                 )
                               : Container(),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.description_sharp,
-                                size: 16,
-                                color: kButtonColor,
-                              ),
-                              const SizedBox(width: 10),
-                              SizedBox(
-                                width: Get.width / 2.5,
-                                child: Text(
-                                  name,
-                                  style: const TextStyle(
-                                      color: kSecondaryPrimaryColor,
-                                      fontSize: 13,
-                                      fontFamily: kCircularStdMedium),
-                                ),
-                              ),
-                            ],
-                          ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

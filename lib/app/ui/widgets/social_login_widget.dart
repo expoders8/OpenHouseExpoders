@@ -12,7 +12,6 @@ import '../../../config/constant/color_constant.dart';
 import '../../../config/provider/loader_provider.dart';
 import '../../../config/provider/snackbar_provider.dart';
 import '../TabPage/tab_page.dart';
-// import '../../services/auth_service.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -40,36 +39,43 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
   @override
   void initState() {
     super.initState();
-    _googleSignIn.onCurrentUserChanged
-        .listen((GoogleSignInAccount? account) {});
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      // Handle user changes if necessary
+    });
     _googleSignIn.signInSilently();
   }
 
   Future<void> handleGoogleSignIn() async {
     try {
-      final GoogleSignIn googleSignIn = GoogleSignIn();
       final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+          await _googleSignIn.signIn();
       if (googleSignInAccount != null) {
-        // ignore: use_build_context_synchronously
         LoaderX.show(context, 60.0, 60.0);
         final GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
+
         setState(() {
           idToken = googleSignInAuthentication.idToken.toString();
         });
+
         final AuthCredential authCredential = GoogleAuthProvider.credential(
-            idToken: googleSignInAuthentication.idToken,
-            accessToken: googleSignInAuthentication.accessToken);
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken,
+        );
 
         UserCredential result = await auth.signInWithCredential(authCredential);
         User? user = result.user;
-        var userName = user?.displayName;
-        // ignore: unused_local_variable
-        List<String> substrings = userName.toString().split(' ');
+        var userName = user?.displayName ?? '';
+        List<String> substrings = userName.split(' '); // Split user name safely
         await authService
-            .socialLogin(substrings[0], substrings[1], user!.email.toString(),
-                user.photoURL.toString(), idToken, "Google")
+            .socialLogin(
+          substrings.isNotEmpty ? substrings[0] : '', // First name
+          substrings.length > 1 ? substrings[1] : '', // Last name
+          user?.email ?? '', // Email
+          user?.photoURL ?? '', // Profile Picture
+          idToken, // Google Token
+          "Google", // Provider
+        )
             .then(
           (value) async {
             if (value) {
@@ -80,7 +86,6 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
               SnackbarUtils.showErrorSnackbar(
                   "Failed to Login", value.message.toString());
             }
-            return null;
           },
         );
       }

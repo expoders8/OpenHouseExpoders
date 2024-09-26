@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 import '../ui/Profile/profile.dart';
+import '../ui/Property Details/Tenant/tenant_lease_property.dart';
+import '../ui/Splash/splash_screen.dart';
 import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
 import '../ui/Auth/SignUp/signup.dart';
@@ -98,6 +100,14 @@ class AppPages {
     GetPage(
       name: _Paths.addExpensePage,
       page: () => const AddExpensePage(),
+    ),
+    GetPage(
+      name: _Paths.tenantLeasePropertyDetailPage,
+      page: () => const TenantLeasePropertyDetailPage(),
+    ),
+    GetPage(
+      name: _Paths.splashScreen,
+      page: () => const SplashScreen(),
     ),
   ];
 }

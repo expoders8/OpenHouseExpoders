@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import '../models/amenities_model.dart';
 import '../controller/amenities_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -9,10 +8,10 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 typedef StringCallback = void Function(String val);
 
 class AmenitiesView extends StatefulWidget {
-  final String? initialvalue;
+  final String initialAmenitiesIds;
   const AmenitiesView({
     super.key,
-    this.initialvalue = "",
+    this.initialAmenitiesIds = "",
   });
 
   @override
@@ -20,16 +19,17 @@ class AmenitiesView extends StatefulWidget {
 }
 
 class _AmenitiesViewState extends State<AmenitiesView> {
-  var selectedValues = [];
-  List<dynamic> separatedList = [];
-  List<AmenitiesModel> amenitiesModel = [];
+  List<String> selectedValues = [];
   final GetAllAmenitiesController getAllAmenitiesController =
       Get.put(GetAllAmenitiesController());
 
   @override
   void initState() {
-    getAllAmenitiesController.fetchAllAmenites();
     super.initState();
+    getAllAmenitiesController.fetchAllAmenites();
+
+    selectedValues =
+        widget.initialAmenitiesIds.split(',').map((id) => id.trim()).toList();
   }
 
   @override
@@ -57,14 +57,13 @@ class _AmenitiesViewState extends State<AmenitiesView> {
       } else {
         if (getAllAmenitiesController.amenitisList.isNotEmpty) {
           var data = getAllAmenitiesController.amenitisList[0];
+          List<MultiSelectItem<dynamic>> items = data
+              .map((category) => MultiSelectItem(
+                  category.id.toString(), category.title.toString()))
+              .toList();
           return MultiSelectDialogField(
-            initialValue: separatedList,
-            items: data
-                .map(
-                  (category) => MultiSelectItem(
-                      category.id.toString(), category.title.toString()),
-                )
-                .toList(),
+            initialValue: selectedValues,
+            items: items,
             searchable: true,
             selectedColor: kButtonColor,
             checkColor: kWhiteColor,
@@ -98,7 +97,7 @@ class _AmenitiesViewState extends State<AmenitiesView> {
             ),
             separateSelectedItems: true,
             onConfirm: (values) {
-              selectedValues = values;
+              selectedValues = List<String>.from(values);
               getAllAmenitiesController.selectedAmenitis(values);
             },
             title: const Text(

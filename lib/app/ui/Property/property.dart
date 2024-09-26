@@ -38,7 +38,8 @@ class _PropertyPageState extends State<PropertyPage>
     setState(() {
       selectedRoll = roll;
     });
-    _tabController = TabController(length: 2, vsync: this, initialIndex: 1);
+    _tabController = TabController(
+        length: 2, vsync: this, initialIndex: selectedRoll == "tenant" ? 0 : 1);
   }
 
   @override
@@ -52,9 +53,32 @@ class _PropertyPageState extends State<PropertyPage>
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 45,
-        title: Text(
-          selectedRoll == "tenant" ? "On Lease Properties" : "My Properties",
-          style: const TextStyle(fontFamily: kCircularStdBook),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              selectedRoll == "tenant"
+                  ? "On Lease Properties"
+                  : "My Properties",
+              style: TextStyle(fontFamily: kCircularStdBold, fontSize: 18),
+            ),
+            const SizedBox(width: 3),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25), color: kButtonColor),
+              child: Center(
+                child: Text(
+                  '${selectedRoll[0].toUpperCase()}${selectedRoll.substring(1)}',
+                  style: const TextStyle(
+                    color: kWhiteColor,
+                    fontSize: 10,
+                    fontFamily: kCircularStdNormal,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,

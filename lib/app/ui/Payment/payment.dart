@@ -41,9 +41,30 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Payment",
-          style: TextStyle(fontFamily: kCircularStdBook),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Payment",
+              style: TextStyle(fontFamily: kCircularStdBold, fontSize: 18),
+            ),
+            const SizedBox(width: 3),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25), color: kButtonColor),
+              child: Center(
+                child: Text(
+                  '${selectedRoll[0].toUpperCase()}${selectedRoll.substring(1)}',
+                  style: const TextStyle(
+                    color: kWhiteColor,
+                    fontSize: 10,
+                    fontFamily: kCircularStdNormal,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,

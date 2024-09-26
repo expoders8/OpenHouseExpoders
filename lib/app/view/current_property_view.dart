@@ -15,16 +15,18 @@ class CurrentPropertyView extends StatefulWidget {
 }
 
 class _CurrentPropertyViewState extends State<CurrentPropertyView> {
-  final GetLeasePropertyController getLeasePropertyController =
-      Get.put(GetLeasePropertyController());
-  final GetDetailsPropertiesController getDetailsPropertiesController =
-      Get.put(GetDetailsPropertiesController());
+  final GetCurrentPropertyController getCurrentPropertyController =
+      Get.put(GetCurrentPropertyController());
+  final GetCurrentDetailsPropertiesController
+      getCurrentDetailsPropertiesController =
+      Get.put(GetCurrentDetailsPropertiesController());
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Obx(
         () {
-          if (getLeasePropertyController.isLoading.value) {
+          if (getCurrentPropertyController.isLoading.value) {
             return Container(
               color: kBackGroundColor,
               child: const Center(
@@ -35,8 +37,9 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
             );
           } else {
             // ignore: unnecessary_null_comparison
-            if (getLeasePropertyController.propertiesList[0].data! != null) {
-              if (getLeasePropertyController.propertiesList[0].data!.isEmpty) {
+            if (getCurrentPropertyController.propertiesList[0].data! != null) {
+              if (getCurrentPropertyController
+                  .propertiesList[0].data!.isEmpty) {
                 return Center(
                   child: SizedBox(
                     width: Get.width - 80,
@@ -53,21 +56,25 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
               } else {
                 return ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount:
-                      getLeasePropertyController.propertiesList[0].data!.length,
+                  itemCount: getCurrentPropertyController
+                      .propertiesList[0].data!.length,
                   itemBuilder: (context, index) {
                     var propertyData =
-                        getLeasePropertyController.propertiesList[0].data!;
+                        getCurrentPropertyController.propertiesList[0].data!;
                     if (propertyData.isNotEmpty) {
                       var data = propertyData[index];
+                      getCurrentPropertyController.image(data.propertyImage);
+                      getCurrentPropertyController.name(data.name);
+                      getCurrentPropertyController.address(data.address);
+                      getCurrentPropertyController.propertyId(data.id);
                       return Column(
                         children: [
                           CupertinoButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              getDetailsPropertiesController
+                              getCurrentDetailsPropertiesController
                                   .propertyId(data.id);
-                              getDetailsPropertiesController
+                              getCurrentDetailsPropertiesController
                                   .fetchPropertyDetail();
                             },
                             child: Container(
@@ -109,14 +116,46 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              data.rentAmount.toString(),
-                                              style: const TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontSize: 25,
-                                                  fontFamily:
-                                                      kCircularStdMedium),
+                                            SizedBox(
+                                              width: Get.width - 170,
+                                              child: Text(
+                                                data.name.toString(),
+                                                style: const TextStyle(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    color: kPrimaryColor,
+                                                    fontSize: 17,
+                                                    fontFamily:
+                                                        kCircularStdMedium),
+                                              ),
                                             ),
+                                            const SizedBox(height: 5),
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.request_page_sharp,
+                                                  size: 16,
+                                                  color: kButtonColor,
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Text(
+                                                  data.rentAmount.toString(),
+                                                  style: const TextStyle(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      color: kPrimaryColor,
+                                                      fontSize: 17,
+                                                      fontFamily:
+                                                          kCircularStdMedium),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    data.address.toString() ==
+                                                            "null"
+                                                        ? 0
+                                                        : 5),
                                             data.address.toString() == "null"
                                                 ? Container()
                                                 : Row(
@@ -142,6 +181,7 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                                                       ),
                                                     ],
                                                   ),
+                                            const SizedBox(height: 5),
                                             Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -162,27 +202,6 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                                                         fontSize: 13,
                                                         fontFamily:
                                                             kCircularStdBold),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.person,
-                                                  size: 16,
-                                                  color: kButtonColor,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                SizedBox(
-                                                  width: Get.width - 220,
-                                                  child: Text(
-                                                    data.name.toString(),
-                                                    style: const TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontSize: 13,
-                                                        fontFamily:
-                                                            kCircularStdMedium),
                                                   ),
                                                 ),
                                               ],

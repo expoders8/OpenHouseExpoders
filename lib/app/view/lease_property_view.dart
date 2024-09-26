@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:openhome/app/ui/Property%20Details/Tenant/tenant_lease_property.dart';
 
+import '../../config/constant/constant.dart';
 import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../controller/property_detail_controller.dart';
+import '../ui/Property Details/lease_property_details.dart';
 
 class LeasePropertyView extends StatefulWidget {
   const LeasePropertyView({super.key});
@@ -19,6 +22,17 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
       Get.put(GetLeasePropertyController());
   final GetDetailsPropertiesController getDetailsPropertiesController =
       Get.put(GetDetailsPropertiesController());
+  String selectedRoll = "";
+
+  @override
+  void initState() {
+    super.initState();
+    var roll = getStorage.read('roll') ?? "";
+    setState(() {
+      selectedRoll = roll;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -67,6 +81,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                             onPressed: () {
                               getDetailsPropertiesController
                                   .propertyId(data.id);
+
                               getDetailsPropertiesController
                                   .fetchPropertyDetail();
                             },
@@ -109,14 +124,46 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              data.rentAmount.toString(),
-                                              style: const TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontSize: 25,
-                                                  fontFamily:
-                                                      kCircularStdMedium),
+                                            SizedBox(
+                                              width: Get.width - 170,
+                                              child: Text(
+                                                data.name.toString(),
+                                                style: const TextStyle(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    color: kPrimaryColor,
+                                                    fontSize: 17,
+                                                    fontFamily:
+                                                        kCircularStdMedium),
+                                              ),
                                             ),
+                                            const SizedBox(height: 5),
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.request_page_sharp,
+                                                  size: 16,
+                                                  color: kButtonColor,
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Text(
+                                                  data.rentAmount.toString(),
+                                                  style: const TextStyle(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      color: kPrimaryColor,
+                                                      fontSize: 17,
+                                                      fontFamily:
+                                                          kCircularStdMedium),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    data.address.toString() ==
+                                                            "null"
+                                                        ? 0
+                                                        : 5),
                                             data.address.toString() == "null"
                                                 ? Container()
                                                 : Row(
@@ -142,6 +189,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                       ),
                                                     ],
                                                   ),
+                                            const SizedBox(height: 5),
                                             Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -162,27 +210,6 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                         fontSize: 13,
                                                         fontFamily:
                                                             kCircularStdBold),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.person,
-                                                  size: 16,
-                                                  color: kButtonColor,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                SizedBox(
-                                                  width: Get.width - 220,
-                                                  child: Text(
-                                                    data.name.toString(),
-                                                    style: const TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontSize: 13,
-                                                        fontFamily:
-                                                            kCircularStdMedium),
                                                   ),
                                                 ),
                                               ],

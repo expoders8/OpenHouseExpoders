@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: Provider.of<ThemeProvider>(context, listen: false).getTheme(),
-      initialRoute: appflow == 0 ? Routes.loginPage : Routes.tabPage,
+      initialRoute: Routes.splashScreen,
       getPages: AppPages.routes,
     );
   }

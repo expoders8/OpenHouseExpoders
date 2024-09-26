@@ -19,13 +19,13 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            notLeaseProperty(
-                "assets/icons/1.png", "\$2550", "101 Main Street", "2"),
+            notLeaseProperty("assets/icons/1.png", "Main Street", "\$2550",
+                "101 Main Street", "2"),
             const SizedBox(height: 15),
-            notLeaseProperty("assets/icons/2.png", "\$1520",
+            notLeaseProperty("assets/icons/2.png", "Main Street", "\$1520",
                 "3545 Robson St, Vancouver", "1"),
             const SizedBox(height: 15),
-            notLeaseProperty("assets/icons/3.png", "\$1850",
+            notLeaseProperty("assets/icons/3.png", "Main Street", "\$1850",
                 "224 Robson St, Vancouver", "2"),
             const SizedBox(height: 65)
           ],
@@ -34,7 +34,7 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
     );
   }
 
-  Widget notLeaseProperty(String image, price, address, person) {
+  Widget notLeaseProperty(String image, name, price, address, person) {
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -62,33 +62,58 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        price,
-                        style: const TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 25,
-                            fontFamily: kCircularStdMedium),
+                      SizedBox(
+                        width: Get.width - 170,
+                        child: Text(
+                          name,
+                          style: const TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              color: kPrimaryColor,
+                              fontSize: 17,
+                              fontFamily: kCircularStdMedium),
+                        ),
                       ),
+                      const SizedBox(height: 3),
                       Row(
                         children: [
                           const Icon(
-                            Icons.location_on,
+                            Icons.request_page_sharp,
                             size: 16,
                             color: kButtonColor,
                           ),
                           const SizedBox(width: 10),
-                          SizedBox(
-                            width: Get.width / 2.5,
-                            child: Text(
-                              address,
-                              style: const TextStyle(
-                                  color: kSecondaryPrimaryColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdMedium),
-                            ),
+                          Text(
+                            price,
+                            style: const TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                color: kPrimaryColor,
+                                fontSize: 17,
+                                fontFamily: kCircularStdMedium),
                           ),
                         ],
                       ),
+                      address == ""
+                          ? Container()
+                          : Row(
+                              children: [
+                                const Icon(
+                                  Icons.location_on,
+                                  size: 16,
+                                  color: kButtonColor,
+                                ),
+                                const SizedBox(width: 10),
+                                SizedBox(
+                                  width: Get.width / 2.5,
+                                  child: Text(
+                                    address,
+                                    style: const TextStyle(
+                                        color: kSecondaryPrimaryColor,
+                                        fontSize: 13,
+                                        fontFamily: kCircularStdMedium),
+                                  ),
+                                ),
+                              ],
+                            ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -103,46 +128,13 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                             child: Text(
                               person,
                               style: const TextStyle(
-                                  color: kPrimaryColor,
+                                  color: kSecondaryPrimaryColor,
                                   fontSize: 13,
                                   fontFamily: kCircularStdBold),
                             ),
                           ),
                         ],
                       ),
-                      // const Row(
-                      //   children: [
-                      //     Icon(
-                      //       Icons.wifi,
-                      //       size: 16,
-                      //       color: kSecondaryPrimaryColor,
-                      //     ),
-                      //     SizedBox(width: 5),
-                      //     Icon(
-                      //       Icons.gas_meter_rounded,
-                      //       size: 16,
-                      //       color: kSecondaryPrimaryColor,
-                      //     ),
-                      //     SizedBox(width: 5),
-                      //     Icon(
-                      //       Icons.electric_bolt_sharp,
-                      //       size: 16,
-                      //       color: kSecondaryPrimaryColor,
-                      //     ),
-                      //     SizedBox(width: 5),
-                      //     Icon(
-                      //       Icons.local_parking,
-                      //       size: 16,
-                      //       color: kSecondaryPrimaryColor,
-                      //     ),
-                      //     SizedBox(width: 5),
-                      //     Icon(
-                      //       Icons.nest_cam_wired_stand_sharp,
-                      //       size: 16,
-                      //       color: kSecondaryPrimaryColor,
-                      //     ),
-                      //   ],
-                      // ),
                       Row(
                         children: [
                           const Icon(
@@ -164,53 +156,118 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                         ],
                       ),
                     ],
-                  )
+                  ),
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text(
+                  //       price,
+                  //       style: const TextStyle(
+                  //           color: kPrimaryColor,
+                  //           fontSize: 25,
+                  //           fontFamily: kCircularStdMedium),
+                  //     ),
+                  //     Row(
+                  //       children: [
+                  //         const Icon(
+                  //           Icons.location_on,
+                  //           size: 16,
+                  //           color: kButtonColor,
+                  //         ),
+                  //         const SizedBox(width: 10),
+                  //         SizedBox(
+                  //           width: Get.width / 2.5,
+                  //           child: Text(
+                  //             address,
+                  //             style: const TextStyle(
+                  //                 color: kSecondaryPrimaryColor,
+                  //                 fontSize: 13,
+                  //                 fontFamily: kCircularStdMedium),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //     Row(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         const Icon(
+                  //           Icons.bed_outlined,
+                  //           size: 16,
+                  //           color: kButtonColor,
+                  //         ),
+                  //         const SizedBox(width: 10),
+                  //         SizedBox(
+                  //           width: Get.width - 220,
+                  //           child: Text(
+                  //             person,
+                  //             style: const TextStyle(
+                  //                 color: kPrimaryColor,
+                  //                 fontSize: 13,
+                  //                 fontFamily: kCircularStdBold),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //     // const Row(
+                  //     //   children: [
+                  //     //     Icon(
+                  //     //       Icons.wifi,
+                  //     //       size: 16,
+                  //     //       color: kSecondaryPrimaryColor,
+                  //     //     ),
+                  //     //     SizedBox(width: 5),
+                  //     //     Icon(
+                  //     //       Icons.gas_meter_rounded,
+                  //     //       size: 16,
+                  //     //       color: kSecondaryPrimaryColor,
+                  //     //     ),
+                  //     //     SizedBox(width: 5),
+                  //     //     Icon(
+                  //     //       Icons.electric_bolt_sharp,
+                  //     //       size: 16,
+                  //     //       color: kSecondaryPrimaryColor,
+                  //     //     ),
+                  //     //     SizedBox(width: 5),
+                  //     //     Icon(
+                  //     //       Icons.local_parking,
+                  //     //       size: 16,
+                  //     //       color: kSecondaryPrimaryColor,
+                  //     //     ),
+                  //     //     SizedBox(width: 5),
+                  //     //     Icon(
+                  //     //       Icons.nest_cam_wired_stand_sharp,
+                  //     //       size: 16,
+                  //     //       color: kSecondaryPrimaryColor,
+                  //     //     ),
+                  //     //   ],
+                  //     // ),
+
+                  //   ],
+                  // )
                 ],
               ),
               const SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Expanded(
-                    child: CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      child: Container(
-                        height: 35,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: kWhiteColor),
-                            color: kButtonColor),
-                        child: const Center(
-                          child: Text(
-                            "Request",
-                            style: TextStyle(
-                                color: kWhiteColor,
-                                fontFamily: kCircularStdNormal,
-                                fontSize: 13),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 35),
-                  Expanded(
-                    child: CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      child: Container(
-                        height: 35,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: kWhiteColor),
-                            color: kPrimaryColor),
-                        child: const Center(
-                          child: Text(
-                            "Book Now",
-                            style: TextStyle(
-                                color: kWhiteColor,
-                                fontFamily: kCircularStdNormal,
-                                fontSize: 13),
-                          ),
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    child: Container(
+                      height: 35,
+                      width: 120,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(color: kWhiteColor),
+                          color: kButtonColor),
+                      child: const Center(
+                        child: Text(
+                          "Request",
+                          style: TextStyle(
+                              color: kWhiteColor,
+                              fontFamily: kCircularStdNormal,
+                              fontSize: 13),
                         ),
                       ),
                     ),

@@ -197,16 +197,16 @@ class _MyRequestViewState extends State<MyRequestView> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              DateFormat('dd MMM yyyy').format(
-                                                  DateTime.parse(data.startDate
-                                                      .toString())),
-                                              style: const TextStyle(
-                                                  color: kGreyColor,
-                                                  fontSize: 13,
-                                                  fontFamily:
-                                                      kCircularStdNormal),
-                                            ),
+                                            // Text(
+                                            //   DateFormat('dd MMM yyyy').format(
+                                            //       DateTime.parse(data.startDate
+                                            //           .toString())),
+                                            //   style: const TextStyle(
+                                            //       color: kGreyColor,
+                                            //       fontSize: 13,
+                                            //       fontFamily:
+                                            //           kCircularStdNormal),
+                                            // ),
                                             data.type.toString() != "normal"
                                                 ? Container(
                                                     padding: const EdgeInsets

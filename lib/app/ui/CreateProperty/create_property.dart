@@ -7,6 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
+import '../../controller/property_controller.dart';
+import '../../models/getbyid_property_model.dart';
 import '../../models/state_model.dart';
 import '../../view/amenities_view.dart';
 import '../../models/country_model.dart';
@@ -20,7 +22,39 @@ import '../../../config/provider/loader_provider.dart';
 
 class CreatePropertyPage extends StatefulWidget {
   final String? checkEdit;
-  const CreatePropertyPage({super.key, this.checkEdit});
+  final String? proeprtyName;
+  final String? description;
+  final String? bedrooms;
+  final String? whoshrooms;
+  final String? capacity;
+  final String? selctesType;
+  final String? price;
+  final String? facilities;
+  final String? person;
+  final String? address;
+  final String? country;
+  final String? state;
+  final String? city;
+  final String? amenitiesid;
+
+  const CreatePropertyPage({
+    super.key,
+    this.checkEdit,
+    this.proeprtyName,
+    this.description,
+    this.bedrooms,
+    this.whoshrooms,
+    this.capacity,
+    this.selctesType,
+    this.price,
+    this.facilities,
+    this.person,
+    this.address,
+    this.country,
+    this.state,
+    this.city,
+    this.amenitiesid,
+  });
 
   @override
   State<CreatePropertyPage> createState() => _CreatePropertyPageState();
@@ -42,6 +76,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   PropertiesService propertiesService = PropertiesService();
   final GetAllAmenitiesController getAllAmenitiesController =
       Get.put(GetAllAmenitiesController());
+  final GetCurrentPropertyController getCurrentPropertyController =
+      Get.put(GetCurrentPropertyController());
   final TextEditingController cityController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   final TextEditingController personController = TextEditingController();
@@ -54,6 +90,50 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController propertyNameController = TextEditingController();
   final TextEditingController propertyPriceController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    if (widget.checkEdit == "edit") {
+      getPropertyData();
+    }
+  }
+
+  getPropertyData() {
+    propertyNameController.text = widget.proeprtyName.toString() == "null"
+        ? ""
+        : widget.proeprtyName.toString();
+    descriptionController.text = widget.description.toString() == "null"
+        ? ""
+        : widget.description.toString();
+    propertyPriceController.text =
+        widget.price.toString() == "null" ? "" : widget.price.toString();
+    facilitiesController.text = widget.facilities.toString() == "null"
+        ? ""
+        : widget.facilities.toString();
+    personController.text =
+        widget.person.toString() == "null" ? "" : widget.person.toString();
+    addressController.text =
+        widget.address.toString() == "null" ? "" : widget.address.toString();
+    countryController.text =
+        widget.country.toString() == "null" ? "" : widget.country.toString();
+    stateController.text =
+        widget.state.toString() == "null" ? "" : widget.state.toString();
+    cityController.text =
+        widget.city.toString() == "null" ? "" : widget.city.toString();
+    capacityController.text =
+        widget.capacity.toString() == "null" ? "" : widget.capacity.toString();
+    bedRoomsController.text =
+        widget.bedrooms.toString() == "null" ? "" : widget.bedrooms.toString();
+    washRoomsController.text = widget.whoshrooms.toString() == "null"
+        ? ""
+        : widget.whoshrooms.toString();
+    selctesType = widget.selctesType.toString() == "null"
+        ? ""
+        : widget.selctesType.toString();
+    amenities = widget.amenitiesid.toString() == "null"
+        ? ""
+        : widget.selctesType.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +151,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Form(
           key: _formKey,
-          autovalidateMode: AutovalidateMode.always,
+          // autovalidateMode: AutovalidateMode.always,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
@@ -786,7 +866,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 ),
                 const SizedBox(height: 10),
                 AmenitiesView(
-                  initialvalue: amenities,
+                  initialAmenitiesIds: amenities,
                 ),
                 const SizedBox(height: 10),
                 imageList.isEmpty
@@ -941,95 +1021,190 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                     ),
                   ),
                 const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                widget.checkEdit == "edit"
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              if (_formKey.currentState?.validate() ?? false) {
+                                if (!isImagePickerError &&
+                                    bedRoomsController.value.text != "" &&
+                                    capacityController.value.text != "" &&
+                                    countryController.value.text != "" &&
+                                    stateController.value.text != "" &&
+                                    washRoomsController.value.text != "") {
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                  Future.delayed(
+                                      const Duration(milliseconds: 100),
+                                      () async {
+                                    // ignore: use_build_context_synchronously
+                                    LoaderX.show(context, 60.0, 60.0);
+                                    // ignore: avoid_function_literals_in_foreach_calls
+                                    imageList.forEach((i) => selctedImages
+                                        .add(i.identifier.toString()));
+                                    getAllAmenitiesController.selectedImages(
+                                      selctedImages,
+                                    );
+                                    propertiesService
+                                        .createProperties(
+                                            propertyNameController.text,
+                                            descriptionController.text,
+                                            propertyPriceController.text,
+                                            facilitiesController.text,
+                                            personController.text,
+                                            addressController.text,
+                                            countryId,
+                                            stateid,
+                                            cityController.text,
+                                            "",
+                                            "",
+                                            capacityController.text,
+                                            bedRoomsController.text,
+                                            washRoomsController.text,
+                                            selctesType,
+                                            "null",
+                                            fileList)
+                                        .then((value) {
+                                      if (value) {
+                                        propertyNameController.dispose();
+                                        descriptionController.dispose();
+                                        propertyPriceController.dispose();
+                                        facilitiesController.dispose();
+                                        personController.dispose();
+                                        addressController.dispose();
+                                        countryId = "";
+                                        stateid = "";
+                                        cityController.dispose();
+                                        countryController.dispose();
+                                        stateController.dispose();
+                                        capacityController.dispose();
+                                        bedRoomsController.dispose();
+                                        washRoomsController.dispose();
+                                        selctesType = "";
+                                        fileList = [];
+                                      }
+                                    });
+                                  });
+                                } else {
+                                  setState(() {
+                                    isFormSubmitted = true;
+                                    isImagePickerError = imageList.isEmpty;
+                                  });
+                                }
+                              } else {
+                                setState(() {
+                                  isFormSubmitted = true;
+                                  isImagePickerError = imageList.isEmpty;
+                                });
+                              }
+                            },
+                            child: const Text(
+                              "Edit Property",
+                              style: TextStyle(color: kWhiteColor),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              if (_formKey.currentState?.validate() ?? false) {
+                                if (!isImagePickerError &&
+                                    bedRoomsController.value.text != "" &&
+                                    capacityController.value.text != "" &&
+                                    countryController.value.text != "" &&
+                                    stateController.value.text != "" &&
+                                    washRoomsController.value.text != "") {
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                  Future.delayed(
+                                      const Duration(milliseconds: 100),
+                                      () async {
+                                    // ignore: use_build_context_synchronously
+                                    LoaderX.show(context, 60.0, 60.0);
+                                    // ignore: avoid_function_literals_in_foreach_calls
+                                    imageList.forEach((i) => selctedImages
+                                        .add(i.identifier.toString()));
+                                    getAllAmenitiesController.selectedImages(
+                                      selctedImages,
+                                    );
+                                    propertiesService
+                                        .createProperties(
+                                            propertyNameController.text,
+                                            descriptionController.text,
+                                            propertyPriceController.text,
+                                            facilitiesController.text,
+                                            personController.text,
+                                            addressController.text,
+                                            countryId,
+                                            stateid,
+                                            cityController.text,
+                                            "",
+                                            "",
+                                            capacityController.text,
+                                            bedRoomsController.text,
+                                            washRoomsController.text,
+                                            selctesType,
+                                            "null",
+                                            fileList)
+                                        .then((value) {
+                                      if (value) {
+                                        propertyNameController.dispose();
+                                        descriptionController.dispose();
+                                        propertyPriceController.dispose();
+                                        facilitiesController.dispose();
+                                        personController.dispose();
+                                        addressController.dispose();
+                                        countryId = "";
+                                        stateid = "";
+                                        cityController.dispose();
+                                        countryController.dispose();
+                                        stateController.dispose();
+                                        capacityController.dispose();
+                                        bedRoomsController.dispose();
+                                        washRoomsController.dispose();
+                                        selctesType = "";
+                                        fileList = [];
+                                      }
+                                    });
+                                  });
+                                } else {
+                                  setState(() {
+                                    isFormSubmitted = true;
+                                    isImagePickerError = imageList.isEmpty;
+                                  });
+                                }
+                              } else {
+                                setState(() {
+                                  isFormSubmitted = true;
+                                  isImagePickerError = imageList.isEmpty;
+                                });
+                              }
+                            },
+                            child: const Text(
+                              "Create a Property",
+                              style: TextStyle(color: kWhiteColor),
+                            ),
+                          ),
                         ),
                       ),
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          if (!isImagePickerError &&
-                              bedRoomsController.value.text != "" &&
-                              capacityController.value.text != "" &&
-                              countryController.value.text != "" &&
-                              stateController.value.text != "" &&
-                              washRoomsController.value.text != "") {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            Future.delayed(const Duration(milliseconds: 100),
-                                () async {
-                              // ignore: use_build_context_synchronously
-                              LoaderX.show(context, 60.0, 60.0);
-                              // ignore: avoid_function_literals_in_foreach_calls
-                              imageList.forEach((i) =>
-                                  selctedImages.add(i.identifier.toString()));
-                              getAllAmenitiesController.selectedImages(
-                                selctedImages,
-                              );
-                              propertiesService
-                                  .createProperties(
-                                      propertyNameController.text,
-                                      descriptionController.text,
-                                      propertyPriceController.text,
-                                      facilitiesController.text,
-                                      personController.text,
-                                      addressController.text,
-                                      countryId,
-                                      stateid,
-                                      cityController.text,
-                                      "",
-                                      "",
-                                      capacityController.text,
-                                      bedRoomsController.text,
-                                      washRoomsController.text,
-                                      selctesType,
-                                      fileList)
-                                  .then((value) {
-                                if (value) {
-                                  propertyNameController.dispose();
-                                  descriptionController.dispose();
-                                  propertyPriceController.dispose();
-                                  facilitiesController.dispose();
-                                  personController.dispose();
-                                  addressController.dispose();
-                                  countryId = "";
-                                  stateid = "";
-                                  cityController.dispose();
-                                  countryController.dispose();
-                                  stateController.dispose();
-                                  capacityController.dispose();
-                                  bedRoomsController.dispose();
-                                  washRoomsController.dispose();
-                                  selctesType = "";
-                                  fileList = [];
-                                }
-                              });
-                            });
-                          } else {
-                            setState(() {
-                              isFormSubmitted = true;
-                              isImagePickerError = imageList.isEmpty;
-                            });
-                          }
-                        } else {
-                          setState(() {
-                            isFormSubmitted = true;
-                            isImagePickerError = imageList.isEmpty;
-                          });
-                        }
-                      },
-                      child: const Text(
-                        "Create a Property",
-                        style: TextStyle(color: kWhiteColor),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 90)
+                SizedBox(height: widget.checkEdit == "edit" ? 10 : 90)
               ],
             ),
           ),

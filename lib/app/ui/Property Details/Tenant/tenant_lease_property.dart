@@ -3,34 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
-import '../../models/getbyid_property_model.dart';
-import '../../routes/app_pages.dart';
-import '../../view/nearby_view.dart';
-import '../../view/house keeper/house_keeper_view.dart';
-import '../../view/payment_detail_view.dart';
-import '../../view/tenant_history_view.dart';
-import '../../view/property_details_view.dart';
-import '../../../config/constant/constant.dart';
-import '../CreateProperty/create_property.dart';
-import '../../../config/constant/font_constant.dart';
-import '../../../config/constant/color_constant.dart';
-import '../../controller/property_detail_controller.dart';
+import '../../../view/house keeper/tenant_house_keeper_view.dart';
+import '../../../view/nearby_view.dart';
+import '../../../view/property_details_view.dart';
+import '../../../../config/constant/constant.dart';
+import '../../../../config/constant/font_constant.dart';
+import '../../../../config/constant/color_constant.dart';
+import '../../../controller/property_detail_controller.dart';
 
-class LeasePropertyDetailPage extends StatefulWidget {
-  const LeasePropertyDetailPage({super.key});
+class TenantLeasePropertyDetailPage extends StatefulWidget {
+  const TenantLeasePropertyDetailPage({super.key});
 
   @override
-  State<LeasePropertyDetailPage> createState() =>
-      _LeasePropertyDetailPageeState();
+  State<TenantLeasePropertyDetailPage> createState() =>
+      _TenantLeasePropertyDetailPageState();
 }
 
-class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
+class _TenantLeasePropertyDetailPageState
+    extends State<TenantLeasePropertyDetailPage>
     with SingleTickerProviderStateMixin {
   String selectedRoll = "";
   late TabController _tabController;
   bool isPreviousTenantsSelected = true;
-  final GetDetailsPropertiesController getDetailsPropertiesController =
-      Get.put(GetDetailsPropertiesController());
+  final GetCurrentDetailsPropertiesController
+      getCurrentDetailsPropertiesController =
+      Get.put(GetCurrentDetailsPropertiesController());
   List<ImageProvider> images = [];
 
   @override
@@ -40,9 +37,9 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
     setState(() {
       selectedRoll = roll;
     });
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     images = [
-      ...getDetailsPropertiesController.detailModel!.data!.images!
+      ...getCurrentDetailsPropertiesController.detailModel!.data!.images!
           .map((imageUrl) => NetworkImage(imageUrl)),
     ];
   }
@@ -57,11 +54,12 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        if (getDetailsPropertiesController.isLoading.value) {
+        if (getCurrentDetailsPropertiesController.isLoading.value) {
           return const Center(
               child: CircularProgressIndicator(color: kSelectedIconColor));
         } else {
-          var propertydata = getDetailsPropertiesController.detailModel!.data;
+          var propertydata =
+              getCurrentDetailsPropertiesController.detailModel!.data;
           return Stack(
             children: [
               SizedBox(
@@ -126,113 +124,44 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                   floating: false,
                                   flexibleSpace: Column(
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                          SizedBox(
+                                            width: Get.width - 100,
+                                            child: Text(
+                                              propertydata.name.toString(),
+                                              style: const TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 18,
+                                                  fontFamily:
+                                                      kCircularStdMedium),
+                                            ),
+                                          ),
+                                          Row(
                                             children: [
-                                              SizedBox(
-                                                width: Get.width - 100,
-                                                child: Text(
-                                                  propertydata.name.toString(),
-                                                  style: const TextStyle(
-                                                      color: kPrimaryColor,
-                                                      fontSize: 18,
-                                                      fontFamily:
-                                                          kCircularStdMedium),
-                                                ),
+                                              Text(
+                                                propertydata.rentAmount
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    color: kButtonColor,
+                                                    fontSize: 18,
+                                                    fontFamily:
+                                                        kCircularStdMedium),
                                               ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    propertydata.rentAmount
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                        color: kButtonColor,
-                                                        fontSize: 18,
-                                                        fontFamily:
-                                                            kCircularStdMedium),
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  const Text(
-                                                    "per month",
-                                                    style: TextStyle(
-                                                        color:
-                                                            kSecondaryPrimaryColor,
-                                                        fontSize: 13,
-                                                        fontFamily:
-                                                            kCircularStdMedium),
-                                                  ),
-                                                ],
+                                              const SizedBox(width: 10),
+                                              const Text(
+                                                "per month",
+                                                style: TextStyle(
+                                                    color:
+                                                        kSecondaryPrimaryColor,
+                                                    fontSize: 13,
+                                                    fontFamily:
+                                                        kCircularStdMedium),
                                               ),
                                             ],
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              List<Amenitys> amenitiesList =
-                                                  propertydata.amenitys!;
-
-                                              String allAmenityIds =
-                                                  amenitiesList
-                                                      .map((amenity) =>
-                                                          amenity.id)
-                                                      .join(',');
-                                              Get.to(() => CreatePropertyPage(
-                                                    checkEdit: "edit",
-                                                    proeprtyName: propertydata
-                                                        .name
-                                                        .toString(),
-                                                    description: propertydata
-                                                        .description
-                                                        .toString(),
-                                                    bedrooms: propertydata.type
-                                                        .toString(),
-                                                    whoshrooms: propertydata
-                                                        .subtype
-                                                        .toString(),
-                                                    capacity: propertydata
-                                                        .category
-                                                        .toString(),
-                                                    selctesType: "",
-                                                    price: propertydata
-                                                        .rentAmount
-                                                        .toString(),
-                                                    facilities: propertydata
-                                                        .facilities
-                                                        .toString(),
-                                                    person: propertydata.person
-                                                        .toString(),
-                                                    address: propertydata
-                                                        .address
-                                                        .toString(),
-                                                    country: propertydata
-                                                        .countryId
-                                                        .toString(),
-                                                    state: propertydata.stateId
-                                                        .toString(),
-                                                    city: propertydata.cityName
-                                                        .toString(),
-                                                    amenitiesid: allAmenityIds,
-                                                  ));
-                                            },
-                                            child: Container(
-                                              height: 45,
-                                              width: 45,
-                                              decoration: BoxDecoration(
-                                                  color: kBorderColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15)),
-                                              child: const Icon(
-                                                Icons.edit,
-                                                color: kPrimaryColor,
-                                                size: 20,
-                                              ),
-                                            ),
-                                          )
                                         ],
                                       ),
                                       Row(
@@ -258,11 +187,10 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                 isScrollable: true,
                                 labelColor: kPrimaryColor,
                                 tabs: const [
-                                  Tab(text: 'Tenants'),
+                                  Tab(text: "Host"),
                                   Tab(text: 'Overview'),
                                   Tab(text: 'Near By'),
-                                  Tab(text: 'Payment'),
-                                  Tab(text: 'Expense'),
+                                  Tab(text: "Amenities"),
                                 ],
                               ),
                               Flexible(
@@ -295,145 +223,79 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16),
-                                                    ),
+                                                  SizedBox(
                                                     width: 150,
-                                                    height: 40,
                                                     child: CupertinoButton(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      padding: EdgeInsets.zero,
-                                                      color:
-                                                          isPreviousTenantsSelected
-                                                              ? kBlack87Color
-                                                              : kWhiteColor,
-                                                      child: Text(
-                                                        "Previous Tenants",
-                                                        style: TextStyle(
-                                                          color:
-                                                              isPreviousTenantsSelected
-                                                                  ? kWhiteColor
-                                                                  : kBlack87Color,
-                                                          fontFamily:
-                                                              kCircularStdNormal,
-                                                          fontSize: 12,
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        color: kButtonColor,
+                                                        child: const Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Icon(Icons.payment),
+                                                            SizedBox(width: 10),
+                                                            Text("Pay rent"),
+                                                          ],
                                                         ),
-                                                      ),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          isPreviousTenantsSelected =
-                                                              true;
-                                                        });
-                                                      },
-                                                    ),
+                                                        onPressed: () {}),
                                                   ),
                                                   const SizedBox(width: 10),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16),
-                                                    ),
+                                                  SizedBox(
                                                     width: 150,
-                                                    height: 40,
                                                     child: CupertinoButton(
-                                                      padding: EdgeInsets.zero,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      color:
-                                                          isPreviousTenantsSelected
-                                                              ? kWhiteColor
-                                                              : kBlack87Color,
-                                                      child: Text(
-                                                        "Housekeepers",
-                                                        style: TextStyle(
-                                                          color:
-                                                              isPreviousTenantsSelected
-                                                                  ? kBlack87Color
-                                                                  : kWhiteColor,
-                                                          fontFamily:
-                                                              kCircularStdNormal,
-                                                          fontSize: 12,
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        color: kBlack87Color,
+                                                        child: const Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Icon(Icons
+                                                                .checklist_outlined),
+                                                            SizedBox(width: 10),
+                                                            Text("Checkout"),
+                                                          ],
                                                         ),
-                                                      ),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          isPreviousTenantsSelected =
-                                                              false;
-                                                        });
-                                                      },
-                                                    ),
+                                                        onPressed: () {}),
                                                   ),
                                                 ],
                                               ),
-                                              const SizedBox(height: 20),
-                                              isPreviousTenantsSelected
-                                                  ? const TenantHistoryView()
-                                                  : const HouseKeeperView(),
+                                              const SizedBox(height: 15),
+                                              const TenantHouseKeeperView()
                                             ],
-                                          ),
+                                          )
                                         ],
                                       ),
                                     ),
-                                    const PropertyDetailsView(),
+                                    const CurrentPropertyDetailsView(),
                                     const NearByAmenitiesView(),
-                                    const PaymentView(),
                                     SingleChildScrollView(
                                       child: Column(
                                         children: [
                                           const SizedBox(height: 10),
-                                          CupertinoButton(
-                                            padding: EdgeInsets.zero,
-                                            onPressed: () {
-                                              Get.toNamed(
-                                                  Routes.addExpensePage);
+                                          GestureDetector(
+                                            onTap: () {
+                                              _bottomSheetForChackout();
                                             },
-                                            child: Container(
-                                              height: 38,
-                                              width: Get.width,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                      color: kPrimaryColor),
-                                                  color: kBackGroundColor),
-                                              child: const Center(
-                                                child: Text(
-                                                  "+ Add Expenses",
-                                                  style: TextStyle(
-                                                      color: kPrimaryColor,
-                                                      fontFamily:
-                                                          kCircularStdNormal,
-                                                      fontSize: 18),
-                                                ),
-                                              ),
-                                            ),
+                                            child: otheractivities(
+                                                "Before you leave",
+                                                "How to check out",
+                                                Icons.door_front_door),
                                           ),
-                                          const SizedBox(height: 10),
-                                          routingmaintanance(
-                                              "Electricity",
-                                              "\$105",
-                                              Icons.electric_bolt_sharp),
-                                          routingmaintanance("Gas", "\$99",
-                                              Icons.gas_meter_rounded),
-                                          routingmaintanance("Repair", "\$65",
-                                              Icons.manage_history_sharp),
-                                          routingmaintanance(
-                                              "Internet",
-                                              "\$46",
-                                              Icons
-                                                  .signal_wifi_statusbar_connected_no_internet_4_sharp),
+                                          otheractivities("Connecting to wifi",
+                                              "Network: Expo", Icons.wifi),
+                                          otheractivities(
+                                              "Things to know",
+                                              "Instructions and house rules",
+                                              Icons.menu_book_rounded),
+                                          otheractivities("Message your host",
+                                              "Host Name", Icons.message),
                                         ],
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),
@@ -484,6 +346,179 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
           ),
         ],
       ),
+    );
+  }
+
+  _bottomSheetForChackout() {
+    return showModalBottomSheet<dynamic>(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40.0),
+          topRight: Radius.circular(40.0),
+        ),
+      ),
+      isScrollControlled: true,
+      backgroundColor: kWhiteColor,
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            const Center(
+              child: ImageIcon(
+                AssetImage("assets/icons/line.png"),
+                size: 30,
+                color: Color(0XffBFC5CC),
+              ),
+            ),
+            Theme(
+              data: ThemeData(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'How to check out',
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: kPrimaryColor,
+                              fontFamily: kCircularStdBold),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(
+                              Icons.close,
+                              size: 25,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 5),
+                    const ListTile(
+                      leading: Icon(Icons.delete),
+                      title: Text(
+                        'Throw trash away',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 15,
+                            fontFamily: kCircularStdMedium),
+                      ),
+                      subtitle: Text(
+                        'Ensure all perishable trash especially left over food is put in the trash bin and not left on the kitchen counter so no bugs can fester.',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 11,
+                            fontFamily: kCircularStdNormal),
+                      ),
+                    ),
+                    const ListTile(
+                      leading: Icon(Icons.power_settings_new),
+                      title: Text(
+                        'Turn things off',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 15,
+                            fontFamily: kCircularStdMedium),
+                      ),
+                      subtitle: Text(
+                        'Kindly switch off the shower heater, lights in each room and electronic appliances. You can leave the fridge switched on.',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 11,
+                            fontFamily: kCircularStdNormal),
+                      ),
+                    ),
+                    const ListTile(
+                      leading: Icon(Icons.lock),
+                      title: Text(
+                        'Lock up',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 15,
+                            fontFamily: kCircularStdMedium),
+                      ),
+                      subtitle: Text(
+                        'Kindly close all the windows and lock the door when checking out. A friendly reminder that check out time is at/before 10am.',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 11,
+                            fontFamily: kCircularStdNormal),
+                      ),
+                    ),
+                    const ListTile(
+                      leading: Icon(Icons.key),
+                      title: Text(
+                        'Return keys',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 15,
+                            fontFamily: kCircularStdMedium),
+                      ),
+                      subtitle: Text(
+                        'At check out, kindly return the key back to the lock box and secure the lock box.',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 11,
+                            fontFamily: kCircularStdNormal),
+                      ),
+                    ),
+                    const ListTile(
+                      leading: Icon(Icons.request_page),
+                      title: Text(
+                        'Additional requests',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 15,
+                            fontFamily: kCircularStdMedium),
+                      ),
+                      subtitle: Text(
+                        'Before you leave don’t forget to double check that you have all your belongings. The host will not be liable for any items left in the apartment.',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 11,
+                            fontFamily: kCircularStdNormal),
+                      ),
+                    ),
+                    CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {},
+                      child: Container(
+                        height: 40,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(color: kWhiteColor),
+                            color: kButtonColor),
+                        child: const Center(
+                          child: Text(
+                            "Send Request",
+                            style: TextStyle(
+                                color: kWhiteColor,
+                                fontFamily: kCircularStdNormal,
+                                fontSize: 15),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

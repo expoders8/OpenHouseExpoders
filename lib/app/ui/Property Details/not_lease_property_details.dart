@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
+import '../../models/getbyid_property_model.dart';
 import '../../routes/app_pages.dart';
 import '../../view/nearby_view.dart';
-import '../../view/house_keeper_view.dart';
 import '../../view/tenant_history_view.dart';
 import '../../view/property_details_view.dart';
 import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../view/house keeper/house_keeper_view.dart';
 import '../../controller/property_detail_controller.dart';
 
 class NotLeasePropertyDetailPage extends StatefulWidget {
@@ -43,7 +44,6 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
   @override
   void dispose() {
     _tabController.dispose();
-    getnotleaseDetailsPropertiesController.dispose();
     super.dispose();
   }
 
@@ -70,6 +70,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                 // ],
                 dotSize: 6,
                 autoplay: false,
+                showIndicator: true,
                 borderRadius: true,
                 radius: const Radius.circular(0),
                 dotPosition: DotPosition.bottomCenter,
@@ -169,9 +170,47 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            Get.to(() =>
-                                                const CreatePropertyPage(
-                                                    checkEdit: "edit"));
+                                            List<Amenitys> amenitiesList =
+                                                propertydata.amenitys!;
+
+                                            String allAmenityIds = amenitiesList
+                                                .map((amenity) => amenity.id)
+                                                .join(',');
+                                            Get.to(() => CreatePropertyPage(
+                                                  checkEdit: "edit",
+                                                  proeprtyName: propertydata
+                                                      .name
+                                                      .toString(),
+                                                  description: propertydata
+                                                      .description
+                                                      .toString(),
+                                                  bedrooms: propertydata.type
+                                                      .toString(),
+                                                  whoshrooms: propertydata
+                                                      .subtype
+                                                      .toString(),
+                                                  capacity: propertydata
+                                                      .category
+                                                      .toString(),
+                                                  selctesType: "",
+                                                  price: propertydata.rentAmount
+                                                      .toString(),
+                                                  facilities: propertydata
+                                                      .facilities
+                                                      .toString(),
+                                                  person: propertydata.person
+                                                      .toString(),
+                                                  address: propertydata.address
+                                                      .toString(),
+                                                  country: propertydata
+                                                      .countryId
+                                                      .toString(),
+                                                  state: propertydata.stateId
+                                                      .toString(),
+                                                  city: propertydata.cityName
+                                                      .toString(),
+                                                  amenitiesid: allAmenityIds,
+                                                ));
                                           },
                                           child: Container(
                                             height: 45,

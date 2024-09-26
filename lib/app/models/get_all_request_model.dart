@@ -42,7 +42,9 @@ class GetAllRequestsDataModel {
   bool? isActive;
   String? amenityId;
   String? userId;
+  String? propertyId;
   String? title;
+  String? address;
   String? username;
   String? amenityTitle;
 
@@ -58,7 +60,9 @@ class GetAllRequestsDataModel {
       this.isActive,
       this.amenityId,
       this.userId,
+      this.propertyId,
       this.title,
+      this.address,
       this.username,
       this.amenityTitle});
 
@@ -74,7 +78,9 @@ class GetAllRequestsDataModel {
     isActive = json['is_active'];
     amenityId = json['amenity_id'];
     userId = json['user_id'];
+    propertyId = json['property_id'];
     title = json['title'];
+    address = json['address'];
     username = json['username'];
     amenityTitle = json['amenity_title'];
   }
@@ -92,7 +98,9 @@ class GetAllRequestsDataModel {
     data['is_active'] = isActive;
     data['amenity_id'] = amenityId;
     data['user_id'] = userId;
+    data['property_id'] = propertyId;
     data['title'] = title;
+    data['address'] = address;
     data['username'] = username;
     data['amenity_title'] = amenityTitle;
     return data;

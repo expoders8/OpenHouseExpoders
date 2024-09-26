@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
-import '../../config/constant/font_constant.dart';
-import '../../config/constant/color_constant.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class HouseKeeperView extends StatefulWidget {
   const HouseKeeperView({super.key});
@@ -28,7 +29,7 @@ class _HouseKeeperViewState extends State<HouseKeeperView> {
           ),
           const Divider(),
           const SizedBox(height: 5),
-          tenanthistory(),
+          housekeeperhistory(),
           const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -86,14 +87,14 @@ class _HouseKeeperViewState extends State<HouseKeeperView> {
           ),
           const Divider(),
           const SizedBox(height: 5),
-          tenanthistory(),
-          tenanthistory(),
+          previoushousekeeperhistory(),
+          previoushousekeeperhistory(),
         ],
       ),
     );
   }
 
-  Widget tenanthistory() {
+  housekeeperhistory() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -142,6 +143,82 @@ class _HouseKeeperViewState extends State<HouseKeeperView> {
                   ],
                 ),
               ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+
+  previoushousekeeperhistory() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.asset(
+                "assets/icons/boy 2.png",
+                fit: BoxFit.cover,
+                height: 40,
+                width: 40,
+              ),
+            ),
+            const SizedBox(width: 10),
+            SizedBox(
+              width: Get.width - 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Housekeeper Name",
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 15,
+                            fontFamily: kCircularStdMedium),
+                      ),
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.phone,
+                                size: 15,
+                                color: kButtonColor,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                "+91 9898567548",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 11,
+                                    fontFamily: kCircularStdNormal),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    child: const Text(
+                      "Assign",
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontFamily: kCircularStdNormal,
+                          fontSize: 13),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

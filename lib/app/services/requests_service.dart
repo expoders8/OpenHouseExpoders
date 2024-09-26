@@ -8,8 +8,7 @@ import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
 
 class RequestsService {
-  addRequest(
-      String amenityId, String description, String type, String date) async {
+  addRequest(String amenityId, description, type, date, propertyId) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
@@ -23,7 +22,8 @@ class RequestsService {
                 "start_date": date,
                 "created_by_id": null,
                 "updated_by_id": null,
-                "is_active": true
+                "is_active": true,
+                "property_id": propertyId
               }),
               headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);

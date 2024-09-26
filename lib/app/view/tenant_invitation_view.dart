@@ -82,7 +82,7 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
-                                    "You have received a house rent invitation from",
+                                    "You have received an invitation from",
                                     style: TextStyle(
                                         color: kPrimaryColor,
                                         fontSize: 14,
