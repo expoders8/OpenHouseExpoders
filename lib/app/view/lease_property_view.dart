@@ -55,7 +55,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                   child: SizedBox(
                     width: Get.width - 80,
                     child: const Text(
-                      "No Properties",
+                      "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: kPrimaryColor,
@@ -330,7 +330,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                     } else {
                       return const Center(
                         child: Text(
-                          "No Properties",
+                          "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: kPrimaryColor,
@@ -345,7 +345,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
             } else {
               return const Center(
                 child: Text(
-                  "No Properties",
+                  "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,

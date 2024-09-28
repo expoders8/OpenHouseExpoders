@@ -24,7 +24,6 @@ class AuthService {
       if (response.statusCode == 200) {
         if (decodedUser['success']) {
           getStorage.write('user', jsonEncode(decodedUser["data"]));
-          getStorage.write('userid', decodedUser["data"]["id"]);
           getStorage.write('authToken', decodedUser["data"]['authToken']);
           getStorage.write('roll', decodedUser["data"]['type']);
           getStorage.write('appFlow', 1);
@@ -119,7 +118,6 @@ class AuthService {
                 "profilePicture": profilePicture,
                 "googleToken": googleToken,
                 "provider": provider,
-                "currency": "",
                 "fcmToken": "",
               }),
               headers: {'Content-type': 'application/json'});
@@ -128,6 +126,8 @@ class AuthService {
         if (decodedUser['success']) {
           getStorage.write('user', jsonEncode(decodedUser["data"]));
           getStorage.write('authToken', decodedUser["data"]['authToken']);
+          getStorage.write('roll', decodedUser["data"]['type']);
+          getStorage.write('appFlow', 1);
           return decodedUser['success'];
         } else {
           LoaderX.hide();

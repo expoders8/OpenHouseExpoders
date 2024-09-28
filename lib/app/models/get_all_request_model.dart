@@ -44,6 +44,7 @@ class GetAllRequestsDataModel {
   String? userId;
   String? propertyId;
   String? title;
+  String? status;
   String? address;
   String? username;
   String? amenityTitle;
@@ -62,6 +63,7 @@ class GetAllRequestsDataModel {
       this.userId,
       this.propertyId,
       this.title,
+      this.status,
       this.address,
       this.username,
       this.amenityTitle});
@@ -80,6 +82,7 @@ class GetAllRequestsDataModel {
     userId = json['user_id'];
     propertyId = json['property_id'];
     title = json['title'];
+    status = json['status'];
     address = json['address'];
     username = json['username'];
     amenityTitle = json['amenity_title'];
@@ -100,6 +103,7 @@ class GetAllRequestsDataModel {
     data['user_id'] = userId;
     data['property_id'] = propertyId;
     data['title'] = title;
+    data['status'] = status;
     data['address'] = address;
     data['username'] = username;
     data['amenity_title'] = amenityTitle;

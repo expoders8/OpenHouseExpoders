@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:openhome/app/ui/TabPage/tab_page.dart';
 
 import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../controller/property_detail_controller.dart';
+import '../controller/tab_controller.dart';
+import '../ui/Property Details/Tenant/tenant_lease_property.dart';
 
 class CurrentPropertyView extends StatefulWidget {
   const CurrentPropertyView({super.key});
@@ -23,7 +26,8 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: Get.height,
       child: Obx(
         () {
           if (getCurrentPropertyController.isLoading.value) {
@@ -40,18 +44,54 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
             if (getCurrentPropertyController.propertiesList[0].data! != null) {
               if (getCurrentPropertyController
                   .propertiesList[0].data!.isEmpty) {
-                return Center(
-                  child: SizedBox(
-                    width: Get.width - 80,
-                    child: const Text(
-                      "No Properties",
+                return Column(
+                  children: [
+                    const SizedBox(height: 150),
+                    Image.asset(
+                      "assets/images/noproperty.png",
+                      scale: 4,
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "You don't have properties on lease.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: kPrimaryColor,
                           fontSize: 15,
                           fontFamily: kCircularStdMedium),
                     ),
-                  ),
+                    CupertinoButton(
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          width: 200,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              border:
+                                  Border.all(width: 1, color: kButtonColor)),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                  child: Text(
+                                "Start now",
+                                style: TextStyle(
+                                    color: kPrimaryColor, fontSize: 18),
+                              )),
+                              SizedBox(width: 10),
+                              Icon(
+                                Icons.arrow_right_alt,
+                                size: 35,
+                                color: kPrimaryColor,
+                              )
+                            ],
+                          ),
+                        ),
+                        onPressed: () {
+                          // Get.offAll(() => const TabPage(
+                          //       selectedTabIndex: 1,
+                          //     ));
+                        }),
+                  ],
                 );
               } else {
                 return ListView.builder(
@@ -74,6 +114,8 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                             onPressed: () {
                               getCurrentDetailsPropertiesController
                                   .propertyId(data.id);
+                              Get.to(
+                                  () => const TenantLeasePropertyDetailPage());
                               getCurrentDetailsPropertiesController
                                   .fetchPropertyDetail();
                             },
@@ -322,7 +364,7 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                     } else {
                       return const Center(
                         child: Text(
-                          "No Properties",
+                          "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: kPrimaryColor,
@@ -337,7 +379,7 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
             } else {
               return const Center(
                 child: Text(
-                  "No Properties",
+                  "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,

@@ -95,7 +95,6 @@ class GetCurrentDetailsPropertiesController extends GetxController {
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         detailModel = PropertyDetailModel.fromJson(jsonDecode(response.body));
-        Get.to(() => const TenantLeasePropertyDetailPage());
       } else {
         return Future.error("Server Error");
       }

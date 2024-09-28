@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "997085098268-kkps8umb0n6vlb2d7anp7ga0u8eb58he.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.openuniverse.openhouse",
+            "certificate_hash": "030739df5280ae02356e81bb3b0c8d13be177537"
+          }
+        },
+        {
           "client_id": "997085098268-t1skad82knidqks4cp7kvrrk7vco8tdn.apps.googleusercontent.com",
           "client_type": 3
         }

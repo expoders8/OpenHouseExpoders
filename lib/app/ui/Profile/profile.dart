@@ -164,24 +164,27 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: const EdgeInsets.only(right: 28.0, top: 10),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Icon(
-                              Icons.phone,
-                              size: 18,
-                              color: kButtonColor,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              phoneNo,
-                              style: const TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 15,
-                                  fontFamily: kCircularStdMedium),
-                            ),
-                          ],
-                        ),
+                        // ignore: unnecessary_null_comparison
+                        phoneNo != ""
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const Icon(
+                                    Icons.phone,
+                                    size: 18,
+                                    color: kButtonColor,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    phoneNo,
+                                    style: const TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 12,
+                                        fontFamily: kCircularStdMedium),
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -190,12 +193,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               size: 18,
                               color: kButtonColor,
                             ),
-                            const SizedBox(width: 10),
+                            const SizedBox(width: 5),
                             Text(
                               email,
                               style: const TextStyle(
                                   color: kPrimaryColor,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   fontFamily: kCircularStdMedium),
                             ),
                           ],

@@ -39,16 +39,17 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
   @override
   void initState() {
     super.initState();
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      // Handle user changes if necessary
-    });
+    _googleSignIn.onCurrentUserChanged
+        .listen((GoogleSignInAccount? account) {});
     _googleSignIn.signInSilently();
   }
 
   Future<void> handleGoogleSignIn() async {
     try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
       final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+          await googleSignIn.signIn();
+
       if (googleSignInAccount != null) {
         LoaderX.show(context, 60.0, 60.0);
         final GoogleSignInAuthentication googleSignInAuthentication =
@@ -57,41 +58,30 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
         setState(() {
           idToken = googleSignInAuthentication.idToken.toString();
         });
-
-        final AuthCredential authCredential = GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken,
-        );
-
-        UserCredential result = await auth.signInWithCredential(authCredential);
-        User? user = result.user;
-        var userName = user?.displayName ?? '';
-        List<String> substrings = userName.split(' '); // Split user name safely
+        var userName = googleSignInAccount.displayName;
+        List<String> substrings = userName.toString().split(' ');
         await authService
             .socialLogin(
-          substrings.isNotEmpty ? substrings[0] : '', // First name
-          substrings.length > 1 ? substrings[1] : '', // Last name
-          user?.email ?? '', // Email
-          user?.photoURL ?? '', // Profile Picture
-          idToken, // Google Token
-          "Google", // Provider
+          substrings[0],
+          substrings[1],
+          googleSignInAccount.email,
+          googleSignInAccount.photoUrl.toString(),
+          idToken,
+          "Google",
         )
             .then(
           (value) async {
             if (value) {
               LoaderX.hide();
               Get.offAll(() => const TabPage());
-            } else {
-              LoaderX.hide();
-              SnackbarUtils.showErrorSnackbar(
-                  "Failed to Login", value.message.toString());
             }
+            return null;
           },
         );
       }
     } catch (error) {
-      LoaderX.hide();
       SnackbarUtils.showErrorSnackbar("Failed to Login", error.toString());
+      LoaderX.hide();
       throw error.toString();
     }
   }

@@ -20,6 +20,8 @@ import '../ui/Auth/ChangePassword/change_password.dart';
 import '../ui/Auth/ForgotPassword/forgot_password.dart';
 import '../ui/Property Details/lease_property_details.dart';
 import '../ui/Property Details/not_lease_property_details.dart';
+import '../view/my_request_view_all.dart';
+import '../view/tenant_request_all_view.dart';
 
 part 'app_routes.dart';
 
@@ -108,6 +110,14 @@ class AppPages {
     GetPage(
       name: _Paths.splashScreen,
       page: () => const SplashScreen(),
+    ),
+    GetPage(
+      name: _Paths.tenantRequestAllView,
+      page: () => const TenantRequestAllView(),
+    ),
+    GetPage(
+      name: _Paths.myRequestViewAllView,
+      page: () => const MyRequestViewAllView(),
     ),
   ];
 }

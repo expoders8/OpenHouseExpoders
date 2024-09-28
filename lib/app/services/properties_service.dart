@@ -251,9 +251,9 @@ class PropertiesService {
         LoaderX.hide();
         return Future.error("Authentication Error");
       } else {
-        LoaderX.hide();
-        SnackbarUtils.showErrorSnackbar("Server Error",
-            "Error while fetch Properties, Please try after some time.");
+        // LoaderX.hide();
+        // SnackbarUtils.showErrorSnackbar("Server Error",
+        //     "Error while fetch Properties, Please try after some time.");
         return Future.error("Server Error");
       }
     } catch (e) {

@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../controller/property_controller.dart';
+import '../../controller/property_detail_controller.dart';
 import '../../view/my_request.dart';
 import '../../routes/app_pages.dart';
 import '../../view/chechout_request.dart';
@@ -12,6 +14,7 @@ import '../../view/tenant_invitation_view.dart';
 import '../../controller/request_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../Property Details/Tenant/tenant_lease_property.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,6 +28,11 @@ class _HomePageState extends State<HomePage> {
   final tabController = Get.put(TabCountController());
   final GetAllRequestsController getAllRequestsController =
       Get.put(GetAllRequestsController());
+  final GetCurrentPropertyController getCurrentPropertyController =
+      Get.put(GetCurrentPropertyController());
+  final GetCurrentDetailsPropertiesController
+      getCurrentDetailsPropertiesController =
+      Get.put(GetCurrentDetailsPropertiesController());
   @override
   void initState() {
     var roll = getStorage.read('roll') ?? "";
@@ -65,8 +73,9 @@ class _HomePageState extends State<HomePage> {
         ),
         automaticallyImplyLeading: false,
         actions: [
-          GestureDetector(
-            onTap: () {
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {
               Get.toNamed(Routes.notificationPage);
             },
             child: Padding(
@@ -79,8 +88,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {
               Get.toNamed(Routes.profilePage);
             },
             child: Padding(
@@ -98,7 +108,57 @@ class _HomePageState extends State<HomePage> {
         ],
         backgroundColor: kBackGroundColor,
       ),
-      body: SafeArea(
+      body:
+          //  getCurrentPropertyController.propertiesList.isEmpty ||
+          //         getCurrentPropertyController.propertiesList[0].data!.isEmpty
+          //     ? Column(
+          //         children: [
+          //           const SizedBox(height: 200),
+          //           Image.asset(
+          //             "assets/images/noproperty.png",
+          //             scale: 4,
+          //           ),
+          //           const SizedBox(height: 10),
+          //           const Text(
+          //             "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
+          //             textAlign: TextAlign.center,
+          //             style: TextStyle(
+          //                 color: kPrimaryColor,
+          //                 fontSize: 15,
+          //                 fontFamily: kCircularStdMedium),
+          //           ),
+          //           CupertinoButton(
+          //               child: Container(
+          //                 padding: const EdgeInsets.all(5),
+          //                 width: 200,
+          //                 child: const Row(
+          //                   mainAxisAlignment: MainAxisAlignment.center,
+          //                   children: [
+          //                     Center(
+          //                         child: Text(
+          //                       "Start now",
+          //                       style:
+          //                           TextStyle(color: kPrimaryColor, fontSize: 18),
+          //                     )),
+          //                     SizedBox(width: 10),
+          //                     Icon(
+          //                       Icons.arrow_right_alt,
+          //                       size: 35,
+          //                       color: kPrimaryColor,
+          //                     )
+          //                   ],
+          //                 ),
+          //                 decoration: BoxDecoration(
+          //                     borderRadius: BorderRadius.circular(15),
+          //                     border: Border.all(width: 1, color: kButtonColor)),
+          //               ),
+          //               onPressed: () {
+          //                 tabController.changeTabIndex(1);
+          //               }),
+          //         ],
+          //       )
+          //     :
+          SafeArea(
         child: SingleChildScrollView(
           child: selectedRoll == "tenant"
               ? Padding(
@@ -118,19 +178,389 @@ class _HomePageState extends State<HomePage> {
                             fontFamily: kCircularStdMedium),
                       ),
                       const SizedBox(height: 5),
-                      leaseproperty(
-                          "assets/icons/1.png",
-                          "\$2550",
-                          "101 Main Street",
-                          "2",
-                          "Tenant Name",
-                          "\$15,200",
-                          "\$220",
-                          "12-06-2021"),
-                      const SizedBox(height: 10),
                       SizedBox(
+                        height: 210,
+                        child: Obx(
+                          () {
+                            if (getCurrentPropertyController.isLoading.value) {
+                              return Container(
+                                color: kBackGroundColor,
+                                child: const Center(
+                                  child: CircularProgressIndicator(
+                                    color: kSelectedIconColor,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              // ignore: unnecessary_null_comparison
+                              if (getCurrentPropertyController
+                                      .propertiesList[0].data! !=
+                                  null) {
+                                if (getCurrentPropertyController
+                                    .propertiesList[0].data!.isEmpty) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: Get.width - 80,
+                                      child: const Text(
+                                        "No Property",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: kPrimaryColor,
+                                            fontSize: 15,
+                                            fontFamily: kCircularStdMedium),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return ListView.builder(
+                                    itemCount: getCurrentPropertyController
+                                        .propertiesList[0].data!.length,
+                                    itemBuilder: (context, index) {
+                                      var propertyData =
+                                          getCurrentPropertyController
+                                              .propertiesList[0].data!;
+                                      if (propertyData.isNotEmpty) {
+                                        var data = propertyData[index];
+                                        return CupertinoButton(
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () {
+                                            getCurrentDetailsPropertiesController
+                                                .propertyId(data.id);
+                                            Get.to(() =>
+                                                const TenantLeasePropertyDetailPage());
+                                            getCurrentDetailsPropertiesController
+                                                .fetchPropertyDetail();
+                                          },
+                                          child: Container(
+                                            width: Get.width,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                color: kWhiteColor),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25),
+                                                        child: Image.network(
+                                                          data.propertyImage
+                                                              .toString(),
+                                                          fit: BoxFit.cover,
+                                                          scale: 1.2,
+                                                          height: 120,
+                                                          width: 120,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Image.asset(
+                                                            "assets/images/samplehouse.jpeg",
+                                                            fit: BoxFit.cover,
+                                                            height: 110,
+                                                            width: 110,
+                                                          ),
+                                                          loadingBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  Widget child,
+                                                                  ImageChunkEvent?
+                                                                      loadingProgress) {
+                                                            if (loadingProgress ==
+                                                                null) {
+                                                              return child;
+                                                            }
+                                                            return SizedBox(
+                                                              width: 50,
+                                                              height: 50,
+                                                              child: Center(
+                                                                child:
+                                                                    CircularProgressIndicator(
+                                                                  color:
+                                                                      kPrimaryColor,
+                                                                  value: loadingProgress
+                                                                              .expectedTotalBytes !=
+                                                                          null
+                                                                      ? loadingProgress
+                                                                              .cumulativeBytesLoaded /
+                                                                          loadingProgress
+                                                                              .expectedTotalBytes!
+                                                                      : null,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            data.rentAmount
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                color:
+                                                                    kPrimaryColor,
+                                                                fontSize: 25,
+                                                                fontFamily:
+                                                                    kCircularStdMedium),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              const Icon(
+                                                                Icons
+                                                                    .location_on,
+                                                                size: 16,
+                                                                color:
+                                                                    kButtonColor,
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 10),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width /
+                                                                        2.5,
+                                                                child: Text(
+                                                                  data.address
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color:
+                                                                          kSecondaryPrimaryColor,
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontFamily:
+                                                                          kCircularStdMedium),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              const Icon(
+                                                                Icons
+                                                                    .bed_outlined,
+                                                                size: 16,
+                                                                color:
+                                                                    kButtonColor,
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 10),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width -
+                                                                        220,
+                                                                child: Text(
+                                                                  data.person
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color:
+                                                                          kSecondaryPrimaryColor,
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontFamily:
+                                                                          kCircularStdBold),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              const Icon(
+                                                                Icons.person,
+                                                                size: 16,
+                                                                color:
+                                                                    kButtonColor,
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 10),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width -
+                                                                        220,
+                                                                child:
+                                                                    const Text(
+                                                                  "tenantname",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          kPrimaryColor,
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontFamily:
+                                                                          kCircularStdMedium),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 15),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5.0,
+                                                            right: 5.0,
+                                                            top: 10,
+                                                            bottom: 10.0),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        const Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              "Balance Due",
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      kCircularStdNormal,
+                                                                  fontSize: 12,
+                                                                  color:
+                                                                      kPrimaryColor),
+                                                            ),
+                                                            Text(
+                                                              "\$1500",
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      kCircularStdMedium,
+                                                                  fontSize: 17,
+                                                                  color:
+                                                                      kPrimaryColor),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Image.asset(
+                                                          "assets/icons/line_vertical.png",
+                                                          fit: BoxFit.cover,
+                                                          scale: 1.8,
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            const Text(
+                                                              "Rent Due on",
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      kCircularStdNormal,
+                                                                  fontSize: 12,
+                                                                  color:
+                                                                      kPrimaryColor),
+                                                            ),
+                                                            Text(
+                                                              data.rentAmountUnit
+                                                                  .toString(),
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      kCircularStdMedium,
+                                                                  fontSize: 17,
+                                                                  color:
+                                                                      kPrimaryColor),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Image.asset(
+                                                          "assets/icons/line_vertical.png",
+                                                          fit: BoxFit.cover,
+                                                          scale: 1.8,
+                                                        ),
+                                                        const Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              "lease expiry",
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      kCircularStdNormal,
+                                                                  fontSize: 12,
+                                                                  color:
+                                                                      kRedColor),
+                                                            ),
+                                                            Text(
+                                                              "expiry date",
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      kCircularStdMedium,
+                                                                  fontSize: 17,
+                                                                  color:
+                                                                      kRedColor),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        return const Center(
+                                          child: Text(
+                                            "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: kPrimaryColor,
+                                                fontSize: 15,
+                                                fontFamily: kCircularStdMedium),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  );
+                                }
+                              } else {
+                                return const Center(
+                                  child: Text(
+                                    "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontFamily: kCircularStdMedium),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const SizedBox(
                         height: 235,
-                        child: MyRequestView(isviewall: 0),
+                        child: MyRequestView(),
                       ),
                       const SizedBox(height: 85)
                     ],
@@ -152,7 +582,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const CheckOutRequestView(),
                       const SizedBox(height: 10),
-                      TenantRequestView(isviewall: 0),
+                      const TenantRequestView(),
                       const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -395,7 +825,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "lease Expaires",
+                          "lease Expiry ",
                           style: TextStyle(
                               fontFamily: kCircularStdNormal,
                               fontSize: 12,

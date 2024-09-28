@@ -6,11 +6,11 @@ import 'package:flutter/cupertino.dart';
 import '../controller/request_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../routes/app_pages.dart';
 
 // ignore: must_be_immutable
 class MyRequestView extends StatefulWidget {
-  int? isviewall;
-  MyRequestView({super.key, this.isviewall});
+  const MyRequestView({super.key});
 
   @override
   State<MyRequestView> createState() => _MyRequestViewState();
@@ -53,7 +53,7 @@ class _MyRequestViewState extends State<MyRequestView> {
                       ),
                       CupertinoButton(
                         onPressed: () {
-                          // Get.toNamed(Routes.tenantRequestPage);
+                          Get.toNamed(Routes.myRequestViewAllView);
                         },
                         child: const Text(
                           "View all",
@@ -66,11 +66,9 @@ class _MyRequestViewState extends State<MyRequestView> {
                     ],
                   ),
                   SizedBox(
-                    height: 187,
+                    height: 204,
                     child: ListView.builder(
-                      scrollDirection: widget.isviewall == 1
-                          ? Axis.vertical
-                          : Axis.horizontal,
+                      scrollDirection: Axis.horizontal,
                       itemCount:
                           getAllRequestsController.requestList[0].data!.length,
                       itemBuilder: (context, index) {
@@ -84,9 +82,7 @@ class _MyRequestViewState extends State<MyRequestView> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 5.0),
                                 child: Container(
-                                  width: widget.isviewall == 1
-                                      ? Get.width
-                                      : Get.width - 130,
+                                  width: Get.width - 150,
                                   decoration: BoxDecoration(
                                     color: kWhiteColor,
                                     borderRadius: BorderRadius.circular(15),
@@ -192,21 +188,11 @@ class _MyRequestViewState extends State<MyRequestView> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: 8),
+                                        // const SizedBox(height: 8),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            // Text(
-                                            //   DateFormat('dd MMM yyyy').format(
-                                            //       DateTime.parse(data.startDate
-                                            //           .toString())),
-                                            //   style: const TextStyle(
-                                            //       color: kGreyColor,
-                                            //       fontSize: 13,
-                                            //       fontFamily:
-                                            //           kCircularStdNormal),
-                                            // ),
                                             data.type.toString() != "normal"
                                                 ? Container(
                                                     padding: const EdgeInsets
@@ -239,6 +225,31 @@ class _MyRequestViewState extends State<MyRequestView> {
                                                     ),
                                                   )
                                                 : Container(),
+                                            CupertinoButton(
+                                              padding: EdgeInsets.zero,
+                                              onPressed: () {},
+                                              child: Container(
+                                                height: 30,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                    border: Border.all(
+                                                        color: kWhiteColor),
+                                                    color: kPrimaryColor),
+                                                child: Center(
+                                                  child: Text(
+                                                    data.status.toString(),
+                                                    style: const TextStyle(
+                                                        color: kWhiteColor,
+                                                        fontFamily:
+                                                            kCircularStdNormal,
+                                                        fontSize: 13),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ],

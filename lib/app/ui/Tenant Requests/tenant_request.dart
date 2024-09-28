@@ -42,8 +42,8 @@ class _TenantRequestPageState extends State<TenantRequestPage> {
           child: Column(
             children: [
               selectedRoll == "tenant"
-                  ? MyRequestView(isviewall: 1)
-                  : TenantRequestView(isviewall: 1)
+                  ? const MyRequestView()
+                  : const TenantRequestView()
             ],
           ),
         ),

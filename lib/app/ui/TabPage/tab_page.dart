@@ -41,7 +41,7 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
       color: Color.fromARGB(255, 63, 168, 248),
       fontFamily: kCircularStdNormal,
       fontSize: 11);
-
+  final tabController = Get.put(TabCountController());
   @override
   void initState() {
     super.initState();
@@ -53,6 +53,9 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
     // notificationServices.isTokenRefresh();
     // fCMNotificationServices.firebaseInit();
     // fCMNotificationServices.getDeviceToken().then((value) => print(value));
+    // if (widget.selectedTabIndex != 0) {
+    //   tabController.changeTabIndex(1);
+    // }
     WidgetsBinding.instance.addObserver(this);
   }
 
