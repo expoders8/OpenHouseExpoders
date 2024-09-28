@@ -17,7 +17,13 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  String selectedRoll = "";
+  String userImage = "",
+      authToken = "",
+      firstName = "",
+      lastName = "",
+      firstlater = "",
+      lastlatter = "",
+      selectedRoll = "";
   final GetPaymentController getPaymentController =
       Get.put(GetPaymentController());
   int totalamount = 0;
@@ -34,7 +40,20 @@ class _PaymentPageState extends State<PaymentPage> {
       totalamount = user['total_amount'] ?? 0;
       dueamount = user['due_amount'] ?? 0;
     });
+    getuser();
     super.initState();
+  }
+
+  getuser() {
+    var user = getStorage.read('user');
+    var userData = jsonDecode(user);
+    if (userData != null) {
+      userImage = userData["profile_picture"] ?? "";
+      firstName = userData['first_name'] ?? "";
+      lastName = userData['last_name'] ?? "";
+      firstlater = firstName[0];
+      lastlatter = lastName[0];
+    }
   }
 
   @override
@@ -75,14 +94,57 @@ class _PaymentPageState extends State<PaymentPage> {
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.asset(
-                    "assets/icons/boy 1.png",
-                    fit: BoxFit.cover,
-                    height: 30,
-                    width: 30,
-                  )),
+              child: ClipOval(
+                child: Material(
+                    child: userImage != ""
+                        ? Image.network(
+                            userImage,
+                            width: 30,
+                            height: 30,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Image.asset(
+                              "assets/images/blank_profile.png",
+                              width: 33,
+                              height: 33,
+                              fit: BoxFit.cover,
+                            ),
+                            fit: BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return SizedBox(
+                                width: 33,
+                                height: 33,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: kPrimaryColor,
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        : Container(
+                            height: 36,
+                            width: 36,
+                            color: kTransparentColor,
+                            child: Center(
+                                child: Text(
+                              "$firstlater$lastlatter".toUpperCase(),
+                              style: const TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdNormal),
+                            )),
+                          )),
+              ),
             ),
           ),
         ],

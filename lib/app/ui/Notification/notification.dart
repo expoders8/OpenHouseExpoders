@@ -24,7 +24,6 @@ class _NotificationPageState extends State<NotificationPage> {
           "Notification",
           style: TextStyle(fontFamily: kCircularStdBook),
         ),
-        automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: kBackGroundColor,
       ),
@@ -43,7 +42,9 @@ class _NotificationPageState extends State<NotificationPage> {
             if (getAllNotificationsController.notificationList.isNotEmpty) {
               if (getAllNotificationsController
                   .notificationList[0].data!.isEmpty) {
-                return Container();
+                return Center(
+                  child: Text('No Notification found'),
+                );
               } else {
                 return ListView.builder(
                   itemCount: getAllNotificationsController
