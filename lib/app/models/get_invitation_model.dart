@@ -47,7 +47,8 @@ class GetAllInvitationDataModel {
   String? startDate;
   String? endDate;
   String? tenantId;
-  String? name;
+  String? firstName;
+  String? lastName;
   String? address;
 
   GetAllInvitationDataModel(
@@ -67,7 +68,8 @@ class GetAllInvitationDataModel {
       this.startDate,
       this.endDate,
       this.tenantId,
-      this.name,
+      this.firstName,
+      this.lastName,
       this.address});
 
   GetAllInvitationDataModel.fromJson(Map<String, dynamic> json) {
@@ -87,7 +89,8 @@ class GetAllInvitationDataModel {
     startDate = json['start_date'];
     endDate = json['end_date'];
     tenantId = json['tenant_id'];
-    name = json['name'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
     address = json['address'];
   }
 
@@ -109,7 +112,8 @@ class GetAllInvitationDataModel {
     data['start_date'] = startDate;
     data['end_date'] = endDate;
     data['tenant_id'] = tenantId;
-    data['name'] = name;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
     data['address'] = address;
     return data;
   }

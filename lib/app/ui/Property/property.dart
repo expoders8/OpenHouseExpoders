@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,12 @@ class _PropertyPageState extends State<PropertyPage>
       Get.put(GetLeasePropertyController());
   final GetCurrentPropertyController getCurrentPropertyController =
       Get.put(GetCurrentPropertyController());
-
+  String userImage = "",
+      authToken = "",
+      firstName = "",
+      lastName = "",
+      firstlater = "",
+      lastlatter = "";
   @override
   void initState() {
     super.initState();
@@ -41,6 +48,7 @@ class _PropertyPageState extends State<PropertyPage>
     setState(() {
       selectedRoll = roll;
     });
+    getuser();
     _tabController = TabController(
         length: 2, vsync: this, initialIndex: selectedRoll == "tenant" ? 0 : 1);
   }
@@ -49,6 +57,18 @@ class _PropertyPageState extends State<PropertyPage>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  getuser() {
+    var user = getStorage.read('user');
+    var userData = jsonDecode(user);
+    if (userData != null) {
+      userImage = userData["profile_picture"] ?? "";
+      firstName = userData['first_name'] ?? "";
+      lastName = userData['last_name'] ?? "";
+      firstlater = firstName[0];
+      lastlatter = lastName[0];
+    }
   }
 
   @override
@@ -93,14 +113,57 @@ class _PropertyPageState extends State<PropertyPage>
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.asset(
-                    "assets/icons/boy 1.png",
-                    fit: BoxFit.cover,
-                    height: 30,
-                    width: 30,
-                  )),
+              child: ClipOval(
+                child: Material(
+                    child: userImage != ""
+                        ? Image.network(
+                            userImage,
+                            width: 30,
+                            height: 30,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Image.asset(
+                              "assets/images/blank_profile.png",
+                              width: 33,
+                              height: 33,
+                              fit: BoxFit.cover,
+                            ),
+                            fit: BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return SizedBox(
+                                width: 33,
+                                height: 33,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: kPrimaryColor,
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        : Container(
+                            height: 36,
+                            width: 36,
+                            color: kTransparentColor,
+                            child: Center(
+                                child: Text(
+                              "$firstlater$lastlatter".toUpperCase(),
+                              style: const TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdNormal),
+                            )),
+                          )),
+              ),
             ),
           ),
         ],
@@ -131,44 +194,37 @@ class _PropertyPageState extends State<PropertyPage>
                             child: Column(
                               children: [
                                 const SizedBox(height: 10),
-                                getCurrentPropertyController
-                                        .propertiesList[0].data!.isEmpty
-                                    ? Container()
-                                    : TextFormField(
-                                        controller: currentsearchController,
-                                        decoration: InputDecoration(
-                                          contentPadding:
-                                              const EdgeInsets.fromLTRB(
-                                                  13, 0, 10, 0),
-                                          prefixIcon: const Icon(Icons.search),
-                                          filled: true,
-                                          fillColor: kWhiteColor,
-                                          hintText: 'Search',
-                                          hintStyle: const TextStyle(
-                                              color: kSecondaryPrimaryColor,
-                                              fontFamily: kCircularStdNormal,
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16),
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25.0),
-                                            borderSide: const BorderSide(
-                                                color: kWhiteColor),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25.0),
-                                            borderSide: const BorderSide(
-                                                color: kWhiteColor),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25.0),
-                                            borderSide: const BorderSide(
-                                                color: kWhiteColor),
-                                          ),
-                                        ),
-                                      ),
+                                TextFormField(
+                                  controller: currentsearchController,
+                                  decoration: InputDecoration(
+                                    contentPadding:
+                                        const EdgeInsets.fromLTRB(13, 0, 10, 0),
+                                    prefixIcon: const Icon(Icons.search),
+                                    filled: true,
+                                    fillColor: kWhiteColor,
+                                    hintText: 'Search',
+                                    hintStyle: const TextStyle(
+                                        color: kSecondaryPrimaryColor,
+                                        fontFamily: kCircularStdNormal,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide:
+                                          const BorderSide(color: kWhiteColor),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide:
+                                          const BorderSide(color: kWhiteColor),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide:
+                                          const BorderSide(color: kWhiteColor),
+                                    ),
+                                  ),
+                                ),
                                 const SizedBox(height: 10),
                                 const CurrentPropertyView(),
                               ],
@@ -210,7 +266,6 @@ class _PropertyPageState extends State<PropertyPage>
                               ),
                               const SizedBox(height: 10),
                               const PreviousPropertyView(),
-                              const SizedBox(height: 30),
                             ],
                           ),
                         ],
@@ -279,11 +334,6 @@ class _PropertyPageState extends State<PropertyPage>
                                 ),
                                 const SizedBox(height: 10),
                                 const LeasePropertyView(),
-                                SizedBox(
-                                    height:
-                                        leasesearchController.value.text == ""
-                                            ? 80
-                                            : 0),
                               ],
                             ),
                           ),
@@ -333,12 +383,6 @@ class _PropertyPageState extends State<PropertyPage>
                                 ),
                                 const SizedBox(height: 10),
                                 const NotLeasePropertyView(),
-                                SizedBox(
-                                    height:
-                                        notleasesearchController.value.text ==
-                                                ""
-                                            ? 80
-                                            : 0),
                               ],
                             ),
                           ),

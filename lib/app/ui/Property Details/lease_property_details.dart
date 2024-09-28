@@ -172,14 +172,6 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              List<Amenitys> amenitiesList =
-                                                  propertydata.amenitys!;
-
-                                              String allAmenityIds =
-                                                  amenitiesList
-                                                      .map((amenity) =>
-                                                          amenity.id)
-                                                      .join(',');
                                               Get.to(() => CreatePropertyPage(
                                                     checkEdit: "edit",
                                                     proeprtyName: propertydata
@@ -209,13 +201,21 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                         .address
                                                         .toString(),
                                                     country: propertydata
+                                                        .countryName
+                                                        .toString(),
+                                                    countryId: propertydata
                                                         .countryId
                                                         .toString(),
-                                                    state: propertydata.stateId
+                                                    state: propertydata
+                                                        .stateName
+                                                        .toString(),
+                                                    stateId: propertydata
+                                                        .stateId
                                                         .toString(),
                                                     city: propertydata.cityName
                                                         .toString(),
-                                                    amenitiesid: allAmenityIds,
+                                                    amenitiesid:
+                                                        propertydata.amenitys,
                                                   ));
                                             },
                                             child: Container(

@@ -58,6 +58,10 @@ class GetAllPropertiesDataModel {
   String? size;
   String? sizeunit;
   String? rentAmountUnit;
+  String? email;
+  String? phoneNumber;
+  String? startDate;
+  String? endDate;
   String? propertyImage;
 
   GetAllPropertiesDataModel(
@@ -88,6 +92,10 @@ class GetAllPropertiesDataModel {
       this.size,
       this.sizeunit,
       this.rentAmountUnit,
+      this.email,
+      this.phoneNumber,
+      this.startDate,
+      this.endDate,
       this.propertyImage});
 
   GetAllPropertiesDataModel.fromJson(Map<String, dynamic> json) {
@@ -120,6 +128,10 @@ class GetAllPropertiesDataModel {
     size = json['size'];
     sizeunit = json['sizeunit'];
     rentAmountUnit = json['rent_amount_unit'];
+    email = json['email'];
+    phoneNumber = json['phone_number'];
+    startDate = json['start_date'];
+    endDate = json['end_date'];
     propertyImage = json['property_image'];
   }
 
@@ -152,6 +164,10 @@ class GetAllPropertiesDataModel {
     data['size'] = size;
     data['sizeunit'] = sizeunit;
     data['rent_amount_unit'] = rentAmountUnit;
+    data['email'] = email;
+    data['phone_number'] = phoneNumber;
+    data['start_date'] = startDate;
+    data['end_date'] = endDate;
     data['property_image'] = propertyImage;
     return data;
   }

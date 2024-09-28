@@ -8,11 +8,11 @@ import '../../routes/app_pages.dart';
 import '../../view/nearby_view.dart';
 import '../../view/tenant_history_view.dart';
 import '../../view/property_details_view.dart';
-import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../view/house keeper/house_keeper_view.dart';
 import '../../controller/property_detail_controller.dart';
+import '../CreateProperty/create_property.dart';
 
 class NotLeasePropertyDetailPage extends StatefulWidget {
   const NotLeasePropertyDetailPage({super.key});
@@ -35,10 +35,23 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    images = [
-      ...getnotleaseDetailsPropertiesController.detailModel!.data!.images!
-          .map((imageUrl) => NetworkImage(imageUrl)),
-    ];
+    Future.delayed(const Duration(seconds: 3), () {
+      if (getnotleaseDetailsPropertiesController.detailModel != null &&
+          getnotleaseDetailsPropertiesController.detailModel!.data != null &&
+          getnotleaseDetailsPropertiesController.detailModel!.data!.images !=
+              null) {
+        setState(() {
+          images = [
+            ...getnotleaseDetailsPropertiesController.detailModel!.data!.images!
+                .map((imageUrl) => NetworkImage(imageUrl)),
+          ];
+        });
+      } else {
+        setState(() {
+          images = [const AssetImage('assets/images/noproperty.png')];
+        });
+      }
+    });
   }
 
   @override
@@ -63,11 +76,6 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
               width: double.infinity,
               child: AnotherCarousel(
                 images: images,
-                // images: const [
-                //   AssetImage("assets/icons/3.png"),
-                //   AssetImage("assets/icons/6.png"),
-                //   AssetImage("assets/icons/7.png"),
-                // ],
                 dotSize: 6,
                 autoplay: false,
                 showIndicator: true,
@@ -136,7 +144,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                             SizedBox(
                                               width: Get.width - 100,
                                               child: Text(
-                                                propertydata!.name.toString(),
+                                                propertydata!.name!.toString(),
                                                 style: const TextStyle(
                                                     color: kPrimaryColor,
                                                     fontSize: 18,
@@ -147,7 +155,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                             Row(
                                               children: [
                                                 Text(
-                                                  "\$${propertydata.rentAmount.toString()}",
+                                                  "\$${propertydata.rentAmount!.toString()}",
                                                   style: const TextStyle(
                                                       color: kButtonColor,
                                                       fontSize: 18,
@@ -170,12 +178,6 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            List<Amenitys> amenitiesList =
-                                                propertydata.amenitys!;
-
-                                            String allAmenityIds = amenitiesList
-                                                .map((amenity) => amenity.id)
-                                                .join(',');
                                             Get.to(() => CreatePropertyPage(
                                                   checkEdit: "edit",
                                                   proeprtyName: propertydata
@@ -209,7 +211,8 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                       .toString(),
                                                   city: propertydata.cityName
                                                       .toString(),
-                                                  amenitiesid: allAmenityIds,
+                                                  amenitiesid:
+                                                      propertydata.amenitys,
                                                 ));
                                           },
                                           child: Container(

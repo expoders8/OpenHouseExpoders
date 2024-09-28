@@ -204,6 +204,15 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                             color: kWhiteColor,
                           ),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              const BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
+                        errorText:
+                            isFormSubmitted && amenityController.text.isEmpty
+                                ? 'Please select a Amenities'
+                                : null,
                       ),
                       style: const TextStyle(
                         fontFamily: kCircularStdBook,
@@ -361,10 +370,6 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                             decoration: BoxDecoration(
                               color: kWhiteColor,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                  color: dateError == true
-                                      ? kErrorColor
-                                      : kWhiteColor),
                             ),
                             child: InkWell(
                               onTap: () {
@@ -430,12 +435,24 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                               ),
                             ),
                           ),
+                          if (isFormSubmitted && dateError)
+                            const Padding(
+                              padding: EdgeInsets.only(top: 8.0, left: 20),
+                              child: Text(
+                                "Please select a date.",
+                                style: TextStyle(
+                                  color: kErrorColor,
+                                  fontFamily: kCircularStdNormal,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 15),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: SizedBox(
@@ -449,8 +466,15 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                       onPressed: () {
                         setState(() {
                           isFormSubmitted = true;
+                          if (selectdate.isEmpty ||
+                              selectdate == "YYYY/MM/DD") {
+                            setState(() {
+                              dateError = true;
+                            });
+                          }
                         });
                         FocusScope.of(context).requestFocus(FocusNode());
+
                         Future.delayed(const Duration(milliseconds: 100),
                             () async {
                           if (_formKey.currentState!.validate()) {

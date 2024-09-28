@@ -76,6 +76,7 @@ class _MyRequestViewState extends State<MyRequestView> {
                             getAllRequestsController.requestList[0].data!;
                         if (requestData.isNotEmpty) {
                           var data = requestData[index];
+
                           return Row(
                             children: [
                               Padding(
@@ -179,6 +180,27 @@ class _MyRequestViewState extends State<MyRequestView> {
                                               width: Get.width - 220,
                                               child: Text(
                                                 data.username.toString(),
+                                                style: const TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 13,
+                                                    fontFamily:
+                                                        kCircularStdNormal),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.date_range_outlined,
+                                              size: 16,
+                                              color: kButtonColor,
+                                            ),
+                                            const SizedBox(width: 10),
+                                            SizedBox(
+                                              width: Get.width - 220,
+                                              child: Text(
+                                                data.startDate.toString(),
                                                 style: const TextStyle(
                                                     color: kPrimaryColor,
                                                     fontSize: 13,

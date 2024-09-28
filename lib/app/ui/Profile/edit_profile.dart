@@ -28,6 +28,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController firstNameController = TextEditingController();
   UserService userService = UserService();
   File? imagefile;
+  String image = "";
+
   @override
   void initState() {
     getuser();
@@ -41,6 +43,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       firstNameController.text = userData["first_name"] ?? "";
       lastNameController.text = userData["last_name"] ?? "";
       emailController.text = userData["email"] ?? "";
+      image = userData["profile_picture"] ?? "";
     }
   }
 
@@ -78,80 +81,84 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                       ),
                     ),
-                    Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: imagefile != null
-                              ? Container(
-                                  margin: const EdgeInsets.only(top: 75),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: kWhiteColor, width: 2),
-                                    borderRadius: BorderRadius.circular(1000),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: Image.file(
-                                      imagefile!,
-                                      fit: BoxFit.cover,
-                                      scale: 1.2,
-                                      height: 110,
-                                      width: 110,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return Image.asset(
-                                          "assets/images/blank_profile.png",
-                                          fit: BoxFit.cover,
-                                          height: 110,
-                                          width: 110,
-                                        );
-                                      },
+                    CupertinoButton(
+                      onPressed: () {
+                        pickImage();
+                      },
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: imagefile != null || image != ""
+                                ? Container(
+                                    margin: const EdgeInsets.only(top: 75),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: kWhiteColor, width: 2),
+                                      borderRadius: BorderRadius.circular(1000),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Image.network(
+                                        image,
+                                        fit: BoxFit.cover,
+                                        scale: 1.2,
+                                        height: 110,
+                                        width: 110,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                            "assets/images/blank_profile.png",
+                                            fit: BoxFit.cover,
+                                            height: 110,
+                                            width: 110,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    margin: const EdgeInsets.only(top: 75),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: kWhiteColor, width: 2),
+                                      borderRadius: BorderRadius.circular(1000),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Image.asset(
+                                        "assets/images/blank_profile.png",
+                                        fit: BoxFit.cover,
+                                        scale: 1.2,
+                                        height: 110,
+                                        width: 110,
+                                      ),
                                     ),
                                   ),
-                                )
-                              : Container(
-                                  margin: const EdgeInsets.only(top: 75),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: kWhiteColor, width: 2),
-                                    borderRadius: BorderRadius.circular(1000),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: Image.asset(
-                                      "assets/images/blank_profile.png",
-                                      fit: BoxFit.cover,
-                                      scale: 1.2,
-                                      height: 110,
-                                      width: 110,
-                                    ),
-                                  ),
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.only(top: 150, left: 85),
+                                padding: const EdgeInsets.all(5),
+                                decoration: const BoxDecoration(
+                                  color: kPrimaryColor,
+                                  shape: BoxShape.circle,
                                 ),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: GestureDetector(
-                            onTap: () {
-                              pickImage();
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 150, left: 85),
-                              padding: const EdgeInsets.all(5),
-                              decoration: const BoxDecoration(
-                                color: kPrimaryColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.edit,
-                                color: kWhiteColor,
-                                size: 18,
+                                child: const Icon(
+                                  Icons.edit,
+                                  color: kWhiteColor,
+                                  size: 18,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   ],
                 ),

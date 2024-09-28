@@ -57,7 +57,7 @@ class PropertiesService {
         ..fields['created_by_id'] = userid["id"]
         ..fields['updated_by_id'] = ""
         ..fields['amenity_id'] =
-            getAllAmenitiesController.selectedAmenitis.string
+            getAllAmenitiesController.selectedAmenitis.value
         ..fields['id'] = id;
       for (File file in fileList) {
         if (file != null) {
@@ -200,6 +200,8 @@ class PropertiesService {
   bookProperties(String propertyId, invitationId) async {
     final GetAllInvitationController getAllInvitationController =
         Get.put(GetAllInvitationController());
+    final GetCurrentPropertyController getCurrentPropertyController =
+        Get.put(GetCurrentPropertyController());
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
@@ -217,6 +219,7 @@ class PropertiesService {
         LoaderX.hide();
         var data = json.decode(response.body);
         getAllInvitationController.getAllInvitations();
+        getCurrentPropertyController.fetchAllProperties();
         tabController.changeTabIndex(1);
         return GetAllPropertiesModel.fromJson(data);
       } else if (response.statusCode == 401) {

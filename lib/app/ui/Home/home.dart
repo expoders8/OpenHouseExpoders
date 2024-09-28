@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../controller/property_controller.dart';
 import '../../controller/property_detail_controller.dart';
+import '../../view/home_view.dart';
 import '../../view/my_request.dart';
 import '../../routes/app_pages.dart';
 import '../../view/chechout_request.dart';
@@ -630,61 +631,115 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 )
-              : Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 10),
-                      const Text(
-                        "Checkout Requests",
-                        style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 16,
-                            fontFamily: kCircularStdMedium),
+              : SizedBox(
+                  height: Get.height - 85,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GridView(
+                      padding: EdgeInsets.fromLTRB(5, 10, 5, 80),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 5.0,
+                        mainAxisSpacing: 3.0,
+                        childAspectRatio: 1,
                       ),
-                      const CheckOutRequestView(),
-                      const SizedBox(height: 10),
-                      const TenantRequestView(),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Lease Status",
-                            style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 16,
-                                fontFamily: kCircularStdMedium),
-                          ),
-                          CupertinoButton(
-                            onPressed: () {
-                              tabController.changeTabIndex(1);
-                            },
-                            child: const Text(
-                              "View all",
-                              style: TextStyle(
-                                  color: kBlueColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdMedium),
-                            ),
-                          ),
-                        ],
-                      ),
-                      leaseproperty(
-                          "assets/icons/1.png",
-                          "\$2550",
-                          "101 Main Street",
-                          "2",
-                          "Tenant Name",
-                          "\$15,200",
-                          "\$220",
-                          "12-06-2021"),
-                      const SizedBox(height: 85)
-                    ],
+                      children: const [
+                        ResponsiveContainer(
+                          icon: Icons.home,
+                          name: 'Manage All\nYour Properties',
+                        ),
+                        ResponsiveContainer(
+                          icon: Icons.search,
+                          name: "Track Available Properties",
+                        ),
+                        ResponsiveContainer(
+                          icon: Icons.calendar_today,
+                          name: 'Tracked Properties Under Lease',
+                        ),
+                        ResponsiveContainer(
+                          icon: Icons.build,
+                          name: "Manage Tenants' Service Requests",
+                        ),
+                        ResponsiveContainer(
+                          icon: Icons.exit_to_app,
+                          name: "Track Check-Out Requests",
+                        ),
+                        ResponsiveContainer(
+                          icon: Icons.calendar_today,
+                          name: "Track Lease\nExtensions",
+                        ),
+                        ResponsiveContainer(
+                          icon: Icons.trending_up,
+                          name: "Track Property\nIncome",
+                        ),
+                        ResponsiveContainer(
+                          icon: Icons.trending_down,
+                          name: "Track Property\nExpenses",
+                        ),
+                        ResponsiveContainer(
+                          icon: Icons.cleaning_services,
+                          name: "Assign Housekeepers\n",
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+          // : Padding(
+          //     padding:
+          //         const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         const SizedBox(height: 10),
+          //         const Text(
+          //           "Checkout Requests",
+          //           style: TextStyle(
+          //               color: kPrimaryColor,
+          //               fontSize: 16,
+          //               fontFamily: kCircularStdMedium),
+          //         ),
+          //         const CheckOutRequestView(),
+          //         const SizedBox(height: 10),
+          //         const TenantRequestView(),
+          //         const SizedBox(height: 10),
+          //         Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             const Text(
+          //               "Lease Status",
+          //               style: TextStyle(
+          //                   color: kPrimaryColor,
+          //                   fontSize: 16,
+          //                   fontFamily: kCircularStdMedium),
+          //             ),
+          //             CupertinoButton(
+          //               onPressed: () {
+          //                 tabController.changeTabIndex(1);
+          //               },
+          //               child: const Text(
+          //                 "View all",
+          //                 style: TextStyle(
+          //                     color: kBlueColor,
+          //                     fontSize: 13,
+          //                     fontFamily: kCircularStdMedium),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         leaseproperty(
+          //             "assets/icons/1.png",
+          //             "\$2550",
+          //             "101 Main Street",
+          //             "2",
+          //             "Tenant Name",
+          //             "\$15,200",
+          //             "\$220",
+          //             "12-06-2021"),
+          //         const SizedBox(height: 85)
+          //       ],
+          //     ),
+          //   ),
         ),
       ),
     );

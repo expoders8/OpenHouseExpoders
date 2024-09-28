@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../config/provider/loader_provider.dart';
 import '../services/properties_service.dart';
 import '../../config/constant/font_constant.dart';
 import '../controller/invitation_controller.dart';
@@ -91,7 +92,7 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
                                   Row(
                                     children: [
                                       Text(
-                                        data.name.toString(),
+                                        data.firstName.toString(),
                                         style: const TextStyle(
                                             decoration:
                                                 TextDecoration.underline,
@@ -138,6 +139,7 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
                                           CupertinoButton(
                                             padding: EdgeInsets.zero,
                                             onPressed: () {
+                                              LoaderX.show(context, 60.0, 60.0);
                                               propertiesService.bookProperties(
                                                   data.propertyId.toString(),
                                                   data.id.toString());

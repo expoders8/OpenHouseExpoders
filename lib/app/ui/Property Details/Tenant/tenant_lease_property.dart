@@ -38,10 +38,23 @@ class _TenantLeasePropertyDetailPageState
       selectedRoll = roll;
     });
     _tabController = TabController(length: 4, vsync: this);
-    images = [
-      ...getCurrentDetailsPropertiesController.detailModel!.data!.images!
-          .map((imageUrl) => NetworkImage(imageUrl)),
-    ];
+    Future.delayed(const Duration(seconds: 3), () {
+      if (getCurrentDetailsPropertiesController.detailModel != null &&
+          getCurrentDetailsPropertiesController.detailModel!.data != null &&
+          getCurrentDetailsPropertiesController.detailModel!.data!.images !=
+              null) {
+        setState(() {
+          images = [
+            ...getCurrentDetailsPropertiesController.detailModel!.data!.images!
+                .map((imageUrl) => NetworkImage(imageUrl)),
+          ];
+        });
+      } else {
+        setState(() {
+          images = [const AssetImage('assets/images/noproperty.png')];
+        });
+      }
+    });
   }
 
   @override
@@ -131,7 +144,7 @@ class _TenantLeasePropertyDetailPageState
                                           SizedBox(
                                             width: Get.width - 100,
                                             child: Text(
-                                              propertydata.name.toString(),
+                                              propertydata.name!.toString(),
                                               style: const TextStyle(
                                                   color: kPrimaryColor,
                                                   fontSize: 18,
@@ -142,7 +155,7 @@ class _TenantLeasePropertyDetailPageState
                                           Row(
                                             children: [
                                               Text(
-                                                propertydata.rentAmount
+                                                propertydata.rentAmount!
                                                     .toString(),
                                                 style: const TextStyle(
                                                     color: kButtonColor,

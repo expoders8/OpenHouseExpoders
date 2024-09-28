@@ -7,6 +7,7 @@ import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../controller/property_detail_controller.dart';
+import '../ui/Property Details/not_lease_property_details.dart';
 
 class NotLeasePropertyView extends StatefulWidget {
   const NotLeasePropertyView({super.key});
@@ -129,6 +130,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
             });
             getnotleaseDetailsPropertiesController.propertyId(id);
             getnotleaseDetailsPropertiesController.fetchPropertyDetail();
+            Get.to(() => const NotLeasePropertyDetailPage());
           },
           child: Container(
             width: Get.width,

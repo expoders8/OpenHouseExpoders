@@ -26,8 +26,7 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Get.height,
+    return Expanded(
       child: Obx(
         () {
           if (getCurrentPropertyController.isLoading.value) {
@@ -40,13 +39,12 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
               ),
             );
           } else {
-            // ignore: unnecessary_null_comparison
-            if (getCurrentPropertyController.propertiesList[0].data! != null) {
+            if (getCurrentPropertyController.propertiesList.isNotEmpty) {
               if (getCurrentPropertyController
                   .propertiesList[0].data!.isEmpty) {
                 return Column(
                   children: [
-                    const SizedBox(height: 150),
+                    const SizedBox(height: 110),
                     Image.asset(
                       "assets/images/noproperty.png",
                       scale: 4,

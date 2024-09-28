@@ -33,9 +33,11 @@ class CreatePropertyPage extends StatefulWidget {
   final String? person;
   final String? address;
   final String? country;
+  final String? countryId;
   final String? state;
+  final String? stateId;
   final String? city;
-  final String? amenitiesid;
+  final List? amenitiesid;
 
   const CreatePropertyPage({
     super.key,
@@ -51,7 +53,9 @@ class CreatePropertyPage extends StatefulWidget {
     this.person,
     this.address,
     this.country,
+    this.countryId,
     this.state,
+    this.stateId,
     this.city,
     this.amenitiesid,
   });
@@ -116,8 +120,13 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         widget.address.toString() == "null" ? "" : widget.address.toString();
     countryController.text =
         widget.country.toString() == "null" ? "" : widget.country.toString();
+    countryId = widget.countryId.toString() == "null"
+        ? ""
+        : widget.countryId.toString();
     stateController.text =
         widget.state.toString() == "null" ? "" : widget.state.toString();
+    stateid =
+        widget.stateId.toString() == "null" ? "" : widget.stateId.toString();
     cityController.text =
         widget.city.toString() == "null" ? "" : widget.city.toString();
     capacityController.text =
@@ -127,9 +136,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     washRoomsController.text = widget.whoshrooms.toString() == "null"
         ? ""
         : widget.whoshrooms.toString();
-    selctesType = widget.selctesType.toString() == "null"
-        ? ""
-        : widget.selctesType.toString();
+    // selctesType = widget.selctesType.toString() == "null"
+    //     ? ""
+    //     : widget.selctesType.toString();
+    selctesType = "included";
     amenities = widget.amenitiesid.toString() == "null"
         ? ""
         : widget.selctesType.toString();
@@ -659,6 +669,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                         hintText: 'Person',
                         maxLines: 1,
                         ctrl: personController,
+                        keyboardType: TextInputType.number,
                         name: "create",
                         formSubmitted: isFormSubmitted,
                         validationMsg: 'Please enter Person',
@@ -866,7 +877,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 ),
                 const SizedBox(height: 10),
                 AmenitiesView(
-                  initialAmenitiesIds: amenities,
+                  initialAmenitiesIds: widget.amenitiesid,
                 ),
                 const SizedBox(height: 10),
                 imageList.isEmpty

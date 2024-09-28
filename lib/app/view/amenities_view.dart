@@ -8,10 +8,10 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 typedef StringCallback = void Function(String val);
 
 class AmenitiesView extends StatefulWidget {
-  final String initialAmenitiesIds;
+  final List? initialAmenitiesIds;
   const AmenitiesView({
     super.key,
-    this.initialAmenitiesIds = "",
+    this.initialAmenitiesIds,
   });
 
   @override
@@ -19,7 +19,7 @@ class AmenitiesView extends StatefulWidget {
 }
 
 class _AmenitiesViewState extends State<AmenitiesView> {
-  List<String> selectedValues = [];
+  var selectedValues = [];
   final GetAllAmenitiesController getAllAmenitiesController =
       Get.put(GetAllAmenitiesController());
 
@@ -28,8 +28,8 @@ class _AmenitiesViewState extends State<AmenitiesView> {
     super.initState();
     getAllAmenitiesController.fetchAllAmenites();
 
-    selectedValues =
-        widget.initialAmenitiesIds.split(',').map((id) => id.trim()).toList();
+    // selectedValues =
+    //     widget.initialAmenitiesIds.split(',').map((id) => id.trim()).toList();
   }
 
   @override
@@ -62,7 +62,7 @@ class _AmenitiesViewState extends State<AmenitiesView> {
                   category.id.toString(), category.title.toString()))
               .toList();
           return MultiSelectDialogField(
-            initialValue: selectedValues,
+            initialValue: getAllAmenitiesController.selectedAmenitis1.toList(),
             items: items,
             searchable: true,
             selectedColor: kButtonColor,
@@ -97,8 +97,16 @@ class _AmenitiesViewState extends State<AmenitiesView> {
             ),
             separateSelectedItems: true,
             onConfirm: (values) {
-              selectedValues = List<String>.from(values);
-              getAllAmenitiesController.selectedAmenitis(values);
+              selectedValues = values;
+              List<String> liststring =
+                  values != null ? List<String>.from(values) : [];
+              List<String> formattedIds =
+                  liststring.map((id) => '"$id"').toList();
+              String result = '[${formattedIds.join(", ")}]';
+              getAllAmenitiesController.selectedAmenitis.value = result;
+              getAllAmenitiesController.selectedAmenitis1(values);
+
+              print(getAllAmenitiesController.selectedAmenitis);
             },
             title: const Text(
               "House Amenities",

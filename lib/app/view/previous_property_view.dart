@@ -27,7 +27,7 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
             const SizedBox(height: 15),
             notLeaseProperty("assets/icons/3.png", "Main Street", "\$1850",
                 "224 Robson St, Vancouver", "2"),
-            const SizedBox(height: 65)
+            const SizedBox(height: 90)
           ],
         ),
       ),

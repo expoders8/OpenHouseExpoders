@@ -41,7 +41,15 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
                 // ignore: unnecessary_null_comparison
                 getAllRequestsController.requestList[0].data! != null) {
               if (getAllRequestsController.requestList[0].data!.isEmpty) {
-                return Container();
+                return const Center(
+                  child: Text(
+                    "No Requests",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdMedium),
+                  ),
+                );
               } else {
                 return SizedBox(
                   height: Get.height,

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:openhome/app/ui/Property%20Details/Tenant/tenant_lease_property.dart';
 
 import '../../config/constant/constant.dart';
@@ -74,6 +75,10 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                         getLeasePropertyController.propertiesList[0].data!;
                     if (propertyData.isNotEmpty) {
                       var data = propertyData[index];
+                      DateTime dateTime =
+                          DateTime.parse(data.endDate.toString());
+                      String formattedDate =
+                          DateFormat('dd MMM yyyy').format(dateTime);
                       return Column(
                         children: [
                           CupertinoButton(
@@ -105,8 +110,8 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                             data.propertyImage.toString(),
                                             fit: BoxFit.cover,
                                             scale: 1.2,
-                                            height: 120,
-                                            width: 120,
+                                            height: 110,
+                                            width: 110,
                                             errorBuilder:
                                                 (context, error, stackTrace) {
                                               return Image.asset(
@@ -248,7 +253,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                 style: TextStyle(
                                                     fontFamily:
                                                         kCircularStdMedium,
-                                                    fontSize: 17,
+                                                    fontSize: 16,
                                                     color: kPrimaryColor),
                                               ),
                                             ],
@@ -282,7 +287,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                 style: const TextStyle(
                                                     fontFamily:
                                                         kCircularStdMedium,
-                                                    fontSize: 17,
+                                                    fontSize: 16,
                                                     color: kPrimaryColor),
                                               ),
                                             ],
@@ -292,14 +297,14 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                             fit: BoxFit.cover,
                                             scale: 1.8,
                                           ),
-                                          const Column(
+                                          Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                "lease Expaires",
+                                              const Text(
+                                                "Lease expairy",
                                                 style: TextStyle(
                                                     fontFamily:
                                                         kCircularStdNormal,
@@ -307,11 +312,11 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                     color: kPrimaryColor),
                                               ),
                                               Text(
-                                                "expiredate",
-                                                style: TextStyle(
+                                                formattedDate,
+                                                style: const TextStyle(
                                                     fontFamily:
                                                         kCircularStdMedium,
-                                                    fontSize: 17,
+                                                    fontSize: 16,
                                                     color: kPrimaryColor),
                                               ),
                                             ],

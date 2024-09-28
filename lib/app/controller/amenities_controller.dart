@@ -8,8 +8,11 @@ class GetAllAmenitiesController extends GetxController {
   var amenitisList = <List<GetAllAmenitiesDataModel>>[].obs;
   LookupService lookupService = LookupService();
   RxString categoryId = "".obs;
-  RxList selectedAmenitis = [].obs;
+  // var selectedAmenitis = <String>[].obs;
   RxList selectedImages = [].obs;
+  RxList selectedAmenitis1 = [].obs;
+  // RxList selectedAmenitis = [].obs;
+  var selectedAmenitis = ''.obs;
 
   void fetchAllAmenites() async {
     try {
