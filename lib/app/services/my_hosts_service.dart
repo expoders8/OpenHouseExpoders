@@ -4,28 +4,28 @@ import 'package:http/http.dart' as http;
 import '../../config/constant/constant.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
-import '../models/my_tenant_get_model.dart';
+import '../models/my_host_get_model.dart';
 
-class MyTenantService {
-  previousTenants() async {
+class MyHostService {
+  previousHosts() async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
       var response = await http.post(
-          Uri.parse('$baseUrl/api/host/getalltenant'),
+          Uri.parse('$baseUrl/api/tenant/getallhost'),
           body: json.encode({"status": "previous", "userid": userid["id"]}),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
         var data = json.decode(response.body);
-        return GetAllMyTenantsModel.fromJson(data);
+        return GetAllMyHostsModel.fromJson(data);
       } else if (response.statusCode == 401) {
         LoaderX.hide();
         return Future.error("Authentication Error");
       } else {
         LoaderX.hide();
         SnackbarUtils.showErrorSnackbar("Server Error",
-            "Error while fetch Tenants, Please try after some time.");
+            "Error while fetch Hosts, Please try after some time.");
         return Future.error("Server Error");
       }
     } catch (e) {
@@ -35,25 +35,25 @@ class MyTenantService {
     }
   }
 
-  currentTenants() async {
+  currentHosts() async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
       var response = await http.post(
-          Uri.parse('$baseUrl/api/host/getalltenant'),
+          Uri.parse('$baseUrl/api/tenant/getallhost'),
           body: json.encode({"status": "current", "userid": userid["id"]}),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
         var data = json.decode(response.body);
-        return GetAllMyTenantsModel.fromJson(data);
+        return GetAllMyHostsModel.fromJson(data);
       } else if (response.statusCode == 401) {
         LoaderX.hide();
         return Future.error("Authentication Error");
       } else {
         LoaderX.hide();
         SnackbarUtils.showErrorSnackbar("Server Error",
-            "Error while fetch Tenants, Please try after some time.");
+            "Error while fetch Hosts, Please try after some time.");
         return Future.error("Server Error");
       }
     } catch (e) {

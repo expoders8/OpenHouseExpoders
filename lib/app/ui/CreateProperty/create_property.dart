@@ -12,6 +12,7 @@ import '../../models/getbyid_property_model.dart';
 import '../../models/state_model.dart';
 import '../../view/amenities_view.dart';
 import '../../models/country_model.dart';
+import 'package:http/http.dart' as http;
 import '../widgets/custom_textfield.dart';
 import '../../services/lookup_service.dart';
 import '../../services/properties_service.dart';
@@ -22,6 +23,7 @@ import '../../../config/provider/loader_provider.dart';
 
 class CreatePropertyPage extends StatefulWidget {
   final String? checkEdit;
+  final String? proeprtyId;
   final String? proeprtyName;
   final String? description;
   final String? bedrooms;
@@ -38,10 +40,12 @@ class CreatePropertyPage extends StatefulWidget {
   final String? stateId;
   final String? city;
   final List? amenitiesid;
+  final List? imagelist;
 
   const CreatePropertyPage({
     super.key,
     this.checkEdit,
+    this.proeprtyId,
     this.proeprtyName,
     this.description,
     this.bedrooms,
@@ -58,6 +62,7 @@ class CreatePropertyPage extends StatefulWidget {
     this.stateId,
     this.city,
     this.amenitiesid,
+    this.imagelist,
   });
 
   @override
@@ -74,7 +79,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   bool isImagePickerError = false;
   List<Asset> imageList = <Asset>[];
   String error = 'No Error Dectected';
-  String countryId = "", stateid = "";
+  String countryId = "", stateid = "", propertyId = "";
   final _formKey = GlobalKey<FormState>();
   LookupService lookupService = LookupService();
   PropertiesService propertiesService = PropertiesService();
@@ -98,11 +103,20 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   void initState() {
     super.initState();
     if (widget.checkEdit == "edit") {
+      setState(() {
+        initialImagePaths = widget.imagelist!;
+        loadInitialImages();
+      });
       getPropertyData();
     }
   }
 
+  List<dynamic> initialImagePaths = [];
+
   getPropertyData() {
+    propertyId = widget.proeprtyId.toString() == "null"
+        ? ""
+        : widget.proeprtyId.toString();
     propertyNameController.text = widget.proeprtyName.toString() == "null"
         ? ""
         : widget.proeprtyName.toString();
@@ -880,7 +894,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   initialAmenitiesIds: widget.amenitiesid,
                 ),
                 const SizedBox(height: 10),
-                imageList.isEmpty
+                imageList.isEmpty && fileList.isEmpty
                     ? GestureDetector(
                         onTap: pickImage,
                         child: SizedBox(
@@ -890,15 +904,15 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                             elevation: 2,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
-                                side: const BorderSide(color: kWhiteColor)),
+                                side: const BorderSide(color: Colors.white)),
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: kWhiteColor,
+                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(8.0)),
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: DottedBorder(
-                                  color: kBorderColor,
+                                  color: Colors.grey,
                                   borderType: BorderType.RRect,
                                   radius: const Radius.circular(8),
                                   strokeWidth: 1,
@@ -917,7 +931,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                           "Upload Cover photo",
                                           style: TextStyle(
                                             fontSize: 18,
-                                            fontFamily: kCircularStdBook,
                                           ),
                                         )
                                       ],
@@ -937,8 +950,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                           physics: const NeverScrollableScrollPhysics(),
                           crossAxisCount: 3,
                           children: List.generate(6, (index) {
-                            if (index < imageList.length) {
-                              Asset asset = imageList[index];
+                            if (index < fileList.length) {
+                              File file = fileList[index];
                               return Padding(
                                 padding: const EdgeInsets.all(3.0),
                                 child: Stack(
@@ -950,25 +963,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                         height: 120,
                                         child: FittedBox(
                                           fit: BoxFit.cover,
-                                          child: AssetThumb(
-                                            asset: asset,
-                                            width: 120,
-                                            height: 120,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: Container(
-                                        height: 120,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color:
-                                              const Color.fromARGB(92, 0, 0, 0),
+                                          child: Image.file(file),
                                         ),
                                       ),
                                     ),
@@ -978,28 +973,28 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           setState(() {
-                                            imageList.removeAt(index);
-                                            if (imageList.isEmpty) {
+                                            fileList.removeAt(index);
+                                            if (fileList.isEmpty) {
                                               isImagePickerError = true;
                                             }
                                           });
                                         },
                                         child: const Icon(
                                           Icons.delete,
-                                          color: kWhiteColor,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
                               );
-                            } else if (index == imageList.length) {
+                            } else if (index == fileList.length) {
                               return Padding(
                                 padding: const EdgeInsets.all(3.0),
                                 child: GestureDetector(
                                   onTap: pickImage,
                                   child: DottedBorder(
-                                    color: kRedColor,
+                                    color: Colors.red,
                                     borderType: BorderType.RRect,
                                     radius: const Radius.circular(8),
                                     strokeWidth: 1,
@@ -1007,7 +1002,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                     child: Center(
                                       child: Image.asset(
                                         "assets/icons/shareImage.png",
-                                        color: kPrimaryColor,
+                                        color: Colors.red,
                                         scale: 1.2,
                                       ),
                                     ),
@@ -1025,10 +1020,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                     padding: EdgeInsets.symmetric(horizontal: 3),
                     child: Text(
                       "Please upload at least one image",
-                      style: TextStyle(
-                          color: kErrorColor,
-                          fontSize: 13,
-                          fontFamily: kCircularStdNormal),
+                      style: TextStyle(color: Colors.red, fontSize: 13),
                     ),
                   ),
                 const SizedBox(height: 20),
@@ -1065,7 +1057,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                       selctedImages,
                                     );
                                     propertiesService
-                                        .createProperties(
+                                        .editProperties(
                                             propertyNameController.text,
                                             descriptionController.text,
                                             propertyPriceController.text,
@@ -1081,7 +1073,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             bedRoomsController.text,
                                             washRoomsController.text,
                                             selctesType,
-                                            "null",
+                                            propertyId,
                                             fileList)
                                         .then((value) {
                                       if (value) {
@@ -1224,6 +1216,58 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     );
   }
 
+  void loadInitialImages() async {
+    try {
+      for (var path in initialImagePaths) {
+        if (path.startsWith('http')) {
+          // Handle remote URL
+          File file = await _downloadImageFromUrl(path);
+          setState(() {
+            fileList.add(file); // Always add the file, even if it's empty
+          });
+        } else {
+          // Handle local file
+          File file = File(path);
+          if (await file.exists()) {
+            setState(() {
+              fileList.add(file); // Always add the file, even if it's empty
+            });
+          } else {
+            print('Local file does not exist: $path');
+          }
+        }
+      }
+
+      setState(() {
+        isImagePickerError = false; // Reset error state
+      });
+    } catch (e) {
+      setState(() {
+        isImagePickerError = true;
+        error = e.toString();
+      });
+    }
+  }
+
+  Future<File> _downloadImageFromUrl(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        String tempPath = (await getTemporaryDirectory()).path;
+        String fileName = url.split('/').last;
+        String filePath = '$tempPath/$fileName';
+        File file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+        return file; // Return the file if successful
+      } else {
+        throw Exception("Failed to download image: ${response.statusCode}");
+      }
+    } catch (e) {
+      print('Error downloading image: $e');
+      return File(''); // Return an empty file if something goes wrong
+    }
+  }
+
   Widget buildTextWidget(String text) {
     return Container(
       padding: const EdgeInsets.fromLTRB(7, 20, 0, 5),
@@ -1231,47 +1275,57 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         text,
         style: const TextStyle(
           fontSize: 13,
-          fontFamily: kCircularStdBold,
+          fontFamily:
+              'kCircularStdBold', // Ensure the font family is properly referenced
         ),
       ),
     );
   }
 
-  pickImage() async {
+  Future<void> pickImage() async {
     try {
-      imageList = await MultiImagePicker.pickImages(
-        selectedAssets: imageList.isEmpty ? images : imageList,
+      List<Asset> pickedImages = await MultiImagePicker.pickImages(
+        selectedAssets: imageList.isEmpty ? [] : imageList,
         iosOptions: const IOSOptions(
-          doneButton: UIBarButtonItem(title: 'Confirm', tintColor: kRedColor),
+          doneButton: UIBarButtonItem(title: 'Confirm', tintColor: Colors.red),
           cancelButton:
-              UIBarButtonItem(title: 'Cancel', tintColor: kRedAccentColor),
-          albumButtonColor: kPrimaryColor,
-          // settings: iosSettings,
+              UIBarButtonItem(title: 'Cancel', tintColor: Colors.redAccent),
+          albumButtonColor: Colors.blue,
         ),
         androidOptions: const AndroidOptions(
-          actionBarColor: kRedColor,
-          actionBarTitleColor: kWhiteColor,
+          actionBarColor: Colors.red,
+          actionBarTitleColor: Colors.white,
           maxImages: 5,
           hasCameraInPickerPage: false,
-          statusBarColor: kBlack26Color,
+          statusBarColor: Colors.black26,
           actionBarTitle: "Select Photo",
           allViewTitle: "All Photos",
           useDetailsView: false,
-          selectCircleStrokeColor: kRedColor,
+          selectCircleStrokeColor: Colors.red,
         ),
       );
 
-      for (var asset in imageList) {
-        final filePath = await getFilePathFromAsset(asset);
-        fileList.add(File(filePath));
-      }
-      setState(() {
-        if (imageList.isNotEmpty) {
-          isImagePickerError = false;
+      if (pickedImages.isNotEmpty) {
+        imageList = pickedImages;
+        // fileList.clear(); // Clear previous files and re-add initial paths
+        // loadInitialImages(); // Reload initial images
+
+        for (var asset in imageList) {
+          final filePath = await getFilePathFromAsset(asset);
+          setState(() {
+            fileList.add(File(filePath));
+          });
         }
-      });
+
+        setState(() {
+          isImagePickerError = false; // Reset error state
+        });
+      }
     } on Exception catch (e) {
-      error = e.toString();
+      setState(() {
+        error = e.toString();
+        isImagePickerError = true;
+      });
     }
   }
 

@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../controller/my_hosts_controller.dart';
+import '../routes/app_pages.dart';
 
 class PreviousHostView extends StatefulWidget {
   const PreviousHostView({super.key});
@@ -12,32 +15,91 @@ class PreviousHostView extends StatefulWidget {
 }
 
 class _PreviousHostViewState extends State<PreviousHostView> {
+  final GetAllPreviousHostsController getAllPreviousHostsController =
+      Get.put(GetAllPreviousHostsController());
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            currentTenants("assets/icons/boy 3.png", "Leo", "+91 9898567452"),
-            const SizedBox(height: 15),
-            currentTenants("assets/icons/boy 2.png", "Rowan", "+91 9898567452"),
-            const SizedBox(height: 15),
-            currentTenants(
-                "assets/icons/boy 1.png", "James jacko", "+91 9898567452"),
-            const SizedBox(height: 15),
-          ],
-        ),
-      ),
+    return Obx(
+      () {
+        if (getAllPreviousHostsController.isLoading.value) {
+          return Container();
+        } else {
+          if (getAllPreviousHostsController.hostsList.isNotEmpty) {
+            if (getAllPreviousHostsController.hostsList[0].data!.isEmpty) {
+              return const Center(
+                child: Text(
+                  "No Previous Hosts",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 12,
+                      fontFamily: kCircularStdMedium),
+                ),
+              );
+            } else {
+              return Flexible(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount:
+                      getAllPreviousHostsController.hostsList[0].data!.length,
+                  itemBuilder: (context, index) {
+                    var requestData =
+                        getAllPreviousHostsController.hostsList[0].data!;
+                    if (requestData.isNotEmpty) {
+                      var data = requestData[index];
+                      return Column(
+                        children: [
+                          currentTenants(
+                            data.tenantProfilePicture.toString(),
+                            "${data.tenantFirstName} ${data.tenantLastName}",
+                            data.address.toString(),
+                            data.tenantPhoneNumber.toString(),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const Center(
+                        child: Text(
+                          "No Previous Hosts",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 15,
+                              fontFamily: kCircularStdMedium),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              );
+            }
+          } else {
+            return const Center(
+              child: Text(
+                "No Previous Hosts",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 15,
+                    fontFamily: kCircularStdMedium),
+              ),
+            );
+          }
+        }
+      },
     );
   }
 
   Widget currentTenants(
-    String image,
+    String? image,
     name,
+    address,
     contact,
   ) {
-    return GestureDetector(
-      onTap: () {},
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        Get.toNamed(Routes.myHostsDetailsPage);
+      },
       child: Container(
         width: Get.width,
         decoration: BoxDecoration(
@@ -48,16 +110,35 @@ class _PreviousHostViewState extends State<PreviousHostView> {
             children: [
               Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(18),
-                    child: Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                      scale: 1.2,
-                      height: 60,
-                      width: 60,
-                    ),
-                  ),
+                  image != "null"
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.network(
+                            image!,
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                            height: 70,
+                            width: 70,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                "assets/images/blank_profile.png",
+                                fit: BoxFit.cover,
+                                height: 70,
+                                width: 70,
+                              );
+                            },
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.asset(
+                            "assets/images/blank_profile.png",
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                            height: 70,
+                            width: 70,
+                          ),
+                        ),
                   const SizedBox(width: 15),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -69,6 +150,26 @@ class _PreviousHostViewState extends State<PreviousHostView> {
                             color: kPrimaryColor,
                             fontSize: 18,
                             fontFamily: kCircularStdMedium),
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.location_on,
+                            size: 16,
+                            color: kButtonColor,
+                          ),
+                          const SizedBox(width: 5),
+                          SizedBox(
+                            width: Get.width / 2,
+                            child: Text(
+                              address,
+                              style: const TextStyle(
+                                  color: kSecondaryPrimaryColor,
+                                  fontSize: 13,
+                                  fontFamily: kCircularStdBook),
+                            ),
+                          ),
+                        ],
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,

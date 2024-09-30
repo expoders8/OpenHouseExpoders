@@ -1,20 +1,24 @@
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
+import 'package:openhome/app/ui/Add%20Expense/add_expense.dart';
 
-import '../../models/getbyid_property_model.dart';
+import '../../controller/property_controller.dart';
 import '../../routes/app_pages.dart';
+import '../../services/properties_service.dart';
+import '../../view/expense_view.dart';
 import '../../view/nearby_view.dart';
 import '../../view/house keeper/house_keeper_view.dart';
 import '../../view/payment_detail_view.dart';
 import '../../view/tenant_history_view.dart';
 import '../../view/property_details_view.dart';
 import '../../../config/constant/constant.dart';
-import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../controller/property_detail_controller.dart';
+import '../CreateProperty/create_property.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
   const LeasePropertyDetailPage({super.key});
@@ -31,7 +35,10 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
   bool isPreviousTenantsSelected = true;
   final GetDetailsPropertiesController getDetailsPropertiesController =
       Get.put(GetDetailsPropertiesController());
+  final GetAllExpenseController getAllExpenseController =
+      Get.put(GetAllExpenseController());
   List<ImageProvider> images = [];
+  PropertiesService propertiesService = PropertiesService();
 
   @override
   void initState() {
@@ -41,10 +48,34 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
       selectedRoll = roll;
     });
     _tabController = TabController(length: 5, vsync: this);
-    images = [
-      ...getDetailsPropertiesController.detailModel!.data!.images!
-          .map((imageUrl) => NetworkImage(imageUrl)),
-    ];
+
+    Future.delayed(const Duration(seconds: 3), () {
+      if (getDetailsPropertiesController.detailModel != null &&
+          getDetailsPropertiesController.detailModel!.data != null &&
+          getDetailsPropertiesController.detailModel!.data!.images != null) {
+        setState(() {
+          images = [
+            ...getDetailsPropertiesController.detailModel!.data!.images!
+                .map((imageUrl) => NetworkImage(imageUrl)),
+          ];
+        });
+      } else {
+        setState(() {
+          images = [const AssetImage('assets/images/noproperty.png')];
+        });
+      }
+    });
+    Future.delayed(const Duration(seconds: 5), () {
+      if (getDetailsPropertiesController.detailModel != null &&
+          getDetailsPropertiesController.detailModel!.data != null &&
+          getDetailsPropertiesController.detailModel!.data!.id != null) {
+        setState(() {
+          getAllExpenseController
+              .propertyId(getDetailsPropertiesController.detailModel!.data!.id);
+          getAllExpenseController.getAllExpenses();
+        });
+      }
+    });
   }
 
   @override
@@ -61,7 +92,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
           return const Center(
               child: CircularProgressIndicator(color: kSelectedIconColor));
         } else {
-          var propertydata = getDetailsPropertiesController.detailModel!.data;
+          var propertydata = getDetailsPropertiesController.detailModel!.data!;
           return Stack(
             children: [
               SizedBox(
@@ -137,7 +168,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                               SizedBox(
                                                 width: Get.width - 100,
                                                 child: Text(
-                                                  propertydata.name.toString(),
+                                                  propertydata.name!.toString(),
                                                   style: const TextStyle(
                                                       color: kPrimaryColor,
                                                       fontSize: 18,
@@ -148,7 +179,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                               Row(
                                                 children: [
                                                   Text(
-                                                    propertydata.rentAmount
+                                                    propertydata.rentAmount!
                                                         .toString(),
                                                     style: const TextStyle(
                                                         color: kButtonColor,
@@ -174,6 +205,8 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                             onTap: () {
                                               Get.to(() => CreatePropertyPage(
                                                     checkEdit: "edit",
+                                                    proeprtyId: propertydata.id
+                                                        .toString(),
                                                     proeprtyName: propertydata
                                                         .name
                                                         .toString(),
@@ -275,17 +308,24 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                             CrossAxisAlignment.start,
                                         children: [
                                           tenantname(
-                                            propertydata!
-                                                .hostdetails!.profilePicture
-                                                .toString(),
-                                            propertydata.hostdetails!.firstName
-                                                .toString(),
-                                            propertydata.hostdetails!.lastName
+                                            propertydata.tenantdetails!
+                                                        .profilePicture
+                                                        .toString() ==
+                                                    "null"
+                                                ? "assets/images/blank_profile.png"
+                                                : propertydata.tenantdetails!
+                                                    .profilePicture!
+                                                    .toString(),
+                                            propertydata
+                                                .tenantdetails!.firstName!
                                                 .toString(),
                                             propertydata
-                                                .hostdetails!.phoneNumber
+                                                .tenantdetails!.lastName!
                                                 .toString(),
-                                            propertydata.hostdetails!.email
+                                            propertydata
+                                                .tenantdetails!.phoneNumber!
+                                                .toString(),
+                                            propertydata.tenantdetails!.email!
                                                 .toString(),
                                           ),
                                           const SizedBox(height: 15),
@@ -388,13 +428,16 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                     const PaymentView(),
                                     SingleChildScrollView(
                                       child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           const SizedBox(height: 10),
                                           CupertinoButton(
                                             padding: EdgeInsets.zero,
                                             onPressed: () {
-                                              Get.toNamed(
-                                                  Routes.addExpensePage);
+                                              Get.to(() => AddExpensePage(
+                                                    propertyId: propertydata.id,
+                                                  ));
                                             },
                                             child: Container(
                                               height: 38,
@@ -417,20 +460,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(height: 10),
-                                          routingmaintanance(
-                                              "Electricity",
-                                              "\$105",
-                                              Icons.electric_bolt_sharp),
-                                          routingmaintanance("Gas", "\$99",
-                                              Icons.gas_meter_rounded),
-                                          routingmaintanance("Repair", "\$65",
-                                              Icons.manage_history_sharp),
-                                          routingmaintanance(
-                                              "Internet",
-                                              "\$46",
-                                              Icons
-                                                  .signal_wifi_statusbar_connected_no_internet_4_sharp),
+                                          const ExpenseView()
                                         ],
                                       ),
                                     ),
@@ -449,41 +479,6 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
           );
         }
       }),
-    );
-  }
-
-  routingmaintanance(String title, amount, IconData icons) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(
-                icons,
-                size: 18,
-                color: kButtonColor,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 15,
-                    fontFamily: kCircularStdMedium),
-              ),
-            ],
-          ),
-          Text(
-            amount,
-            style: const TextStyle(
-                color: kPrimaryColor,
-                fontSize: 15,
-                fontFamily: kCircularStdMedium),
-          ),
-        ],
-      ),
     );
   }
 
@@ -523,7 +518,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
     );
   }
 
-  tenantname(String image, firstname, lastname, phoneno, email) {
+  tenantname(String? image, firstname, lastname, phoneno, email) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -534,23 +529,33 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
           children: [
             Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.cover,
-                    height: 65,
-                    width: 65,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        "assets/images/blank_profile.png",
-                        fit: BoxFit.cover,
-                        height: 65,
-                        width: 65,
-                      );
-                    },
-                  ),
-                ),
+                image != "null"
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.network(
+                          image!,
+                          fit: BoxFit.cover,
+                          height: 65,
+                          width: 65,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              "assets/images/blank_profile.png",
+                              fit: BoxFit.cover,
+                              height: 65,
+                              width: 65,
+                            );
+                          },
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.asset(
+                          "assets/images/blank_profile.png",
+                          fit: BoxFit.cover,
+                          height: 65,
+                          width: 65,
+                        ),
+                      ),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -564,23 +569,25 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                           fontSize: 18,
                           fontFamily: kCircularStdMedium),
                     ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.phone,
-                          size: 15,
-                          color: kButtonColor,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          phoneno,
-                          style: const TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 13,
-                              fontFamily: kCircularStdNormal),
-                        ),
-                      ],
-                    ),
+                    phoneno != "null"
+                        ? Row(
+                            children: [
+                              const Icon(
+                                Icons.phone,
+                                size: 15,
+                                color: kButtonColor,
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                phoneno,
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 13,
+                                    fontFamily: kCircularStdNormal),
+                              ),
+                            ],
+                          )
+                        : Container(),
                     Row(
                       children: [
                         const Icon(

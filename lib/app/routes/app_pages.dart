@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import '../ui/Checkout Requests/checkout_request.dart';
+import '../ui/My Host/my_hosts_detail.dart';
+import '../ui/My Tenants/my_tenants_detail.dart';
 import '../ui/Profile/profile.dart';
 import '../ui/Property Details/Tenant/tenant_lease_property.dart';
 import '../ui/Splash/splash_screen.dart';
@@ -118,6 +121,18 @@ class AppPages {
     GetPage(
       name: _Paths.myRequestViewAllView,
       page: () => const MyRequestViewAllView(),
+    ),
+    GetPage(
+      name: _Paths.myTenantsDetailsPage,
+      page: () => const MyTenantsDetailsPage(),
+    ),
+    GetPage(
+      name: _Paths.myHostsDetailsPage,
+      page: () => const MyHostsDetailsPage(),
+    ),
+    GetPage(
+      name: _Paths.checkoutRequestsPage,
+      page: () => const CheckoutRequestsPage(),
     ),
   ];
 }

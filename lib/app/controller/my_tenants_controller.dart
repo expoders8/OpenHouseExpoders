@@ -1,10 +1,19 @@
-import 'package:get/get.dart';
-import '../models/getpropretyes_model.dart';
+import 'dart:convert';
 
-class GetAllMyTenantsController extends GetxController {
+import 'package:get/get.dart';
+import '../../config/constant/constant.dart';
+import '../../config/provider/snackbar_provider.dart';
+import '../models/my_tenant_get_model.dart';
+import '../services/my_tenants_service.dart';
+import 'package:http/http.dart' as http;
+
+import '../ui/My Tenants/my_tenants_detail.dart';
+
+class GetAllPreviousTenantsController extends GetxController {
   var isLoading = true.obs;
-  var tenantsList = <GetAllPropertiesModel>[].obs;
+  var tenantsList = <GetAllMyTenantsModel>[].obs;
   RxString searchText = "".obs;
+  MyTenantService myTenantService = MyTenantService();
 
   @override
   void onInit() {
@@ -15,30 +24,73 @@ class GetAllMyTenantsController extends GetxController {
   void fetchAllTenants() async {
     try {
       isLoading(true);
-      // var properties =
-      //     await propertiesService.getAllProperties(createRequest());
-      // if (properties.data != null) {
-      //   propertiesList.assign(properties);
-      // }
+      var tenants = await myTenantService.previousTenants();
+      if (tenants.data != null) {
+        tenantsList.assign(tenants);
+      }
     } finally {
       isLoading(false);
     }
   }
+}
 
-  createRequest() {
-    PropertiesRequestModel propertiesRequestModel = PropertiesRequestModel();
-    propertiesRequestModel.pageSize = 100;
-    propertiesRequestModel.pageNumber = 1;
-    propertiesRequestModel.searchText =
-        searchText.value.isEmpty ? null : searchText.value;
-    propertiesRequestModel.sortBy = null;
-    propertiesRequestModel.propertyid = null;
-    propertiesRequestModel.userId = null;
-    propertiesRequestModel.type = null;
-    propertiesRequestModel.onlease = true;
-    propertiesRequestModel.countryId = null;
-    propertiesRequestModel.stateId = null;
-    propertiesRequestModel.cityName = null;
-    return propertiesRequestModel;
+class GetAllCurrentTenantsController extends GetxController {
+  var isLoading = true.obs;
+  var tenantsList = <GetAllMyTenantsModel>[].obs;
+  RxString searchText = "".obs;
+  MyTenantService myTenantService = MyTenantService();
+
+  @override
+  void onInit() {
+    fetchAllTenants();
+    super.onInit();
+  }
+
+  void fetchAllTenants() async {
+    try {
+      isLoading(true);
+      var tenants = await myTenantService.currentTenants();
+      if (tenants.data != null) {
+        tenantsList.assign(tenants);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+}
+
+class GetDetailTenantsController extends GetxController {
+  var isLoading = true.obs;
+  RxString tenantId = "".obs;
+  GetAllMyTenantDetailModel? detailModel;
+  String selectedRoll = "";
+
+  void feachconferanceId(String newValue) {
+    tenantId.value = newValue;
+    fetchTenantDetail();
+  }
+
+  fetchTenantDetail() async {
+    try {
+      isLoading(true);
+      var response = await http.post(
+          Uri.parse("$baseUrl/api/host/get_tenant_details"),
+          body: json.encode({"tenantId": tenantId.value}),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200) {
+        detailModel =
+            GetAllMyTenantDetailModel.fromJson(jsonDecode(response.body));
+        Get.to(() => const MyTenantsDetailsPage());
+        return detailModel;
+      } else {
+        return Future.error("Server Error");
+      }
+    } catch (error) {
+      SnackbarUtils.showErrorSnackbar(error.toString(),
+          "Error while Tenantdetails, Please try after some time.");
+      return Future.error(error);
+    } finally {
+      isLoading(false);
+    }
   }
 }

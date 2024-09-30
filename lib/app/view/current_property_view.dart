@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:openhome/app/ui/TabPage/tab_page.dart';
 
 import '../controller/property_controller.dart';
@@ -101,6 +102,10 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                         getCurrentPropertyController.propertiesList[0].data!;
                     if (propertyData.isNotEmpty) {
                       var data = propertyData[index];
+                      DateTime dateTime =
+                          DateTime.parse(data.endDate.toString());
+                      String formattedDate =
+                          DateFormat('dd MMM yyyy').format(dateTime);
                       getCurrentPropertyController.image(data.propertyImage);
                       getCurrentPropertyController.name(data.name);
                       getCurrentPropertyController.address(data.address);
@@ -324,14 +329,14 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                                             fit: BoxFit.cover,
                                             scale: 1.8,
                                           ),
-                                          const Column(
+                                          Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                "lease Expaires",
+                                              const Text(
+                                                "Lease expairy",
                                                 style: TextStyle(
                                                     fontFamily:
                                                         kCircularStdNormal,
@@ -339,8 +344,8 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                                                     color: kPrimaryColor),
                                               ),
                                               Text(
-                                                "expiredate",
-                                                style: TextStyle(
+                                                formattedDate,
+                                                style: const TextStyle(
                                                     fontFamily:
                                                         kCircularStdMedium,
                                                     fontSize: 17,
@@ -360,14 +365,17 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                         ],
                       );
                     } else {
-                      return const Center(
-                        child: Text(
-                          "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 15,
-                              fontFamily: kCircularStdMedium),
+                      return const Padding(
+                        padding: EdgeInsets.only(bottom: 35.0),
+                        child: Center(
+                          child: Text(
+                            "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 15,
+                                fontFamily: kCircularStdMedium),
+                          ),
                         ),
                       );
                     }
@@ -375,14 +383,17 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                 );
               }
             } else {
-              return const Center(
-                child: Text(
-                  "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 15,
-                      fontFamily: kCircularStdMedium),
+              return const Padding(
+                padding: EdgeInsets.only(bottom: 35.0),
+                child: Center(
+                  child: Text(
+                    "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdMedium),
+                  ),
                 ),
               );
             }

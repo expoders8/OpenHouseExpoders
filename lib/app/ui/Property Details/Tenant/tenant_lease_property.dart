@@ -612,23 +612,25 @@ class _TenantLeasePropertyDetailPageState
                           fontSize: 18,
                           fontFamily: kCircularStdMedium),
                     ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.phone,
-                          size: 15,
-                          color: kButtonColor,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          phoneno,
-                          style: const TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 13,
-                              fontFamily: kCircularStdNormal),
-                        ),
-                      ],
-                    ),
+                    phoneno != "null"
+                        ? Row(
+                            children: [
+                              const Icon(
+                                Icons.phone,
+                                size: 15,
+                                color: kButtonColor,
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                phoneno,
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 13,
+                                    fontFamily: kCircularStdNormal),
+                              ),
+                            ],
+                          )
+                        : Container(),
                     Row(
                       children: [
                         const Icon(

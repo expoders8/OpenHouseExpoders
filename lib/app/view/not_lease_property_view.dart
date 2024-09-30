@@ -37,9 +37,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
               ),
             );
           } else {
-            // ignore: unnecessary_null_comparison
-            if (getAvailablePropertyController.propertiesList[0].data! !=
-                null) {
+            if (getAvailablePropertyController.propertiesList.isNotEmpty) {
               if (getAvailablePropertyController
                   .propertiesList[0].data!.isEmpty) {
                 return Center(

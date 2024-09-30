@@ -23,6 +23,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
       Get.put(GetLeasePropertyController());
   final GetDetailsPropertiesController getDetailsPropertiesController =
       Get.put(GetDetailsPropertiesController());
+
   String selectedRoll = "";
 
   @override
@@ -89,6 +90,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
 
                               getDetailsPropertiesController
                                   .fetchPropertyDetail();
+                              Get.to(() => const LeasePropertyDetailPage());
                             },
                             child: Container(
                               width: Get.width,

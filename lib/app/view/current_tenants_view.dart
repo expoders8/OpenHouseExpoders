@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:openhome/app/routes/app_pages.dart';
+import 'package:openhome/app/ui/My%20Tenants/my_tenants_detail.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../controller/my_tenants_controller.dart';
 
 class CurrentTenantsView extends StatefulWidget {
   const CurrentTenantsView({super.key});
@@ -12,46 +16,89 @@ class CurrentTenantsView extends StatefulWidget {
 }
 
 class _CurrentTenantsViewState extends State<CurrentTenantsView> {
+  final GetAllCurrentTenantsController getAllCurrentTenantsController =
+      Get.put(GetAllCurrentTenantsController());
+  final GetDetailTenantsController getDetailTenantsController =
+      Get.put(GetDetailTenantsController());
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            currentTenants(
-              "assets/icons/boy 1.png",
-              "Jons jacko",
-              "101 Main Street",
-              "+91 9898567452",
-            ),
-            const SizedBox(height: 15),
-            currentTenants(
-              "assets/icons/boy 2.png",
-              "Brrom Karle",
-              "3545 Robson St, Vancouver",
-              "+91 9898567452",
-            ),
-            const SizedBox(height: 15),
-            currentTenants(
-              "assets/icons/boy 3.png",
-              "Olka Prems",
-              "224 Robson St, Vancouver",
-              "+91 9898567452",
-            ),
-          ],
-        ),
-      ),
+    return Obx(
+      () {
+        if (getAllCurrentTenantsController.isLoading.value) {
+          return Container();
+        } else {
+          if (getAllCurrentTenantsController.tenantsList.isNotEmpty) {
+            if (getAllCurrentTenantsController.tenantsList[0].data!.isEmpty) {
+              return const Center(
+                child: Text(
+                  "No Current Tenants",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 12,
+                      fontFamily: kCircularStdMedium),
+                ),
+              );
+            } else {
+              return Flexible(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: getAllCurrentTenantsController
+                      .tenantsList[0].data!.length,
+                  itemBuilder: (context, index) {
+                    var requestData =
+                        getAllCurrentTenantsController.tenantsList[0].data!;
+                    if (requestData.isNotEmpty) {
+                      var data = requestData[index];
+                      return Column(
+                        children: [
+                          currentTenants(
+                              data.tenantProfilePicture.toString(),
+                              "${data.tenantFirstName} ${data.tenantLastName}",
+                              data.address.toString(),
+                              data.tenantPhoneNumber.toString(),
+                              data.id.toString()),
+                        ],
+                      );
+                    } else {
+                      return const Center(
+                        child: Text(
+                          "No Current Tenants",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 15,
+                              fontFamily: kCircularStdMedium),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              );
+            }
+          } else {
+            return const Center(
+              child: Text(
+                "No Current Tenants",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 15,
+                    fontFamily: kCircularStdMedium),
+              ),
+            );
+          }
+        }
+      },
     );
   }
 
-  Widget currentTenants(
-    String image,
-    name,
-    address,
-    contact,
-  ) {
-    return GestureDetector(
-      onTap: () {},
+  Widget currentTenants(String? image, name, address, contact, id) {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        getDetailTenantsController.tenantId(id);
+        getDetailTenantsController.fetchTenantDetail();
+      },
       child: Container(
         width: Get.width,
         decoration: BoxDecoration(
@@ -62,16 +109,35 @@ class _CurrentTenantsViewState extends State<CurrentTenantsView> {
             children: [
               Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(18),
-                    child: Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                      scale: 1.2,
-                      height: 70,
-                      width: 70,
-                    ),
-                  ),
+                  image != "null"
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.network(
+                            image!,
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                            height: 70,
+                            width: 70,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                "assets/images/blank_profile.png",
+                                fit: BoxFit.cover,
+                                height: 110,
+                                width: 110,
+                              );
+                            },
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.asset(
+                            "assets/images/blank_profile.png",
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                            height: 70,
+                            width: 70,
+                          ),
+                        ),
                   const SizedBox(width: 15),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,

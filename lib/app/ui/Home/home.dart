@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 import '../../controller/property_controller.dart';
 import '../../controller/property_detail_controller.dart';
@@ -259,8 +260,7 @@ class _HomePageState extends State<HomePage> {
                             } else {
                               // ignore: unnecessary_null_comparison
                               if (getCurrentPropertyController
-                                      .propertiesList[0].data !=
-                                  null) {
+                                  .propertiesList.isNotEmpty) {
                                 if (getCurrentPropertyController
                                     .propertiesList[0].data!.isEmpty) {
                                   return Center(
@@ -286,6 +286,11 @@ class _HomePageState extends State<HomePage> {
                                               .propertiesList[0].data!;
                                       if (propertyData.isNotEmpty) {
                                         var data = propertyData[index];
+                                        DateTime dateTime = DateTime.parse(
+                                            data.endDate.toString());
+                                        String formattedDate =
+                                            DateFormat('dd MMM yyyy')
+                                                .format(dateTime);
                                         return CupertinoButton(
                                           padding: EdgeInsets.zero,
                                           onPressed: () {
@@ -555,7 +560,7 @@ class _HomePageState extends State<HomePage> {
                                                           fit: BoxFit.cover,
                                                           scale: 1.8,
                                                         ),
-                                                        const Column(
+                                                        Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .center,
@@ -563,23 +568,23 @@ class _HomePageState extends State<HomePage> {
                                                               MainAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            Text(
-                                                              "lease expiry",
+                                                            const Text(
+                                                              "Lease expairy",
                                                               style: TextStyle(
                                                                   fontFamily:
                                                                       kCircularStdNormal,
                                                                   fontSize: 12,
                                                                   color:
-                                                                      kRedColor),
+                                                                      kPrimaryColor),
                                                             ),
                                                             Text(
-                                                              "expiry date",
-                                                              style: TextStyle(
+                                                              formattedDate,
+                                                              style: const TextStyle(
                                                                   fontFamily:
                                                                       kCircularStdMedium,
                                                                   fontSize: 17,
                                                                   color:
-                                                                      kRedColor),
+                                                                      kPrimaryColor),
                                                             ),
                                                           ],
                                                         ),
@@ -636,7 +641,7 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GridView(
-                      padding: EdgeInsets.fromLTRB(5, 10, 5, 80),
+                      padding: const EdgeInsets.fromLTRB(5, 10, 5, 80),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

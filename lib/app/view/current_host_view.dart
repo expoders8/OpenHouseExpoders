@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../controller/my_hosts_controller.dart';
+import '../routes/app_pages.dart';
 
 class CurrentHostView extends StatefulWidget {
   const CurrentHostView({super.key});
@@ -12,32 +15,91 @@ class CurrentHostView extends StatefulWidget {
 }
 
 class _CurrentHostViewState extends State<CurrentHostView> {
+  final GetAllCurrentHostsController getAllCurrentHostsController =
+      Get.put(GetAllCurrentHostsController());
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            currentTenants(
-              "assets/icons/boy 1.png",
-              "Jons jacko",
-              "101 Main Street",
-              "+91 9898567452",
-            ),
-          ],
-        ),
-      ),
+    return Obx(
+      () {
+        if (getAllCurrentHostsController.isLoading.value) {
+          return Container();
+        } else {
+          if (getAllCurrentHostsController.hostsList.isNotEmpty) {
+            if (getAllCurrentHostsController.hostsList[0].data!.isEmpty) {
+              return const Center(
+                child: Text(
+                  "No Current Hosts",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 12,
+                      fontFamily: kCircularStdMedium),
+                ),
+              );
+            } else {
+              return Flexible(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount:
+                      getAllCurrentHostsController.hostsList[0].data!.length,
+                  itemBuilder: (context, index) {
+                    var requestData =
+                        getAllCurrentHostsController.hostsList[0].data!;
+                    if (requestData.isNotEmpty) {
+                      var data = requestData[index];
+                      return Column(
+                        children: [
+                          currentTenants(
+                            data.tenantProfilePicture.toString(),
+                            "${data.tenantFirstName} ${data.tenantLastName}",
+                            data.address.toString(),
+                            data.tenantPhoneNumber.toString(),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const Center(
+                        child: Text(
+                          "No Current Hosts",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 15,
+                              fontFamily: kCircularStdMedium),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              );
+            }
+          } else {
+            return const Center(
+              child: Text(
+                "No Current Hosts",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 15,
+                    fontFamily: kCircularStdMedium),
+              ),
+            );
+          }
+        }
+      },
     );
   }
 
   Widget currentTenants(
-    String image,
+    String? image,
     name,
     address,
     contact,
   ) {
-    return GestureDetector(
-      onTap: () {},
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        Get.toNamed(Routes.myHostsDetailsPage);
+      },
       child: Container(
         width: Get.width,
         decoration: BoxDecoration(
@@ -48,16 +110,35 @@ class _CurrentHostViewState extends State<CurrentHostView> {
             children: [
               Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(18),
-                    child: Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                      scale: 1.2,
-                      height: 70,
-                      width: 70,
-                    ),
-                  ),
+                  image != "null"
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.network(
+                            image!,
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                            height: 70,
+                            width: 70,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                "assets/images/blank_profile.png",
+                                fit: BoxFit.cover,
+                                height: 70,
+                                width: 70,
+                              );
+                            },
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.asset(
+                            "assets/images/blank_profile.png",
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                            height: 70,
+                            width: 70,
+                          ),
+                        ),
                   const SizedBox(width: 15),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,

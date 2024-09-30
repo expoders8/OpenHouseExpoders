@@ -180,6 +180,8 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                           onTap: () {
                                             Get.to(() => CreatePropertyPage(
                                                   checkEdit: "edit",
+                                                  proeprtyId: propertydata.id
+                                                      .toString(),
                                                   proeprtyName: propertydata
                                                       .name
                                                       .toString(),
@@ -205,14 +207,21 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                   address: propertydata.address
                                                       .toString(),
                                                   country: propertydata
+                                                      .countryName
+                                                      .toString(),
+                                                  countryId: propertydata
                                                       .countryId
                                                       .toString(),
-                                                  state: propertydata.stateId
+                                                  state: propertydata.stateName
+                                                      .toString(),
+                                                  stateId: propertydata.stateId
                                                       .toString(),
                                                   city: propertydata.cityName
                                                       .toString(),
                                                   amenitiesid:
                                                       propertydata.amenitys,
+                                                  imagelist:
+                                                      propertydata.images,
                                                 ));
                                           },
                                           child: Container(

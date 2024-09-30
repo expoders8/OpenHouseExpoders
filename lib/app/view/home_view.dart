@@ -67,6 +67,8 @@ class ResponsiveContainer extends StatelessWidget {
           tabController.changeTabIndex(1);
         } else if (name == "Manage Tenants' Service Requests") {
           Get.toNamed(Routes.myRequestViewAllView);
+        } else if (name == "Track Check-Out Requests") {
+          Get.toNamed(Routes.checkoutRequestsPage);
         }
       },
       child: Card(
@@ -87,7 +89,7 @@ class ResponsiveContainer extends StatelessWidget {
                 size: 31,
                 color: kButtonColor,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Center(
                 child: Text(
                   name,

@@ -24,6 +24,9 @@ abstract class Routes {
   static const notLeasePropertyDetailPage = _Paths.notLeasePropertyDetailPage;
   static const tenantRequestAllView = _Paths.tenantRequestAllView;
   static const myRequestViewAllView = _Paths.myRequestViewAllView;
+  static const myTenantsDetailsPage = _Paths.myTenantsDetailsPage;
+  static const myHostsDetailsPage = _Paths.myHostsDetailsPage;
+  static const checkoutRequestsPage = _Paths.checkoutRequestsPage;
   static const tenantLeasePropertyDetailPage =
       _Paths.tenantLeasePropertyDetailPage;
 }
@@ -51,4 +54,7 @@ abstract class _Paths {
   static const myRequestViewAllView = '/myRequestViewAllView';
   static const tenantLeasePropertyDetailPage = '/tenantLeasePropertyDetailPage';
   static const tenantRequestAllView = '/tenantRequestAllView';
+  static const myTenantsDetailsPage = '/myTenantsDetailsPage';
+  static const myHostsDetailsPage = '/myHostsDetailsPage';
+  static const checkoutRequestsPage = '/checkoutRequestsPage';
 }

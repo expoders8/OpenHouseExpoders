@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../models/get_expense_model.dart';
 import '../models/getpropretyes_model.dart';
 import '../services/properties_service.dart';
 
@@ -158,5 +159,24 @@ class GetMyLeasePropertyController extends GetxController {
     propertiesRequestModel.stateId = null;
     propertiesRequestModel.cityName = null;
     return propertiesRequestModel;
+  }
+}
+
+class GetAllExpenseController extends GetxController {
+  var isLoading = true.obs;
+  PropertiesService propertiesService = PropertiesService();
+  var expensetList = <GetAllExpenseModel>[].obs;
+  RxString propertyId = "".obs;
+
+  void getAllExpenses() async {
+    try {
+      isLoading(true);
+      var expenses = await propertiesService.getAllExpense(propertyId.value);
+      if (expenses.data != null) {
+        expensetList.assign(expenses);
+      }
+    } finally {
+      isLoading(false);
+    }
   }
 }

@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+import '../../../config/provider/loader_provider.dart';
+import '../../services/properties_service.dart';
 import '../widgets/custom_textfield.dart';
 import '../../services/lookup_service.dart';
 import '../../models/get_amenities_model.dart';
@@ -9,7 +11,8 @@ import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
 class AddExpensePage extends StatefulWidget {
-  const AddExpensePage({super.key});
+  final String? propertyId;
+  const AddExpensePage({super.key, this.propertyId});
 
   @override
   State<AddExpensePage> createState() => _AddExpensePageState();
@@ -20,8 +23,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
   bool isFormSubmitted = false;
   final _formKey = GlobalKey<FormState>();
   LookupService lookupService = LookupService();
+  PropertiesService propertiesService = PropertiesService();
   final TextEditingController amenityController = TextEditingController();
-  final TextEditingController raisedFundsController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +90,15 @@ class _AddExpensePageState extends State<AddExpensePage> {
                             color: kWhiteColor,
                           ),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              const BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
+                        errorText:
+                            isFormSubmitted && amenityController.text.isEmpty
+                                ? 'Please select a Amenities'
+                                : null,
                       ),
                       style: const TextStyle(
                         fontFamily: kCircularStdBook,
@@ -125,7 +138,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   child: CustomTextFormField(
                     hintText: 'Price',
                     maxLines: 1,
-                    ctrl: raisedFundsController,
+                    ctrl: priceController,
                     keyboardType: TextInputType.number,
                     name: "price",
                     formSubmitted: isFormSubmitted,
@@ -144,7 +157,21 @@ class _AddExpensePageState extends State<AddExpensePage> {
                         ),
                       ),
                       onPressed: () {
-                        Get.back();
+                        setState(() {
+                          isFormSubmitted = true;
+                        });
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        Future.delayed(const Duration(milliseconds: 100),
+                            () async {
+                          if (_formKey.currentState!.validate()) {
+                            if (amenityController.value.text != "" &&
+                                priceController.value.text != "") {
+                              LoaderX.show(context, 60.0, 60.0);
+                              propertiesService.addExpense(amenitiesId,
+                                  priceController.text, widget.propertyId);
+                            }
+                          }
+                        });
                       },
                       child: const Text(
                         "Submit",
