@@ -22,14 +22,29 @@ class _AmenitiesViewState extends State<AmenitiesView> {
   var selectedValues = [];
   final GetAllAmenitiesController getAllAmenitiesController =
       Get.put(GetAllAmenitiesController());
+  List ids = [];
 
   @override
   void initState() {
     super.initState();
     getAllAmenitiesController.fetchAllAmenites();
 
-    // selectedValues =
-    //     widget.initialAmenitiesIds.split(',').map((id) => id.trim()).toList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fecheId();
+    });
+  }
+
+  fecheId() async {
+    List newIds = widget.initialAmenitiesIds!;
+
+    await Future.delayed(Duration.zero);
+    setState(() {
+      ids = newIds;
+    });
+    getAllAmenitiesController.selectedAmenitis1.clear();
+    newIds.forEach((i) {
+      getAllAmenitiesController.selectedAmenitis1.add(i.id);
+    });
   }
 
   @override
