@@ -90,7 +90,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         children: [
                           Align(
                             alignment: Alignment.topCenter,
-                            child: imagefile != null || image != ""
+                            child: imagefile == null
                                 ? Container(
                                     margin: const EdgeInsets.only(top: 75),
                                     decoration: BoxDecoration(
@@ -115,6 +115,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                             width: 110,
                                           );
                                         },
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return SizedBox(
+                                            height: 110,
+                                            width: 110,
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                color: kPrimaryColor,
+                                                value: loadingProgress
+                                                            .expectedTotalBytes !=
+                                                        null
+                                                    ? loadingProgress
+                                                            .cumulativeBytesLoaded /
+                                                        loadingProgress
+                                                            .expectedTotalBytes!
+                                                    : null,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   )
@@ -127,8 +151,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(100),
-                                      child: Image.asset(
-                                        "assets/images/blank_profile.png",
+                                      child: Image.file(
+                                        imagefile!,
                                         fit: BoxFit.cover,
                                         scale: 1.2,
                                         height: 110,

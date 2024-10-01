@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/routes/app_pages.dart';
 
+import '../../services/firebase_auth_service.dart';
 import '../Auth/Login/login.dart';
 import '../TabPage/tab_page.dart';
 import '../../../config/constant/constant.dart';
@@ -22,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String userName = "";
   String email = "";
   String phoneNo = "";
-  String image = "";
+  String userImage = "";
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
       userName = userData["first_name"] + " " + userData["last_name"] ?? "";
       email = userData["email"] ?? "";
       phoneNo = userData["phone_number"] ?? "";
-      image = userData["profile_picture"] ?? "";
+      userImage = userData["profile_picture"] ?? "";
     }
   }
 
@@ -137,20 +138,51 @@ class _ProfilePageState extends State<ProfilePage> {
                           borderRadius: BorderRadius.circular(1000)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          image,
-                          fit: BoxFit.cover,
-                          height: 110,
-                          width: 110,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                              "assets/images/blank_profile.png",
-                              fit: BoxFit.cover,
-                              height: 110,
-                              width: 110,
-                            );
-                          },
-                        ),
+                        child: userImage != ""
+                            ? Image.network(
+                                userImage,
+                                fit: BoxFit.cover,
+                                height: 110,
+                                width: 110,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    "assets/images/blank_profile.png",
+                                    fit: BoxFit.cover,
+                                    height: 110,
+                                    width: 110,
+                                  );
+                                },
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return SizedBox(
+                                    height: 110,
+                                    width: 110,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: kPrimaryColor,
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            : Image.asset(
+                                "assets/images/blank_profile.png",
+                                fit: BoxFit.cover,
+                                height: 110,
+                                width: 110,
+                              ),
                       ),
                     ),
                   )
@@ -542,7 +574,7 @@ class _ProfilePageState extends State<ProfilePage> {
               getStorage.remove('user');
               getStorage.remove('authToken');
               getStorage.remove('appFlow');
-              // getStorage.write("index", 0);
+              FirebaseAuthServices().signOut();
               Get.offAll(() => const LoginPage());
             },
             child: const Text(

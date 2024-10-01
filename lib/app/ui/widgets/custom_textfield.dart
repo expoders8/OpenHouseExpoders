@@ -77,7 +77,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       decoration: InputDecoration(
         hintText: widget.hintText,
         filled: true,
-        fillColor: widget.name == "create" ? kWhiteColor : kTransparentColor,
+        fillColor: widget.name == "create"
+            ? kWhiteColor
+            : widget.name == "iamount"
+                ? kWhiteColor
+                : kTransparentColor,
         contentPadding:
             EdgeInsets.fromLTRB(13, widget.maxLines == 4 ? 16 : 0, 10, 0),
         hintStyle: TextStyle(
@@ -138,8 +142,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           borderRadius:
               BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
           borderSide: BorderSide(
-            color:
-                widget.name == "create" ? kWhiteColor : kSecondaryPrimaryColor,
+            color: widget.name == "create"
+                ? kWhiteColor
+                : widget.name == "iamount"
+                    ? kWhiteColor
+                    : kSecondaryPrimaryColor,
             width: 1.0,
           ),
         ),
@@ -147,8 +154,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           borderRadius:
               BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
           borderSide: BorderSide(
-            color:
-                widget.name == "create" ? kWhiteColor : kSecondaryPrimaryColor,
+            color: widget.name == "create"
+                ? kWhiteColor
+                : widget.name == "iamount"
+                    ? kWhiteColor
+                    : kSecondaryPrimaryColor,
           ),
         ),
       ),

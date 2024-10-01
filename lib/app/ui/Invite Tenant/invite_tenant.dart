@@ -235,6 +235,30 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                                           width: 50.0,
                                         );
                                       },
+                                      loadingBuilder: (BuildContext context,
+                                          Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        }
+                                        return SizedBox(
+                                          height: 50,
+                                          width: 50,
+                                          child: Center(
+                                            child: CircularProgressIndicator(
+                                              color: kPrimaryColor,
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                   subtitle:
