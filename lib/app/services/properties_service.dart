@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:openhome/app/models/get_expense_model.dart';
 
-import '../controller/property_detail_controller.dart';
 import '../controller/tab_controller.dart';
 import '../models/getpropretyes_model.dart';
 import '../../config/constant/constant.dart';

@@ -75,146 +75,146 @@ class GetAllMyHostsDataModel {
   }
 }
 
-// class GetAllMyTenantDetailModel {
-//   bool? success;
-//   int? code;
-//   String? message;
-//   GetAllMyTenantDetailDataModel? data;
+class GetAllMyHostDetailModel {
+  bool? success;
+  int? code;
+  String? message;
+  GetAllMyHostDetailDataModel? data;
 
-//   GetAllMyTenantDetailModel({this.success, this.code, this.message, this.data});
+  GetAllMyHostDetailModel({this.success, this.code, this.message, this.data});
 
-//   GetAllMyTenantDetailModel.fromJson(Map<String, dynamic> json) {
-//     success = json['success'];
-//     code = json['code'];
-//     message = json['message'];
-//     data = json['data'] != null
-//         ? GetAllMyTenantDetailDataModel.fromJson(json['data'])
-//         : null;
-//   }
+  GetAllMyHostDetailModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    code = json['code'];
+    message = json['message'];
+    data = json['data'] != null
+        ? GetAllMyHostDetailDataModel.fromJson(json['data'])
+        : null;
+  }
 
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data['success'] = success;
-//     data['code'] = code;
-//     data['message'] = message;
-//     if (this.data != null) {
-//       data['data'] = this.data!.toJson();
-//     }
-//     return data;
-//   }
-// }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['code'] = code;
+    data['message'] = message;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
 
-// class GetAllMyTenantDetailDataModel {
-//   Tenant? tenant;
+class GetAllMyHostDetailDataModel {
+  Host? host;
 
-//   GetAllMyTenantDetailDataModel({this.tenant});
+  GetAllMyHostDetailDataModel({this.host});
 
-//   GetAllMyTenantDetailDataModel.fromJson(Map<String, dynamic> json) {
-//     tenant = json['tenant'] != null ? Tenant.fromJson(json['tenant']) : null;
-//   }
+  GetAllMyHostDetailDataModel.fromJson(Map<String, dynamic> json) {
+    host = json['host'] != null ? Host.fromJson(json['host']) : null;
+  }
 
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     if (tenant != null) {
-//       data['tenant'] = tenant!.toJson();
-//     }
-//     return data;
-//   }
-// }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (host != null) {
+      data['host'] = host!.toJson();
+    }
+    return data;
+  }
+}
 
-// class Tenant {
-//   String? id;
-//   String? firstName;
-//   String? lastName;
-//   String? email;
-//   String? phoneNumber;
-//   String? profilePicture;
-//   String? type;
-//   Property? property;
+class Host {
+  String? id;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? phoneNumber;
+  String? profilePicture;
+  String? type;
+  Property? property;
 
-//   Tenant(
-//       {this.id,
-//       this.firstName,
-//       this.lastName,
-//       this.email,
-//       this.phoneNumber,
-//       this.profilePicture,
-//       this.type,
-//       this.property});
+  Host(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phoneNumber,
+      this.profilePicture,
+      this.type,
+      this.property});
 
-//   Tenant.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
-//     firstName = json['firstName'];
-//     lastName = json['lastName'];
-//     email = json['email'];
-//     phoneNumber = json['phoneNumber'];
-//     profilePicture = json['profilePicture'];
-//     type = json['type'];
-//     property =
-//         json['property'] != null ? Property.fromJson(json['property']) : null;
-//   }
+  Host.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    email = json['email'];
+    phoneNumber = json['phoneNumber'];
+    profilePicture = json['profilePicture'];
+    type = json['type'];
+    property =
+        json['property'] != null ? Property.fromJson(json['property']) : null;
+  }
 
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data['id'] = id;
-//     data['firstName'] = firstName;
-//     data['lastName'] = lastName;
-//     data['email'] = email;
-//     data['phoneNumber'] = phoneNumber;
-//     data['profilePicture'] = profilePicture;
-//     data['type'] = type;
-//     if (property != null) {
-//       data['property'] = property!.toJson();
-//     }
-//     return data;
-//   }
-// }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['email'] = email;
+    data['phoneNumber'] = phoneNumber;
+    data['profilePicture'] = profilePicture;
+    data['type'] = type;
+    if (property != null) {
+      data['property'] = property!.toJson();
+    }
+    return data;
+  }
+}
 
-// class Property {
-//   String? id;
-//   String? name;
-//   String? address;
-//   String? description;
-//   int? rentAmount;
-//   String? profilePicture;
-//   String? createdAt;
-//   String? startDate;
-//   String? endDate;
+class Property {
+  String? id;
+  String? name;
+  String? address;
+  String? description;
+  int? rentAmount;
+  String? profilePicture;
+  String? createdAt;
+  String? startDate;
+  String? endDate;
 
-//   Property(
-//       {this.id,
-//       this.name,
-//       this.address,
-//       this.description,
-//       this.rentAmount,
-//       this.profilePicture,
-//       this.createdAt,
-//       this.startDate,
-//       this.endDate});
+  Property(
+      {this.id,
+      this.name,
+      this.address,
+      this.description,
+      this.rentAmount,
+      this.profilePicture,
+      this.createdAt,
+      this.startDate,
+      this.endDate});
 
-//   Property.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
-//     name = json['name'];
-//     address = json['address'];
-//     description = json['description'];
-//     rentAmount = json['rent_amount'];
-//     profilePicture = json['profilePicture'];
-//     createdAt = json['createdAt'];
-//     startDate = json['startDate'];
-//     endDate = json['endDate'];
-//   }
+  Property.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    address = json['address'];
+    description = json['description'];
+    rentAmount = json['rent_amount'];
+    profilePicture = json['profilePicture'];
+    createdAt = json['createdAt'];
+    startDate = json['startDate'];
+    endDate = json['endDate'];
+  }
 
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data['id'] = id;
-//     data['name'] = name;
-//     data['address'] = address;
-//     data['description'] = description;
-//     data['rent_amount'] = rentAmount;
-//     data['profilePicture'] = profilePicture;
-//     data['createdAt'] = createdAt;
-//     data['startDate'] = startDate;
-//     data['endDate'] = endDate;
-//     return data;
-//   }
-// }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['address'] = address;
+    data['description'] = description;
+    data['rent_amount'] = rentAmount;
+    data['profilePicture'] = profilePicture;
+    data['createdAt'] = createdAt;
+    data['startDate'] = startDate;
+    data['endDate'] = endDate;
+    return data;
+  }
+}

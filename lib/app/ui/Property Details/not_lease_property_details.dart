@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
-import '../../models/getbyid_property_model.dart';
 import '../../routes/app_pages.dart';
 import '../../view/nearby_view.dart';
 import '../../view/tenant_history_view.dart';
@@ -12,6 +11,7 @@ import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../view/house keeper/house_keeper_view.dart';
 import '../../controller/property_detail_controller.dart';
+import '../Add NearBy/add_nearby.dart';
 import '../CreateProperty/create_property.dart';
 
 class NotLeasePropertyDetailPage extends StatefulWidget {
@@ -144,7 +144,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                             SizedBox(
                                               width: Get.width - 100,
                                               child: Text(
-                                                propertydata!.name!.toString(),
+                                                propertydata.name!.toString(),
                                                 style: const TextStyle(
                                                     color: kPrimaryColor,
                                                     fontSize: 18,
@@ -398,7 +398,47 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                     ),
                                   ),
                                   const NotLeasePropertyDetailsView(),
-                                  const NearByAmenitiesView(),
+                                  Column(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 10.0),
+                                        child: CupertinoButton(
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () {
+                                            Get.to(() => AddNearByPage(
+                                                  propertyId: propertydata!.id!,
+                                                ));
+                                          },
+                                          child: Container(
+                                            height: 38,
+                                            width: Get.width,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                    color: kPrimaryColor),
+                                                color: kBackGroundColor),
+                                            child: const Center(
+                                              child: Text(
+                                                "+ Add Nearby",
+                                                style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontFamily:
+                                                        kCircularStdNormal,
+                                                    fontSize: 18),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      NearByAmenitiesView(
+                                        propertyId:
+                                            propertydata!.id!.toString(),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),

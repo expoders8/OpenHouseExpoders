@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -91,70 +92,72 @@ class _MyTenantsPageState extends State<MyTenantsPage>
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
         actions: [
-          selectedRoll == "tenant"
-              ? Container()
-              : GestureDetector(
-                  onTap: () {
-                    Get.toNamed(Routes.profilePage);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipOval(
-                      child: Material(
-                          child: userImage != ""
-                              ? Image.network(
-                                  userImage,
-                                  width: 30,
-                                  height: 30,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Image.asset(
-                                    "assets/images/blank_profile.png",
-                                    width: 33,
-                                    height: 33,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  fit: BoxFit.cover,
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    }
-                                    return SizedBox(
-                                      width: 33,
-                                      height: 33,
-                                      child: Center(
-                                        child: CircularProgressIndicator(
-                                          color: kPrimaryColor,
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                Get.toNamed(Routes.profilePage);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipOval(
+                  child: Material(
+                      child: userImage != ""
+                          ? Image.network(
+                              userImage,
+                              width: 30,
+                              height: 30,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(
+                                "assets/images/blank_profile.png",
+                                width: 33,
+                                height: 33,
+                                fit: BoxFit.cover,
+                              ),
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return SizedBox(
+                                  width: 33,
+                                  height: 33,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: kPrimaryColor,
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
                                                   null
                                               ? loadingProgress
                                                       .cumulativeBytesLoaded /
                                                   loadingProgress
                                                       .expectedTotalBytes!
                                               : null,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                )
-                              : Container(
-                                  height: 36,
-                                  width: 36,
-                                  color: kTransparentColor,
-                                  child: Center(
-                                      child: Text(
-                                    "$firstlater$lastlatter".toUpperCase(),
-                                    style: const TextStyle(
-                                        color: kPrimaryColor,
-                                        fontSize: 15,
-                                        fontFamily: kCircularStdNormal),
-                                  )),
-                                )),
-                    ),
-                  ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          : Container(
+                              height: 36,
+                              width: 36,
+                              color: kTransparentColor,
+                              child: Center(
+                                  child: Text(
+                                "$firstlater$lastlatter".toUpperCase(),
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdNormal),
+                              )),
+                            )),
                 ),
+              ),
+            ),
+          ),
         ],
       ),
       body: Padding(

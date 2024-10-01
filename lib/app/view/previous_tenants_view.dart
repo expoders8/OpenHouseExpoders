@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
+import '../controller/my_tenants_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
-import '../controller/my_tenants_controller.dart';
-import '../routes/app_pages.dart';
 
 class PreviousTenantsView extends StatefulWidget {
   const PreviousTenantsView({super.key});
@@ -29,9 +28,9 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
         } else {
           if (getAllPreviousTenantsController.tenantsList.isNotEmpty) {
             if (getAllPreviousTenantsController.tenantsList[0].data!.isEmpty) {
-              return Column(
+              return const Column(
                 children: [
-                  SizedBox(height: 200),
+                  SizedBox(height: 250),
                   Text(
                     "No Previous Tenants",
                     style: TextStyle(
@@ -42,10 +41,11 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
                 ],
               );
             } else {
-              return Flexible(
-                child: Column(
-                  children: [
-                    TextFormField(
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: TextFormField(
                       controller: searchController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.fromLTRB(13, 0, 10, 0),
@@ -72,44 +72,44 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Flexible(
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        itemCount: getAllPreviousTenantsController
-                            .tenantsList[0].data!.length,
-                        itemBuilder: (context, index) {
-                          var requestData = getAllPreviousTenantsController
-                              .tenantsList[0].data!;
-                          if (requestData.isNotEmpty) {
-                            var data = requestData[index];
-                            return Column(
-                              children: [
-                                currentTenants(
-                                    data.tenantProfilePicture.toString(),
-                                    "${data.tenantFirstName} ${data.tenantLastName}",
-                                    data.address.toString(),
-                                    data.tenantPhoneNumber.toString(),
-                                    data.id.toString()),
-                              ],
-                            );
-                          } else {
-                            return const Center(
-                              child: Text(
-                                "No Previous Tenants",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                            );
-                          }
-                        },
-                      ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: getAllPreviousTenantsController
+                          .tenantsList[0].data!.length,
+                      itemBuilder: (context, index) {
+                        var requestData = getAllPreviousTenantsController
+                            .tenantsList[0].data!;
+                        if (requestData.isNotEmpty) {
+                          var data = requestData[index];
+                          return Column(
+                            children: [
+                              previousTenants(
+                                  data.tenantProfilePicture.toString(),
+                                  "${data.tenantFirstName} ${data.tenantLastName}",
+                                  data.address.toString(),
+                                  data.tenantPhoneNumber.toString(),
+                                  data.id.toString()),
+                            ],
+                          );
+                        } else {
+                          return const Center(
+                            child: Text(
+                              "No Previous Tenants",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          );
+                        }
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             }
           } else {
@@ -129,13 +129,12 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
     );
   }
 
-  Widget currentTenants(String? image, name, address, contact, id) {
+  previousTenants(String? image, name, address, contact, id) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
         getDetailTenantsController.tenantId(id);
         getDetailTenantsController.fetchTenantDetail();
-        Get.toNamed(Routes.myTenantsDetailsPage);
       },
       child: Container(
         width: Get.width,
@@ -208,27 +207,29 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
                           ),
                         ],
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.phone,
-                            size: 16,
-                            color: kButtonColor,
-                          ),
-                          const SizedBox(width: 5),
-                          SizedBox(
-                            width: Get.width / 2,
-                            child: Text(
-                              contact,
-                              style: const TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdBook),
-                            ),
-                          ),
-                        ],
-                      ),
+                      contact != "null"
+                          ? Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(
+                                  Icons.phone,
+                                  size: 16,
+                                  color: kButtonColor,
+                                ),
+                                const SizedBox(width: 5),
+                                SizedBox(
+                                  width: Get.width / 2,
+                                  child: Text(
+                                    contact,
+                                    style: const TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 13,
+                                        fontFamily: kCircularStdBook),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Container(),
                     ],
                   )
                 ],

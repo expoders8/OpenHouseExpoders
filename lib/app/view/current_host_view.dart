@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
+import '../controller/my_hosts_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
-import '../controller/my_hosts_controller.dart';
-import '../routes/app_pages.dart';
 
 class CurrentHostView extends StatefulWidget {
   const CurrentHostView({super.key});
@@ -17,6 +16,9 @@ class CurrentHostView extends StatefulWidget {
 class _CurrentHostViewState extends State<CurrentHostView> {
   final GetAllCurrentHostsController getAllCurrentHostsController =
       Get.put(GetAllCurrentHostsController());
+  TextEditingController searchController = TextEditingController();
+  final GetDetailHostsController getDetailHostsController =
+      Get.put(GetDetailHostsController());
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -26,50 +28,88 @@ class _CurrentHostViewState extends State<CurrentHostView> {
         } else {
           if (getAllCurrentHostsController.hostsList.isNotEmpty) {
             if (getAllCurrentHostsController.hostsList[0].data!.isEmpty) {
-              return const Center(
-                child: Text(
-                  "No Current Hosts",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 12,
-                      fontFamily: kCircularStdMedium),
-                ),
+              return const Column(
+                children: [
+                  SizedBox(height: 250),
+                  Text(
+                    "No Current Hosts",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 12,
+                        fontFamily: kCircularStdMedium),
+                  ),
+                ],
               );
             } else {
-              return Flexible(
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount:
-                      getAllCurrentHostsController.hostsList[0].data!.length,
-                  itemBuilder: (context, index) {
-                    var requestData =
-                        getAllCurrentHostsController.hostsList[0].data!;
-                    if (requestData.isNotEmpty) {
-                      var data = requestData[index];
-                      return Column(
-                        children: [
-                          currentTenants(
-                            data.tenantProfilePicture.toString(),
-                            "${data.tenantFirstName} ${data.tenantLastName}",
-                            data.address.toString(),
-                            data.tenantPhoneNumber.toString(),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const Center(
-                        child: Text(
-                          "No Current Hosts",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 15,
-                              fontFamily: kCircularStdMedium),
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: TextFormField(
+                      controller: searchController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.fromLTRB(13, 0, 10, 0),
+                        prefixIcon: const Icon(Icons.search),
+                        filled: true,
+                        fillColor: kWhiteColor,
+                        hintText: 'Search',
+                        hintStyle: const TextStyle(
+                            color: kSecondaryPrimaryColor,
+                            fontFamily: kCircularStdNormal,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
                         ),
-                      );
-                    }
-                  },
-                ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: getAllCurrentHostsController
+                          .hostsList[0].data!.length,
+                      itemBuilder: (context, index) {
+                        var requestData =
+                            getAllCurrentHostsController.hostsList[0].data!;
+                        if (requestData.isNotEmpty) {
+                          var data = requestData[index];
+                          return Column(
+                            children: [
+                              currentHost(
+                                  data.tenantProfilePicture.toString(),
+                                  "${data.tenantFirstName} ${data.tenantLastName}",
+                                  data.address.toString(),
+                                  data.tenantPhoneNumber.toString(),
+                                  data.id.toString()),
+                            ],
+                          );
+                        } else {
+                          return const Center(
+                            child: Text(
+                              "No Current Hosts",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
               );
             }
           } else {
@@ -89,16 +129,12 @@ class _CurrentHostViewState extends State<CurrentHostView> {
     );
   }
 
-  Widget currentTenants(
-    String? image,
-    name,
-    address,
-    contact,
-  ) {
+  currentHost(String? image, name, address, contact, id) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
-        Get.toNamed(Routes.myHostsDetailsPage);
+        getDetailHostsController.hostId(id);
+        getDetailHostsController.fetchHostDetail();
       },
       child: Container(
         width: Get.width,
@@ -171,27 +207,29 @@ class _CurrentHostViewState extends State<CurrentHostView> {
                           ),
                         ],
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.phone,
-                            size: 16,
-                            color: kButtonColor,
-                          ),
-                          const SizedBox(width: 5),
-                          SizedBox(
-                            width: Get.width / 2,
-                            child: Text(
-                              contact,
-                              style: const TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdBook),
-                            ),
-                          ),
-                        ],
-                      ),
+                      contact != "null"
+                          ? Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(
+                                  Icons.phone,
+                                  size: 16,
+                                  color: kButtonColor,
+                                ),
+                                const SizedBox(width: 5),
+                                SizedBox(
+                                  width: Get.width / 2,
+                                  child: Text(
+                                    contact,
+                                    style: const TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 13,
+                                        fontFamily: kCircularStdBook),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Container(),
                     ],
                   )
                 ],

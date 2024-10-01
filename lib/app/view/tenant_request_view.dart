@@ -237,7 +237,7 @@ class _TanantRequestViewState extends State<TenantRequestView> {
                                                 child: Center(
                                                   child: Text(
                                                     data.status.toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: kWhiteColor,
                                                         fontFamily:
                                                             kCircularStdNormal,

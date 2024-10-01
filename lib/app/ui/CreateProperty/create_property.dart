@@ -8,7 +8,6 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
 import '../../controller/property_controller.dart';
-import '../../models/getbyid_property_model.dart';
 import '../../models/state_model.dart';
 import '../../view/amenities_view.dart';
 import '../../models/country_model.dart';

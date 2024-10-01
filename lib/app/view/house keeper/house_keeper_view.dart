@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -72,7 +73,9 @@ class _HouseKeeperViewState extends State<HouseKeeperView> {
                             fontSize: 12),
                       ),
                     ),
-                    onPressed: () {}),
+                    onPressed: () {
+                      Get.toNamed(Routes.addHousekeeperPage);
+                    }),
               ),
             ],
           ),

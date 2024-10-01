@@ -19,96 +19,132 @@ class NotLeasePropertyView extends StatefulWidget {
 class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
   final GetAvailablePropertyController getAvailablePropertyController =
       Get.put(GetAvailablePropertyController());
+  var notleasesearchController = TextEditingController();
   final GetnotleaseDetailsPropertiesController
       getnotleaseDetailsPropertiesController =
       Get.put(GetnotleaseDetailsPropertiesController());
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Obx(
-        () {
-          if (getAvailablePropertyController.isLoading.value) {
-            return Container(
-              color: kBackGroundColor,
-              child: const Center(
-                child: CircularProgressIndicator(
-                  color: kSelectedIconColor,
-                ),
+    return Obx(
+      () {
+        if (getAvailablePropertyController.isLoading.value) {
+          return Container(
+            color: kBackGroundColor,
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: kSelectedIconColor,
               ),
-            );
-          } else {
-            if (getAvailablePropertyController.propertiesList.isNotEmpty) {
-              if (getAvailablePropertyController
-                  .propertiesList[0].data!.isEmpty) {
-                return Center(
-                  child: SizedBox(
-                    width: Get.width - 80,
-                    child: const Text(
-                      "No Properties",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 15,
-                          fontFamily: kCircularStdMedium),
-                    ),
+            ),
+          );
+        } else {
+          if (getAvailablePropertyController.propertiesList.isNotEmpty) {
+            if (getAvailablePropertyController
+                .propertiesList[0].data!.isEmpty) {
+              return Center(
+                child: SizedBox(
+                  width: Get.width - 80,
+                  child: const Text(
+                    "No Properties",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdMedium),
                   ),
-                );
-              } else {
-                return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: getAvailablePropertyController
-                      .propertiesList[0].data!.length,
-                  itemBuilder: (context, index) {
-                    var propertyData =
-                        getAvailablePropertyController.propertiesList[0].data!;
-                    if (propertyData.isNotEmpty) {
-                      var data = propertyData[index];
-                      // String dateStartString = data.startDate.toString();
-                      // String dateEndString = data.endDate.toString();
-                      // DateTime myDateStartTime =
-                      //     DateTime.parse(dateStartString);
-                      // DateTime myDateEndTime = DateTime.parse(dateEndString);
-                      // String startTime =
-                      //   DateFormat('hh:mm a').format(myDateStartTime);
-                      // String endTime =
-                      //     DateFormat('hh:mm a').format(myDateEndTime);
-                      return notLeaseProperty(
-                          data.propertyImage.toString(),
-                          data.rentAmount.toString(),
-                          data.address.toString(),
-                          data.person.toString(),
-                          data.name.toString(),
-                          data.id.toString());
-                    } else {
-                      return const Center(
-                        child: Text(
-                          "No Properties",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 15,
-                              fontFamily: kCircularStdMedium),
-                        ),
-                      );
-                    }
-                  },
-                );
-              }
-            } else {
-              return const Center(
-                child: Text(
-                  "No Properties",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 15,
-                      fontFamily: kCircularStdMedium),
                 ),
               );
+            } else {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: TextFormField(
+                      controller: notleasesearchController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.fromLTRB(13, 0, 10, 0),
+                        prefixIcon: const Icon(Icons.search),
+                        filled: true,
+                        fillColor: kWhiteColor,
+                        hintText: 'Search',
+                        hintStyle: const TextStyle(
+                            color: kSecondaryPrimaryColor,
+                            fontFamily: kCircularStdNormal,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: getAvailablePropertyController
+                          .propertiesList[0].data!.length,
+                      itemBuilder: (context, index) {
+                        var propertyData = getAvailablePropertyController
+                            .propertiesList[0].data!;
+                        if (propertyData.isNotEmpty) {
+                          var data = propertyData[index];
+                          // String dateStartString = data.startDate.toString();
+                          // String dateEndString = data.endDate.toString();
+                          // DateTime myDateStartTime =
+                          //     DateTime.parse(dateStartString);
+                          // DateTime myDateEndTime = DateTime.parse(dateEndString);
+                          // String startTime =
+                          //   DateFormat('hh:mm a').format(myDateStartTime);
+                          // String endTime =
+                          //     DateFormat('hh:mm a').format(myDateEndTime);
+                          return notLeaseProperty(
+                              data.propertyImage.toString(),
+                              data.rentAmount.toString(),
+                              data.address.toString(),
+                              data.person.toString(),
+                              data.name.toString(),
+                              data.id.toString());
+                        } else {
+                          return const Center(
+                            child: Text(
+                              "No Properties",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              );
             }
+          } else {
+            return const Center(
+              child: Text(
+                "No Properties",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 15,
+                    fontFamily: kCircularStdMedium),
+              ),
+            );
           }
-        },
-      ),
+        }
+      },
     );
   }
 

@@ -1,12 +1,12 @@
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../services/properties_service.dart';
+import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../../config/provider/loader_provider.dart';
-import '../controller/property_controller.dart';
-import '../services/properties_service.dart';
 
 class ExpenseView extends StatefulWidget {
   const ExpenseView({super.key});
@@ -28,13 +28,16 @@ class _ExpenseViewState extends State<ExpenseView> {
         } else {
           if (getAllExpenseController.expensetList.isNotEmpty) {
             if (getAllExpenseController.expensetList[0].data!.isEmpty) {
-              return const Center(
-                child: Text(
-                  "No Expense",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 12,
-                      fontFamily: kCircularStdMedium),
+              return const Padding(
+                padding: EdgeInsets.only(top: 50.0),
+                child: Center(
+                  child: Text(
+                    "No Expenses",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdMedium),
+                  ),
                 ),
               );
             } else {
@@ -61,14 +64,16 @@ class _ExpenseViewState extends State<ExpenseView> {
                         ],
                       );
                     } else {
-                      return const Center(
-                        child: Text(
-                          "No Expense",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 15,
-                              fontFamily: kCircularStdMedium),
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 50.0),
+                        child: Center(
+                          child: Text(
+                            "No Expenses",
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 15,
+                                fontFamily: kCircularStdMedium),
+                          ),
                         ),
                       );
                     }
@@ -77,14 +82,16 @@ class _ExpenseViewState extends State<ExpenseView> {
               );
             }
           } else {
-            return const Center(
-              child: Text(
-                "No Expense",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 15,
-                    fontFamily: kCircularStdMedium),
+            return const Padding(
+              padding: EdgeInsets.only(top: 50.0),
+              child: Center(
+                child: Text(
+                  "No Expenses",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
               ),
             );
           }

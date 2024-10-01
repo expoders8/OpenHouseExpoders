@@ -1,4 +1,3 @@
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +5,6 @@ import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:openhome/app/ui/Add%20Expense/add_expense.dart';
 
 import '../../controller/property_controller.dart';
-import '../../routes/app_pages.dart';
 import '../../services/properties_service.dart';
 import '../../view/expense_view.dart';
 import '../../view/nearby_view.dart';
@@ -18,6 +16,7 @@ import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../controller/property_detail_controller.dart';
+import '../Add NearBy/add_nearby.dart';
 import '../CreateProperty/create_property.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
@@ -249,6 +248,8 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                         .toString(),
                                                     amenitiesid:
                                                         propertydata.amenitys,
+                                                    imagelist:
+                                                        propertydata.images,
                                                   ));
                                             },
                                             child: Container(
@@ -424,7 +425,48 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                       ),
                                     ),
                                     const PropertyDetailsView(),
-                                    const NearByAmenitiesView(),
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 10.0),
+                                          child: CupertinoButton(
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {
+                                              Get.to(() => AddNearByPage(
+                                                    propertyId:
+                                                        propertydata.id!,
+                                                  ));
+                                            },
+                                            child: Container(
+                                              height: 38,
+                                              width: Get.width,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: kPrimaryColor),
+                                                  color: kBackGroundColor),
+                                              child: const Center(
+                                                child: Text(
+                                                  "+ Add Nearby",
+                                                  style: TextStyle(
+                                                      color: kPrimaryColor,
+                                                      fontFamily:
+                                                          kCircularStdNormal,
+                                                      fontSize: 18),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        NearByAmenitiesView(
+                                          propertyId:
+                                              propertydata.id!.toString(),
+                                        ),
+                                      ],
+                                    ),
                                     const PaymentView(),
                                     SingleChildScrollView(
                                       child: Column(

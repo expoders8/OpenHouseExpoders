@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -90,62 +91,69 @@ class MyHostsPageState extends State<MyHostsPage>
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
         actions: [
-          GestureDetector(
-            onTap: () {
-              Get.toNamed(Routes.profilePage);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipOval(
-                child: Material(
-                    child: userImage != ""
-                        ? Image.network(
-                            userImage,
-                            width: 30,
-                            height: 30,
-                            errorBuilder: (context, error, stackTrace) =>
-                                Image.asset(
-                              "assets/images/blank_profile.png",
-                              width: 33,
-                              height: 33,
-                              fit: BoxFit.cover,
-                            ),
-                            fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              }
-                              return SizedBox(
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                Get.toNamed(Routes.profilePage);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipOval(
+                  child: Material(
+                      child: userImage != ""
+                          ? Image.network(
+                              userImage,
+                              width: 30,
+                              height: 30,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(
+                                "assets/images/blank_profile.png",
                                 width: 33,
                                 height: 33,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: kPrimaryColor,
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
+                                fit: BoxFit.cover,
+                              ),
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return SizedBox(
+                                  width: 33,
+                                  height: 33,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: kPrimaryColor,
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          )
-                        : Container(
-                            height: 36,
-                            width: 36,
-                            color: kTransparentColor,
-                            child: Center(
-                                child: Text(
-                              "$firstlater$lastlatter".toUpperCase(),
-                              style: const TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 15,
-                                  fontFamily: kCircularStdNormal),
+                                );
+                              },
+                            )
+                          : Container(
+                              height: 36,
+                              width: 36,
+                              color: kTransparentColor,
+                              child: Center(
+                                  child: Text(
+                                "$firstlater$lastlatter".toUpperCase(),
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdNormal),
+                              )),
                             )),
-                          )),
+                ),
               ),
             ),
           ),
@@ -173,87 +181,13 @@ class MyHostsPageState extends State<MyHostsPage>
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          TextFormField(
-                            controller: searchController,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                              prefixIcon: const Icon(Icons.search),
-                              filled: true,
-                              fillColor: kWhiteColor,
-                              hintText: 'Search',
-                              hintStyle: const TextStyle(
-                                  color: kSecondaryPrimaryColor,
-                                  fontFamily: kCircularStdNormal,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const CurrentHostView(),
-                        ],
-                      ),
+                      child: const CurrentHostView(),
                     ),
                     GestureDetector(
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          TextFormField(
-                            controller: searchController,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                              prefixIcon: const Icon(Icons.search),
-                              filled: true,
-                              fillColor: kWhiteColor,
-                              hintText: 'Search',
-                              hintStyle: const TextStyle(
-                                  color: kSecondaryPrimaryColor,
-                                  fontFamily: kCircularStdNormal,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const PreviousHostView()
-                        ],
-                      ),
+                      child: const PreviousHostView(),
                     ),
                   ],
                 ),

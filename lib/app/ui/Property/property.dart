@@ -83,7 +83,8 @@ class _PropertyPageState extends State<PropertyPage>
               selectedRoll == "tenant"
                   ? "On Lease Properties"
                   : "My Properties",
-              style: TextStyle(fontFamily: kCircularStdBold, fontSize: 18),
+              style:
+                  const TextStyle(fontFamily: kCircularStdBold, fontSize: 18),
             ),
             const SizedBox(width: 3),
             Container(
@@ -106,13 +107,13 @@ class _PropertyPageState extends State<PropertyPage>
         automaticallyImplyLeading: false,
         backgroundColor: kBackGroundColor,
         actions: [
-          CupertinoButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              Get.toNamed(Routes.profilePage);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                Get.toNamed(Routes.profilePage);
+              },
               child: ClipOval(
                 child: Material(
                     child: userImage != ""
@@ -191,44 +192,7 @@ class _PropertyPageState extends State<PropertyPage>
                             onTap: () {
                               FocusScope.of(context).requestFocus(FocusNode());
                             },
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 10),
-                                TextFormField(
-                                  controller: currentsearchController,
-                                  decoration: InputDecoration(
-                                    contentPadding:
-                                        const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                                    prefixIcon: const Icon(Icons.search),
-                                    filled: true,
-                                    fillColor: kWhiteColor,
-                                    hintText: 'Search',
-                                    hintStyle: const TextStyle(
-                                        color: kSecondaryPrimaryColor,
-                                        fontFamily: kCircularStdNormal,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide:
-                                          const BorderSide(color: kWhiteColor),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide:
-                                          const BorderSide(color: kWhiteColor),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide:
-                                          const BorderSide(color: kWhiteColor),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                const CurrentPropertyView(),
-                              ],
-                            ),
+                            child: const CurrentPropertyView(),
                           ),
                           Column(
                             children: [
@@ -292,99 +256,13 @@ class _PropertyPageState extends State<PropertyPage>
                             onTap: () {
                               FocusScope.of(context).requestFocus(FocusNode());
                             },
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 10),
-                                TextFormField(
-                                  controller: leasesearchController,
-                                  decoration: InputDecoration(
-                                    contentPadding:
-                                        const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                                    prefixIcon: const Icon(Icons.search),
-                                    filled: true,
-                                    fillColor: kWhiteColor,
-                                    hintText: 'Search',
-                                    hintStyle: const TextStyle(
-                                        color: kSecondaryPrimaryColor,
-                                        fontFamily: kCircularStdNormal,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide:
-                                          const BorderSide(color: kWhiteColor),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide:
-                                          const BorderSide(color: kWhiteColor),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide:
-                                          const BorderSide(color: kWhiteColor),
-                                    ),
-                                  ),
-                                  onChanged: (value) {
-                                    getLeasePropertyController
-                                        .searchText.value = value;
-                                    getLeasePropertyController
-                                        .fetchAllProperties();
-                                  },
-                                ),
-                                const SizedBox(height: 10),
-                                const LeasePropertyView(),
-                              ],
-                            ),
+                            child: const LeasePropertyView(),
                           ),
                           GestureDetector(
                             onTap: () {
                               FocusScope.of(context).requestFocus(FocusNode());
                             },
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 10),
-                                TextFormField(
-                                  controller: notleasesearchController,
-                                  decoration: InputDecoration(
-                                    contentPadding:
-                                        const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                                    prefixIcon: const Icon(Icons.search),
-                                    filled: true,
-                                    fillColor: kWhiteColor,
-                                    hintText: 'Search',
-                                    hintStyle: const TextStyle(
-                                        color: kSecondaryPrimaryColor,
-                                        fontFamily: kCircularStdNormal,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide:
-                                          const BorderSide(color: kWhiteColor),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide:
-                                          const BorderSide(color: kWhiteColor),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide:
-                                          const BorderSide(color: kWhiteColor),
-                                    ),
-                                  ),
-                                  onChanged: (value) {
-                                    getAvailablePropertyController
-                                        .searchText.value = value;
-                                    getAvailablePropertyController
-                                        .fetchAllProperties();
-                                  },
-                                ),
-                                const SizedBox(height: 10),
-                                const NotLeasePropertyView(),
-                              ],
-                            ),
+                            child: const NotLeasePropertyView(),
                           ),
                         ],
                       ),

@@ -76,439 +76,468 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
         ),
         backgroundColor: kBackGroundColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Form(
-          key: _formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildTextWidget("Property"),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Row(
+      body: getCurrentPropertyController.propertiesList.isNotEmpty
+          ? Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Form(
+                key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Image.network(
-                          image,
-                          fit: BoxFit.cover,
-                          scale: 1.2,
-                          height: 55,
-                          width: 55,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                              "assets/images/samplehouse.jpeg",
-                              fit: BoxFit.cover,
-                              scale: 1.2,
-                              height: 55,
-                              width: 55,
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 15),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.home,
-                                size: 16,
-                                color: kButtonColor,
-                              ),
-                              const SizedBox(width: 10),
-                              SizedBox(
-                                width: Get.width / 1.7,
-                                child: Text(
-                                  addres,
-                                  style: const TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 15,
-                                      fontFamily: kCircularStdMedium),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.person,
-                                size: 16,
-                                color: kButtonColor,
-                              ),
-                              const SizedBox(width: 10),
-                              SizedBox(
-                                width: Get.width - 220,
-                                child: Text(
-                                  name,
-                                  style: const TextStyle(
-                                      color: kSecondaryPrimaryColor,
-                                      fontSize: 13,
-                                      fontFamily: kCircularStdBold),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                buildTextWidget("Amenity"),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: TypeAheadField<GetAllAmenitiesDataModel>(
-                    textFieldConfiguration: TextFieldConfiguration(
-                      controller: amenityController,
-                      decoration: InputDecoration(
-                        fillColor: kWhiteColor,
-                        filled: true,
-                        hintText: "Amenity",
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                        hintStyle: const TextStyle(
-                          fontFamily: kCircularStdBook,
-                          fontWeight: FontWeight.w400,
-                          color: kPrimaryColor,
-                          fontSize: 14,
-                        ),
-                        hintMaxLines: 1,
-                        suffixIcon: Image.asset(
-                          "assets/icons/polygon_down.png",
-                          scale: 2,
-                          width: 5,
-                        ),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                          borderSide:
-                              BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide:
-                              const BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: kWhiteColor,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide:
-                              const BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        errorText:
-                            isFormSubmitted && amenityController.text.isEmpty
-                                ? 'Please select a Amenities'
-                                : null,
-                      ),
-                      style: const TextStyle(
-                        fontFamily: kCircularStdBook,
-                        fontWeight: FontWeight.w400,
-                        color: kPrimaryColor,
-                        fontSize: 14,
-                      ),
-                      autocorrect: true,
-                      cursorColor: kPrimaryColor,
-                    ),
-                    suggestionsCallback: (pattern) {
-                      return lookupService.getamenities();
-                    },
-                    itemBuilder:
-                        (context, GetAllAmenitiesDataModel suggestion) {
-                      return ListTile(
-                        title: Text(suggestion.title.toString()),
-                      );
-                    },
-                    onSuggestionSelected:
-                        (GetAllAmenitiesDataModel suggestion) {
-                      setState(() {
-                        amenityController.text = suggestion.title.toString();
-                        amenitiesId = suggestion.id.toString();
-                      });
-                    },
-                    noItemsFoundBuilder: (context) => const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('No Amenity found'),
-                    ),
-                  ),
-                ),
-                buildTextWidget("Comment"),
-                Container(
-                  margin: const EdgeInsets.only(left: 5),
-                  width: Get.width > 500 ? 600 : Get.width - 42,
-                  child: CustomTextFormField(
-                    hintText: 'Describe you request',
-                    maxLines: 4,
-                    ctrl: raisedFundsController,
-                    name: "create",
-                    formSubmitted: isFormSubmitted,
-                    validationMsg: 'Please enter Comment',
-                  ),
-                ),
-                const SizedBox(height: 25),
-                Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          selctesType = "normal";
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(25)),
+                      buildTextWidget("Property"),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
                         child: Row(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(3),
-                              height: 15,
-                              width: 15,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: kPrimaryColor),
-                                  borderRadius: BorderRadius.circular(25)),
-                              child: Container(
-                                height: 5,
-                                width: 5,
-                                decoration: BoxDecoration(
-                                    color: selctesType == "normal"
-                                        ? kPrimaryColor
-                                        : kWhiteColor,
-                                    borderRadius: BorderRadius.circular(25)),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.network(
+                                image,
+                                fit: BoxFit.cover,
+                                scale: 1.2,
+                                height: 55,
+                                width: 55,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    "assets/images/samplehouse.jpeg",
+                                    fit: BoxFit.cover,
+                                    scale: 1.2,
+                                    height: 55,
+                                    width: 55,
+                                  );
+                                },
                               ),
                             ),
                             const SizedBox(width: 15),
-                            const Text(
-                              "Normal",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: kPrimaryColor,
-                                  fontFamily: kCircularStdMedium),
-                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.home,
+                                      size: 16,
+                                      color: kButtonColor,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    SizedBox(
+                                      width: Get.width / 1.7,
+                                      child: Text(
+                                        addres,
+                                        style: const TextStyle(
+                                            color: kPrimaryColor,
+                                            fontSize: 15,
+                                            fontFamily: kCircularStdMedium),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Icon(
+                                      Icons.person,
+                                      size: 16,
+                                      color: kButtonColor,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    SizedBox(
+                                      width: Get.width - 220,
+                                      child: Text(
+                                        name,
+                                        style: const TextStyle(
+                                            color: kSecondaryPrimaryColor,
+                                            fontSize: 13,
+                                            fontFamily: kCircularStdBold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          selctesType = "emergency";
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Center(
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(3),
-                                height: 15,
-                                width: 15,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: kPrimaryColor),
-                                    borderRadius: BorderRadius.circular(25)),
-                                child: Container(
-                                  height: 5,
-                                  width: 5,
-                                  decoration: BoxDecoration(
-                                      color: selctesType == "emergency"
-                                          ? kPrimaryColor
-                                          : kWhiteColor,
-                                      borderRadius: BorderRadius.circular(25)),
+                      buildTextWidget("Amenity"),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: TypeAheadField<GetAllAmenitiesDataModel>(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            controller: amenityController,
+                            decoration: InputDecoration(
+                              fillColor: kWhiteColor,
+                              filled: true,
+                              hintText: "Amenity",
+                              contentPadding:
+                                  const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                              hintStyle: const TextStyle(
+                                fontFamily: kCircularStdBook,
+                                fontWeight: FontWeight.w400,
+                                color: kPrimaryColor,
+                                fontSize: 14,
+                              ),
+                              hintMaxLines: 1,
+                              suffixIcon: Image.asset(
+                                "assets/icons/polygon_down.png",
+                                scale: 2,
+                                width: 5,
+                              ),
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                                borderSide:
+                                    BorderSide(color: kWhiteColor, width: 1.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: const BorderSide(
+                                    color: kWhiteColor, width: 1.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: const BorderSide(
+                                  color: kWhiteColor,
                                 ),
                               ),
-                              const SizedBox(width: 15),
-                              const Text(
-                                "Emergency",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: kPrimaryColor,
-                                    fontFamily: kCircularStdMedium),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: const BorderSide(
+                                    color: kWhiteColor, width: 1.0),
                               ),
-                            ],
+                              errorText: isFormSubmitted &&
+                                      amenityController.text.isEmpty
+                                  ? 'Please select a Amenities'
+                                  : null,
+                            ),
+                            style: const TextStyle(
+                              fontFamily: kCircularStdBook,
+                              fontWeight: FontWeight.w400,
+                              color: kPrimaryColor,
+                              fontSize: 14,
+                            ),
+                            autocorrect: true,
+                            cursorColor: kPrimaryColor,
+                          ),
+                          suggestionsCallback: (pattern) {
+                            return lookupService.getamenities();
+                          },
+                          itemBuilder:
+                              (context, GetAllAmenitiesDataModel suggestion) {
+                            return ListTile(
+                              title: Text(suggestion.title.toString()),
+                            );
+                          },
+                          onSuggestionSelected:
+                              (GetAllAmenitiesDataModel suggestion) {
+                            setState(() {
+                              amenityController.text =
+                                  suggestion.title.toString();
+                              amenitiesId = suggestion.id.toString();
+                            });
+                          },
+                          noItemsFoundBuilder: (context) => const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('No Amenity found'),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                buildTextWidget("Select Date"),
-                IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      buildTextWidget("Comment"),
+                      Container(
+                        margin: const EdgeInsets.only(left: 5),
+                        width: Get.width > 500 ? 600 : Get.width - 42,
+                        child: CustomTextFormField(
+                          hintText: 'Describe you request',
+                          maxLines: 4,
+                          ctrl: raisedFundsController,
+                          name: "create",
+                          formSubmitted: isFormSubmitted,
+                          validationMsg: 'Please enter Comment',
+                        ),
+                      ),
+                      const SizedBox(height: 25),
+                      Row(
                         children: [
-                          Container(
-                            height: 45,
-                            width: Get.width - 35,
-                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            decoration: BoxDecoration(
-                              color: kWhiteColor,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                                BottomPicker.date(
-                                  pickerTitle: const Text(""),
-                                  onSubmit: (index) {
-                                    String formattedDate =
-                                        DateFormat('yyyy-MM-dd').format(index);
-                                    if (mounted) {
-                                      setState(() {
-                                        selectdate = formattedDate;
-                                        pickedDate = formattedDate;
-                                        dateError = false;
-                                      });
-                                    }
-                                  },
-                                  dateOrder: DatePickerDateOrder.ymd,
-                                  minDateTime: DateTime(2024, 1, 1, 17, 57, 25),
-                                  maxDateTime: DateTime(2050, 1, 1),
-                                  pickerTextStyle: const TextStyle(
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                  onClose: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  bottomPickerTheme:
-                                      BottomPickerTheme.plumPlate,
-                                  buttonAlignment: MainAxisAlignment.center,
-                                  buttonContent: const Center(
-                                      child: Text(
-                                    "Save",
-                                    style: TextStyle(color: kWhiteColor),
-                                  )),
-                                  buttonStyle: BoxDecoration(
-                                      color: kButtonColor,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  closeIconColor: kPrimaryColor,
-                                  closeIconSize: 25,
-                                ).show(context);
-                              },
+                          const SizedBox(width: 10),
+                          CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              setState(() {
+                                selctesType = "normal";
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 5),
+                              decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(25)),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    selectdate,
-                                    style: const TextStyle(
-                                      fontFamily: kCircularStdBook,
-                                      fontWeight: FontWeight.w400,
-                                      color: kPrimaryColor,
-                                      fontSize: 14,
+                                  Container(
+                                    padding: const EdgeInsets.all(3),
+                                    height: 15,
+                                    width: 15,
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: kPrimaryColor),
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
+                                    child: Container(
+                                      height: 5,
+                                      width: 5,
+                                      decoration: BoxDecoration(
+                                          color: selctesType == "normal"
+                                              ? kPrimaryColor
+                                              : kWhiteColor,
+                                          borderRadius:
+                                              BorderRadius.circular(25)),
                                     ),
                                   ),
-                                  Image.asset(
-                                    "assets/icons/polygon_down.png",
-                                    scale: 2,
+                                  const SizedBox(width: 15),
+                                  const Text(
+                                    "Normal",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: kPrimaryColor,
+                                        fontFamily: kCircularStdMedium),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          if (isFormSubmitted && dateError)
-                            const Padding(
-                              padding: EdgeInsets.only(top: 8.0, left: 20),
-                              child: Text(
-                                "Please select a date.",
-                                style: TextStyle(
-                                  color: kErrorColor,
-                                  fontFamily: kCircularStdNormal,
-                                  fontSize: 12,
+                          const SizedBox(width: 10),
+                          CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              setState(() {
+                                selctesType = "emergency";
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 5),
+                              decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Center(
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(3),
+                                      height: 15,
+                                      width: 15,
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: kPrimaryColor),
+                                          borderRadius:
+                                              BorderRadius.circular(25)),
+                                      child: Container(
+                                        height: 5,
+                                        width: 5,
+                                        decoration: BoxDecoration(
+                                            color: selctesType == "emergency"
+                                                ? kPrimaryColor
+                                                : kWhiteColor,
+                                            borderRadius:
+                                                BorderRadius.circular(25)),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 15),
+                                    const Text(
+                                      "Emergency",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: kPrimaryColor,
+                                          fontFamily: kCircularStdMedium),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
+                          ),
                         ],
                       ),
+                      buildTextWidget("Select Date"),
+                      IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 45,
+                                  width: Get.width - 35,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                  decoration: BoxDecoration(
+                                    color: kWhiteColor,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                      BottomPicker.date(
+                                        pickerTitle: const Text(""),
+                                        onSubmit: (index) {
+                                          String formattedDate =
+                                              DateFormat('yyyy-MM-dd')
+                                                  .format(index);
+                                          if (mounted) {
+                                            setState(() {
+                                              selectdate = formattedDate;
+                                              pickedDate = formattedDate;
+                                              dateError = false;
+                                            });
+                                          }
+                                        },
+                                        dateOrder: DatePickerDateOrder.ymd,
+                                        minDateTime:
+                                            DateTime(2024, 1, 1, 17, 57, 25),
+                                        maxDateTime: DateTime(2050, 1, 1),
+                                        pickerTextStyle: const TextStyle(
+                                          color: kPrimaryColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                        onClose: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        bottomPickerTheme:
+                                            BottomPickerTheme.plumPlate,
+                                        buttonAlignment:
+                                            MainAxisAlignment.center,
+                                        buttonContent: const Center(
+                                            child: Text(
+                                          "Save",
+                                          style: TextStyle(color: kWhiteColor),
+                                        )),
+                                        buttonStyle: BoxDecoration(
+                                            color: kButtonColor,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        closeIconColor: kPrimaryColor,
+                                        closeIconSize: 25,
+                                      ).show(context);
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          selectdate,
+                                          style: const TextStyle(
+                                            fontFamily: kCircularStdBook,
+                                            fontWeight: FontWeight.w400,
+                                            color: kPrimaryColor,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        Image.asset(
+                                          "assets/icons/polygon_down.png",
+                                          scale: 2,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                if (isFormSubmitted && dateError)
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 8.0, left: 20),
+                                    child: Text(
+                                      "Please select a date.",
+                                      style: TextStyle(
+                                        color: kErrorColor,
+                                        fontFamily: kCircularStdNormal,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isFormSubmitted = true;
+                                if (selectdate.isEmpty ||
+                                    selectdate == "YYYY/MM/DD") {
+                                  setState(() {
+                                    dateError = true;
+                                  });
+                                }
+                              });
+                              FocusScope.of(context).requestFocus(FocusNode());
+
+                              Future.delayed(const Duration(milliseconds: 100),
+                                  () async {
+                                if (_formKey.currentState!.validate()) {
+                                  LoaderX.show(context, 60.0, 60.0);
+                                  requestsService
+                                      .addRequest(
+                                          amenitiesId,
+                                          raisedFundsController.text,
+                                          selctesType,
+                                          selectdate,
+                                          propertyId)
+                                      .then((value) {
+                                    if (value) {
+                                      getAllRequestsController.getAllRequests();
+                                      LoaderX.hide();
+                                      tabController.changeTabIndex(0);
+                                    }
+                                  });
+                                }
+                              });
+                            },
+                            child: const Text(
+                              "Submit",
+                              style: TextStyle(color: kWhiteColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 90)
                     ],
                   ),
                 ),
-                const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isFormSubmitted = true;
-                          if (selectdate.isEmpty ||
-                              selectdate == "YYYY/MM/DD") {
-                            setState(() {
-                              dateError = true;
-                            });
-                          }
-                        });
-                        FocusScope.of(context).requestFocus(FocusNode());
-
-                        Future.delayed(const Duration(milliseconds: 100),
-                            () async {
-                          if (_formKey.currentState!.validate()) {
-                            LoaderX.show(context, 60.0, 60.0);
-                            requestsService
-                                .addRequest(
-                                    amenitiesId,
-                                    raisedFundsController.text,
-                                    selctesType,
-                                    selectdate,
-                                    propertyId)
-                                .then((value) {
-                              if (value) {
-                                getAllRequestsController.getAllRequests();
-                                LoaderX.hide();
-                                tabController.changeTabIndex(0);
-                              }
-                            });
-                          }
-                        });
-                      },
-                      child: const Text(
-                        "Submit",
-                        style: TextStyle(color: kWhiteColor),
-                      ),
-                    ),
+              ),
+            )
+          : const Center(
+              child: Column(
+                children: [
+                  SizedBox(height: 250),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "You have no current leases\nSo you can't make any Requests",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 17,
+                        fontFamily: kCircularStdMedium),
                   ),
-                ),
-                const SizedBox(height: 90)
-              ],
+                ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 

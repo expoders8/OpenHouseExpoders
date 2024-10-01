@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:openhome/app/models/my_host_get_model.dart';
-import '../models/my_tenant_get_model.dart';
+import 'package:openhome/app/ui/My%20Host/my_hosts_detail.dart';
+import '../../config/constant/constant.dart';
+import '../../config/provider/snackbar_provider.dart';
 import '../services/my_hosts_service.dart';
-import '../services/my_tenants_service.dart';
+import 'package:http/http.dart' as http;
 
 class GetAllPreviousHostsController extends GetxController {
   var isLoading = true.obs;
@@ -48,6 +52,42 @@ class GetAllCurrentHostsController extends GetxController {
       if (tenants.data != null) {
         hostsList.assign(tenants);
       }
+    } finally {
+      isLoading(false);
+    }
+  }
+}
+
+class GetDetailHostsController extends GetxController {
+  var isLoading = true.obs;
+  RxString hostId = "".obs;
+  GetAllMyHostDetailModel? detailModel;
+  String selectedRoll = "";
+
+  void feachconferanceId(String newValue) {
+    hostId.value = newValue;
+    fetchHostDetail();
+  }
+
+  fetchHostDetail() async {
+    try {
+      isLoading(true);
+      var response = await http.post(
+          Uri.parse("$baseUrl/api/tenant/get_host_details"),
+          body: json.encode({"hostId": hostId.value}),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200) {
+        detailModel =
+            GetAllMyHostDetailModel.fromJson(jsonDecode(response.body));
+        Get.to(() => const MyHostsDetailsPage());
+        return detailModel;
+      } else {
+        return Future.error("Server Error");
+      }
+    } catch (error) {
+      SnackbarUtils.showErrorSnackbar(error.toString(),
+          "Error while Hostdetails, Please try after some time.");
+      return Future.error(error);
     } finally {
       isLoading(false);
     }

@@ -42,7 +42,7 @@ class _NotificationPageState extends State<NotificationPage> {
             if (getAllNotificationsController.notificationList.isNotEmpty) {
               if (getAllNotificationsController
                   .notificationList[0].data!.isEmpty) {
-                return Center(
+                return const Center(
                   child: Text('No Notification found'),
                 );
               } else {

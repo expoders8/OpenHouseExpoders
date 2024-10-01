@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../ui/Add Housekeeper/add_housekeeper.dart';
+import '../ui/Add NearBy/add_nearby.dart';
 import '../ui/Checkout Requests/checkout_request.dart';
 import '../ui/My Host/my_hosts_detail.dart';
 import '../ui/My Tenants/my_tenants_detail.dart';
@@ -133,6 +135,14 @@ class AppPages {
     GetPage(
       name: _Paths.checkoutRequestsPage,
       page: () => const CheckoutRequestsPage(),
+    ),
+    GetPage(
+      name: _Paths.addNearByPage,
+      page: () => const AddNearByPage(),
+    ),
+    GetPage(
+      name: _Paths.addHousekeeperPage,
+      page: () => const AddHousekeeperPage(),
     ),
   ];
 }

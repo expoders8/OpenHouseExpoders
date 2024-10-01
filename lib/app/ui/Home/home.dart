@@ -10,8 +10,6 @@ import '../../controller/property_detail_controller.dart';
 import '../../view/home_view.dart';
 import '../../view/my_request.dart';
 import '../../routes/app_pages.dart';
-import '../../view/chechout_request.dart';
-import '../../view/tenant_request_view.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/constant.dart';
 import '../../view/tenant_invitation_view.dart';
@@ -101,23 +99,20 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Get.toNamed(Routes.notificationPage);
             },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                "assets/icons/notification.png",
-                fit: BoxFit.cover,
-                height: 31,
-                width: 31,
-              ),
+            child: Image.asset(
+              "assets/icons/notification.png",
+              fit: BoxFit.cover,
+              height: 33,
+              width: 33,
             ),
           ),
-          CupertinoButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              Get.toNamed(Routes.profilePage);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                Get.toNamed(Routes.profilePage);
+              },
               child: ClipOval(
                 child: Material(
                     child: userImage != ""
@@ -128,8 +123,8 @@ class _HomePageState extends State<HomePage> {
                             errorBuilder: (context, error, stackTrace) =>
                                 Image.asset(
                               "assets/images/blank_profile.png",
-                              width: 33,
-                              height: 33,
+                              width: 30,
+                              height: 30,
                               fit: BoxFit.cover,
                             ),
                             fit: BoxFit.cover,
@@ -139,8 +134,8 @@ class _HomePageState extends State<HomePage> {
                                 return child;
                               }
                               return SizedBox(
-                                width: 33,
-                                height: 33,
+                                width: 30,
+                                height: 30,
                                 child: Center(
                                   child: CircularProgressIndicator(
                                     color: kPrimaryColor,
@@ -258,7 +253,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               );
                             } else {
-                              // ignore: unnecessary_null_comparison
                               if (getCurrentPropertyController
                                   .propertiesList.isNotEmpty) {
                                 if (getCurrentPropertyController
@@ -326,45 +320,16 @@ class _HomePageState extends State<HomePage> {
                                                               .toString(),
                                                           fit: BoxFit.cover,
                                                           scale: 1.2,
-                                                          height: 120,
-                                                          width: 120,
-                                                          errorBuilder: (context,
-                                                                  error,
-                                                                  stackTrace) =>
-                                                              Image.asset(
-                                                            "assets/images/samplehouse.jpeg",
-                                                            fit: BoxFit.cover,
-                                                            height: 110,
-                                                            width: 110,
-                                                          ),
-                                                          loadingBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  Widget child,
-                                                                  ImageChunkEvent?
-                                                                      loadingProgress) {
-                                                            if (loadingProgress ==
-                                                                null) {
-                                                              return child;
-                                                            }
-                                                            return SizedBox(
-                                                              width: 50,
-                                                              height: 50,
-                                                              child: Center(
-                                                                child:
-                                                                    CircularProgressIndicator(
-                                                                  color:
-                                                                      kPrimaryColor,
-                                                                  value: loadingProgress
-                                                                              .expectedTotalBytes !=
-                                                                          null
-                                                                      ? loadingProgress
-                                                                              .cumulativeBytesLoaded /
-                                                                          loadingProgress
-                                                                              .expectedTotalBytes!
-                                                                      : null,
-                                                                ),
-                                                              ),
+                                                          height: 110,
+                                                          width: 110,
+                                                          errorBuilder:
+                                                              (context, error,
+                                                                  stackTrace) {
+                                                            return Image.asset(
+                                                              "assets/images/samplehouse.jpeg",
+                                                              fit: BoxFit.cover,
+                                                              height: 110,
+                                                              width: 110,
                                                             );
                                                           },
                                                         ),
@@ -377,45 +342,94 @@ class _HomePageState extends State<HomePage> {
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(
-                                                            data.rentAmount
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                color:
-                                                                    kPrimaryColor,
-                                                                fontSize: 25,
-                                                                fontFamily:
-                                                                    kCircularStdMedium),
+                                                          SizedBox(
+                                                            width:
+                                                                Get.width - 170,
+                                                            child: Text(
+                                                              data.name
+                                                                  .toString(),
+                                                              style: const TextStyle(
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  color:
+                                                                      kPrimaryColor,
+                                                                  fontSize: 17,
+                                                                  fontFamily:
+                                                                      kCircularStdMedium),
+                                                            ),
                                                           ),
+                                                          const SizedBox(
+                                                              height: 5),
                                                           Row(
                                                             children: [
                                                               const Icon(
                                                                 Icons
-                                                                    .location_on,
+                                                                    .request_page_sharp,
                                                                 size: 16,
                                                                 color:
                                                                     kButtonColor,
                                                               ),
                                                               const SizedBox(
                                                                   width: 10),
-                                                              SizedBox(
-                                                                width:
-                                                                    Get.width /
-                                                                        2.5,
-                                                                child: Text(
-                                                                  data.address
-                                                                      .toString(),
-                                                                  style: const TextStyle(
-                                                                      color:
-                                                                          kSecondaryPrimaryColor,
-                                                                      fontSize:
-                                                                          13,
-                                                                      fontFamily:
-                                                                          kCircularStdMedium),
-                                                                ),
+                                                              Text(
+                                                                data.rentAmount
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    color:
+                                                                        kPrimaryColor,
+                                                                    fontSize:
+                                                                        17,
+                                                                    fontFamily:
+                                                                        kCircularStdMedium),
                                                               ),
                                                             ],
                                                           ),
+                                                          SizedBox(
+                                                              height: data.address
+                                                                          .toString() ==
+                                                                      "null"
+                                                                  ? 0
+                                                                  : 5),
+                                                          data.address.toString() ==
+                                                                  "null"
+                                                              ? Container()
+                                                              : Row(
+                                                                  children: [
+                                                                    const Icon(
+                                                                      Icons
+                                                                          .location_on,
+                                                                      size: 16,
+                                                                      color:
+                                                                          kButtonColor,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                        width:
+                                                                            10),
+                                                                    SizedBox(
+                                                                      width: Get
+                                                                              .width /
+                                                                          2.5,
+                                                                      child:
+                                                                          Text(
+                                                                        data.address
+                                                                            .toString(),
+                                                                        style: const TextStyle(
+                                                                            color:
+                                                                                kSecondaryPrimaryColor,
+                                                                            fontSize:
+                                                                                13,
+                                                                            fontFamily:
+                                                                                kCircularStdMedium),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                          const SizedBox(
+                                                              height: 5),
                                                           Row(
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
@@ -448,36 +462,8 @@ class _HomePageState extends State<HomePage> {
                                                               ),
                                                             ],
                                                           ),
-                                                          Row(
-                                                            children: [
-                                                              const Icon(
-                                                                Icons.person,
-                                                                size: 16,
-                                                                color:
-                                                                    kButtonColor,
-                                                              ),
-                                                              const SizedBox(
-                                                                  width: 10),
-                                                              SizedBox(
-                                                                width:
-                                                                    Get.width -
-                                                                        220,
-                                                                child:
-                                                                    const Text(
-                                                                  "tenantname",
-                                                                  style: TextStyle(
-                                                                      color:
-                                                                          kPrimaryColor,
-                                                                      fontSize:
-                                                                          13,
-                                                                      fontFamily:
-                                                                          kCircularStdMedium),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
                                                         ],
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                   const SizedBox(height: 15),
@@ -545,7 +531,12 @@ class _HomePageState extends State<HomePage> {
                                                             ),
                                                             Text(
                                                               data.rentAmountUnit
-                                                                  .toString(),
+                                                                          .toString() ==
+                                                                      "null"
+                                                                  ? "\$0"
+                                                                  : data
+                                                                      .rentAmountUnit
+                                                                      .toString(),
                                                               style: const TextStyle(
                                                                   fontFamily:
                                                                       kCircularStdMedium,

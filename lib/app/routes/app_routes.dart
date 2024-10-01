@@ -27,6 +27,8 @@ abstract class Routes {
   static const myTenantsDetailsPage = _Paths.myTenantsDetailsPage;
   static const myHostsDetailsPage = _Paths.myHostsDetailsPage;
   static const checkoutRequestsPage = _Paths.checkoutRequestsPage;
+  static const addNearByPage = _Paths.addNearByPage;
+  static const addHousekeeperPage = _Paths.addHousekeeperPage;
   static const tenantLeasePropertyDetailPage =
       _Paths.tenantLeasePropertyDetailPage;
 }
@@ -57,4 +59,6 @@ abstract class _Paths {
   static const myTenantsDetailsPage = '/myTenantsDetailsPage';
   static const myHostsDetailsPage = '/myHostsDetailsPage';
   static const checkoutRequestsPage = '/checkoutRequestsPage';
+  static const addNearByPage = '/addNearByPage';
+  static const addHousekeeperPage = '/addHousekeeperPage';
 }
