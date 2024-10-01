@@ -18,6 +18,7 @@ class CurrentTenantsView extends StatefulWidget {
 class _CurrentTenantsViewState extends State<CurrentTenantsView> {
   final GetAllCurrentTenantsController getAllCurrentTenantsController =
       Get.put(GetAllCurrentTenantsController());
+  TextEditingController searchController = TextEditingController();
   final GetDetailTenantsController getDetailTenantsController =
       Get.put(GetDetailTenantsController());
   @override
@@ -40,38 +41,72 @@ class _CurrentTenantsViewState extends State<CurrentTenantsView> {
               );
             } else {
               return Flexible(
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: getAllCurrentTenantsController
-                      .tenantsList[0].data!.length,
-                  itemBuilder: (context, index) {
-                    var requestData =
-                        getAllCurrentTenantsController.tenantsList[0].data!;
-                    if (requestData.isNotEmpty) {
-                      var data = requestData[index];
-                      return Column(
-                        children: [
-                          currentTenants(
-                              data.tenantProfilePicture.toString(),
-                              "${data.tenantFirstName} ${data.tenantLastName}",
-                              data.address.toString(),
-                              data.tenantPhoneNumber.toString(),
-                              data.id.toString()),
-                        ],
-                      );
-                    } else {
-                      return const Center(
-                        child: Text(
-                          "No Current Tenants",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 15,
-                              fontFamily: kCircularStdMedium),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: searchController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.fromLTRB(13, 0, 10, 0),
+                        prefixIcon: const Icon(Icons.search),
+                        filled: true,
+                        fillColor: kWhiteColor,
+                        hintText: 'Search',
+                        hintStyle: const TextStyle(
+                            color: kSecondaryPrimaryColor,
+                            fontFamily: kCircularStdNormal,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
                         ),
-                      );
-                    }
-                  },
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Flexible(
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: getAllCurrentTenantsController
+                            .tenantsList[0].data!.length,
+                        itemBuilder: (context, index) {
+                          var requestData = getAllCurrentTenantsController
+                              .tenantsList[0].data!;
+                          if (requestData.isNotEmpty) {
+                            var data = requestData[index];
+                            return Column(
+                              children: [
+                                currentTenants(
+                                    data.tenantProfilePicture.toString(),
+                                    "${data.tenantFirstName} ${data.tenantLastName}",
+                                    data.address.toString(),
+                                    data.tenantPhoneNumber.toString(),
+                                    data.id.toString()),
+                              ],
+                            );
+                          } else {
+                            return const Center(
+                              child: Text(
+                                "No Current Tenants",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               );
             }

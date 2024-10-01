@@ -102,18 +102,27 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.checkEdit == "edit") {
-      setState(() {
-        initialImagePaths = widget.imagelist!;
-        loadInitialImages();
-      });
-      getPropertyData();
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.checkEdit == "edit") {
+        setState(() {
+          initialImagePaths = widget.imagelist!;
+          loadInitialImages();
+        });
+        getPropertyData();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    LoaderX.hide();
+    super.dispose();
   }
 
   List<dynamic> initialImagePaths = [];
 
   getPropertyData() {
+    LoaderX.show(context, 60.0, 60.0);
     propertyId = widget.proeprtyId.toString() == "null"
         ? ""
         : widget.proeprtyId.toString();
@@ -168,7 +177,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
           widget.checkEdit == "edit" ? "Edit Property" : "Create Property",
           style: const TextStyle(fontFamily: kCircularStdBook),
         ),
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: widget.checkEdit == "edit" ? true : false,
+        centerTitle: true,
         backgroundColor: kBackGroundColor,
       ),
       body: Padding(
@@ -1241,7 +1251,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
       setState(() {
         isImagePickerError = false; // Reset error state
       });
+      LoaderX.hide();
     } catch (e) {
+      LoaderX.hide();
       setState(() {
         isImagePickerError = true;
         error = e.toString();

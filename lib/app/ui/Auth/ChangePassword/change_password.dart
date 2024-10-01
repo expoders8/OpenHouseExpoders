@@ -68,24 +68,40 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       validationMsg: 'Please enter Current Password',
                     ),
                     const SizedBox(height: 15),
-                    CustomTextFormField(
-                      hintText: 'New Password',
+                    TextFormField(
+                      controller: newPasswordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value.toString().isEmpty) {
+                          return "Please enter New Password";
+                        }
+                        if (value!.length <= 5 || value.length >= 7) {
+                          return 'Password Must be more than 6 characters.';
+                        }
+                        return null;
+                      },
+                      decoration: inputOfTextField("New Password"),
                       maxLines: 1,
-                      ctrl: newPasswordController,
-                      name: "newpassword",
-                      formSubmitted: isFormSubmitted,
-                      validationMsg: 'Please enter New Password',
-                      confirmPasswordController: confirmPasswordController,
                     ),
-                    const SizedBox(height: 15),
-                    CustomTextFormField(
-                      hintText: 'Confirm Password',
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      controller: confirmPasswordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value.toString().isEmpty) {
+                          return "Please enter Confirm password";
+                        }
+                        if (newPasswordController.text !=
+                            confirmPasswordController.text) {
+                          return "Confirm Password does not match";
+                        }
+                        if (value!.length <= 5 || value.length >= 7) {
+                          return 'Password Must be more than 6 characters.';
+                        }
+                        return null;
+                      },
+                      decoration: inputOfTextField("Confirm Password"),
                       maxLines: 1,
-                      ctrl: confirmPasswordController,
-                      name: "confirmpassword",
-                      formSubmitted: isFormSubmitted,
-                      validationMsg: 'Please enter Confirm Password',
-                      confirmPasswordController: newPasswordController,
                     ),
                     const SizedBox(height: 15),
                     CupertinoButton(
@@ -130,6 +146,47 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  InputDecoration inputOfTextField(String hintText) {
+    return InputDecoration(
+      hintText: hintText,
+      filled: true,
+      fillColor: kBackGroundColor,
+      contentPadding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      hintStyle: const TextStyle(color: kGreyColor),
+      labelStyle: const TextStyle(color: kBlackColor),
+      border: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(25.0),
+        ),
+        borderSide: BorderSide(
+            color: hintText == "Confirm Password"
+                ? newPasswordController.text != confirmPasswordController.text
+                    ? kRedColor
+                    : kSecondaryPrimaryColor
+                : kSecondaryPrimaryColor),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25.0),
+        borderSide: BorderSide(
+            color: hintText == "Confirm Password"
+                ? newPasswordController.text != confirmPasswordController.text
+                    ? kRedColor
+                    : kSecondaryPrimaryColor
+                : kSecondaryPrimaryColor,
+            width: 1.0),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25.0),
+        borderSide: BorderSide(
+            color: hintText == "Confirm Password"
+                ? newPasswordController.text != confirmPasswordController.text
+                    ? kRedColor
+                    : kSecondaryPrimaryColor
+                : kSecondaryPrimaryColor),
       ),
     );
   }

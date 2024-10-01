@@ -21,7 +21,7 @@ class _MyTenantsPageState extends State<MyTenantsPage>
     with SingleTickerProviderStateMixin {
   String selectedRoll = "";
   late TabController _tabController;
-  var searchController = TextEditingController();
+
   String userImage = "",
       authToken = "",
       firstName = "",
@@ -179,87 +179,13 @@ class _MyTenantsPageState extends State<MyTenantsPage>
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          TextFormField(
-                            controller: searchController,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                              prefixIcon: const Icon(Icons.search),
-                              filled: true,
-                              fillColor: kWhiteColor,
-                              hintText: 'Search',
-                              hintStyle: const TextStyle(
-                                  color: kSecondaryPrimaryColor,
-                                  fontFamily: kCircularStdNormal,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const CurrentTenantsView()
-                        ],
-                      ),
+                      child: const CurrentTenantsView(),
                     ),
                     GestureDetector(
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          TextFormField(
-                            controller: searchController,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                              prefixIcon: const Icon(Icons.search),
-                              filled: true,
-                              fillColor: kWhiteColor,
-                              hintText: 'Search',
-                              hintStyle: const TextStyle(
-                                  color: kSecondaryPrimaryColor,
-                                  fontFamily: kCircularStdNormal,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide:
-                                    const BorderSide(color: kWhiteColor),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const PreviousTenantsView()
-                        ],
-                      ),
+                      child: const PreviousTenantsView(),
                     ),
                   ],
                 ),
