@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/constant/color_constant.dart';
-import '../../../config/constant/font_constant.dart';
 import '../../view/chechout_request.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class CheckoutRequestsPage extends StatefulWidget {
   const CheckoutRequestsPage({super.key});

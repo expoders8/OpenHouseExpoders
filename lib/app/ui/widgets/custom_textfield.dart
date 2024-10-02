@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -13,6 +14,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool formSubmitted;
   final TextEditingController? confirmPasswordController;
   final Function(String)? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextFormField({
     Key? key,
@@ -26,6 +28,7 @@ class CustomTextFormField extends StatefulWidget {
     this.confirmPasswordController,
     this.validationMsg,
     this.onChanged,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -54,7 +57,22 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         return 'Please enter a valid email';
       }
     }
+    if (widget.name == 'numbers' ||
+        widget.name == 'phoneno' ||
+        widget.name == 'price' ||
+        widget.name == 'iamount') {
+      const pattern = r'^[0-9]+$';
+      final regExp = RegExp(pattern);
+      if (!regExp.hasMatch(value)) {
+        return 'Please enter only numbers';
+      }
+    }
 
+    if (widget.name == 'phoneno') {
+      if (value.length != 10) {
+        return 'Enter only 10 digits.';
+      }
+    }
     if (widget.name == "confirmPassword") {
       if (widget.ctrl?.text != widget.confirmPasswordController?.text) {
         return 'Passwords do not match';
@@ -70,6 +88,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       style: const TextStyle(color: kPrimaryColor, fontSize: 16),
       controller: widget.ctrl,
       keyboardType: widget.keyboardType,
+      inputFormatters: widget.inputFormatters,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) => validateInput(value),
       obscureText: widget.name == "password" ? !_passwordVisible : false,
@@ -126,21 +145,21 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               )
             : null,
         border: OutlineInputBorder(
-          borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
+          borderRadius: BorderRadius.circular(
+              widget.name == "create" || widget.name == "iamount" ? 9 : 25.0),
           borderSide: const BorderSide(color: kSecondaryPrimaryColor),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: widget.name == "create" ? kWhiteColor : kErrorColor,
           ),
-          borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
+          borderRadius: BorderRadius.circular(
+              widget.name == "create" || widget.name == "iamount" ? 9 : 25.0),
         ),
         errorStyle: const TextStyle(color: kErrorColor),
         enabledBorder: OutlineInputBorder(
-          borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
+          borderRadius: BorderRadius.circular(
+              widget.name == "create" || widget.name == "iamount" ? 9 : 25.0),
           borderSide: BorderSide(
             color: widget.name == "create"
                 ? kWhiteColor
@@ -151,8 +170,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius:
-              BorderRadius.circular(widget.name == "create" ? 9 : 25.0),
+          borderRadius: BorderRadius.circular(
+              widget.name == "create" || widget.name == "iamount" ? 9 : 25.0),
           borderSide: BorderSide(
             color: widget.name == "create"
                 ? kWhiteColor

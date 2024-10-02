@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/routes/app_pages.dart';
-import 'package:openhome/config/constant/color_constant.dart';
 import 'package:openhome/config/constant/font_constant.dart';
+import 'package:openhome/config/constant/color_constant.dart';
 
 import '../controller/tab_controller.dart';
 
@@ -61,12 +61,8 @@ class ResponsiveContainer extends StatelessWidget {
       onPressed: () {
         if (name == "Manage All\nYour Properties") {
           tabController.changeTabIndex(1);
-        } else if (name == "Track Available Properties") {
-          tabController.changeTabIndex(1);
-        } else if (name == "Tracked Properties Under Lease") {
-          tabController.changeTabIndex(1);
         } else if (name == "Manage Tenants' Service Requests") {
-          Get.toNamed(Routes.myRequestViewAllView);
+          Get.toNamed(Routes.tenantRequestAllView);
         } else if (name == "Track Check-Out Requests") {
           Get.toNamed(Routes.checkoutRequestsPage);
         }

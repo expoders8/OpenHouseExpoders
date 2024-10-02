@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../services/tenant_service.dart';
 import '../models/getall_tenant_model.dart';
+import '../models/previous_tenant_model.dart';
 
 class GetAllTenantController extends GetxController {
   var isLoading = true.obs;
@@ -14,6 +15,7 @@ class GetAllTenantController extends GetxController {
   RxString startDate = "".obs;
   RxString searchText = "".obs;
   RxString propertyId = "".obs;
+  RxString hostName = "".obs;
   RxString rentAmount = "".obs;
   RxString propertyName = "".obs;
   RxString propertyImage = "".obs;
@@ -40,4 +42,24 @@ class GetAllTenantController extends GetxController {
   //     isLoading(false);
   //   }
   // }
+}
+
+class GetAllPropertyPreviousTenantController extends GetxController {
+  var isLoading = true.obs;
+  TenantService tenantService = TenantService();
+  RxString propertyId = "".obs;
+  var requestList = <GetAllPreviousTenantModel>[].obs;
+
+  void getAllTenants() async {
+    try {
+      isLoading(true);
+      var requests =
+          await tenantService.getAllPreviousTenant(propertyId.value.toString());
+      if (requests.data != null) {
+        requestList.assign(requests);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
 }

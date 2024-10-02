@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:openhome/app/ui/Auth/Login/login.dart';
-import 'package:openhome/app/ui/TabPage/tab_page.dart';
-import 'package:openhome/config/constant/color_constant.dart';
 
+import '../Auth/Login/login.dart';
+import '../TabPage/tab_page.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

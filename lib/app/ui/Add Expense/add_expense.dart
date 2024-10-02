@@ -131,6 +131,20 @@ class _AddExpensePageState extends State<AddExpensePage> {
                     ),
                   ),
                 ),
+                amenityController.text == "other"
+                    ? Container(
+                        margin: const EdgeInsets.only(left: 5),
+                        width: Get.width > 500 ? 600 : Get.width - 42,
+                        child: CustomTextFormField(
+                          hintText: 'Amenities title',
+                          maxLines: 1,
+                          ctrl: priceController,
+                          name: "title",
+                          formSubmitted: isFormSubmitted,
+                          validationMsg: 'Please enter Price',
+                        ),
+                      )
+                    : Container(),
                 buildTextWidget("Price"),
                 Container(
                   margin: const EdgeInsets.only(left: 5),

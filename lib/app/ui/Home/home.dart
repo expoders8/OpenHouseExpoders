@@ -1,12 +1,9 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 
-import '../../controller/property_controller.dart';
-import '../../controller/property_detail_controller.dart';
 import '../../view/home_view.dart';
 import '../../view/my_request.dart';
 import '../../routes/app_pages.dart';
@@ -14,8 +11,10 @@ import '../../controller/tab_controller.dart';
 import '../../../config/constant/constant.dart';
 import '../../view/tenant_invitation_view.dart';
 import '../../controller/request_controller.dart';
+import '../../controller/property_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../controller/property_detail_controller.dart';
 import '../Property Details/Tenant/tenant_lease_property.dart';
 
 class HomePage extends StatefulWidget {
@@ -560,7 +559,7 @@ class _HomePageState extends State<HomePage> {
                                                                   .center,
                                                           children: [
                                                             const Text(
-                                                              "Lease expairy",
+                                                              "Lease expiry",
                                                               style: TextStyle(
                                                                   fontFamily:
                                                                       kCircularStdNormal,
@@ -620,7 +619,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 10),
                       const SizedBox(
-                        height: 235,
+                        height: 255,
                         child: MyRequestView(),
                       ),
                       const SizedBox(height: 85)
@@ -645,14 +644,14 @@ class _HomePageState extends State<HomePage> {
                           icon: Icons.home,
                           name: 'Manage All\nYour Properties',
                         ),
-                        ResponsiveContainer(
-                          icon: Icons.search,
-                          name: "Track Available Properties",
-                        ),
-                        ResponsiveContainer(
-                          icon: Icons.calendar_today,
-                          name: 'Tracked Properties Under Lease',
-                        ),
+                        // ResponsiveContainer(
+                        //   icon: Icons.search,
+                        //   name: "Track Available Properties",
+                        // ),
+                        // ResponsiveContainer(
+                        //   icon: Icons.calendar_today,
+                        //   name: 'Tracked Properties Under Lease',
+                        // ),
                         ResponsiveContainer(
                           icon: Icons.build,
                           name: "Manage Tenants' Service Requests",
@@ -673,10 +672,10 @@ class _HomePageState extends State<HomePage> {
                           icon: Icons.trending_down,
                           name: "Track Property\nExpenses",
                         ),
-                        ResponsiveContainer(
-                          icon: Icons.cleaning_services,
-                          name: "Assign Housekeepers\n",
-                        ),
+                        // ResponsiveContainer(
+                        //   icon: Icons.cleaning_services,
+                        //   name: "Assign Housekeepers\n",
+                        // ),
                       ],
                     ),
                   ),
@@ -940,7 +939,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "lease Expiry ",
+                          "lease expiry",
                           style: TextStyle(
                               fontFamily: kCircularStdNormal,
                               fontSize: 12,

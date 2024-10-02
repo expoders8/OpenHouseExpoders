@@ -177,28 +177,38 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                             kCircularStdMedium),
                                                   ),
                                                 ),
-                                                const SizedBox(height: 5),
-                                                Row(
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.request_page_sharp,
-                                                      size: 16,
+                                                const SizedBox(height: 3),
+                                                Text(
+                                                  " \$ ${data.rentAmount.toString()}",
+                                                  style: const TextStyle(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       color: kButtonColor,
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    Text(
-                                                      data.rentAmount
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          color: kPrimaryColor,
-                                                          fontSize: 17,
-                                                          fontFamily:
-                                                              kCircularStdMedium),
-                                                    ),
-                                                  ],
+                                                      fontSize: 16,
+                                                      fontFamily:
+                                                          kCircularStdMedium),
                                                 ),
+                                                // Row(
+                                                //   children: [
+                                                //     const Icon(
+                                                //       Icons.request_page_sharp,
+                                                //       size: 16,
+                                                //       color: kButtonColor,
+                                                //     ),
+                                                //     const SizedBox(width: 10),
+                                                //     Text(
+                                                //       data.rentAmount
+                                                //           .toString(),
+                                                //       style: const TextStyle(
+                                                //           overflow: TextOverflow
+                                                //               .ellipsis,
+                                                //           color: kPrimaryColor,
+                                                //           fontSize: 17,
+                                                //           fontFamily:
+                                                //               kCircularStdMedium),
+                                                //     ),
+                                                //   ],
+                                                // ),
                                                 SizedBox(
                                                     height: data.address
                                                                 .toString() ==
@@ -209,6 +219,12 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                         "null"
                                                     ? Container()
                                                     : Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
                                                         children: [
                                                           const Icon(
                                                             Icons.location_on,
@@ -216,7 +232,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                             color: kButtonColor,
                                                           ),
                                                           const SizedBox(
-                                                              width: 10),
+                                                              width: 5),
                                                           SizedBox(
                                                             width:
                                                                 Get.width / 2.5,
@@ -243,7 +259,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                       size: 16,
                                                       color: kButtonColor,
                                                     ),
-                                                    const SizedBox(width: 10),
+                                                    const SizedBox(width: 5),
                                                     SizedBox(
                                                       width: Get.width - 220,
                                                       child: Text(
@@ -343,7 +359,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   const Text(
-                                                    "Lease expairy",
+                                                    "Lease expiry",
                                                     style: TextStyle(
                                                         fontFamily:
                                                             kCircularStdNormal,

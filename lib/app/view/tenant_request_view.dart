@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../routes/app_pages.dart';
 import '../controller/request_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
-import '../routes/app_pages.dart';
 
 class TenantRequestView extends StatefulWidget {
   const TenantRequestView({super.key});
@@ -15,13 +15,13 @@ class TenantRequestView extends StatefulWidget {
 }
 
 class _TanantRequestViewState extends State<TenantRequestView> {
-  final GetAllRequestsController getAllRequestsController =
-      Get.put(GetAllRequestsController());
+  final GetAllHostRequestsController getAllHostRequestsController =
+      Get.put(GetAllHostRequestsController());
   @override
   Widget build(BuildContext context) {
     return Obx(
       () {
-        if (getAllRequestsController.isLoading.value) {
+        if (getAllHostRequestsController.isLoading.value) {
           return Container(
             color: kBackGroundColor,
             child: const Center(
@@ -31,8 +31,8 @@ class _TanantRequestViewState extends State<TenantRequestView> {
             ),
           );
         } else {
-          if (getAllRequestsController.requestList.isNotEmpty) {
-            if (getAllRequestsController.requestList[0].data!.isEmpty) {
+          if (getAllHostRequestsController.requestList.isNotEmpty) {
+            if (getAllHostRequestsController.requestList[0].data!.isEmpty) {
               return Container();
             } else {
               return Column(
@@ -65,11 +65,11 @@ class _TanantRequestViewState extends State<TenantRequestView> {
                     height: 204,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount:
-                          getAllRequestsController.requestList[0].data!.length,
+                      itemCount: getAllHostRequestsController
+                          .requestList[0].data!.length,
                       itemBuilder: (context, index) {
                         var requestData =
-                            getAllRequestsController.requestList[0].data!;
+                            getAllHostRequestsController.requestList[0].data!;
                         if (requestData.isNotEmpty) {
                           var data = requestData[index];
                           return Row(

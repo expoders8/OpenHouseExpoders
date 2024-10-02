@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../controller/my_hosts_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../controller/my_hosts_controller.dart';
 
 class MyHostsDetailsPage extends StatefulWidget {
   const MyHostsDetailsPage({super.key});
@@ -196,8 +196,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                                         ),
                                         const SizedBox(width: 10),
                                         Text(
-                                          hostsdata.host!.property!.rentAmount
-                                              .toString(),
+                                          "\$ ${hostsdata.host!.property!.rentAmount.toString()}",
                                           style: const TextStyle(
                                               overflow: TextOverflow.ellipsis,
                                               color: kPrimaryColor,

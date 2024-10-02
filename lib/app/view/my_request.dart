@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -7,7 +8,6 @@ import '../controller/request_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 
-// ignore: must_be_immutable
 class MyRequestView extends StatefulWidget {
   const MyRequestView({super.key});
 
@@ -32,9 +32,7 @@ class _MyRequestViewState extends State<MyRequestView> {
             ),
           );
         } else {
-          if (getAllRequestsController.requestList.isNotEmpty &&
-              // ignore: unnecessary_null_comparison
-              getAllRequestsController.requestList[0].data! != null) {
+          if (getAllRequestsController.requestList.isNotEmpty) {
             if (getAllRequestsController.requestList[0].data!.isEmpty) {
               return Container();
             } else {
@@ -75,7 +73,10 @@ class _MyRequestViewState extends State<MyRequestView> {
                             getAllRequestsController.requestList[0].data!;
                         if (requestData.isNotEmpty) {
                           var data = requestData[index];
-
+                          DateTime dateTime =
+                              DateTime.parse(data.startDate.toString());
+                          String formattedDate =
+                              DateFormat('dd MMM yyyy').format(dateTime);
                           return Row(
                             children: [
                               Padding(
@@ -144,29 +145,31 @@ class _MyRequestViewState extends State<MyRequestView> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.location_on,
-                                              size: 16,
-                                              color: kButtonColor,
-                                            ),
-                                            const SizedBox(width: 10),
-                                            SizedBox(
-                                              width: Get.width - 220,
-                                              child: const Text(
-                                                "address",
-                                                style: TextStyle(
-                                                    color: kPrimaryColor,
-                                                    fontSize: 12,
-                                                    fontFamily:
-                                                        kCircularStdNormal),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
+                                        const SizedBox(height: 5),
+                                        data.address.toString() != "null"
+                                            ? Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.location_on,
+                                                    size: 16,
+                                                    color: kButtonColor,
+                                                  ),
+                                                  const SizedBox(width: 10),
+                                                  SizedBox(
+                                                    width: Get.width - 220,
+                                                    child: Text(
+                                                      data.address.toString(),
+                                                      style: const TextStyle(
+                                                          color: kPrimaryColor,
+                                                          fontSize: 12,
+                                                          fontFamily:
+                                                              kCircularStdNormal),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            : Container(),
+                                        const SizedBox(height: 5),
                                         Row(
                                           children: [
                                             const Icon(
@@ -188,6 +191,7 @@ class _MyRequestViewState extends State<MyRequestView> {
                                             ),
                                           ],
                                         ),
+                                        const SizedBox(height: 5),
                                         Row(
                                           children: [
                                             const Icon(
@@ -199,7 +203,7 @@ class _MyRequestViewState extends State<MyRequestView> {
                                             SizedBox(
                                               width: Get.width - 220,
                                               child: Text(
-                                                data.startDate.toString(),
+                                                formattedDate,
                                                 style: const TextStyle(
                                                     color: kPrimaryColor,
                                                     fontSize: 13,

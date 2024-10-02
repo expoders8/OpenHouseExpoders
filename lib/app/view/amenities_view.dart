@@ -124,7 +124,7 @@ class _AmenitiesViewState extends State<AmenitiesView> {
               print(getAllAmenitiesController.selectedAmenitis);
             },
             title: const Text(
-              "House Amenities",
+              "Select Amenities",
               style: TextStyle(
                 fontFamily: kCircularStdBook,
                 fontWeight: FontWeight.w400,
@@ -146,7 +146,7 @@ class _AmenitiesViewState extends State<AmenitiesView> {
               size: 35,
             ),
             buttonText: const Text(
-              "House Amenities",
+              "Select Amenities",
               style: TextStyle(
                 fontFamily: kCircularStdBook,
                 fontWeight: FontWeight.w400,

@@ -116,7 +116,7 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "included",
+                    "Included",
                     style: TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
@@ -312,7 +312,7 @@ class _NotLeasePropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "included",
+                    "Included",
                     style: TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
@@ -507,7 +507,7 @@ class _CurrentPropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "included",
+                    "Included",
                     style: TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,

@@ -182,13 +182,13 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                           image,
                           fit: BoxFit.cover,
                           scale: 1.2,
-                          height: 95,
+                          height: 100,
                           width: 95,
                           errorBuilder: (context, error, stackTrace) {
                             return Image.asset(
                               "assets/images/samplehouse.jpeg",
                               fit: BoxFit.cover,
-                              height: 95,
+                              height: 100,
                               width: 95,
                             );
                           },
@@ -210,27 +210,22 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                                   fontFamily: kCircularStdMedium),
                             ),
                           ),
-                          const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.request_page_sharp,
-                                size: 16,
+                          const SizedBox(height: 3),
+                          Text(
+                            "\$ $price",
+                            style: const TextStyle(
+                                overflow: TextOverflow.ellipsis,
                                 color: kButtonColor,
-                              ),
-                              const SizedBox(width: 10),
-                              Text(
-                                price,
-                                style: const TextStyle(
-                                    overflow: TextOverflow.ellipsis,
-                                    color: kPrimaryColor,
-                                    fontSize: 17,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                            ],
+                                fontSize: 15,
+                                fontFamily: kCircularStdMedium),
                           ),
+                          SizedBox(
+                              height:
+                                  address != "" && address != "null" ? 3 : 0),
                           address != "" && address != "null"
                               ? Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     const Icon(
                                       Icons.location_on,
@@ -239,7 +234,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                                     ),
                                     const SizedBox(width: 10),
                                     SizedBox(
-                                      width: Get.width / 2.5,
+                                      width: Get.width - 185,
                                       child: Text(
                                         address,
                                         style: const TextStyle(
@@ -251,8 +246,10 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                                   ],
                                 )
                               : Container(),
+                          const SizedBox(height: 3),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const Icon(
                                 Icons.bed_outlined,
@@ -260,18 +257,16 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                                 color: kButtonColor,
                               ),
                               const SizedBox(width: 10),
-                              SizedBox(
-                                width: Get.width - 220,
-                                child: Text(
-                                  person,
-                                  style: const TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 13,
-                                      fontFamily: kCircularStdBold),
-                                ),
+                              Text(
+                                person,
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 13,
+                                    fontFamily: kCircularStdBold),
                               ),
                             ],
                           ),
+                          const SizedBox(height: 3),
                           const Row(
                             children: [
                               Icon(

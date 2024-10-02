@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -188,9 +189,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                         maxLines: 1,
                                         ctrl: mobilenoController,
                                         keyboardType: TextInputType.phone,
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(10),
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                        ],
                                         name: "phoneno",
                                         formSubmitted: isFormSubmitted,
-                                        validationMsg: 'Please enter phoneNo',
+                                        validationMsg:
+                                            'Please enter mobile number',
                                       ),
                                     ],
                                   ),

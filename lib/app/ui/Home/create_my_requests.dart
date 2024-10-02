@@ -45,7 +45,7 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
   final TextEditingController raisedFundsController = TextEditingController();
   final GetCurrentPropertyController getCurrentPropertyController =
       Get.put(GetCurrentPropertyController());
-  String image = "", name = "", addres = "", propertyId = "";
+  String image = "", name = "", addres = "", propertyId = "", hostId = "";
 
   @override
   void initState() {
@@ -63,6 +63,7 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
       name = data.name.toString();
       addres = data.address.toString();
       propertyId = data.id.toString();
+      hostId = data.createdById.toString();
     });
   }
 
@@ -499,7 +500,8 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                                           raisedFundsController.text,
                                           selctesType,
                                           selectdate,
-                                          propertyId)
+                                          propertyId,
+                                          hostId)
                                       .then((value) {
                                     if (value) {
                                       getAllRequestsController.getAllRequests();

@@ -1,13 +1,12 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import '../../config/constant/constant.dart';
-import '../../config/provider/snackbar_provider.dart';
+import 'package:http/http.dart' as http;
 import '../models/my_tenant_get_model.dart';
 import '../services/my_tenants_service.dart';
-import 'package:http/http.dart' as http;
-
+import '../../config/constant/constant.dart';
 import '../ui/My Tenants/my_tenants_detail.dart';
+import '../../config/provider/snackbar_provider.dart';
 
 class GetAllPreviousTenantsController extends GetxController {
   var isLoading = true.obs;

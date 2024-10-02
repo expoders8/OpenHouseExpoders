@@ -1,23 +1,28 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:openhome/app/ui/Add%20Expense/add_expense.dart';
 
-import '../../controller/property_controller.dart';
-import '../../services/properties_service.dart';
-import '../../view/expense_view.dart';
 import '../../view/nearby_view.dart';
-import '../../view/house keeper/house_keeper_view.dart';
+import '../../view/expense_view.dart';
+import '../Add NearBy/add_nearby.dart';
+import '../Add Expense/add_expense.dart';
+import '../../services/lease_service.dart';
 import '../../view/payment_detail_view.dart';
 import '../../view/tenant_history_view.dart';
 import '../../view/property_details_view.dart';
+import '../../services/properties_service.dart';
+import '../CreateProperty/create_property.dart';
 import '../../../config/constant/constant.dart';
+import '../../controller/property_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/loader_provider.dart';
+import '../../view/house keeper/house_keeper_view.dart';
 import '../../controller/property_detail_controller.dart';
-import '../Add NearBy/add_nearby.dart';
-import '../CreateProperty/create_property.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
   const LeasePropertyDetailPage({super.key});
@@ -38,7 +43,9 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
       Get.put(GetAllExpenseController());
   List<ImageProvider> images = [];
   PropertiesService propertiesService = PropertiesService();
-
+  LeaseService leaseService = LeaseService();
+  String pickedEndDate = "";
+  String selectedEndDate = "";
   @override
   void initState() {
     super.initState();
@@ -178,8 +185,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                               Row(
                                                 children: [
                                                   Text(
-                                                    propertydata.rentAmount!
-                                                        .toString(),
+                                                    "\$ ${propertydata.rentAmount!.toString()}",
                                                     style: const TextStyle(
                                                         color: kButtonColor,
                                                         fontSize: 18,
@@ -309,26 +315,25 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                             CrossAxisAlignment.start,
                                         children: [
                                           tenantname(
-                                            propertydata.tenantdetails!
-                                                        .profilePicture
-                                                        .toString() ==
-                                                    "null"
-                                                ? "assets/images/blank_profile.png"
-                                                : propertydata.tenantdetails!
-                                                    .profilePicture!
-                                                    .toString(),
-                                            propertydata
-                                                .tenantdetails!.firstName!
-                                                .toString(),
-                                            propertydata
-                                                .tenantdetails!.lastName!
-                                                .toString(),
-                                            propertydata
-                                                .tenantdetails!.phoneNumber!
-                                                .toString(),
-                                            propertydata.tenantdetails!.email!
-                                                .toString(),
-                                          ),
+                                              propertydata.tenantdetails!
+                                                          .profilePicture
+                                                          .toString() ==
+                                                      "null"
+                                                  ? "assets/images/blank_profile.png"
+                                                  : propertydata.tenantdetails!
+                                                      .profilePicture!
+                                                      .toString(),
+                                              propertydata.tenantdetails!.firstName!
+                                                  .toString(),
+                                              propertydata
+                                                  .tenantdetails!.lastName!
+                                                  .toString(),
+                                              propertydata
+                                                  .tenantdetails!.phoneNumber!
+                                                  .toString(),
+                                              propertydata.tenantdetails!.email!
+                                                  .toString(),
+                                              propertydata.id.toString()),
                                           const SizedBox(height: 15),
                                           Column(
                                             children: [
@@ -417,8 +422,16 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                               ),
                                               const SizedBox(height: 20),
                                               isPreviousTenantsSelected
-                                                  ? const TenantHistoryView()
-                                                  : const HouseKeeperView(),
+                                                  ? TenantHistoryView(
+                                                      propertyId: propertydata
+                                                          .id
+                                                          .toString(),
+                                                    )
+                                                  : HouseKeeperView(
+                                                      propertyId: propertydata
+                                                          .id
+                                                          .toString(),
+                                                    ),
                                             ],
                                           ),
                                         ],
@@ -460,7 +473,6 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(height: 10),
                                         NearByAmenitiesView(
                                           propertyId:
                                               propertydata.id!.toString(),
@@ -560,7 +572,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
     );
   }
 
-  tenantname(String? image, firstname, lastname, phoneno, email) {
+  tenantname(String? image, firstname, lastname, phoneno, email, id) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -658,34 +670,86 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: kButtonColor),
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text(
-                              "Extend",
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 11,
-                                  fontFamily: kCircularStdNormal),
+                        CupertinoButton(
+                          onPressed: () {
+                            BottomPicker.date(
+                              pickerTitle: const Text(""),
+                              onSubmit: (index) {
+                                String formattedDate =
+                                    DateFormat('dd-MM-yyyy').format(index);
+                                String formattedEndDate =
+                                    DateFormat('dd/MM/yyyy hh:mm:ss')
+                                        .format(index);
+                                if (mounted) {
+                                  setState(() {
+                                    selectedEndDate = formattedDate;
+                                    pickedEndDate = formattedEndDate;
+                                  });
+                                  LoaderX.show(context, 60.0, 60.0);
+                                  leaseService.extendProperty(
+                                      pickedEndDate, id);
+                                }
+                              },
+                              dateOrder: DatePickerDateOrder.ymd,
+                              minDateTime: DateTime(2024, 1, 1, 17, 57, 25),
+                              maxDateTime: DateTime(2050, 1, 1),
+                              pickerTextStyle: const TextStyle(
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                              onClose: () {
+                                Navigator.of(context).pop();
+                              },
+                              bottomPickerTheme: BottomPickerTheme.plumPlate,
+                              buttonAlignment: MainAxisAlignment.center,
+                              buttonContent: const Center(
+                                  child: Text(
+                                "Save",
+                                style: TextStyle(color: kWhiteColor),
+                              )),
+                              buttonStyle: BoxDecoration(
+                                  color: kButtonColor,
+                                  borderRadius: BorderRadius.circular(15)),
+                              closeIconColor: kPrimaryColor,
+                              closeIconSize: 25,
+                            ).show(context);
+                          },
+                          padding: EdgeInsets.zero,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: kButtonColor),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: Text(
+                                "Extend",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 12,
+                                    fontFamily: kCircularStdNormal),
+                              ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: kButtonColor),
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text(
-                              "Terminate",
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 11,
-                                  fontFamily: kCircularStdNormal),
+                        CupertinoButton(
+                          onPressed: () {
+                            invitationDialog(id);
+                          },
+                          padding: EdgeInsets.zero,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: kButtonColor),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: Text(
+                                "Terminate",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 12,
+                                    fontFamily: kCircularStdNormal),
+                              ),
                             ),
                           ),
                         ),
@@ -745,6 +809,40 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
           ],
         ),
       ],
+    );
+  }
+
+  invitationDialog(String? proeprtyId) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Alert !"),
+        elevation: 5,
+        titleTextStyle: const TextStyle(fontSize: 18, color: kRedColor),
+        content: const Text("Are you sure want to\nterminate lease?"),
+        contentPadding: const EdgeInsets.only(left: 25, top: 10),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              LoaderX.show(context, 60.0, 60.0);
+              leaseService.terminatProperty(proeprtyId!);
+            },
+            child: const Text(
+              'Yes',
+              style: TextStyle(fontSize: 16, color: kPrimaryColor),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text(
+              'No',
+              style: TextStyle(fontSize: 16, color: kPrimaryColor),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/routes/app_pages.dart';
 
-import '../../services/firebase_auth_service.dart';
 import '../Auth/Login/login.dart';
 import '../TabPage/tab_page.dart';
 import '../../../config/constant/constant.dart';
+import '../../services/firebase_auth_service.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -240,112 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 35),
-              // selectedRoll == "tenant"
-              //     ? CupertinoButton(
-              //         padding: EdgeInsets.zero,
-              //         onPressed: () {},
-              //         child: const Padding(
-              //           padding: EdgeInsets.symmetric(horizontal: 15.0),
-              //           child: Row(
-              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //             children: [
-              //               Row(
-              //                 children: [
-              //                   Icon(
-              //                     Icons.people,
-              //                     size: 18,
-              //                     color: kButtonColor,
-              //                   ),
-              //                   SizedBox(width: 10),
-              //                   Text(
-              //                     "Host Details",
-              //                     style: TextStyle(
-              //                         color: kPrimaryColor,
-              //                         fontSize: 16,
-              //                         fontFamily: kCircularStdMedium),
-              //                   ),
-              //                 ],
-              //               ),
-              //               Icon(
-              //                 Icons.arrow_forward_ios,
-              //                 size: 13,
-              //                 color: kButtonColor,
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       )
-              //     : CupertinoButton(
-              //         padding: EdgeInsets.zero,
-              //         onPressed: () {
-              //           Get.toNamed(Routes.myTenantsPage);
-              //         },
-              //         child: const Padding(
-              //           padding: EdgeInsets.symmetric(horizontal: 15.0),
-              //           child: Row(
-              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //             children: [
-              //               Row(
-              //                 children: [
-              //                   Icon(
-              //                     Icons.people,
-              //                     size: 18,
-              //                     color: kButtonColor,
-              //                   ),
-              //                   SizedBox(width: 10),
-              //                   Text(
-              //                     "My Tenants",
-              //                     style: TextStyle(
-              //                         color: kPrimaryColor,
-              //                         fontSize: 16,
-              //                         fontFamily: kCircularStdMedium),
-              //                   ),
-              //                 ],
-              //               ),
-              //               Icon(
-              //                 Icons.arrow_forward_ios,
-              //                 size: 13,
-              //                 color: kButtonColor,
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              SizedBox(height: selectedRoll == "tenant" ? 0 : 5),
-              selectedRoll == "tenant"
-                  ? Container()
-                  : const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.person_search,
-                                size: 18,
-                                color: kButtonColor,
-                              ),
-                              SizedBox(width: 10),
-                              Text(
-                                "Requests",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 16,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: 13,
-                            color: kButtonColor,
-                          ),
-                        ],
-                      ),
-                    ),
-              SizedBox(height: selectedRoll == "tenant" ? 5 : 18),
+              SizedBox(height: phoneNo != "" ? 40 : 60),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.0),
                 child: Row(

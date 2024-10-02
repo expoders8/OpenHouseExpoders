@@ -187,7 +187,10 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
                             fontSize: 18,
                             fontFamily: kCircularStdMedium),
                       ),
+                      const SizedBox(height: 5),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const Icon(
                             Icons.location_on,
@@ -207,6 +210,7 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
                           ),
                         ],
                       ),
+                      SizedBox(height: contact != "null" ? 3 : 0),
                       contact != "null"
                           ? Row(
                               crossAxisAlignment: CrossAxisAlignment.start,

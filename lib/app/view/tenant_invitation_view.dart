@@ -3,11 +3,11 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../config/provider/loader_provider.dart';
 import '../services/properties_service.dart';
 import '../../config/constant/font_constant.dart';
 import '../controller/invitation_controller.dart';
 import '../../config/constant/color_constant.dart';
+import '../../config/provider/loader_provider.dart';
 
 // ignore: must_be_immutable
 class TenantInvitationView extends StatefulWidget {

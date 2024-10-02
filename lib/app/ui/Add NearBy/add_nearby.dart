@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../../../config/constant/color_constant.dart';
-import '../../../config/constant/font_constant.dart';
-import '../../../config/provider/loader_provider.dart';
-import '../../services/nearby_service.dart';
 import '../widgets/custom_textfield.dart';
+import '../../services/nearby_service.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/loader_provider.dart';
 
 class AddNearByPage extends StatefulWidget {
   final String? propertyId;

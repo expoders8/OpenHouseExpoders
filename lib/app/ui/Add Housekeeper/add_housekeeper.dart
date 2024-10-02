@@ -1,5 +1,6 @@
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../config/constant/color_constant.dart';
@@ -9,7 +10,8 @@ import '../../services/house_keeper_service.dart';
 import '../widgets/custom_textfield.dart';
 
 class AddHousekeeperPage extends StatefulWidget {
-  const AddHousekeeperPage({super.key});
+  final String? propertyId;
+  const AddHousekeeperPage({super.key, this.propertyId});
 
   @override
   State<AddHousekeeperPage> createState() => _AddHousekeeperPageState();
@@ -20,10 +22,10 @@ class _AddHousekeeperPageState extends State<AddHousekeeperPage> {
   String selectedCountrydialCode = "+91";
   final _formKey = GlobalKey<FormState>();
   HouseKeeperService houseKeeperService = HouseKeeperService();
-  final TextEditingController firstnameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController contactController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController contactController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController firstnameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,8 +142,12 @@ class _AddHousekeeperPageState extends State<AddHousekeeperPage> {
                                 ctrl: contactController,
                                 keyboardType: TextInputType.phone,
                                 name: "phoneno",
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(10),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
                                 formSubmitted: isFormSubmitted,
-                                validationMsg: 'Please enter phoneNo',
+                                validationMsg: 'Please enter mobile number',
                               ),
                             ],
                           ),
@@ -170,11 +176,11 @@ class _AddHousekeeperPageState extends State<AddHousekeeperPage> {
                             if (_formKey.currentState!.validate()) {
                               LoaderX.show(context, 60.0, 60.0);
                               houseKeeperService.add(
-                                firstnameController.text,
-                                lastNameController.text,
-                                emailController.text,
-                                contactController.text,
-                              );
+                                  firstnameController.text,
+                                  lastNameController.text,
+                                  emailController.text,
+                                  "$selectedCountrydialCode${contactController.text}",
+                                  widget.propertyId.toString());
                             }
                           });
                         },

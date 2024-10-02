@@ -1,17 +1,17 @@
-import 'package:bottom_picker/bottom_picker.dart';
-import 'package:bottom_picker/resources/arrays.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
 
-import '../../../config/provider/loader_provider.dart';
 import '../widgets/custom_textfield.dart';
 import '../../services/tenant_service.dart';
 import '../../controller/tab_controller.dart';
 import '../../controller/tenants_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/loader_provider.dart';
 
 class InviteTenantDetailPage extends StatefulWidget {
   const InviteTenantDetailPage({super.key});
@@ -241,9 +241,10 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
               ),
               const SizedBox(height: 15),
               CustomTextFormField(
-                hintText: 'Amount',
+                hintText: '\$ Amount',
                 maxLines: 1,
                 ctrl: amountController,
+                keyboardType: TextInputType.number,
                 name: "iamount",
                 validationMsg: 'Please enter amount',
               ),

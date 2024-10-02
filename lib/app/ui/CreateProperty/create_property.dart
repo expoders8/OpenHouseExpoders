@@ -7,14 +7,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
-import '../../controller/property_controller.dart';
-import '../../models/state_model.dart';
 import '../../view/amenities_view.dart';
-import '../../models/country_model.dart';
 import 'package:http/http.dart' as http;
+import '../../models/country_model.dart';
 import '../widgets/custom_textfield.dart';
 import '../../services/lookup_service.dart';
 import '../../services/properties_service.dart';
+import '../../controller/property_controller.dart';
 import '../../controller/amenities_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -87,7 +86,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final GetCurrentPropertyController getCurrentPropertyController =
       Get.put(GetCurrentPropertyController());
   final TextEditingController cityController = TextEditingController();
-  final TextEditingController stateController = TextEditingController();
   final TextEditingController personController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
@@ -145,8 +143,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     countryId = widget.countryId.toString() == "null"
         ? ""
         : widget.countryId.toString();
-    stateController.text =
-        widget.state.toString() == "null" ? "" : widget.state.toString();
+
     stateid =
         widget.stateId.toString() == "null" ? "" : widget.stateId.toString();
     cityController.text =
@@ -191,87 +188,23 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
-                Card(
-                  shadowColor: const Color.fromARGB(10, 0, 0, 0),
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: kWhiteColor),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: propertyNameController,
-                            textInputAction: TextInputAction.next,
-                            onChanged: (value) {},
-                            decoration: const InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: kIconColor),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: kIconColor),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: kRedColor),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: kRedColor),
-                              ),
-                              contentPadding: EdgeInsets.only(top: 5),
-                              hintText: 'Property Name',
-                              hintStyle: TextStyle(
-                                fontFamily: kCircularStdNormal,
-                                fontWeight: FontWeight.w400,
-                                color: kPrimaryColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter property name';
-                              }
-                              return null;
-                            },
-                          ),
-                          TextFormField(
-                            keyboardType: TextInputType.multiline,
-                            maxLines: 3,
-                            minLines: 1,
-                            controller: descriptionController,
-                            decoration: const InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: kIconColor),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: kIconColor),
-                              ),
-                              contentPadding: EdgeInsets.only(top: 5),
-                              hintText: 'Description',
-                              hintStyle: TextStyle(
-                                fontFamily: kCircularStdNormal,
-                                fontWeight: FontWeight.w400,
-                                color: kPrimaryColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter Description';
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 15)
-                        ],
-                      ),
-                    ),
-                  ),
+                buildTextWidget("Property Name"),
+                CustomTextFormField(
+                  hintText: 'Property Name',
+                  maxLines: 1,
+                  ctrl: propertyNameController,
+                  name: "create",
+                  formSubmitted: isFormSubmitted,
+                  validationMsg: 'Please enter property name',
+                ),
+                buildTextWidget("Description"),
+                CustomTextFormField(
+                  hintText: 'Description',
+                  maxLines: 1,
+                  ctrl: descriptionController,
+                  name: "create",
+                  formSubmitted: isFormSubmitted,
+                  validationMsg: 'Please enter Description',
                 ),
                 buildTextWidget("Property Details"),
                 SizedBox(
@@ -644,79 +577,33 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                     ),
                   ],
                 ),
-                buildTextWidget("Property Price"),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return SizedBox(
-                      width: constraints.maxWidth > 500
-                          ? 600
-                          : constraints.maxWidth,
-                      child: CustomTextFormField(
-                        hintText: '\$100',
-                        maxLines: 1,
-                        keyboardType: TextInputType.number,
-                        ctrl: propertyPriceController,
-                        name: "create",
-                        formSubmitted: isFormSubmitted,
-                        validationMsg: 'Please enter Property Price',
-                      ),
-                    );
-                  },
+                buildTextWidget("Rent per month"),
+                CustomTextFormField(
+                  hintText: '\$100',
+                  maxLines: 1,
+                  keyboardType: TextInputType.number,
+                  ctrl: propertyPriceController,
+                  name: "iamount",
+                  formSubmitted: isFormSubmitted,
+                  validationMsg: 'Please enter Property Price',
                 ),
                 const SizedBox(height: 10),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return SizedBox(
-                      width: constraints.maxWidth > 500
-                          ? 600
-                          : constraints.maxWidth,
-                      child: CustomTextFormField(
-                        hintText: 'Facilities',
-                        maxLines: 1,
-                        ctrl: facilitiesController,
-                        name: "create",
-                        formSubmitted: isFormSubmitted,
-                        validationMsg: 'Please enter facilities',
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 10),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return SizedBox(
-                      width: constraints.maxWidth > 500
-                          ? 600
-                          : constraints.maxWidth,
-                      child: CustomTextFormField(
-                        hintText: 'Person',
-                        maxLines: 1,
-                        ctrl: personController,
-                        keyboardType: TextInputType.number,
-                        name: "create",
-                        formSubmitted: isFormSubmitted,
-                        validationMsg: 'Please enter Person',
-                      ),
-                    );
-                  },
+                CustomTextFormField(
+                  hintText: 'Notes..',
+                  maxLines: 1,
+                  ctrl: facilitiesController,
+                  name: "create",
+                  formSubmitted: isFormSubmitted,
+                  validationMsg: 'Please enter facilities',
                 ),
                 buildTextWidget("Address"),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return SizedBox(
-                      width: constraints.maxWidth > 500
-                          ? 600
-                          : constraints.maxWidth,
-                      child: CustomTextFormField(
-                        hintText: 'Flat / House No / Building',
-                        maxLines: 1,
-                        ctrl: addressController,
-                        name: "create",
-                        formSubmitted: isFormSubmitted,
-                        validationMsg: 'Please enter Address',
-                      ),
-                    );
-                  },
+                CustomTextFormField(
+                  hintText: 'Flat / House No / Building',
+                  maxLines: 1,
+                  ctrl: addressController,
+                  name: "create",
+                  formSubmitted: isFormSubmitted,
+                  validationMsg: 'Please enter Address',
                 ),
                 const SizedBox(height: 10),
                 Padding(
@@ -800,97 +687,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                  child: TypeAheadField<GetAllStateDataModel>(
-                    textFieldConfiguration: TextFieldConfiguration(
-                      controller: stateController,
-                      enabled: countryId != "",
-                      decoration: InputDecoration(
-                        fillColor: kWhiteColor,
-                        filled: true,
-                        hintText: "State",
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                        hintStyle: const TextStyle(
-                          fontFamily: kCircularStdBook,
-                          fontWeight: FontWeight.w400,
-                          color: kPrimaryColor,
-                          fontSize: 14,
-                        ),
-                        hintMaxLines: 1,
-                        suffixIcon: Image.asset(
-                          "assets/icons/polygon_down.png",
-                          scale: 2,
-                          width: 5,
-                        ),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                          borderSide:
-                              BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide:
-                              const BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide:
-                              const BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide:
-                              const BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: kWhiteColor,
-                          ),
-                        ),
-                        errorText:
-                            isFormSubmitted && stateController.text.isEmpty
-                                ? 'Please select a state'
-                                : null,
-                      ),
-                      style: const TextStyle(
-                        fontFamily: kCircularStdBook,
-                        fontWeight: FontWeight.w400,
-                        color: kPrimaryColor,
-                        fontSize: 14,
-                      ),
-                      autocorrect: true,
-                      cursorColor: kPrimaryColor,
-                    ),
-                    suggestionsCallback: (pattern) {
-                      return lookupService.getState(countryId);
-                    },
-                    itemBuilder: (context, GetAllStateDataModel suggestion) {
-                      return ListTile(
-                        title: Text(suggestion.name.toString()),
-                      );
-                    },
-                    onSuggestionSelected: (GetAllStateDataModel suggestion) {
-                      setState(() {
-                        stateController.text = suggestion.name.toString();
-                        stateid = suggestion.id.toString();
-                      });
-                    },
-                    noItemsFoundBuilder: (context) => const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('No state found'),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
                 SizedBox(
                   width: size.width > 500 ? 600 : size.width,
                   child: CustomTextFormField(
-                    hintText: 'city',
+                    hintText: 'City',
                     maxLines: 1,
                     ctrl: cityController,
                     name: "create",
@@ -1050,7 +850,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                     bedRoomsController.value.text != "" &&
                                     capacityController.value.text != "" &&
                                     countryController.value.text != "" &&
-                                    stateController.value.text != "" &&
                                     washRoomsController.value.text != "") {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
@@ -1071,7 +870,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             descriptionController.text,
                                             propertyPriceController.text,
                                             facilitiesController.text,
-                                            personController.text,
                                             addressController.text,
                                             countryId,
                                             stateid,
@@ -1086,20 +884,19 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             fileList)
                                         .then((value) {
                                       if (value) {
-                                        propertyNameController.dispose();
-                                        descriptionController.dispose();
-                                        propertyPriceController.dispose();
-                                        facilitiesController.dispose();
-                                        personController.dispose();
-                                        addressController.dispose();
+                                        propertyNameController.clear();
+                                        descriptionController.clear();
+                                        propertyPriceController.clear();
+                                        facilitiesController.clear();
+                                        personController.clear();
+                                        addressController.clear();
                                         countryId = "";
                                         stateid = "";
-                                        cityController.dispose();
-                                        countryController.dispose();
-                                        stateController.dispose();
-                                        capacityController.dispose();
-                                        bedRoomsController.dispose();
-                                        washRoomsController.dispose();
+                                        cityController.clear();
+                                        countryController.clear();
+                                        capacityController.clear();
+                                        bedRoomsController.clear();
+                                        washRoomsController.clear();
                                         selctesType = "";
                                         fileList = [];
                                       }
@@ -1108,13 +905,13 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                 } else {
                                   setState(() {
                                     isFormSubmitted = true;
-                                    isImagePickerError = imageList.isEmpty;
+                                    isImagePickerError = fileList.isEmpty;
                                   });
                                 }
                               } else {
                                 setState(() {
                                   isFormSubmitted = true;
-                                  isImagePickerError = imageList.isEmpty;
+                                  isImagePickerError = fileList.isEmpty;
                                 });
                               }
                             },
@@ -1141,7 +938,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                     bedRoomsController.value.text != "" &&
                                     capacityController.value.text != "" &&
                                     countryController.value.text != "" &&
-                                    stateController.value.text != "" &&
                                     washRoomsController.value.text != "") {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
@@ -1162,7 +958,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             descriptionController.text,
                                             propertyPriceController.text,
                                             facilitiesController.text,
-                                            personController.text,
                                             addressController.text,
                                             countryId,
                                             stateid,
@@ -1177,20 +972,19 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             fileList)
                                         .then((value) {
                                       if (value) {
-                                        propertyNameController.dispose();
-                                        descriptionController.dispose();
-                                        propertyPriceController.dispose();
-                                        facilitiesController.dispose();
-                                        personController.dispose();
-                                        addressController.dispose();
+                                        propertyNameController.clear();
+                                        descriptionController.clear();
+                                        propertyPriceController.clear();
+                                        facilitiesController.clear();
+                                        personController.clear();
+                                        addressController.clear();
                                         countryId = "";
                                         stateid = "";
-                                        cityController.dispose();
-                                        countryController.dispose();
-                                        stateController.dispose();
-                                        capacityController.dispose();
-                                        bedRoomsController.dispose();
-                                        washRoomsController.dispose();
+                                        cityController.clear();
+                                        countryController.clear();
+                                        capacityController.clear();
+                                        bedRoomsController.clear();
+                                        washRoomsController.clear();
                                         selctesType = "";
                                         fileList = [];
                                       }
@@ -1199,13 +993,13 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                 } else {
                                   setState(() {
                                     isFormSubmitted = true;
-                                    isImagePickerError = imageList.isEmpty;
+                                    isImagePickerError = fileList.isEmpty;
                                   });
                                 }
                               } else {
                                 setState(() {
                                   isFormSubmitted = true;
-                                  isImagePickerError = imageList.isEmpty;
+                                  isImagePickerError = fileList.isEmpty;
                                 });
                               }
                             },
@@ -1229,26 +1023,23 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     try {
       for (var path in initialImagePaths) {
         if (path.startsWith('http')) {
-          // Handle remote URL
           File file = await _downloadImageFromUrl(path);
           setState(() {
-            fileList.add(file); // Always add the file, even if it's empty
+            fileList.add(file);
           });
         } else {
-          // Handle local file
           File file = File(path);
           if (await file.exists()) {
             setState(() {
-              fileList.add(file); // Always add the file, even if it's empty
+              fileList.add(file);
             });
           } else {
             print('Local file does not exist: $path');
           }
         }
       }
-
       setState(() {
-        isImagePickerError = false; // Reset error state
+        isImagePickerError = false;
       });
       LoaderX.hide();
     } catch (e) {
@@ -1269,13 +1060,13 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         String filePath = '$tempPath/$fileName';
         File file = File(filePath);
         await file.writeAsBytes(response.bodyBytes);
-        return file; // Return the file if successful
+        return file;
       } else {
         throw Exception("Failed to download image: ${response.statusCode}");
       }
     } catch (e) {
       print('Error downloading image: $e');
-      return File(''); // Return an empty file if something goes wrong
+      return File('');
     }
   }
 
@@ -1286,8 +1077,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         text,
         style: const TextStyle(
           fontSize: 13,
-          fontFamily:
-              'kCircularStdBold', // Ensure the font family is properly referenced
+          fontFamily: 'kCircularStdBold',
         ),
       ),
     );
@@ -1327,9 +1117,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
             fileList.add(File(filePath));
           });
         }
-
         setState(() {
-          isImagePickerError = false; // Reset error state
+          isImagePickerError = false;
         });
       }
     } on Exception catch (e) {
@@ -1349,7 +1138,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     await file.writeAsBytes(
       buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
     );
-
     return filePath;
   }
 }

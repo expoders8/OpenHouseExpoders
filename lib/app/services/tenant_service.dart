@@ -9,12 +9,19 @@ import '../../config/constant/constant.dart';
 import '../controller/tenants_controller.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
+import '../models/previous_tenant_model.dart';
 
 class TenantService {
-  static Future<List<GetAllTenantDataModel>> getallTenant(String query) async {
+  static Future<List<GetAllTenantDataModel>> getallTenant(
+    String? mobileno,
+    String? email,
+  ) async {
     try {
       var response = await http.post(Uri.parse('$baseUrl/api/tenant/getall'),
-          body: json.encode({"searchText": query}),
+          body: json.encode({
+            "searchText": mobileno,
+            "email": email,
+          }),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
@@ -24,7 +31,7 @@ class TenantService {
             .map((e) => GetAllTenantDataModel.fromJson(e))
             .where((value) {
           final phoneLower = value.phoneNumber!.toLowerCase();
-          final searchLower = query.toLowerCase();
+          final searchLower = mobileno!.toLowerCase();
           return phoneLower.contains(searchLower);
         }).toList();
       } else if (response.statusCode == 401) {
@@ -64,7 +71,10 @@ class TenantService {
             "is_active": true,
             "start_date": getAllTenantController.startDate.value,
             "end_date": getAllTenantController.endDate.value,
-            "tenant_id": getAllTenantController.tenantId.value
+            "tenant_id": getAllTenantController.tenantId.value,
+            "propertyAddress": getAllTenantController.propertyAddress.value,
+            "propertyName": getAllTenantController.propertyName.value,
+            "hostName": "${userid["first_name"]} ${userid["last_name"]}",
           }),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -113,6 +123,35 @@ class TenantService {
         LoaderX.hide();
         SnackbarUtils.showErrorSnackbar(
             "Failed to Invitations", decodedUser['error']);
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  getAllPreviousTenant(String? id) async {
+    try {
+      var response = await http.get(
+          Uri.parse('$baseUrl/api/host/getall_previous_tenant?propertyid=$id'),
+          headers: {'Content-type': 'application/json'});
+      var decodedUser = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (decodedUser['success']) {
+          LoaderX.hide();
+          var data = json.decode(response.body);
+          return GetAllPreviousTenantModel.fromJson(data);
+        } else {
+          LoaderX.hide();
+          SnackbarUtils.showErrorSnackbar(
+              "Failed to Previous tenant", decodedUser['error']);
+          return Future.error("Server Error");
+        }
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar(
+            "Failed to Previous tenant", decodedUser['error']);
       }
     } catch (e) {
       LoaderX.hide();

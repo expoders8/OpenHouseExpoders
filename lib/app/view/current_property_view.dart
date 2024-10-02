@@ -215,8 +215,7 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                                                     ),
                                                     const SizedBox(width: 10),
                                                     Text(
-                                                      data.rentAmount
-                                                          .toString(),
+                                                      "\$ ${data.rentAmount.toString()}",
                                                       style: const TextStyle(
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -371,7 +370,7 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   const Text(
-                                                    "Lease expairy",
+                                                    "Lease expiry",
                                                     style: TextStyle(
                                                         fontFamily:
                                                             kCircularStdNormal,

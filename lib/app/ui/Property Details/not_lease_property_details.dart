@@ -5,14 +5,14 @@ import 'package:another_carousel_pro/another_carousel_pro.dart';
 
 import '../../routes/app_pages.dart';
 import '../../view/nearby_view.dart';
+import '../Add NearBy/add_nearby.dart';
 import '../../view/tenant_history_view.dart';
 import '../../view/property_details_view.dart';
+import '../CreateProperty/create_property.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 import '../../view/house keeper/house_keeper_view.dart';
 import '../../controller/property_detail_controller.dart';
-import '../Add NearBy/add_nearby.dart';
-import '../CreateProperty/create_property.dart';
 
 class NotLeasePropertyDetailPage extends StatefulWidget {
   const NotLeasePropertyDetailPage({super.key});
@@ -72,7 +72,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
         return Stack(
           children: [
             SizedBox(
-              height: Get.height / 2.9,
+              height: Get.height / 2.94,
               width: double.infinity,
               child: AnotherCarousel(
                 images: images,
@@ -155,7 +155,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                             Row(
                                               children: [
                                                 Text(
-                                                  "\$${propertydata.rentAmount!.toString()}",
+                                                  "\$ ${propertydata.rentAmount!.toString()}",
                                                   style: const TextStyle(
                                                       color: kButtonColor,
                                                       fontSize: 18,
@@ -353,7 +353,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                     border: Border.all(),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            15),
+                                                            16),
                                                   ),
                                                   width: 150,
                                                   height: 40,
@@ -390,8 +390,14 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                             ),
                                             const SizedBox(height: 20),
                                             isPreviousTenantsSelected
-                                                ? const TenantHistoryView()
-                                                : const HouseKeeperView(),
+                                                ? TenantHistoryView(
+                                                    propertyId: propertydata!.id
+                                                        .toString(),
+                                                  )
+                                                : HouseKeeperView(
+                                                    propertyId: propertydata!.id
+                                                        .toString(),
+                                                  ),
                                           ],
                                         ),
                                       ],
@@ -407,7 +413,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                           padding: EdgeInsets.zero,
                                           onPressed: () {
                                             Get.to(() => AddNearByPage(
-                                                  propertyId: propertydata!.id!,
+                                                  propertyId: propertydata.id!,
                                                 ));
                                           },
                                           child: Container(
@@ -432,10 +438,8 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(height: 10),
                                       NearByAmenitiesView(
-                                        propertyId:
-                                            propertydata!.id!.toString(),
+                                        propertyId: propertydata.id!.toString(),
                                       ),
                                     ],
                                   ),

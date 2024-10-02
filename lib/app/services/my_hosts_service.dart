@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../models/my_host_get_model.dart';
 import '../../config/constant/constant.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
-import '../models/my_host_get_model.dart';
 
 class MyHostService {
   previousHosts() async {

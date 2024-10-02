@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
-import '../../../view/house keeper/tenant_house_keeper_view.dart';
 import '../../../view/nearby_view.dart';
 import '../../../view/property_details_view.dart';
 import '../../../../config/constant/constant.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
 import '../../../controller/property_detail_controller.dart';
+import '../../../view/house keeper/tenant_house_keeper_view.dart';
 
 class TenantLeasePropertyDetailPage extends StatefulWidget {
   const TenantLeasePropertyDetailPage({super.key});
@@ -155,8 +155,7 @@ class _TenantLeasePropertyDetailPageState
                                           Row(
                                             children: [
                                               Text(
-                                                propertydata.rentAmount!
-                                                    .toString(),
+                                                "\$ ${propertydata.rentAmount!.toString()}",
                                                 style: const TextStyle(
                                                     color: kButtonColor,
                                                     fontSize: 18,
@@ -284,7 +283,9 @@ class _TenantLeasePropertyDetailPageState
                                       ),
                                     ),
                                     const CurrentPropertyDetailsView(),
-                                    const NearByAmenitiesView(),
+                                    NearByAmenitiesView(
+                                      propertyId: propertydata.id!.toString(),
+                                    ),
                                     SingleChildScrollView(
                                       child: Column(
                                         children: [

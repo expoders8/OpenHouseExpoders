@@ -15,8 +15,8 @@ class TenantRequestAllView extends StatefulWidget {
 }
 
 class _TenantRequestAllViewState extends State<TenantRequestAllView> {
-  final GetAllRequestsController getAllRequestsController =
-      Get.put(GetAllRequestsController());
+  final GetAllHostRequestsController getAllHostRequestsController =
+      Get.put(GetAllHostRequestsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +26,7 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
       ),
       body: Obx(
         () {
-          if (getAllRequestsController.isLoading.value) {
+          if (getAllHostRequestsController.isLoading.value) {
             return Container(
               color: kBackGroundColor,
               child: const Center(
@@ -36,20 +36,20 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
               ),
             );
           } else {
-            if (getAllRequestsController.requestList.isNotEmpty) {
-              if (getAllRequestsController.requestList[0].data!.isEmpty) {
+            if (getAllHostRequestsController.requestList.isNotEmpty) {
+              if (getAllHostRequestsController.requestList[0].data!.isEmpty) {
                 return Container();
               } else {
                 return Column(
                   children: [
-                    Expanded(
+                    Flexible(
                       child: ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
-                        itemCount: getAllRequestsController
+                        itemCount: getAllHostRequestsController
                             .requestList[0].data!.length,
                         itemBuilder: (context, index) {
                           var requestData =
-                              getAllRequestsController.requestList[0].data!;
+                              getAllHostRequestsController.requestList[0].data!;
                           if (requestData.isNotEmpty) {
                             var data = requestData[index];
                             var startDate = DateFormat('dd MMM yyyy').format(
@@ -161,9 +161,9 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
                                               const SizedBox(width: 10),
                                               SizedBox(
                                                 width: Get.width - 220,
-                                                child: const Text(
-                                                  "address",
-                                                  style: TextStyle(
+                                                child: Text(
+                                                  data.address.toString(),
+                                                  style: const TextStyle(
                                                       color: kPrimaryColor,
                                                       fontSize: 12,
                                                       fontFamily:
@@ -222,7 +222,12 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
                                                       color: kPrimaryColor),
                                                   child: Center(
                                                     child: Text(
-                                                      data.status.toString(),
+                                                      data.status
+                                                              .toString()[0]
+                                                              .toUpperCase() +
+                                                          data.status
+                                                              .toString()
+                                                              .substring(1),
                                                       style: const TextStyle(
                                                           color: kWhiteColor,
                                                           fontFamily:

@@ -24,7 +24,6 @@ class PropertiesService {
       String description,
       String propertyprice,
       String facilities,
-      String person,
       String address,
       String countryid,
       String stateid,
@@ -49,10 +48,9 @@ class PropertiesService {
         ..fields['description'] = description
         ..fields['property_price'] = propertyprice
         ..fields['facilities'] = facilities
-        ..fields['person'] = person
+        ..fields['person'] = capacity
         ..fields['address'] = address
         ..fields['country_id'] = countryid
-        ..fields['state_id'] = stateid
         ..fields['city_name'] = cityname
         ..fields['profile_picture'] = ""
         ..fields['created_by_id'] = userid["id"]
@@ -98,7 +96,6 @@ class PropertiesService {
       String description,
       String propertyprice,
       String facilities,
-      String person,
       String address,
       String countryid,
       String stateid,
@@ -126,7 +123,7 @@ class PropertiesService {
         ..fields['description'] = description
         ..fields['property_price'] = propertyprice
         ..fields['facilities'] = facilities
-        ..fields['person'] = person
+        ..fields['person'] = capacity
         ..fields['address'] = address
         ..fields['country_id'] = countryid
         ..fields['state_id'] = stateid

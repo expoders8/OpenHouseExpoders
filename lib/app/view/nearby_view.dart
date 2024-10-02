@@ -36,7 +36,7 @@ class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
                 padding: EdgeInsets.only(top: 50.0),
                 child: Center(
                   child: Text(
-                    "No NearBy Amenities",
+                    "No Nearby places",
                     style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 15,
@@ -57,6 +57,7 @@ class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
                       var data = requestData[index];
                       return Column(
                         children: [
+                          const SizedBox(height: 10),
                           nearby(data.title.toString(), data.address.toString(),
                               data.description.toString()),
                           const SizedBox(height: 10),
@@ -67,7 +68,7 @@ class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
                         padding: EdgeInsets.only(top: 50.0),
                         child: Center(
                           child: Text(
-                            "No NearBy Amenities",
+                            "No Nearby places",
                             style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: 15,
@@ -85,7 +86,7 @@ class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
               padding: EdgeInsets.only(top: 50.0),
               child: Center(
                 child: Text(
-                  "No NearBy Amenities",
+                  "No Nearby places",
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 15,
