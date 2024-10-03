@@ -27,6 +27,7 @@ abstract class Routes {
   static const checkoutRequestsPage = _Paths.checkoutRequestsPage;
   static const totalAmountDetailPage = _Paths.totalAmountDetailPage;
   static const inviteTenantDetailPage = _Paths.inviteTenantDetailPage;
+  static const sendCheckoutRequest = _Paths.sendCheckoutRequest;
   static const leasePropertyDetailPage = _Paths.leasePropertyDetailPage;
   static const notLeasePropertyDetailPage = _Paths.notLeasePropertyDetailPage;
   static const tenantLeasePropertyDetailPage =
@@ -58,6 +59,7 @@ abstract class _Paths {
   static const checkoutRequestsPage = '/checkoutRequestsPage';
   static const totalAmountDetailPage = '/totalAmountDetailPage';
   static const inviteTenantDetailPage = '/inviteTenantDetailPage';
+  static const sendCheckoutRequest = '/sendCheckoutRequest';
   static const leasePropertyDetailPage = '/leasePropertyDetailPage';
   static const notLeasePropertyDetailPage = '/notLeasePropertyDetailPage';
   static const tenantLeasePropertyDetailPage = '/tenantLeasePropertyDetailPage';

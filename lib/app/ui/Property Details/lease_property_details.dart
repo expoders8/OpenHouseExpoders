@@ -473,9 +473,11 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                             ),
                                           ),
                                         ),
-                                        NearByAmenitiesView(
-                                          propertyId:
-                                              propertydata.id!.toString(),
+                                        Flexible(
+                                          child: NearByAmenitiesView(
+                                            propertyId:
+                                                propertydata.id!.toString(),
+                                          ),
                                         ),
                                       ],
                                     ),

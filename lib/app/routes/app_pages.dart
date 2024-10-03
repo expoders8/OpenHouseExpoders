@@ -2,7 +2,8 @@ import 'package:get/get.dart';
 
 import '../ui/Add Housekeeper/add_housekeeper.dart';
 import '../ui/Add NearBy/add_nearby.dart';
-import '../ui/Checkout Requests/checkout_request.dart';
+import '../ui/Checkout Requests/checkout_request_get.dart';
+import '../ui/Checkout Requests/send_checkout_request.dart';
 import '../ui/My Host/my_hosts_detail.dart';
 import '../ui/My Tenants/my_tenants_detail.dart';
 import '../ui/Profile/profile.dart';
@@ -143,6 +144,10 @@ class AppPages {
     GetPage(
       name: _Paths.addHousekeeperPage,
       page: () => const AddHousekeeperPage(),
+    ),
+    GetPage(
+      name: _Paths.sendCheckoutRequest,
+      page: () => const SendCheckoutRequest(),
     ),
   ];
 }

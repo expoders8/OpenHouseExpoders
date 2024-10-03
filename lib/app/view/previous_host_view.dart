@@ -19,6 +19,7 @@ class _PreviousHostViewState extends State<PreviousHostView> {
   TextEditingController searchController = TextEditingController();
   final GetDetailHostsController getDetailHostsController =
       Get.put(GetDetailHostsController());
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -92,6 +93,7 @@ class _PreviousHostViewState extends State<PreviousHostView> {
                                   data.address.toString(),
                                   data.tenantPhoneNumber.toString(),
                                   data.id.toString()),
+                              const SizedBox(height: 10),
                             ],
                           );
                         } else {

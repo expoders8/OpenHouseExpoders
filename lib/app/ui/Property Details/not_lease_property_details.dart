@@ -438,8 +438,11 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                           ),
                                         ),
                                       ),
-                                      NearByAmenitiesView(
-                                        propertyId: propertydata.id!.toString(),
+                                      Flexible(
+                                        child: NearByAmenitiesView(
+                                          propertyId:
+                                              propertydata.id!.toString(),
+                                        ),
                                       ),
                                     ],
                                   ),

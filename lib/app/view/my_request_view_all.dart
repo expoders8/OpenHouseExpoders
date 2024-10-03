@@ -17,6 +17,8 @@ class MyRequestViewAllView extends StatefulWidget {
 class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
   final GetAllRequestsController getAllRequestsController =
       Get.put(GetAllRequestsController());
+  DateTime? dateTime;
+  String formattedDate = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,10 +64,13 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
                           getAllRequestsController.requestList[0].data!;
                       if (requestData.isNotEmpty) {
                         var data = requestData[index];
-                        DateTime dateTime =
-                            DateTime.parse(data.startDate.toString());
-                        String formattedDate =
-                            DateFormat('dd MMM yyyy').format(dateTime);
+                        if (data.startDate != null) {
+                          dateTime = DateTime.parse(data.startDate!.toString());
+                          formattedDate =
+                              DateFormat('dd MMM yyyy').format(dateTime!);
+                        } else {
+                          formattedDate = 'No Date Available';
+                        }
                         return Column(
                           children: [
                             Container(

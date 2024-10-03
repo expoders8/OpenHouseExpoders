@@ -284,14 +284,7 @@ class PropertiesService {
     var userid = jsonDecode(userdata);
     try {
       var response = await http.post(Uri.parse('$baseUrl/api/property/book'),
-          body: json.encode({
-            "id": invitationId,
-            "user_id": userid["id"],
-            "property_id": propertyId,
-            "created_by_id": null,
-            "updated_by_id": null,
-            "is_active": true
-          }),
+          body: json.encode({"userid": userid["id"], "propertyid": propertyId}),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
@@ -320,9 +313,45 @@ class PropertiesService {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
-      var response = await http.get(
-          Uri.parse(
-              '$baseUrl/api/property/getallcurrentproperty?userid=${userid["id"]}'),
+      var response = await http.post(
+          Uri.parse('$baseUrl/api/tenant/getall_currentproperty'),
+          body: json.encode({
+            "userid": userid["id"],
+            "status": "Booked",
+            "request": "current"
+          }),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        LoaderX.hide();
+        var data = json.decode(response.body);
+        return GetAllPropertiesModel.fromJson(data);
+      } else if (response.statusCode == 401) {
+        LoaderX.hide();
+        return Future.error("Authentication Error");
+      } else {
+        // LoaderX.hide();
+        // SnackbarUtils.showErrorSnackbar("Server Error",
+        //     "Error while fetch Properties, Please try after some time.");
+        return Future.error("Server Error");
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  getAllPreviousProperties() async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
+    try {
+      var response = await http.post(
+          Uri.parse('$baseUrl/api/tenant/getall_currentproperty'),
+          body: json.encode({
+            "userid": userid["id"],
+            "status": "Completed",
+            "request": "previous"
+          }),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();

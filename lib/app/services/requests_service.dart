@@ -26,7 +26,7 @@ class RequestsService {
                 "updated_by_id": null,
                 "is_active": true,
                 "property_id": propertyId,
-                "host_userid": hostId,
+                "host_user_id": hostId,
               }),
               headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);

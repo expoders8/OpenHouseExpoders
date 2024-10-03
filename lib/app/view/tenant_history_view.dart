@@ -18,6 +18,10 @@ class _TenantHistoryViewState extends State<TenantHistoryView> {
   final GetAllPropertyPreviousTenantController
       getAllPropertyPreviousTenantController =
       Get.put(GetAllPropertyPreviousTenantController());
+  DateTime? dateTime;
+  DateTime? dateTime1;
+  String enddate = '';
+  String startdate = '';
   @override
   void initState() {
     getAllPropertyPreviousTenantController
@@ -60,15 +64,21 @@ class _TenantHistoryViewState extends State<TenantHistoryView> {
                       .requestList[0].data!;
                   if (requestData.isNotEmpty) {
                     var data = requestData[index];
-                    DateTime? dateTime =
-                        DateTime.parse(data.tenantStartDate!.toString());
-                    String? startdate =
-                        DateFormat('dd MMM yyyy').format(dateTime);
+                    if (data.tenantStartDate != null) {
+                      dateTime =
+                          DateTime.parse(data.tenantStartDate!.toString());
+                      startdate = DateFormat('dd MMM yyyy').format(dateTime!);
+                    } else {
+                      startdate = 'No Date Available';
+                    }
+                    if (data.tenantStartDate != null) {
+                      dateTime1 =
+                          DateTime.parse(data.tenantEndDate!.toString());
+                      enddate = DateFormat('dd MMM yyyy').format(dateTime1!);
+                    } else {
+                      startdate = 'No Date Available';
+                    }
 
-                    DateTime? dateTime1 =
-                        DateTime.parse(data.tenantEndDate!.toString());
-                    String? enddate =
-                        DateFormat('dd MMM yyyy').format(dateTime1);
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

@@ -104,3 +104,35 @@ class GetCurrentDetailsPropertiesController extends GetxController {
     }
   }
 }
+
+class GetPreviousDetailsPropertiesController extends GetxController {
+  var isLoading = true.obs;
+  RxString propertyId = "".obs;
+  PropertyDetailModel? detailModel;
+
+  void feachconferanceId(String newValue) {
+    propertyId.value = newValue;
+    fetchPropertyDetail();
+  }
+
+  fetchPropertyDetail() async {
+    try {
+      isLoading(true);
+      var response = await http.get(
+          Uri.parse(
+              "$baseUrl/api/property/getbyid?id=${propertyId.toString()}"),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200) {
+        detailModel = PropertyDetailModel.fromJson(jsonDecode(response.body));
+      } else {
+        return Future.error("Server Error");
+      }
+    } catch (error) {
+      SnackbarUtils.showErrorSnackbar(error.toString(),
+          "Error while Properties, Please try after some time.");
+      return Future.error(error);
+    } finally {
+      isLoading(false);
+    }
+  }
+}

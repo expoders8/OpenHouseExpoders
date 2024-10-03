@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 
+import '../../../controller/tab_controller.dart';
 import '../../../view/nearby_view.dart';
 import '../../../view/property_details_view.dart';
 import '../../../../config/constant/constant.dart';
@@ -29,6 +31,7 @@ class _TenantLeasePropertyDetailPageState
       getCurrentDetailsPropertiesController =
       Get.put(GetCurrentDetailsPropertiesController());
   List<ImageProvider> images = [];
+  final tabController = Get.put(TabCountController());
 
   @override
   void initState() {
@@ -137,43 +140,88 @@ class _TenantLeasePropertyDetailPageState
                                   floating: false,
                                   flexibleSpace: Column(
                                     children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          SizedBox(
-                                            width: Get.width - 100,
-                                            child: Text(
-                                              propertydata.name!.toString(),
-                                              style: const TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontSize: 18,
-                                                  fontFamily:
-                                                      kCircularStdMedium),
-                                            ),
-                                          ),
-                                          Row(
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "\$ ${propertydata.rentAmount!.toString()}",
-                                                style: const TextStyle(
-                                                    color: kButtonColor,
-                                                    fontSize: 18,
-                                                    fontFamily:
-                                                        kCircularStdMedium),
+                                              SizedBox(
+                                                width: Get.width - 150,
+                                                child: Text(
+                                                  propertydata.name!.toString(),
+                                                  style: const TextStyle(
+                                                      color: kPrimaryColor,
+                                                      fontSize: 18,
+                                                      fontFamily:
+                                                          kCircularStdMedium),
+                                                ),
                                               ),
-                                              const SizedBox(width: 10),
-                                              const Text(
-                                                "per month",
-                                                style: TextStyle(
-                                                    color:
-                                                        kSecondaryPrimaryColor,
-                                                    fontSize: 13,
-                                                    fontFamily:
-                                                        kCircularStdMedium),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "\$ ${propertydata.rentAmount!.toString()}",
+                                                    style: const TextStyle(
+                                                        color: kButtonColor,
+                                                        fontSize: 18,
+                                                        fontFamily:
+                                                            kCircularStdMedium),
+                                                  ),
+                                                  const SizedBox(width: 10),
+                                                  const Text(
+                                                    "per month",
+                                                    style: TextStyle(
+                                                        color:
+                                                            kSecondaryPrimaryColor,
+                                                        fontSize: 13,
+                                                        fontFamily:
+                                                            kCircularStdMedium),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
+                                          CupertinoButton(
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {
+                                              Get.back();
+                                              tabController.changeTabIndex(2);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: kButtonColor),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: Row(
+                                                  children: [
+                                                    Image.asset(
+                                                      "assets/images/request-approval.png",
+                                                      height: 25,
+                                                      width: 25,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    const SizedBox(width: 7),
+                                                    const Text(
+                                                      "Request",
+                                                      style: TextStyle(
+                                                          color: kPrimaryColor,
+                                                          fontSize: 13,
+                                                          fontFamily:
+                                                              kCircularStdMedium),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
                                         ],
                                       ),
                                       Row(
@@ -271,12 +319,18 @@ class _TenantLeasePropertyDetailPageState
                                                             Text("Checkout"),
                                                           ],
                                                         ),
-                                                        onPressed: () {}),
+                                                        onPressed: () {
+                                                          Get.toNamed(Routes
+                                                              .sendCheckoutRequest);
+                                                        }),
                                                   ),
                                                 ],
                                               ),
                                               const SizedBox(height: 15),
-                                              const TenantHouseKeeperView()
+                                              TenantHouseKeeperView(
+                                                propertyId:
+                                                    propertydata.id.toString(),
+                                              )
                                             ],
                                           )
                                         ],
@@ -578,122 +632,75 @@ class _TenantLeasePropertyDetailPageState
       children: [
         const SizedBox(height: 10),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.network(
-                    image,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.network(
+                image,
+                fit: BoxFit.cover,
+                height: 65,
+                width: 65,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    "assets/images/blank_profile.png",
                     fit: BoxFit.cover,
                     height: 65,
                     width: 65,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        "assets/images/blank_profile.png",
-                        fit: BoxFit.cover,
-                        height: 65,
-                        width: 65,
-                      );
-                    },
-                  ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  selectedRoll == "tenant"
+                      ? "$firstname $lastname"
+                      : "$firstname $lastname",
+                  style: const TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 18,
+                      fontFamily: kCircularStdMedium),
                 ),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                phoneno != "null"
+                    ? Row(
+                        children: [
+                          const Icon(
+                            Icons.phone,
+                            size: 15,
+                            color: kButtonColor,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            phoneno,
+                            style: const TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 13,
+                                fontFamily: kCircularStdNormal),
+                          ),
+                        ],
+                      )
+                    : Container(),
+                Row(
                   children: [
+                    const Icon(
+                      Icons.email,
+                      size: 15,
+                      color: kButtonColor,
+                    ),
+                    const SizedBox(width: 10),
                     Text(
-                      selectedRoll == "tenant"
-                          ? "$firstname $lastname"
-                          : "$firstname $lastname",
+                      email,
                       style: const TextStyle(
                           color: kPrimaryColor,
-                          fontSize: 18,
-                          fontFamily: kCircularStdMedium),
-                    ),
-                    phoneno != "null"
-                        ? Row(
-                            children: [
-                              const Icon(
-                                Icons.phone,
-                                size: 15,
-                                color: kButtonColor,
-                              ),
-                              const SizedBox(width: 10),
-                              Text(
-                                phoneno,
-                                style: const TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 13,
-                                    fontFamily: kCircularStdNormal),
-                              ),
-                            ],
-                          )
-                        : Container(),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.email,
-                          size: 15,
-                          color: kButtonColor,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          email,
-                          style: const TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 13,
-                              fontFamily: kCircularStdNormal),
-                        ),
-                      ],
+                          fontSize: 13,
+                          fontFamily: kCircularStdNormal),
                     ),
                   ],
                 ),
               ],
             ),
-            selectedRoll == "tenant"
-                ? Container()
-                : Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: kButtonColor),
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text(
-                              "Extend",
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 11,
-                                  fontFamily: kCircularStdNormal),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: kButtonColor),
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text(
-                              "Terminate",
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 11,
-                                  fontFamily: kCircularStdNormal),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
           ],
         ),
         const SizedBox(height: 20),

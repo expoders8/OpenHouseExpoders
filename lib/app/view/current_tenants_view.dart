@@ -92,6 +92,7 @@ class _CurrentTenantsViewState extends State<CurrentTenantsView> {
                                   data.address.toString(),
                                   data.tenantPhoneNumber.toString(),
                                   data.id.toString()),
+                              const SizedBox(height: 10),
                             ],
                           );
                         } else {

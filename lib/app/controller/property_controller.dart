@@ -119,6 +119,35 @@ class GetCurrentPropertyController extends GetxController {
   }
 }
 
+class GetPreviousPropertyController extends GetxController {
+  var isLoading = true.obs;
+  PropertiesService propertiesService = PropertiesService();
+  var propertiesList = <GetAllPropertiesModel>[].obs;
+  RxString searchText = "".obs;
+  RxString image = "".obs;
+  RxString name = "".obs;
+  RxString address = "".obs;
+  RxString propertyId = "".obs;
+
+  @override
+  void onInit() {
+    fetchAllProperties();
+    super.onInit();
+  }
+
+  void fetchAllProperties() async {
+    try {
+      isLoading(true);
+      var properties = await propertiesService.getAllPreviousProperties();
+      if (properties.data != null) {
+        propertiesList.assign(properties);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+}
+
 class GetMyLeasePropertyController extends GetxController {
   var isLoading = true.obs;
   PropertiesService propertiesService = PropertiesService();

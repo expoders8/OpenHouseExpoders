@@ -23,6 +23,8 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
   final GetCurrentDetailsPropertiesController
       getCurrentDetailsPropertiesController =
       Get.put(GetCurrentDetailsPropertiesController());
+  DateTime? dateTime;
+  String formattedDate = '';
 
   @override
   Widget build(BuildContext context) {
@@ -132,10 +134,13 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                             .propertiesList[0].data!;
                         if (propertyData.isNotEmpty) {
                           var data = propertyData[index];
-                          DateTime dateTime =
-                              DateTime.parse(data.endDate.toString());
-                          String formattedDate =
-                              DateFormat('dd MMM yyyy').format(dateTime);
+                          if (data.endDate != null) {
+                            dateTime = DateTime.parse(data.endDate.toString());
+                            formattedDate =
+                                DateFormat('dd MMM yyyy').format(dateTime!);
+                          } else {
+                            formattedDate = 'No Date Available';
+                          }
                           getCurrentPropertyController
                               .image(data.propertyImage);
                           getCurrentPropertyController.name(data.name);

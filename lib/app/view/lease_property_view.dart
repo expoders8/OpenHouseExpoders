@@ -25,6 +25,8 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
       Get.put(GetDetailsPropertiesController());
 
   String selectedRoll = "";
+  DateTime? dateTime;
+  String formattedDate = '';
 
   @override
   void initState() {
@@ -109,10 +111,13 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                             getLeasePropertyController.propertiesList[0].data!;
                         if (propertyData.isNotEmpty) {
                           var data = propertyData[index];
-                          DateTime dateTime =
-                              DateTime.parse(data.endDate.toString());
-                          String formattedDate =
-                              DateFormat('dd MMM yyyy').format(dateTime);
+                          if (data.endDate != null) {
+                            dateTime = DateTime.parse(data.endDate.toString());
+                            formattedDate =
+                                DateFormat('dd MMM yyyy').format(dateTime!);
+                          } else {
+                            formattedDate = 'No Date Available';
+                          }
                           return Column(
                             children: [
                               CupertinoButton(

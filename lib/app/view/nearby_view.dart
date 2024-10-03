@@ -45,40 +45,38 @@ class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
                 ),
               );
             } else {
-              return Flexible(
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: getAllNearByAmenitiesController
-                      .requestList[0].data!.length,
-                  itemBuilder: (context, index) {
-                    var requestData =
-                        getAllNearByAmenitiesController.requestList[0].data!;
-                    if (requestData.isNotEmpty) {
-                      var data = requestData[index];
-                      return Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          nearby(data.title.toString(), data.address.toString(),
-                              data.description.toString()),
-                          const SizedBox(height: 10),
-                        ],
-                      );
-                    } else {
-                      return const Padding(
-                        padding: EdgeInsets.only(top: 50.0),
-                        child: Center(
-                          child: Text(
-                            "No Nearby places",
-                            style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 15,
-                                fontFamily: kCircularStdMedium),
-                          ),
+              return ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount:
+                    getAllNearByAmenitiesController.requestList[0].data!.length,
+                itemBuilder: (context, index) {
+                  var requestData =
+                      getAllNearByAmenitiesController.requestList[0].data!;
+                  if (requestData.isNotEmpty) {
+                    var data = requestData[index];
+                    return Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        nearby(data.title.toString(), data.address.toString(),
+                            data.description.toString()),
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  } else {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 50.0),
+                      child: Center(
+                        child: Text(
+                          "No Nearby places",
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 15,
+                              fontFamily: kCircularStdMedium),
                         ),
-                      );
-                    }
-                  },
-                ),
+                      ),
+                    );
+                  }
+                },
               );
             }
           } else {

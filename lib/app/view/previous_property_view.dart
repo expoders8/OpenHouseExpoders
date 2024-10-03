@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../controller/property_controller.dart';
+import '../controller/property_detail_controller.dart';
 
 class PreviousPropertyView extends StatefulWidget {
   const PreviousPropertyView({super.key});
@@ -13,26 +16,177 @@ class PreviousPropertyView extends StatefulWidget {
 }
 
 class _PreviousPropertyViewState extends State<PreviousPropertyView> {
+  final GetPreviousPropertyController getPreviousPropertyController =
+      Get.put(GetPreviousPropertyController());
+  var leasesearchController = TextEditingController();
+  final GetPreviousDetailsPropertiesController
+      getPreviousDetailsPropertiesController =
+      Get.put(GetPreviousDetailsPropertiesController());
+  DateTime? dateTime;
+  String formattedDate = '';
+
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            notLeaseProperty("assets/icons/1.png", "Main Street", "\$2550",
-                "101 Main Street", "2"),
-            const SizedBox(height: 15),
-            notLeaseProperty("assets/icons/2.png", "Main Street", "\$1520",
-                "3545 Robson St, Vancouver", "1"),
-            const SizedBox(height: 15),
-            notLeaseProperty("assets/icons/3.png", "Main Street", "\$1850",
-                "224 Robson St, Vancouver", "2"),
-            const SizedBox(height: 90)
-          ],
-        ),
-      ),
+    return Obx(
+      () {
+        if (getPreviousPropertyController.isLoading.value) {
+          return Container(
+            color: kBackGroundColor,
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: kSelectedIconColor,
+              ),
+            ),
+          );
+        } else {
+          if (getPreviousPropertyController.propertiesList.isNotEmpty) {
+            if (getPreviousPropertyController.propertiesList[0].data!.isEmpty) {
+              return Column(
+                children: [
+                  const SizedBox(height: 110),
+                  Image.asset(
+                    "assets/images/noproperty.png",
+                    scale: 4,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "You don't have properties on lease.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdMedium),
+                  ),
+                ],
+              );
+            } else {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: TextFormField(
+                      controller: leasesearchController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.fromLTRB(13, 0, 10, 0),
+                        prefixIcon: const Icon(Icons.search),
+                        filled: true,
+                        fillColor: kWhiteColor,
+                        hintText: 'Search',
+                        hintStyle: const TextStyle(
+                            color: kSecondaryPrimaryColor,
+                            fontFamily: kCircularStdNormal,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: const BorderSide(color: kWhiteColor),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: getPreviousPropertyController
+                          .propertiesList[0].data!.length,
+                      itemBuilder: (context, index) {
+                        var propertyData = getPreviousPropertyController
+                            .propertiesList[0].data!;
+                        if (propertyData.isNotEmpty) {
+                          var data = propertyData[index];
+                          if (data.endDate != null) {
+                            dateTime = DateTime.parse(data.endDate.toString());
+                            formattedDate =
+                                DateFormat('dd MMM yyyy').format(dateTime!);
+                          } else {
+                            formattedDate = 'No Date Available';
+                          }
+                          getPreviousPropertyController
+                              .image(data.propertyImage);
+                          getPreviousPropertyController.name(data.name);
+                          getPreviousPropertyController.address(data.address);
+                          getPreviousPropertyController.propertyId(data.id);
+                          return Column(
+                            children: [
+                              notLeaseProperty(
+                                data.propertyImage.toString(),
+                                data.name.toString(),
+                                "\$ ${data.rentAmount.toString()}",
+                                data.address.toString(),
+                                data.person.toString(),
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          );
+                        } else {
+                          return const Padding(
+                            padding: EdgeInsets.only(bottom: 35.0),
+                            child: Center(
+                              child: Text(
+                                "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              );
+            }
+          } else {
+            return const Padding(
+              padding: EdgeInsets.only(bottom: 35.0),
+              child: Center(
+                child: Text(
+                  "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
+              ),
+            );
+          }
+        }
+      },
     );
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Flexible(
+  //     child: SingleChildScrollView(
+  //       child: Column(
+  //         children: [
+  //           notLeaseProperty("assets/icons/1.png", "Main Street", "\$2550",
+  //               "101 Main Street", "2"),
+  //           const SizedBox(height: 15),
+  //           notLeaseProperty("assets/icons/2.png", "Main Street", "\$1520",
+  //               "3545 Robson St, Vancouver", "1"),
+  //           const SizedBox(height: 15),
+  //           notLeaseProperty("assets/icons/3.png", "Main Street", "\$1850",
+  //               "224 Robson St, Vancouver", "2"),
+  //           const SizedBox(height: 90)
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget notLeaseProperty(String image, name, price, address, person) {
     return GestureDetector(
@@ -49,12 +203,20 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(25),
-                    child: Image.asset(
+                    child: Image.network(
                       image,
                       fit: BoxFit.cover,
                       scale: 1.2,
                       height: 95,
                       width: 95,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          "assets/images/samplehouse.jpeg",
+                          fit: BoxFit.cover,
+                          height: 95,
+                          width: 95,
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(width: 15),
@@ -135,26 +297,26 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.person,
-                            size: 16,
-                            color: kButtonColor,
-                          ),
-                          const SizedBox(width: 10),
-                          SizedBox(
-                            width: Get.width - 220,
-                            child: const Text(
-                              "Host Name",
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdMedium),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     const Icon(
+                      //       Icons.person,
+                      //       size: 16,
+                      //       color: kButtonColor,
+                      //     ),
+                      //     const SizedBox(width: 10),
+                      //     SizedBox(
+                      //       width: Get.width - 220,
+                      //       child: const Text(
+                      //         "Host Name",
+                      //         style: TextStyle(
+                      //             color: kPrimaryColor,
+                      //             fontSize: 13,
+                      //             fontFamily: kCircularStdMedium),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                   // Column(
