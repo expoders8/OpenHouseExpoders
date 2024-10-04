@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../../config/provider/loader_provider.dart';
 import '../controller/checkout_controller.dart';
+import '../services/checkout_service.dart';
 
 class CheckOutRequestView extends StatefulWidget {
   const CheckOutRequestView({super.key});
@@ -16,6 +18,7 @@ class CheckOutRequestView extends StatefulWidget {
 class _CheckOutRequestViewState extends State<CheckOutRequestView> {
   final GetAllCheckoutController getAllCheckoutController =
       Get.put(GetAllCheckoutController());
+  CheckoutService checkoutService = CheckoutService();
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -188,7 +191,11 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                                   children: [
                                     CupertinoButton(
                                       padding: EdgeInsets.zero,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        checkoutService
+                                            .acceptCheckoutInvitation(
+                                                data.id.toString());
+                                      },
                                       child: Container(
                                         padding: const EdgeInsets.all(5),
                                         decoration: BoxDecoration(
@@ -206,7 +213,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                                     CupertinoButton(
                                       padding: EdgeInsets.zero,
                                       onPressed: () {
-                                        invitationDialog();
+                                        invitationDialog(data.id.toString());
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(5),
@@ -264,155 +271,6 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
           }
         }
       },
-    );
-  }
-
-  buildrequestwidget(name, address, contact, image) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        width: Get.width,
-        decoration: BoxDecoration(
-          color: kWhiteColor,
-          borderRadius: BorderRadius.circular(11),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.asset(
-                    image,
-                    fit: BoxFit.cover,
-                    scale: 1.2,
-                    height: 40,
-                    width: 40,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 12,
-                          fontFamily: kCircularStdMedium),
-                    ),
-                    Text(
-                      contact,
-                      style: const TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 10,
-                          fontFamily: kCircularStdMedium),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "You have received a house Checkout Request from",
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 13,
-                  fontFamily: kCircularStdNormal),
-            ),
-            Row(
-              children: [
-                Text(
-                  address,
-                  style: const TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationColor: kRedColor,
-                      color: kRedColor,
-                      fontSize: 14,
-                      fontFamily: kCircularStdNormal),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: _bottomSheetForChackout,
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                            color: kButtonColor,
-                            borderRadius: BorderRadius.circular(25)),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.question_mark,
-                              color: kWhiteColor,
-                              size: 15,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      const Text(
-                        "CheckOut Checklist",
-                        style: TextStyle(
-                            color: kButtonColor,
-                            fontSize: 13,
-                            fontFamily: kCircularStdMedium),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: kGreenColor, width: 1),
-                            borderRadius: BorderRadius.circular(25)),
-                        child: const Icon(
-                          Icons.check,
-                          color: kGreenColor,
-                          size: 19,
-                        ),
-                      ),
-                    ),
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        invitationDialog();
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color(0xFFFF1100), width: 1),
-                            borderRadius: BorderRadius.circular(25)),
-                        child: const Icon(
-                          Icons.close,
-                          color: Color(0xFFFF1100),
-                          size: 19,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -653,7 +511,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
     );
   }
 
-  invitationDialog() async {
+  invitationDialog(String id) async {
     return await showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -665,7 +523,8 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
         actions: <Widget>[
           TextButton(
             onPressed: () async {
-              Get.back();
+              LoaderX.show(context, 60.0, 60.0);
+              checkoutService.notAcceptCheckoutInvitation(id);
             },
             child: const Text(
               'Yes',

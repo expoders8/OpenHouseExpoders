@@ -111,21 +111,28 @@ class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title!,
-                style: const TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 15,
-                    fontFamily: kCircularStdMedium),
+              SizedBox(
+                width: Get.width - 100,
+                child: Text(
+                  title!,
+                  style: const TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
               SizedBox(
-                width: Get.width / 2,
+                width: Get.width - 120,
                 child: Text(
                   type,
                   style: const TextStyle(
                       color: kSecondaryPrimaryColor,
                       fontSize: 11,
                       fontFamily: kCircularStdMedium),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
               ),
               Row(
@@ -137,13 +144,15 @@ class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
                   ),
                   const SizedBox(width: 3),
                   SizedBox(
-                    width: Get.width / 2,
+                    width: Get.width - 120,
                     child: Text(
                       address,
                       style: const TextStyle(
                           color: kSecondaryPrimaryColor,
                           fontSize: 11,
                           fontFamily: kCircularStdNormal),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                   ),
                 ],

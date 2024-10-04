@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 
 import '../models/get_expense_model.dart';
@@ -93,7 +95,7 @@ class GetAvailablePropertyController extends GetxController {
 class GetCurrentPropertyController extends GetxController {
   var isLoading = true.obs;
   PropertiesService propertiesService = PropertiesService();
-  var propertiesList = <GetAllPropertiesModel>[].obs;
+  var trtrrtrt = <GetAllCurrentPropertyModel>[].obs;
   RxString searchText = "".obs;
   RxString image = "".obs;
   RxString name = "".obs;
@@ -106,12 +108,12 @@ class GetCurrentPropertyController extends GetxController {
     super.onInit();
   }
 
-  void fetchAllProperties() async {
+  fetchAllProperties() async {
     try {
       isLoading(true);
       var properties = await propertiesService.getAllCurrentProperties();
       if (properties.data != null) {
-        propertiesList.assign(properties);
+        trtrrtrt.assign(properties);
       }
     } finally {
       isLoading(false);
@@ -204,6 +206,23 @@ class GetAllExpenseController extends GetxController {
       if (expenses.data != null) {
         expensetList.assign(expenses);
       }
+    } finally {
+      isLoading(false);
+    }
+  }
+}
+
+class PropertyCheckoutController extends GetxController {
+  var isLoading = true.obs;
+  PropertiesService propertiesService = PropertiesService();
+  RxString propertyId = "".obs;
+  RxString rentalId = "".obs;
+
+  void sendCheckoutProperties(List<Map<String, dynamic>> checkoutData) async {
+    try {
+      isLoading(true);
+      await propertiesService.sendCheckoutProperties(
+          propertyId.value, rentalId.value, checkoutData);
     } finally {
       isLoading(false);
     }

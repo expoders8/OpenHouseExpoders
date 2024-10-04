@@ -7,7 +7,7 @@ import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../controller/property_detail_controller.dart';
-import '../ui/Property Details/not_lease_property_details.dart';
+import '../ui/Property Details/Host/not_lease_property_details.dart';
 
 class NotLeasePropertyView extends StatefulWidget {
   const NotLeasePropertyView({super.key});
@@ -112,7 +112,8 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                               data.address.toString(),
                               data.person.toString(),
                               data.name.toString(),
-                              data.id.toString());
+                              data.id.toString(),
+                              data.amenitys!);
                         } else {
                           return const Center(
                             child: Text(
@@ -148,7 +149,8 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
     );
   }
 
-  notLeaseProperty(String image, price, address, person, name, id) {
+  notLeaseProperty(
+      String image, price, address, person, name, id, List amenities) {
     final GetAllTenantController getAllTenantController =
         Get.put(GetAllTenantController());
     return Column(
@@ -204,10 +206,11 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                             child: Text(
                               name,
                               style: const TextStyle(
-                                  overflow: TextOverflow.ellipsis,
                                   color: kPrimaryColor,
                                   fontSize: 17,
                                   fontFamily: kCircularStdMedium),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                           ),
                           const SizedBox(height: 3),
@@ -241,6 +244,8 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                                             color: kSecondaryPrimaryColor,
                                             fontSize: 13,
                                             fontFamily: kCircularStdMedium),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
                                     ),
                                   ],

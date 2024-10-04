@@ -6,23 +6,23 @@ import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
-import '../../view/nearby_view.dart';
-import '../../view/expense_view.dart';
-import '../Add NearBy/add_nearby.dart';
-import '../Add Expense/add_expense.dart';
-import '../../services/lease_service.dart';
-import '../../view/payment_detail_view.dart';
-import '../../view/tenant_history_view.dart';
-import '../../view/property_details_view.dart';
-import '../../services/properties_service.dart';
-import '../CreateProperty/create_property.dart';
-import '../../../config/constant/constant.dart';
-import '../../controller/property_controller.dart';
-import '../../../config/constant/font_constant.dart';
-import '../../../config/constant/color_constant.dart';
-import '../../../config/provider/loader_provider.dart';
-import '../../view/house keeper/house_keeper_view.dart';
-import '../../controller/property_detail_controller.dart';
+import '../../../view/nearby_view.dart';
+import '../../../view/expense_view.dart';
+import '../../Add NearBy/add_nearby.dart';
+import '../../Add Expense/add_expense.dart';
+import '../../../services/lease_service.dart';
+import '../../../view/payment_detail_view.dart';
+import '../../../view/tenant_history_view.dart';
+import '../../../view/property_details_view.dart';
+import '../../../services/properties_service.dart';
+import '../../CreateProperty/create_property.dart';
+import '../../../../config/constant/constant.dart';
+import '../../../controller/property_controller.dart';
+import '../../../../config/constant/font_constant.dart';
+import '../../../../config/constant/color_constant.dart';
+import '../../../../config/provider/loader_provider.dart';
+import '../../../view/house keeper/house_keeper_view.dart';
+import '../../../controller/property_detail_controller.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
   const LeasePropertyDetailPage({super.key});
@@ -180,6 +180,9 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                       fontSize: 18,
                                                       fontFamily:
                                                           kCircularStdMedium),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
                                                 ),
                                               ),
                                               Row(

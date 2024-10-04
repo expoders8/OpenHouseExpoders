@@ -139,12 +139,17 @@ class _TenantHouseKeeperViewState extends State<TenantHouseKeeperView> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdMedium),
+                  SizedBox(
+                    width: Get.width - 100,
+                    child: Text(
+                      name,
+                      style: const TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 15,
+                          fontFamily: kCircularStdMedium),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   Row(

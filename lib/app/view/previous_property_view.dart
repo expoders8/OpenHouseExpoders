@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:openhome/app/ui/Property%20Details/Tenant/tenant_previous_property.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
@@ -41,23 +42,18 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
         } else {
           if (getPreviousPropertyController.propertiesList.isNotEmpty) {
             if (getPreviousPropertyController.propertiesList[0].data!.isEmpty) {
-              return Column(
-                children: [
-                  const SizedBox(height: 110),
-                  Image.asset(
-                    "assets/images/noproperty.png",
-                    scale: 4,
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "You don't have properties on lease.",
+              return const Padding(
+                padding: EdgeInsets.only(bottom: 35.0),
+                child: Center(
+                  child: Text(
+                    "No property",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 15,
                         fontFamily: kCircularStdMedium),
                   ),
-                ],
+                ),
               );
             } else {
               return Column(
@@ -118,12 +114,12 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                           return Column(
                             children: [
                               notLeaseProperty(
-                                data.propertyImage.toString(),
-                                data.name.toString(),
-                                "\$ ${data.rentAmount.toString()}",
-                                data.address.toString(),
-                                data.person.toString(),
-                              ),
+                                  data.propertyImage.toString(),
+                                  data.name.toString(),
+                                  "\$ ${data.rentAmount.toString()}",
+                                  data.address.toString(),
+                                  data.person.toString(),
+                                  data.id.toString()),
                               const SizedBox(height: 10),
                             ],
                           );
@@ -132,7 +128,7 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                             padding: EdgeInsets.only(bottom: 35.0),
                             child: Center(
                               child: Text(
-                                "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
+                                "No property",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: kPrimaryColor,
@@ -153,7 +149,7 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
               padding: EdgeInsets.only(bottom: 35.0),
               child: Center(
                 child: Text(
-                  "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or explore properties once added.",
+                  "No property",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,
@@ -188,9 +184,13 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
   //   );
   // }
 
-  Widget notLeaseProperty(String image, name, price, address, person) {
+  notLeaseProperty(String image, name, price, address, person, id) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        getPreviousDetailsPropertiesController.propertyId(id);
+        Get.to(() => const PreviousPropertyDetailPage());
+        getPreviousDetailsPropertiesController.fetchPropertyDetail();
+      },
       child: Container(
         width: Get.width,
         decoration: BoxDecoration(

@@ -4,6 +4,7 @@ import '../ui/Add Housekeeper/add_housekeeper.dart';
 import '../ui/Add NearBy/add_nearby.dart';
 import '../ui/Checkout Requests/checkout_request_get.dart';
 import '../ui/Checkout Requests/send_checkout_request.dart';
+import '../ui/Invite Tenant/get_invitation_tenant.dart';
 import '../ui/My Host/my_hosts_detail.dart';
 import '../ui/My Tenants/my_tenants_detail.dart';
 import '../ui/Profile/profile.dart';
@@ -24,8 +25,8 @@ import '../ui/Total Amount/total_amount_detail.dart';
 import '../ui/Invite Tenant/invite_tenant_detail.dart';
 import '../ui/Auth/ChangePassword/change_password.dart';
 import '../ui/Auth/ForgotPassword/forgot_password.dart';
-import '../ui/Property Details/lease_property_details.dart';
-import '../ui/Property Details/not_lease_property_details.dart';
+import '../ui/Property Details/Host/lease_property_details.dart';
+import '../ui/Property Details/Host/not_lease_property_details.dart';
 import '../view/my_request_view_all.dart';
 import '../view/tenant_request_all_view.dart';
 
@@ -148,6 +149,10 @@ class AppPages {
     GetPage(
       name: _Paths.sendCheckoutRequest,
       page: () => const SendCheckoutRequest(),
+    ),
+    GetPage(
+      name: _Paths.invitationshowPage,
+      page: () => const InvitationshowPage(),
     ),
   ];
 }

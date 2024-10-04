@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../models/lookup_get_checkout_request.dart';
 import '../models/state_model.dart';
 import '../models/country_model.dart';
 import '../models/get_amenities_model.dart';
@@ -65,6 +66,29 @@ class LookupService {
         final List<dynamic> fetchStates = data['data'];
         return fetchStates
             .map((json) => GetAllStateDataModel.fromJson(json))
+            .toList();
+      } else if (response.statusCode == 401) {
+        return Future.error("Authentication Error");
+      } else {
+        throw Exception('Failed to fetch Category');
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  Future<List<GetAllCheckoutRequestLookupDataModel>> getCheckoutLookup() async {
+    try {
+      var response = await http.get(
+          Uri.parse('$baseUrl/api/lookup/get_checkout_request'),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        final List<dynamic> fetchStates = data['data'];
+        return fetchStates
+            .map((json) => GetAllCheckoutRequestLookupDataModel.fromJson(json))
             .toList();
       } else if (response.statusCode == 401) {
         return Future.error("Authentication Error");

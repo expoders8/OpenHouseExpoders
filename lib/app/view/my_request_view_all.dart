@@ -144,7 +144,7 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
                                               ),
                                               const SizedBox(width: 10),
                                               SizedBox(
-                                                width: Get.width - 220,
+                                                width: Get.width - 120,
                                                 child: Text(
                                                   data.address.toString(),
                                                   style: const TextStyle(
@@ -152,6 +152,9 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
                                                       fontSize: 12,
                                                       fontFamily:
                                                           kCircularStdNormal),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
                                                 ),
                                               ),
                                             ],
@@ -204,12 +207,31 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          formattedDate,
-                                          style: const TextStyle(
-                                              color: kGreyColor,
-                                              fontSize: 13,
-                                              fontFamily: kCircularStdNormal),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5, vertical: 3),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              color: kGreenColor),
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.warning,
+                                                size: 11,
+                                                color: kWhiteColor,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                data.status.toString(),
+                                                style: const TextStyle(
+                                                    color: kWhiteColor,
+                                                    fontSize: 9,
+                                                    fontFamily:
+                                                        kCircularStdNormal),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                         data.type.toString() != "normal"
                                             ? Container(

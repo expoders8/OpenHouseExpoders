@@ -8,7 +8,7 @@ import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../controller/property_detail_controller.dart';
-import '../ui/Property Details/lease_property_details.dart';
+import '../ui/Property Details/Host/lease_property_details.dart';
 
 class LeasePropertyView extends StatefulWidget {
   const LeasePropertyView({super.key});
@@ -23,7 +23,6 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
   var leasesearchController = TextEditingController();
   final GetDetailsPropertiesController getDetailsPropertiesController =
       Get.put(GetDetailsPropertiesController());
-
   String selectedRoll = "";
   DateTime? dateTime;
   String formattedDate = '';
@@ -174,12 +173,13 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                   child: Text(
                                                     data.name.toString(),
                                                     style: const TextStyle(
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
                                                         color: kPrimaryColor,
                                                         fontSize: 17,
                                                         fontFamily:
                                                             kCircularStdMedium),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
                                                   ),
                                                 ),
                                                 const SizedBox(height: 3),
@@ -250,6 +250,10 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                                                   fontSize: 13,
                                                                   fontFamily:
                                                                       kCircularStdMedium),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              maxLines: 1,
                                                             ),
                                                           ),
                                                         ],

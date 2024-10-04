@@ -46,7 +46,6 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
   final GetCurrentPropertyController getCurrentPropertyController =
       Get.put(GetCurrentPropertyController());
   String image = "", name = "", addres = "", propertyId = "", hostId = "";
-
   @override
   void initState() {
     super.initState();
@@ -56,9 +55,9 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
   }
 
   getpropertydata() {
-    var propertyData = getCurrentPropertyController.propertiesList[0].data!;
+    var propertyData = getCurrentPropertyController.trtrrtrt[0].data!;
     setState(() {
-      var data = propertyData[0];
+      var data = propertyData;
       image = data.propertyImage.toString();
       name = data.name.toString();
       addres = data.address.toString();
@@ -77,7 +76,7 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
         ),
         backgroundColor: kBackGroundColor,
       ),
-      body: getCurrentPropertyController.propertiesList.isNotEmpty
+      body: getCurrentPropertyController.trtrrtrt.isNotEmpty
           ? Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Form(
@@ -134,6 +133,8 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                                             color: kPrimaryColor,
                                             fontSize: 15,
                                             fontFamily: kCircularStdMedium),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
                                     ),
                                   ],
@@ -155,6 +156,8 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                                             color: kSecondaryPrimaryColor,
                                             fontSize: 13,
                                             fontFamily: kCircularStdBold),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
                                     ),
                                   ],
@@ -525,18 +528,53 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                 ),
               ),
             )
-          : const Center(
+          : Center(
               child: Column(
                 children: [
-                  SizedBox(height: 250),
-                  Text(
+                  const SizedBox(height: 100),
+                  Image.asset(
+                    "assets/house101.png",
+                    fit: BoxFit.cover,
+                    scale: 2,
+                  ),
+                  const Text(
+                    "You have no current leases so you can't make\nany Requests at this time.",
                     textAlign: TextAlign.center,
-                    "You have no current leases\nSo you can't make any Requests",
                     style: TextStyle(
                         color: kPrimaryColor,
-                        fontSize: 17,
+                        fontSize: 15,
                         fontFamily: kCircularStdMedium),
                   ),
+                  CupertinoButton(
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 180,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(width: 1, color: kButtonColor)),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: Text(
+                              "Explore more",
+                              style:
+                                  TextStyle(color: kPrimaryColor, fontSize: 17),
+                            )),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_right_alt,
+                              size: 25,
+                              color: kPrimaryColor,
+                            )
+                          ],
+                        ),
+                      ),
+                      onPressed: () {
+                        // Get.offAll(() => const TabPage(
+                        //       selectedTabIndex: 1,
+                        //     ));
+                      }),
                 ],
               ),
             ),

@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/loader_provider.dart';
+import '../../controller/checkout_lookup_controller.dart';
+import '../../controller/property_controller.dart';
 import '../widgets/custom_textfield.dart';
 
 class SendCheckoutRequest extends StatefulWidget {
-  const SendCheckoutRequest({super.key});
+  final String? propertyId;
+  final String? rentalId;
+  const SendCheckoutRequest({super.key, this.propertyId, this.rentalId});
 
   @override
   State<SendCheckoutRequest> createState() => _SendCheckoutRequestState();
@@ -19,17 +25,68 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
       payment = false,
       other = false;
   String comments = '';
+  final _formKey = GlobalKey<FormState>();
   TextEditingController commentController = TextEditingController();
+  final PropertyCheckoutController propertyCheckoutController =
+      Get.put(PropertyCheckoutController());
+  final GetAllCheckoutLookupController getAllCheckoutLookupController =
+      Get.put(GetAllCheckoutLookupController());
+  bool isFormSubmitted = false;
+  List<bool> toggleStates = [];
+  bool isLoading = true;
+  List<Map<String, dynamic>> jsonData = [];
 
-  void createJson() {
-    Map<String, dynamic> jsonData = {
-      'electricity': electricity,
-      'pendingbill': pendingbill,
-      'amenities': amenities,
-      'payment': payment,
-      'comments': comments,
-    };
-    print(jsonData);
+  // Initialize a list to store the names of items with true state
+  List<String> selectedNames = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getAllCheckoutLookupController.fetchAllcheckoutlookup();
+    Future.delayed(const Duration(seconds: 3), () async {
+      setState(() {
+        isLoading = false;
+        toggleStates = List<bool>.filled(
+          getAllCheckoutLookupController.lookupdataList[0].length,
+          false,
+        );
+      });
+    });
+  }
+
+  List<Map<String, dynamic>> generateJson() {
+    var requestData = getAllCheckoutLookupController.lookupdataList[0];
+
+    for (int i = 0; i < requestData.length; i++) {
+      String key = requestData[i].name!;
+      bool value = toggleStates[i];
+
+      jsonData.add({key: value});
+    }
+
+    return jsonData;
+  }
+
+  IconData getIconFromString(String? iconName) {
+    switch (iconName) {
+      case 'Icons.inventory':
+        return Icons.inventory;
+      case 'Icons.warning':
+        return Icons.warning;
+      case 'Icons.key':
+        return Icons.key;
+      case 'Icons.pool':
+        return Icons.pool;
+      case 'Icons.description':
+        return Icons.description;
+      case 'Icons.cleaning_services':
+        return Icons.cleaning_services;
+      case 'Icons.flash_on':
+        return Icons.flash_on;
+      // Add more cases for other icons
+      default:
+        return Icons.help; // default icon if no match
+    }
   }
 
   @override
@@ -43,355 +100,260 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
           backgroundColor: kBackGroundColor,
           centerTitle: true,
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Center(
-            child: Column(
-              children: [
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    if (electricity == true) {
-                      setState(() {
-                        electricity = false;
-                      });
-                    } else {
-                      setState(() {
-                        electricity = true;
-                      });
-                    }
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
+        body: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Center(
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Column(
+                      children: [
+                        Obx(
+                          () {
+                            if (getAllCheckoutLookupController
+                                .isLoading.value) {
+                              return Container(
+                                color: kBackGroundColor,
+                                child: const Center(
+                                  child: CircularProgressIndicator(
+                                    color: kSelectedIconColor,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              if (getAllCheckoutLookupController
+                                  .lookupdataList.isNotEmpty) {
+                                if (getAllCheckoutLookupController
+                                    .lookupdataList[0].isEmpty) {
+                                  return Container();
+                                } else {
+                                  return Flexible(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: getAllCheckoutLookupController
+                                          .lookupdataList[0].length,
+                                      itemBuilder: (context, index) {
+                                        var requestData =
+                                            getAllCheckoutLookupController
+                                                .lookupdataList[0];
+
+                                        if (requestData.isNotEmpty) {
+                                          var data = requestData[index];
+                                          bool isToggled = toggleStates[index];
+
+                                          return Column(
+                                            children: [
+                                              CupertinoButton(
+                                                padding: EdgeInsets.zero,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    toggleStates[index] =
+                                                        !toggleStates[index];
+                                                    if (toggleStates[index]) {
+                                                      if (!selectedNames
+                                                          .contains(data.name!
+                                                              .toString())) {
+                                                        selectedNames.add(data
+                                                            .name!
+                                                            .toString());
+                                                      }
+                                                    } else {
+                                                      selectedNames.remove(data
+                                                          .name!
+                                                          .toString());
+                                                    }
+
+                                                    print(
+                                                        toggleStates); // Current toggle states
+                                                    print(
+                                                        selectedNames); // Current selected names
+
+                                                    // Print generated JSON structure
+                                                    print(generateJson());
+                                                  });
+                                                },
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        25),
+                                                            border: Border.all(
+                                                                color:
+                                                                    kPrimaryColor),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(3.0),
+                                                            child: Icon(
+                                                              getIconFromString(
+                                                                  data.icon),
+                                                              size: 18,
+                                                              color:
+                                                                  kButtonColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 10),
+                                                        Text(
+                                                          data.name!.toString(),
+                                                          style:
+                                                              const TextStyle(
+                                                            fontFamily:
+                                                                kWorkSans,
+                                                            fontSize: 15,
+                                                            color:
+                                                                kPrimaryColor,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    isToggled
+                                                        ? Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          25),
+                                                              border: Border.all(
+                                                                  color:
+                                                                      kGreenColor),
+                                                            ),
+                                                            child:
+                                                                const Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(3.0),
+                                                              child: Icon(
+                                                                Icons.check,
+                                                                size: 18,
+                                                                color:
+                                                                    kGreenColor,
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          25),
+                                                              border: Border.all(
+                                                                  color:
+                                                                      kButtonColor),
+                                                            ),
+                                                            child:
+                                                                const Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(3.0),
+                                                              child: Icon(
+                                                                Icons.close,
+                                                                size: 18,
+                                                                color:
+                                                                    kButtonColor,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        } else {
+                                          return const Center(
+                                            child: Text(
+                                              "No Requests",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 15,
+                                                  fontFamily:
+                                                      kCircularStdMedium),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  );
+                                }
+                              } else {
+                                return const Center(
+                                  child: Text(
+                                    "No Requests",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontFamily: kCircularStdMedium),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                        ),
+                        CustomTextFormField(
+                          hintText: 'Comment',
+                          maxLines: 1,
+                          ctrl: commentController,
+                          name: "create",
+                        ),
+                        const SizedBox(height: 15),
+                        CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            setState(() {
+                              comments = commentController.text;
+                              isFormSubmitted = true;
+                            });
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            Future.delayed(const Duration(milliseconds: 100),
+                                () async {
+                              if (_formKey.currentState!.validate()) {
+                                LoaderX.show(context, 60.0, 60.0);
+                                propertyCheckoutController
+                                    .sendCheckoutProperties(jsonData);
+                              }
+                            });
+                            // createJson();
+                          },
+                          child: Container(
+                            height: 45,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
-                                border: Border.all(color: kPrimaryColor)),
-                            child: const Padding(
-                              padding: EdgeInsets.all(3.0),
-                              child: Icon(
-                                Icons.electric_bolt_sharp,
-                                size: 18,
-                                color: kButtonColor,
+                                border: Border.all(color: kWhiteColor),
+                                color: kButtonColor),
+                            child: const Center(
+                              child: Text(
+                                "Send request",
+                                style: TextStyle(
+                                    color: kWhiteColor,
+                                    fontFamily: kCircularStdNormal,
+                                    fontSize: 18),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "Electricity",
-                            style: TextStyle(
-                              fontFamily: kWorkSans,
-                              fontSize: 15,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      electricity == true
-                          ? Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kGreenColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.check,
-                                  size: 18,
-                                  color: kGreenColor,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kButtonColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.close,
-                                  size: 18,
-                                  color: kButtonColor,
-                                ),
-                              ),
-                            ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 5),
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    if (pendingbill == true) {
-                      setState(() {
-                        pendingbill = false;
-                      });
-                    } else {
-                      setState(() {
-                        pendingbill = true;
-                      });
-                    }
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                border: Border.all(color: kPrimaryColor)),
-                            child: const Padding(
-                              padding: EdgeInsets.all(3.0),
-                              child: Icon(
-                                Icons.paypal_sharp,
-                                size: 18,
-                                color: kButtonColor,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "Pending Bill",
-                            style: TextStyle(
-                              fontFamily: kWorkSans,
-                              fontSize: 15,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      pendingbill == true
-                          ? Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kGreenColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.check,
-                                  size: 18,
-                                  color: kGreenColor,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kButtonColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.close,
-                                  size: 18,
-                                  color: kButtonColor,
-                                ),
-                              ),
-                            ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 5),
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    if (amenities == true) {
-                      setState(() {
-                        amenities = false;
-                      });
-                    } else {
-                      setState(() {
-                        amenities = true;
-                      });
-                    }
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                border: Border.all(color: kPrimaryColor)),
-                            child: const Padding(
-                              padding: EdgeInsets.all(3.0),
-                              child: Icon(
-                                Icons.line_style_outlined,
-                                size: 18,
-                                color: kButtonColor,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "Pipe Fitting",
-                            style: TextStyle(
-                              fontFamily: kWorkSans,
-                              fontSize: 15,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      amenities == true
-                          ? Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kGreenColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.check,
-                                  size: 18,
-                                  color: kGreenColor,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kButtonColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.close,
-                                  size: 18,
-                                  color: kButtonColor,
-                                ),
-                              ),
-                            ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 5),
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    if (payment == true) {
-                      setState(() {
-                        payment = false;
-                      });
-                    } else {
-                      setState(() {
-                        payment = true;
-                      });
-                    }
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                border: Border.all(color: kPrimaryColor)),
-                            child: const Padding(
-                              padding: EdgeInsets.all(3.0),
-                              child: Icon(
-                                Icons.receipt_long_rounded,
-                                size: 18,
-                                color: kButtonColor,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "Rent payment",
-                            style: TextStyle(
-                              fontFamily: kWorkSans,
-                              fontSize: 15,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      payment == true
-                          ? Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kGreenColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.check,
-                                  size: 18,
-                                  color: kGreenColor,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kButtonColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.close,
-                                  size: 18,
-                                  color: kButtonColor,
-                                ),
-                              ),
-                            ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 15),
-                CustomTextFormField(
-                  hintText: 'Comment',
-                  maxLines: 1,
-                  ctrl: commentController,
-                  name: "create",
-                ),
-                const SizedBox(height: 15),
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    setState(() {
-                      comments = commentController.text;
-                      // isFormSubmitted = true;
-                    });
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    createJson();
-                  },
-                  child: Container(
-                    height: 45,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: kWhiteColor),
-                        color: kButtonColor),
-                    child: const Center(
-                      child: Text(
-                        "Send request",
-                        style: TextStyle(
-                            color: kWhiteColor,
-                            fontFamily: kCircularStdNormal,
-                            fontSize: 18),
-                      ),
+                        )
+                      ],
                     ),
-                  ),
-                ),
-              ],
             ),
           ),
-        )
-        // Column(
-        //   children: [
-        //     const Text("checkout request send"),
-        //     ElevatedButton(
-        //         onPressed: () {
-        //           createJson();
-        //         },
-        //         child: const Text("click"))
-        //   ],
-        // ),
-        );
+        ));
   }
 }

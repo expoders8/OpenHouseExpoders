@@ -40,6 +40,13 @@ class _PropertyPageState extends State<PropertyPage>
       lastName = "",
       firstlater = "",
       lastlatter = "";
+  Future<void> _refreshList() async {
+    await Future.delayed(const Duration(microseconds: 1000));
+    setState(() {
+      getCurrentPropertyController.fetchAllProperties();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -191,7 +198,9 @@ class _PropertyPageState extends State<PropertyPage>
                             onTap: () {
                               FocusScope.of(context).requestFocus(FocusNode());
                             },
-                            child: const CurrentPropertyView(),
+                            child: RefreshIndicator(
+                                onRefresh: _refreshList,
+                                child: const CurrentPropertyView()),
                           ),
                           GestureDetector(
                             onTap: () {

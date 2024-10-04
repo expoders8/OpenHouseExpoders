@@ -40,7 +40,16 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
               // ignore: unnecessary_null_comparison
               getAllInvitationController.invitationList[0].data! != null) {
             if (getAllInvitationController.invitationList[0].data!.isEmpty) {
-              return Container();
+              return const Center(
+                child: Text(
+                  "No Invitations",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
+              );
             } else {
               return SingleChildScrollView(
                 child: Column(

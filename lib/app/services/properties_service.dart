@@ -12,7 +12,7 @@ import '../controller/amenities_controller.dart';
 import '../controller/invitation_controller.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
-import '../ui/Property Details/lease_property_details.dart';
+import '../ui/Property Details/Host/lease_property_details.dart';
 
 class PropertiesService {
   final tabController = Get.put(TabCountController());
@@ -324,7 +324,7 @@ class PropertiesService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
         var data = json.decode(response.body);
-        return GetAllPropertiesModel.fromJson(data);
+        return GetAllCurrentPropertyModel.fromJson(data);
       } else if (response.statusCode == 401) {
         LoaderX.hide();
         return Future.error("Authentication Error");
@@ -336,7 +336,7 @@ class PropertiesService {
       }
     } catch (e) {
       LoaderX.hide();
-      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      // SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
       throw e.toString();
     }
   }
@@ -455,6 +455,42 @@ class PropertiesService {
         LoaderX.hide();
         SnackbarUtils.showErrorSnackbar("Server Error",
             "Error while Delete Expenses, Please try after some time.");
+        return Future.error("Server Error");
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  sendCheckoutProperties(
+    String propertyId,
+    rentalid,
+    List<Map<String, dynamic>> checkoutData,
+  ) async {
+    final PropertyCheckoutController propertyCheckoutController =
+        Get.put(PropertyCheckoutController());
+    try {
+      var response =
+          await http.post(Uri.parse('$baseUrl/api/tenant/checkout_request'),
+              body: json.encode({
+                "rentalid": propertyCheckoutController.rentalId.value,
+                "checkoutJson": checkoutData,
+              }),
+              headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        LoaderX.hide();
+        Get.back();
+        Get.back();
+        tabController.changeTabIndex(0);
+      } else if (response.statusCode == 401) {
+        LoaderX.hide();
+        return Future.error("Authentication Error");
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar("Server Error",
+            "Error while Checkout request send, Please try after some time.");
         return Future.error("Server Error");
       }
     } catch (e) {

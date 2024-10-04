@@ -30,6 +30,7 @@ class _TenantLeasePropertyDetailPageState
   final GetCurrentDetailsPropertiesController
       getCurrentDetailsPropertiesController =
       Get.put(GetCurrentDetailsPropertiesController());
+
   List<ImageProvider> images = [];
   final tabController = Get.put(TabCountController());
 
@@ -157,6 +158,9 @@ class _TenantLeasePropertyDetailPageState
                                                       fontSize: 18,
                                                       fontFamily:
                                                           kCircularStdMedium),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
                                                 ),
                                               ),
                                               Row(

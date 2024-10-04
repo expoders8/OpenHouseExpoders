@@ -30,6 +30,7 @@ abstract class Routes {
   static const sendCheckoutRequest = _Paths.sendCheckoutRequest;
   static const leasePropertyDetailPage = _Paths.leasePropertyDetailPage;
   static const notLeasePropertyDetailPage = _Paths.notLeasePropertyDetailPage;
+  static const invitationshowPage = _Paths.invitationshowPage;
   static const tenantLeasePropertyDetailPage =
       _Paths.tenantLeasePropertyDetailPage;
 }
@@ -63,4 +64,5 @@ abstract class _Paths {
   static const leasePropertyDetailPage = '/leasePropertyDetailPage';
   static const notLeasePropertyDetailPage = '/notLeasePropertyDetailPage';
   static const tenantLeasePropertyDetailPage = '/tenantLeasePropertyDetailPage';
+  static const invitationshowPage = '/invitationshowPage';
 }

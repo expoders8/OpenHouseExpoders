@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
-import '../../routes/app_pages.dart';
-import '../../view/nearby_view.dart';
-import '../Add NearBy/add_nearby.dart';
-import '../../view/tenant_history_view.dart';
-import '../../view/property_details_view.dart';
-import '../CreateProperty/create_property.dart';
-import '../../../config/constant/font_constant.dart';
-import '../../../config/constant/color_constant.dart';
-import '../../view/house keeper/house_keeper_view.dart';
-import '../../controller/property_detail_controller.dart';
+import '../../../routes/app_pages.dart';
+import '../../../view/nearby_view.dart';
+import '../../Add NearBy/add_nearby.dart';
+import '../../../view/tenant_history_view.dart';
+import '../../../view/property_details_view.dart';
+import '../../CreateProperty/create_property.dart';
+import '../../../../config/constant/font_constant.dart';
+import '../../../../config/constant/color_constant.dart';
+import '../../../view/house keeper/house_keeper_view.dart';
+import '../../../controller/property_detail_controller.dart';
 
 class NotLeasePropertyDetailPage extends StatefulWidget {
   const NotLeasePropertyDetailPage({super.key});
@@ -150,6 +150,8 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                     fontSize: 18,
                                                     fontFamily:
                                                         kCircularStdMedium),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                               ),
                                             ),
                                             Row(

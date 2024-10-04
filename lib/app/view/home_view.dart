@@ -65,6 +65,10 @@ class ResponsiveContainer extends StatelessWidget {
           Get.toNamed(Routes.tenantRequestAllView);
         } else if (name == "Track Check-Out Requests") {
           Get.toNamed(Routes.checkoutRequestsPage);
+        } else if (name == "Tenant Service\nRequest") {
+          Get.toNamed(Routes.myRequestViewAllView);
+        } else if (name == "Property Invitations") {
+          Get.toNamed(Routes.invitationshowPage);
         }
       },
       child: Card(
