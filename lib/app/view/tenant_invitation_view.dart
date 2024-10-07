@@ -21,6 +21,13 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
   final GetAllInvitationController getAllInvitationController =
       Get.put(GetAllInvitationController());
   PropertiesService propertiesService = PropertiesService();
+  Future<void> _refreshItems() async {
+    await Future.delayed(
+        const Duration(seconds: 2)); // Simulate network request
+    setState(() {
+      getAllInvitationController.getAllInvitations();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,167 +71,175 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
                           fontFamily: kCircularStdMedium),
                     ),
                     const SizedBox(height: 10),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: getAllInvitationController
-                          .invitationList[0].data!.length,
-                      itemBuilder: (context, index) {
-                        var requestData =
-                            getAllInvitationController.invitationList[0].data!;
-                        if (requestData.isNotEmpty) {
-                          var data = requestData[index];
-                          DateTime dateTime =
-                              DateTime.parse(data.endDate.toString());
-                          String formattedDate =
-                              DateFormat('dd MMM yyyy').format(dateTime);
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              width: Get.width,
-                              decoration: BoxDecoration(
-                                color: kWhiteColor,
-                                borderRadius: BorderRadius.circular(11),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "You have received an invitation from",
-                                    style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontSize: 14,
-                                        fontFamily: kCircularStdNormal),
-                                  ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: Get.width / 1.2,
-                                        child: Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text:
-                                                    "${data.firstName.toString()} ${data.lastName.toString()} ",
-                                                style: const TextStyle(
-                                                  color: kRedColor,
-                                                  fontSize: 14,
-                                                  fontFamily:
-                                                      kCircularStdNormal,
+                    RefreshIndicator(
+                      onRefresh: _refreshItems,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: getAllInvitationController
+                            .invitationList[0].data!.length,
+                        itemBuilder: (context, index) {
+                          var requestData = getAllInvitationController
+                              .invitationList[0].data!;
+                          if (requestData.isNotEmpty) {
+                            var data = requestData[index];
+                            DateTime dateTime =
+                                DateTime.parse(data.endDate.toString());
+                            String formattedDate =
+                                DateFormat('dd MMM yyyy').format(dateTime);
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                  color: kWhiteColor,
+                                  borderRadius: BorderRadius.circular(11),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "You have received an invitation from",
+                                      style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 14,
+                                          fontFamily: kCircularStdNormal),
+                                    ),
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: Get.width / 1.2,
+                                          child: Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      "${data.firstName.toString()} ${data.lastName.toString()} ",
+                                                  style: const TextStyle(
+                                                    color: kRedColor,
+                                                    fontSize: 14,
+                                                    fontFamily:
+                                                        kCircularStdNormal,
+                                                  ),
                                                 ),
-                                              ),
-                                              const TextSpan(
-                                                text: "for ",
-                                                style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontSize: 14,
-                                                  fontFamily:
-                                                      kCircularStdNormal,
+                                                const TextSpan(
+                                                  text: "for ",
+                                                  style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 14,
+                                                    fontFamily:
+                                                        kCircularStdNormal,
+                                                  ),
                                                 ),
-                                              ),
-                                              TextSpan(
-                                                text: data.address.toString(),
-                                                style: const TextStyle(
-                                                  color: kRedColor,
-                                                  fontSize: 14,
-                                                  fontFamily:
-                                                      kCircularStdNormal,
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  decorationColor: kRedColor,
+                                                TextSpan(
+                                                  text: data.address.toString(),
+                                                  style: const TextStyle(
+                                                    color: kRedColor,
+                                                    fontSize: 14,
+                                                    fontFamily:
+                                                        kCircularStdNormal,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    decorationColor: kRedColor,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "End On $formattedDate",
-                                        style: const TextStyle(
-                                            color: kGreyColor,
-                                            fontSize: 13,
-                                            fontFamily: kCircularStdNormal),
-                                      ),
-                                      Row(
-                                        children: [
-                                          CupertinoButton(
-                                            padding: EdgeInsets.zero,
-                                            onPressed: () {
-                                              LoaderX.show(context, 60.0, 60.0);
-                                              propertiesService.bookProperties(
-                                                  data.propertyId.toString(),
-                                                  data.id.toString());
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.all(5),
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: kGreenColor,
-                                                      width: 1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          25)),
-                                              child: const Icon(
-                                                Icons.check,
-                                                color: kGreenColor,
-                                                size: 19,
+                                      ],
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "End On $formattedDate",
+                                          style: const TextStyle(
+                                              color: kGreyColor,
+                                              fontSize: 13,
+                                              fontFamily: kCircularStdNormal),
+                                        ),
+                                        Row(
+                                          children: [
+                                            CupertinoButton(
+                                              padding: EdgeInsets.zero,
+                                              onPressed: () {
+                                                LoaderX.show(
+                                                    context, 60.0, 60.0);
+                                                propertiesService
+                                                    .bookProperties(
+                                                        data.propertyId
+                                                            .toString(),
+                                                        data.id.toString());
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: kGreenColor,
+                                                        width: 1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25)),
+                                                child: const Icon(
+                                                  Icons.check,
+                                                  color: kGreenColor,
+                                                  size: 19,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          CupertinoButton(
-                                            padding: EdgeInsets.zero,
-                                            onPressed: () {
-                                              invitationDialog();
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.all(5),
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: const Color(
-                                                          0xFFFF1100),
-                                                      width: 1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          25)),
-                                              child: const Icon(
-                                                Icons.close,
-                                                color: Color(0xFFFF1100),
-                                                size: 19,
+                                            CupertinoButton(
+                                              padding: EdgeInsets.zero,
+                                              onPressed: () {
+                                                invitationDialog();
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: const Color(
+                                                            0xFFFF1100),
+                                                        width: 1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25)),
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: Color(0xFFFF1100),
+                                                  size: 19,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        } else {
-                          return const Center(
-                            child: Text(
-                              "No Invitatios",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 15,
-                                  fontFamily: kCircularStdMedium),
-                            ),
-                          );
-                        }
-                      },
+                            );
+                          } else {
+                            return const Center(
+                              child: Text(
+                                "No Invitatios",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ],
                 ),

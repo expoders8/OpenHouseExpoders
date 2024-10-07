@@ -191,8 +191,10 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                                       onPressed: () {
                                         checkoutService
                                             .acceptCheckoutInvitation(
-                                          data.id.toString(),
-                                        );
+                                                data.id.toString(),
+                                                data.name.toString(),
+                                                data.address.toString(),
+                                                data.propertyId.toString());
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(5),
@@ -211,7 +213,10 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                                     CupertinoButton(
                                       padding: EdgeInsets.zero,
                                       onPressed: () {
-                                        invitationDialog(data.id.toString());
+                                        invitationDialog(
+                                            data.id.toString(),
+                                            data.name.toString(),
+                                            data.address.toString());
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(5),
@@ -503,7 +508,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
     );
   }
 
-  invitationDialog(String id) async {
+  invitationDialog(String id, name, address) async {
     return await showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -516,7 +521,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
           TextButton(
             onPressed: () async {
               LoaderX.show(context, 60.0, 60.0);
-              checkoutService.notAcceptCheckoutInvitation(id);
+              checkoutService.notAcceptCheckoutInvitation(id, name, address);
             },
             child: const Text(
               'Yes',

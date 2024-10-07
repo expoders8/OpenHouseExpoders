@@ -24,6 +24,14 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
       getPreviousDetailsPropertiesController =
       Get.put(GetPreviousDetailsPropertiesController());
   DateTime? dateTime;
+  Future<void> _refreshItems() async {
+    await Future.delayed(
+        const Duration(seconds: 2)); // Simulate network request
+    setState(() {
+      getPreviousPropertyController.fetchAllProperties();
+    });
+  }
+
   String formattedDate = '';
 
   @override
@@ -89,54 +97,58 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                   ),
                   const SizedBox(height: 10),
                   Flexible(
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: getPreviousPropertyController
-                          .propertiesList[0].data!.length,
-                      itemBuilder: (context, index) {
-                        var propertyData = getPreviousPropertyController
-                            .propertiesList[0].data!;
-                        if (propertyData.isNotEmpty) {
-                          var data = propertyData[index];
-                          if (data.endDate != null) {
-                            dateTime = DateTime.parse(data.endDate.toString());
-                            formattedDate =
-                                DateFormat('dd MMM yyyy').format(dateTime!);
+                    child: RefreshIndicator(
+                      onRefresh: _refreshItems,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: getPreviousPropertyController
+                            .propertiesList[0].data!.length,
+                        itemBuilder: (context, index) {
+                          var propertyData = getPreviousPropertyController
+                              .propertiesList[0].data!;
+                          if (propertyData.isNotEmpty) {
+                            var data = propertyData[index];
+                            if (data.endDate != null) {
+                              dateTime =
+                                  DateTime.parse(data.endDate.toString());
+                              formattedDate =
+                                  DateFormat('dd MMM yyyy').format(dateTime!);
+                            } else {
+                              formattedDate = 'No Date Available';
+                            }
+                            getPreviousPropertyController
+                                .image(data.propertyImage);
+                            getPreviousPropertyController.name(data.name);
+                            getPreviousPropertyController.address(data.address);
+                            getPreviousPropertyController.propertyId(data.id);
+                            return Column(
+                              children: [
+                                notLeaseProperty(
+                                    data.propertyImage.toString(),
+                                    data.name.toString(),
+                                    "\$ ${data.rentAmount.toString()}",
+                                    data.address.toString(),
+                                    data.person.toString(),
+                                    data.id.toString()),
+                                const SizedBox(height: 10),
+                              ],
+                            );
                           } else {
-                            formattedDate = 'No Date Available';
-                          }
-                          getPreviousPropertyController
-                              .image(data.propertyImage);
-                          getPreviousPropertyController.name(data.name);
-                          getPreviousPropertyController.address(data.address);
-                          getPreviousPropertyController.propertyId(data.id);
-                          return Column(
-                            children: [
-                              notLeaseProperty(
-                                  data.propertyImage.toString(),
-                                  data.name.toString(),
-                                  "\$ ${data.rentAmount.toString()}",
-                                  data.address.toString(),
-                                  data.person.toString(),
-                                  data.id.toString()),
-                              const SizedBox(height: 10),
-                            ],
-                          );
-                        } else {
-                          return const Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 55.0),
-                              child: Text(
-                                "No property",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 55.0),
+                                child: Text(
+                                  "No property",
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      },
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ],

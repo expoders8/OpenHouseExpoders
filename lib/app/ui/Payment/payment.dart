@@ -56,6 +56,14 @@ class _PaymentPageState extends State<PaymentPage> {
     }
   }
 
+  Future<void> _refreshItems() async {
+    await Future.delayed(
+        const Duration(seconds: 2)); // Simulate network request
+    setState(() {
+      getPaymentController.fetchAllPayments();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -262,40 +270,43 @@ class _PaymentPageState extends State<PaymentPage> {
                               return Column(
                                 children: [
                                   Flexible(
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15.0),
-                                      itemCount: getPaymentController
-                                          .paymentList[0].data!.length,
-                                      itemBuilder: (context, index) {
-                                        var requestData = getPaymentController
-                                            .paymentList[0].data!;
-                                        if (requestData.isNotEmpty) {
-                                          var data = requestData[index];
-                                          return payment(
-                                              "assets/icons/boy 2.png",
-                                              "\$${data.totalPayment}",
-                                              data.address,
-                                              "Pending",
-                                              data.name,
-                                              data.mobileNo,
-                                              "\$250",
-                                              "25-06-2025");
-                                        } else {
-                                          return const Center(
-                                            child: Text(
-                                              "No Payments",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontSize: 15,
-                                                  fontFamily:
-                                                      kCircularStdMedium),
-                                            ),
-                                          );
-                                        }
-                                      },
+                                    child: RefreshIndicator(
+                                      onRefresh: _refreshItems,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15.0),
+                                        itemCount: getPaymentController
+                                            .paymentList[0].data!.length,
+                                        itemBuilder: (context, index) {
+                                          var requestData = getPaymentController
+                                              .paymentList[0].data!;
+                                          if (requestData.isNotEmpty) {
+                                            var data = requestData[index];
+                                            return payment(
+                                                "assets/icons/boy 2.png",
+                                                "\$${data.totalPayment}",
+                                                data.address,
+                                                "Pending",
+                                                data.name,
+                                                data.mobileNo,
+                                                "\$250",
+                                                "25-06-2025");
+                                          } else {
+                                            return const Center(
+                                              child: Text(
+                                                "No Payments",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 15,
+                                                    fontFamily:
+                                                        kCircularStdMedium),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
                                     ),
                                   ),
                                   Flexible(

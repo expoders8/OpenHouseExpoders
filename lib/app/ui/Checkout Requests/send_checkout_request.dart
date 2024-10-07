@@ -35,6 +35,7 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
   List<bool> toggleStates = [];
   bool isLoading = true;
   List<Map<String, dynamic>> jsonData = [];
+  var updatedJson;
 
   // Initialize a list to store the names of items with true state
   List<String> selectedNames = [];
@@ -57,11 +58,21 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
   List<Map<String, dynamic>> generateJson() {
     var requestData = getAllCheckoutLookupController.lookupdataList[0];
 
+    // Initialize or ensure jsonData has the correct structure, 7 keys in this case
+    if (jsonData.isEmpty) {
+      for (int i = 0; i < requestData.length; i++) {
+        String key = requestData[i].name!;
+        jsonData.add({key: false}); // Add with initial false or default value
+      }
+    }
+
+    // Loop through and update the values based on toggleStates
     for (int i = 0; i < requestData.length; i++) {
       String key = requestData[i].name!;
       bool value = toggleStates[i];
 
-      jsonData.add({key: value});
+      // Update the value in the existing jsonData list at the corresponding index
+      jsonData[i] = {key: value};
     }
 
     return jsonData;
@@ -147,8 +158,11 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                                                 padding: EdgeInsets.zero,
                                                 onPressed: () {
                                                   setState(() {
+                                                    // Toggle the current state
                                                     toggleStates[index] =
                                                         !toggleStates[index];
+
+                                                    // Update selectedNames based on the toggle state
                                                     if (toggleStates[index]) {
                                                       if (!selectedNames
                                                           .contains(data.name!
@@ -163,13 +177,16 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                                                           .toString());
                                                     }
 
-                                                    print(
-                                                        toggleStates); // Current toggle states
-                                                    print(
-                                                        selectedNames); // Current selected names
+                                                    // Log the updated states and names
+                                                    // print(
+                                                    //     toggleStates); // Current toggle states
+                                                    // print(
+                                                    //     selectedNames); // Current selected names
 
-                                                    // Print generated JSON structure
-                                                    print(generateJson());
+                                                    // Generate JSON structure after every toggle to avoid duplication
+                                                    updatedJson =
+                                                        generateJson();
+                                                    print(updatedJson);
                                                   });
                                                 },
                                                 child: Row(
@@ -327,7 +344,7 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                               if (_formKey.currentState!.validate()) {
                                 LoaderX.show(context, 60.0, 60.0);
                                 propertyCheckoutController
-                                    .sendCheckoutProperties(jsonData);
+                                    .sendCheckoutProperties(updatedJson);
                               }
                             });
                             // createJson();

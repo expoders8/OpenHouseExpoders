@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:openhome/app/models/get_expense_model.dart';
@@ -112,7 +113,8 @@ class PropertiesService {
     var userid = jsonDecode(userdata);
     final GetAvailablePropertyController getAvailablePropertyController =
         Get.put(GetAvailablePropertyController());
-
+    final GetLeasePropertyController getLeasePropertyController =
+        Get.put(GetLeasePropertyController());
     try {
       http.Response response;
       var request = http.MultipartRequest(
@@ -142,7 +144,10 @@ class PropertiesService {
       });
       response = await http.Response.fromStream(await request.send());
       if (response.statusCode == 200 || response.statusCode == 201) {
-        getAvailablePropertyController.fetchAllProperties();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          getAvailablePropertyController.fetchAllProperties();
+        });
+        getLeasePropertyController.fetchAllProperties();
         var decodedUser = jsonDecode(response.body);
         if (decodedUser['success']) {
           // getLeasePropertyController.fetchAllProperties();
@@ -288,6 +293,7 @@ class PropertiesService {
         var data = json.decode(response.body);
         getAllInvitationController.getAllInvitations();
         getCurrentPropertyController.fetchAllProperties();
+        Get.back();
         tabController.changeTabIndex(1);
         return GetAllPropertiesModel.fromJson(data);
       } else if (response.statusCode == 401) {
@@ -468,6 +474,7 @@ class PropertiesService {
   ) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
+
     final PropertyCheckoutController propertyCheckoutController =
         Get.put(PropertyCheckoutController());
     try {

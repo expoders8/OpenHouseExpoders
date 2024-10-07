@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
+import '../../../config/constant/constant.dart';
 import '../../view/amenities_view.dart';
 import 'package:http/http.dart' as http;
 import '../../models/country_model.dart';
@@ -88,7 +90,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
       Get.put(GetCurrentPropertyController());
   final TextEditingController cityController = TextEditingController();
   final TextEditingController personController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  final addressController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
   final TextEditingController bedRoomsController = TextEditingController();
   final TextEditingController capacityController = TextEditingController();
@@ -97,9 +99,17 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController propertyNameController = TextEditingController();
   final TextEditingController propertyPriceController = TextEditingController();
+  List<dynamic> _placeList = [];
+  int totalImageCount = 0;
+  String _sessionToken = '1234567890',
+      countryName = "",
+      placesApiKey = "AIzaSyAQYUMPajZSmEupi3I7rsukQMSAZJmh-XA";
   @override
   void initState() {
     super.initState();
+    addressController.addListener(() {
+      _onChanged();
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.checkEdit == "edit") {
         setState(() {
@@ -109,6 +119,34 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         getPropertyData();
       }
     });
+  }
+
+  _onChanged() {
+    if (_sessionToken == "null") {
+      setState(() {
+        // _sessionToken = uuid.v4();
+      });
+    }
+    getSuggestion(addressController.text);
+  }
+
+  void getSuggestion(String input) async {
+    try {
+      String baseURL =
+          'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      String request =
+          '$baseURL?input=$input&key=$placesApiKey&sessiontoken=$_sessionToken';
+      var response = await http.get(Uri.parse(request));
+      if (response.statusCode == 200) {
+        setState(() {
+          _placeList = json.decode(response.body)['predictions'];
+        });
+      } else {
+        throw Exception('Failed to load predictions');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -613,13 +651,137 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   validationMsg: 'Please enter facilities',
                 ),
                 buildTextWidget("Address"),
-                CustomTextFormField(
-                  hintText: 'Flat / House No / Building',
-                  maxLines: 1,
-                  ctrl: addressController,
-                  name: "create",
-                  formSubmitted: isFormSubmitted,
-                  validationMsg: 'Please enter Address',
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      validator: (value) {
+                        if (isFormSubmitted) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Address';
+                          }
+                        }
+                        return null;
+                      },
+                      // focusNode: focusNode,
+                      controller: addressController,
+                      textInputAction: TextInputAction.next,
+                      onChanged: (value) => {
+                        // isTouched = true,
+                        getSuggestion(addressController.text)
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Flat / House No / Building",
+                        counterText: "",
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                        hintStyle: const TextStyle(
+                          fontFamily: kCircularStdBook,
+                          fontWeight: FontWeight.w400,
+                          color: kPrimaryColor,
+                          fontSize: 14,
+                        ),
+                        filled: true,
+                        fillColor: kWhiteColor,
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8.0),
+                          ),
+                          borderSide:
+                              BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide:
+                              const BorderSide(color: kWhiteColor, width: 1.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: const BorderSide(
+                            color: kWhiteColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: _placeList.isEmpty ? 0 : 200,
+                  width: _placeList.isEmpty ? 0 : size.width,
+                  color: kWhiteColor,
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
+                    shrinkWrap: true,
+                    itemCount: _placeList.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () async {
+                          Future.delayed(const Duration(milliseconds: 100),
+                              () async {
+                            String placeId = _placeList[index]['place_id'];
+                            String detailsURL =
+                                'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$placesApiKey';
+                            var detailsResponse =
+                                await http.get(Uri.parse(detailsURL));
+                            var detailsData = json.decode(detailsResponse.body);
+                            if (detailsResponse.statusCode == 200) {
+                              List<dynamic> addressComponents =
+                                  detailsData['result']['address_components'];
+                              String city = '';
+                              for (var component in addressComponents) {
+                                List<dynamic> types = component['types'];
+
+                                if (types.contains('country')) {
+                                  setState(() {
+                                    countryName = component['long_name'];
+                                  });
+                                }
+                                if (types
+                                    .contains('administrative_area_level_1')) {
+                                  // state = component['long_name'];
+                                }
+                                if (types.contains('locality') ||
+                                    types.contains('postal_town')) {
+                                  city = component['long_name'];
+                                }
+                              }
+                              setState(() {
+                                // con.text = state;
+                                cityController.text = city;
+
+                                // print(_stateController.text);
+                                // print(_cityController.text);
+                                // stateError = false;
+                                // cityError = false;
+                              });
+                              setState(() {
+                                // pickedCity = "1";
+                                // pickedState = "2";
+                              });
+
+                              checCounrty();
+                            } else {
+                              throw Exception('Failed to load place details');
+                            }
+                            setState(() {
+                              // street1Controller.text = _placeList[index]
+                              //         ["terms"]
+                              //     .sublist(
+                              //         0, _placeList[index]["terms"].length - 3)
+                              //     .map((term) => term["value"])
+                              //     .join(", ");
+                              // focusNode.unfocus();
+                              _placeList.clear();
+                            });
+                          });
+                        },
+                        child: ListTile(
+                          title: Text(_placeList[index]["description"]),
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Padding(
@@ -771,7 +933,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                         ),
                       )
                     : SizedBox(
-                        height: imageList.length == 1 || imageList.length == 2
+                        height: fileList.length == 1 || fileList.length == 2
                             ? 120
                             : 240,
                         child: GridView.count(
@@ -1060,20 +1222,52 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     );
   }
 
+  checCounrty() async {
+    try {
+      var response =
+          await http.get(Uri.parse("$baseUrl/api/lookup/getcountries"));
+      if (response.statusCode == 200) {
+        final countryData = jsonDecode(response.body);
+        final List countryListData = countryData["data"];
+        List filteredCountry = countryListData
+            .where((data) => data["name"] == countryName)
+            .toList();
+        setState(() {
+          countryId = filteredCountry[0]['id'];
+          countryController.text = filteredCountry[0]['name'];
+        });
+        // checState(countryId);
+      } else {
+        return Future.error("Server Error");
+      }
+    } catch (error) {
+      return Future.error(error);
+    }
+  }
+
   void loadInitialImages() async {
     try {
       for (var path in initialImagePaths) {
         if (path.startsWith('http')) {
           File file = await _downloadImageFromUrl(path);
-          setState(() {
-            fileList.add(file);
-          });
+          if (totalImageCount < 5 &&
+              !fileList.any((existingFile) => existingFile.path == file.path)) {
+            setState(() {
+              fileList.add(file);
+              totalImageCount++;
+            });
+          }
         } else {
           File file = File(path);
           if (await file.exists()) {
-            setState(() {
-              fileList.add(file);
-            });
+            if (totalImageCount < 5 &&
+                !fileList
+                    .any((existingFile) => existingFile.path == file.path)) {
+              setState(() {
+                fileList.add(file);
+                totalImageCount++;
+              });
+            }
           } else {
             print('Local file does not exist: $path');
           }
@@ -1111,33 +1305,20 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     }
   }
 
-  Widget buildTextWidget(String text) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(7, 20, 0, 5),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 13,
-          fontFamily: 'kCircularStdBold',
-        ),
-      ),
-    );
-  }
-
   Future<void> pickImage() async {
     try {
       List<Asset> pickedImages = await MultiImagePicker.pickImages(
-        selectedAssets: imageList.isEmpty ? [] : imageList,
+        selectedAssets: fileList.isEmpty ? [] : imageList,
         iosOptions: const IOSOptions(
           doneButton: UIBarButtonItem(title: 'Confirm', tintColor: Colors.red),
           cancelButton:
               UIBarButtonItem(title: 'Cancel', tintColor: Colors.redAccent),
           albumButtonColor: Colors.blue,
         ),
-        androidOptions: const AndroidOptions(
+        androidOptions: AndroidOptions(
           actionBarColor: Colors.red,
           actionBarTitleColor: Colors.white,
-          maxImages: 5,
+          maxImages: 5 - totalImageCount,
           hasCameraInPickerPage: false,
           statusBarColor: Colors.black26,
           actionBarTitle: "Select Photo",
@@ -1148,21 +1329,32 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
       );
 
       if (pickedImages.isNotEmpty) {
+        LoaderX.show(context, 60.0, 60.0);
+        fileList.clear(); // Clear previous files and re-add initial paths
         imageList = pickedImages;
-        // fileList.clear(); // Clear previous files and re-add initial paths
+
         // loadInitialImages(); // Reload initial images
 
         for (var asset in imageList) {
           final filePath = await getFilePathFromAsset(asset);
           setState(() {
             fileList.add(File(filePath));
+            LoaderX.hide();
           });
         }
         setState(() {
+          LoaderX.hide();
           isImagePickerError = false;
+        });
+        setState(() {
+          initialImagePaths = widget.imagelist!;
+          if (widget.imagelist!.isNotEmpty) {
+            loadInitialImages();
+          }
         });
       }
     } on Exception catch (e) {
+      LoaderX.hide();
       setState(() {
         error = e.toString();
         isImagePickerError = true;
@@ -1180,5 +1372,18 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
       buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
     );
     return filePath;
+  }
+
+  Widget buildTextWidget(String text) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(7, 20, 0, 5),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 13,
+          fontFamily: 'kCircularStdBold',
+        ),
+      ),
+    );
   }
 }

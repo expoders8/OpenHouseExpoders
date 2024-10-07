@@ -19,6 +19,13 @@ class _PreviousHostViewState extends State<PreviousHostView> {
   TextEditingController searchController = TextEditingController();
   final GetDetailHostsController getDetailHostsController =
       Get.put(GetDetailHostsController());
+  Future<void> _refreshItems() async {
+    await Future.delayed(
+        const Duration(seconds: 2)); // Simulate network request
+    setState(() {
+      getAllPreviousHostsController.fetchAllTenants();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,41 +83,44 @@ class _PreviousHostViewState extends State<PreviousHostView> {
                   ),
                   const SizedBox(height: 10),
                   Flexible(
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: getAllPreviousHostsController
-                          .hostsList[0].data!.length,
-                      itemBuilder: (context, index) {
-                        var requestData =
-                            getAllPreviousHostsController.hostsList[0].data!;
-                        if (requestData.isNotEmpty) {
-                          var data = requestData[index];
-                          return Column(
-                            children: [
-                              previousHost(
-                                  data.tenantProfilePicture.toString(),
-                                  "${data.tenantFirstName} ${data.tenantLastName}",
-                                  data.address.toString(),
-                                  data.tenantPhoneNumber.toString(),
-                                  data.id.toString()),
-                              const SizedBox(height: 10),
-                            ],
-                          );
-                        } else {
-                          return const Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 55.0),
-                              child: Text(
-                                "No Previous Hosts",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
+                    child: RefreshIndicator(
+                      onRefresh: _refreshItems,
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: getAllPreviousHostsController
+                            .hostsList[0].data!.length,
+                        itemBuilder: (context, index) {
+                          var requestData =
+                              getAllPreviousHostsController.hostsList[0].data!;
+                          if (requestData.isNotEmpty) {
+                            var data = requestData[index];
+                            return Column(
+                              children: [
+                                previousHost(
+                                    data.tenantProfilePicture.toString(),
+                                    "${data.tenantFirstName} ${data.tenantLastName}",
+                                    data.address.toString(),
+                                    data.tenantPhoneNumber.toString(),
+                                    data.id.toString()),
+                                const SizedBox(height: 10),
+                              ],
+                            );
+                          } else {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 55.0),
+                                child: Text(
+                                  "No Previous Hosts",
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      },
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ],

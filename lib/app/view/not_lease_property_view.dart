@@ -23,6 +23,15 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
   final GetnotleaseDetailsPropertiesController
       getnotleaseDetailsPropertiesController =
       Get.put(GetnotleaseDetailsPropertiesController());
+
+  Future<void> _refreshItems() async {
+    await Future.delayed(
+        const Duration(seconds: 2)); // Simulate network request
+    setState(() {
+      getAvailablePropertyController.fetchAllProperties();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -87,47 +96,50 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                   ),
                   const SizedBox(height: 10),
                   Flexible(
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: getAvailablePropertyController
-                          .propertiesList[0].data!.length,
-                      itemBuilder: (context, index) {
-                        var propertyData = getAvailablePropertyController
-                            .propertiesList[0].data!;
-                        if (propertyData.isNotEmpty) {
-                          var data = propertyData[index];
-                          // String dateStartString = data.startDate.toString();
-                          // String dateEndString = data.endDate.toString();
-                          // DateTime myDateStartTime =
-                          //     DateTime.parse(dateStartString);
-                          // DateTime myDateEndTime = DateTime.parse(dateEndString);
-                          // String startTime =
-                          //   DateFormat('hh:mm a').format(myDateStartTime);
-                          // String endTime =
-                          //     DateFormat('hh:mm a').format(myDateEndTime);
-                          return notLeaseProperty(
-                              data.propertyImage.toString(),
-                              data.rentAmount.toString(),
-                              data.address.toString(),
-                              data.person.toString(),
-                              data.name.toString(),
-                              data.id.toString(),
-                              data.amenitys!);
-                        } else {
-                          return const Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 55.0),
-                              child: Text(
-                                "No Properties",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
+                    child: RefreshIndicator(
+                      onRefresh: _refreshItems,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: getAvailablePropertyController
+                            .propertiesList[0].data!.length,
+                        itemBuilder: (context, index) {
+                          var propertyData = getAvailablePropertyController
+                              .propertiesList[0].data!;
+                          if (propertyData.isNotEmpty) {
+                            var data = propertyData[index];
+                            // String dateStartString = data.startDate.toString();
+                            // String dateEndString = data.endDate.toString();
+                            // DateTime myDateStartTime =
+                            //     DateTime.parse(dateStartString);
+                            // DateTime myDateEndTime = DateTime.parse(dateEndString);
+                            // String startTime =
+                            //   DateFormat('hh:mm a').format(myDateStartTime);
+                            // String endTime =
+                            //     DateFormat('hh:mm a').format(myDateEndTime);
+                            return notLeaseProperty(
+                                data.propertyImage.toString(),
+                                data.rentAmount.toString(),
+                                data.address.toString(),
+                                data.person.toString(),
+                                data.name.toString(),
+                                data.id.toString(),
+                                data.amenitys!);
+                          } else {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 55.0),
+                                child: Text(
+                                  "No Properties",
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      },
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ],
