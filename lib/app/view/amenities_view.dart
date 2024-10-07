@@ -28,7 +28,6 @@ class _AmenitiesViewState extends State<AmenitiesView> {
   void initState() {
     super.initState();
     getAllAmenitiesController.fetchAllAmenites();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       fecheId();
     });
@@ -36,7 +35,6 @@ class _AmenitiesViewState extends State<AmenitiesView> {
 
   fecheId() async {
     List newIds = widget.initialAmenitiesIds!;
-
     await Future.delayed(Duration.zero);
     setState(() {
       ids = newIds;

@@ -28,17 +28,17 @@ class _CurrentTenantsViewState extends State<CurrentTenantsView> {
         } else {
           if (getAllCurrentTenantsController.tenantsList.isNotEmpty) {
             if (getAllCurrentTenantsController.tenantsList[0].data!.isEmpty) {
-              return const Column(
-                children: [
-                  SizedBox(height: 250),
-                  Text(
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 55.0),
+                  child: Text(
                     "No Current Tenants",
                     style: TextStyle(
                         color: kPrimaryColor,
-                        fontSize: 12,
+                        fontSize: 15,
                         fontFamily: kCircularStdMedium),
                   ),
-                ],
+                ),
               );
             } else {
               return Column(
@@ -97,13 +97,15 @@ class _CurrentTenantsViewState extends State<CurrentTenantsView> {
                           );
                         } else {
                           return const Center(
-                            child: Text(
-                              "No Current Tenants",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 15,
-                                  fontFamily: kCircularStdMedium),
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 55.0),
+                              child: Text(
+                                "No Current Tenants",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                              ),
                             ),
                           );
                         }
@@ -115,13 +117,15 @@ class _CurrentTenantsViewState extends State<CurrentTenantsView> {
             }
           } else {
             return const Center(
-              child: Text(
-                "No Current Tenants",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 15,
-                    fontFamily: kCircularStdMedium),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 55.0),
+                child: Text(
+                  "No Current Tenants",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
               ),
             );
           }

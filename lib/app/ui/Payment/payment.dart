@@ -247,13 +247,15 @@ class _PaymentPageState extends State<PaymentPage> {
                             if (getPaymentController
                                 .paymentList[0].data!.isEmpty) {
                               return const Center(
-                                child: Text(
-                                  "No Payments",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 15,
-                                      fontFamily: kCircularStdMedium),
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 55.0),
+                                  child: Text(
+                                    "No Payments",
+                                    style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontFamily: kCircularStdMedium),
+                                  ),
                                 ),
                               );
                             } else {
@@ -331,13 +333,15 @@ class _PaymentPageState extends State<PaymentPage> {
                             }
                           } else {
                             return const Center(
-                              child: Text(
-                                "No Payments",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 55.0),
+                                child: Text(
+                                  "No Payments",
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
                               ),
                             );
                           }

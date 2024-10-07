@@ -44,10 +44,10 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
               if (getAllRequestsController.requestList[0].data!.isEmpty) {
                 return const Center(
                   child: Text(
-                    "No Requests",
+                    "No requests",
                     style: TextStyle(
                         color: kPrimaryColor,
-                        fontSize: 12,
+                        fontSize: 15,
                         fontFamily: kCircularStdMedium),
                   ),
                 );
@@ -276,8 +276,7 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
                       } else {
                         return const Center(
                           child: Text(
-                            "No Requests",
-                            textAlign: TextAlign.center,
+                            "No requests",
                             style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: 15,
@@ -292,8 +291,7 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
             } else {
               return const Center(
                 child: Text(
-                  "No Requests",
-                  textAlign: TextAlign.center,
+                  "No requests",
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 15,

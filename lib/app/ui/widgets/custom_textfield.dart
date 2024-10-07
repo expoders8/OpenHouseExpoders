@@ -88,7 +88,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       style: const TextStyle(color: kPrimaryColor, fontSize: 16),
       controller: widget.ctrl,
       keyboardType: widget.keyboardType,
-      inputFormatters: widget.inputFormatters,
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(RegExp(r'^ ')),
+        ...?widget.inputFormatters,
+      ],
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) => validateInput(value),
       obscureText: widget.name == "password" ? !_passwordVisible : false,

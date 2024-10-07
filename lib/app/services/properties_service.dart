@@ -112,8 +112,6 @@ class PropertiesService {
     var userid = jsonDecode(userdata);
     final GetAvailablePropertyController getAvailablePropertyController =
         Get.put(GetAvailablePropertyController());
-    final GetLeasePropertyController getLeasePropertyController =
-        Get.put(GetLeasePropertyController());
 
     try {
       http.Response response;
@@ -126,7 +124,6 @@ class PropertiesService {
         ..fields['person'] = capacity
         ..fields['address'] = address
         ..fields['country_id'] = countryid
-        ..fields['state_id'] = stateid
         ..fields['city_name'] = cityname
         ..fields['profile_picture'] = ""
         ..fields['created_by_id'] = userid["id"]
@@ -469,6 +466,8 @@ class PropertiesService {
     rentalid,
     List<Map<String, dynamic>> checkoutData,
   ) async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
     final PropertyCheckoutController propertyCheckoutController =
         Get.put(PropertyCheckoutController());
     try {
@@ -476,6 +475,11 @@ class PropertiesService {
           await http.post(Uri.parse('$baseUrl/api/tenant/checkout_request'),
               body: json.encode({
                 "rentalid": propertyCheckoutController.rentalId.value,
+                "proeprtyAddress":
+                    propertyCheckoutController.proeprtyAddress.value,
+                "propertyName": propertyCheckoutController.propertyName.value,
+                "email": userid["email"],
+                "rentAmount": propertyCheckoutController.rentAmount.value,
                 "checkoutJson": checkoutData,
               }),
               headers: {'Content-type': 'application/json'});

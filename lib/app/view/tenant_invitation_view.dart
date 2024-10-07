@@ -100,34 +100,47 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
                                   ),
                                   Row(
                                     children: [
-                                      Text(
-                                        data.firstName.toString(),
-                                        style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationColor: kRedColor,
-                                            color: kRedColor,
-                                            fontSize: 14,
-                                            fontFamily: kCircularStdNormal),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      const Text(
-                                        "for",
-                                        style: TextStyle(
-                                            color: kPrimaryColor,
-                                            fontSize: 14,
-                                            fontFamily: kCircularStdNormal),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        data.address.toString(),
-                                        style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationColor: kRedColor,
-                                            color: kRedColor,
-                                            fontSize: 14,
-                                            fontFamily: kCircularStdNormal),
+                                      SizedBox(
+                                        width: Get.width / 1.2,
+                                        child: Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text:
+                                                    "${data.firstName.toString()} ${data.lastName.toString()} ",
+                                                style: const TextStyle(
+                                                  color: kRedColor,
+                                                  fontSize: 14,
+                                                  fontFamily:
+                                                      kCircularStdNormal,
+                                                ),
+                                              ),
+                                              const TextSpan(
+                                                text: "for ",
+                                                style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 14,
+                                                  fontFamily:
+                                                      kCircularStdNormal,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: data.address.toString(),
+                                                style: const TextStyle(
+                                                  color: kRedColor,
+                                                  fontSize: 14,
+                                                  fontFamily:
+                                                      kCircularStdNormal,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor: kRedColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ],
                                   ),

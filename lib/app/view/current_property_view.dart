@@ -29,7 +29,8 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
   String formattedDate = '';
 
   Future<void> _refreshItems() async {
-    await Future.delayed(Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(
+        const Duration(seconds: 2)); // Simulate network request
     setState(() {
       getCurrentPropertyController.fetchAllProperties();
     });
@@ -143,6 +144,12 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                       propertyCheckoutController
                           .propertyId(propertyData.propertyId);
                       propertyCheckoutController.rentalId(propertyData.id);
+                      propertyCheckoutController
+                          .proeprtyAddress(propertyData.address);
+                      propertyCheckoutController
+                          .propertyName(propertyData.name);
+                      propertyCheckoutController
+                          .rentAmount(propertyData.rentAmount);
                       if (propertyData.endDate != null) {
                         dateTime =
                             DateTime.parse(propertyData.endDate.toString());

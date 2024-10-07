@@ -29,17 +29,17 @@ class _CurrentHostViewState extends State<CurrentHostView> {
         } else {
           if (getAllCurrentHostsController.hostsList.isNotEmpty) {
             if (getAllCurrentHostsController.hostsList[0].data!.isEmpty) {
-              return const Column(
-                children: [
-                  SizedBox(height: 250),
-                  Text(
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 55.0),
+                  child: Text(
                     "No Current Hosts",
                     style: TextStyle(
                         color: kPrimaryColor,
-                        fontSize: 12,
+                        fontSize: 15,
                         fontFamily: kCircularStdMedium),
                   ),
-                ],
+                ),
               );
             } else {
               return Column(
@@ -98,13 +98,15 @@ class _CurrentHostViewState extends State<CurrentHostView> {
                           );
                         } else {
                           return const Center(
-                            child: Text(
-                              "No Current Hosts",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 15,
-                                  fontFamily: kCircularStdMedium),
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 55.0),
+                              child: Text(
+                                "No Current Hosts",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                              ),
                             ),
                           );
                         }
@@ -116,13 +118,15 @@ class _CurrentHostViewState extends State<CurrentHostView> {
             }
           } else {
             return const Center(
-              child: Text(
-                "No Current Hosts",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 15,
-                    fontFamily: kCircularStdMedium),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 55.0),
+                child: Text(
+                  "No Current Hosts",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
               ),
             );
           }

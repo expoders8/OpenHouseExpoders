@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../controller/request_controller.dart';
 import '../../config/constant/font_constant.dart';
@@ -40,17 +39,13 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
           } else {
             if (getAllHostRequestsController.requestList.isNotEmpty) {
               if (getAllHostRequestsController.requestList[0].data!.isEmpty) {
-                return const Padding(
-                  padding: EdgeInsets.only(bottom: 35.0),
-                  child: Center(
-                    child: Text(
-                      "No requests",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 15,
-                          fontFamily: kCircularStdMedium),
-                    ),
+                return const Center(
+                  child: Text(
+                    "No requests",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdMedium),
                   ),
                 );
               } else {
@@ -288,8 +283,7 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
                           } else {
                             return const Center(
                               child: Text(
-                                "No Requests",
-                                textAlign: TextAlign.center,
+                                "No requests",
                                 style: TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: 15,
@@ -306,8 +300,7 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
             } else {
               return const Center(
                 child: Text(
-                  "No Requests",
-                  textAlign: TextAlign.center,
+                  "No requests",
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 15,

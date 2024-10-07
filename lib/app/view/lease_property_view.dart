@@ -54,15 +54,18 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
           if (getLeasePropertyController.propertiesList.isNotEmpty) {
             if (getLeasePropertyController.propertiesList[0].data!.isEmpty) {
               return Center(
-                child: SizedBox(
-                  width: Get.width - 80,
-                  child: const Text(
-                    "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdMedium),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 55.0),
+                  child: SizedBox(
+                    width: Get.width - 80,
+                    child: const Text(
+                      textAlign: TextAlign.center,
+                      "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 15,
+                          fontFamily: kCircularStdMedium),
+                    ),
                   ),
                 ),
               );

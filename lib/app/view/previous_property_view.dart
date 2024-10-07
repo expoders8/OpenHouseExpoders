@@ -42,12 +42,11 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
         } else {
           if (getPreviousPropertyController.propertiesList.isNotEmpty) {
             if (getPreviousPropertyController.propertiesList[0].data!.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.only(bottom: 35.0),
-                child: Center(
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 55.0),
                   child: Text(
                     "No property",
-                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 15,
@@ -124,12 +123,11 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                             ],
                           );
                         } else {
-                          return const Padding(
-                            padding: EdgeInsets.only(bottom: 35.0),
-                            child: Center(
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 55.0),
                               child: Text(
                                 "No property",
-                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: 15,
@@ -145,12 +143,11 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
               );
             }
           } else {
-            return const Padding(
-              padding: EdgeInsets.only(bottom: 35.0),
-              child: Center(
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 55.0),
                 child: Text(
                   "No property",
-                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 15,

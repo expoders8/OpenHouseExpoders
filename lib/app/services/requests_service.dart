@@ -9,8 +9,8 @@ import '../../config/provider/snackbar_provider.dart';
 import '../models/tenant_request_model.dart';
 
 class RequestsService {
-  addRequest(
-      String amenityId, description, type, date, propertyId, hostId) async {
+  addRequest(String amenityId, description, type, date, propertyId, hostId,
+      propertyName, proeprtyAddress, rentAmount, amenityName) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
@@ -27,6 +27,10 @@ class RequestsService {
                 "is_active": true,
                 "property_id": propertyId,
                 "host_user_id": hostId,
+                "propertyName": propertyName,
+                "proeprtyAddress": proeprtyAddress,
+                "rentAmount": rentAmount,
+                "amenityName": amenityName
               }),
               headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -222,6 +223,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                               child: TypeAheadField<int>(
                                 textFieldConfiguration: TextFieldConfiguration(
                                   controller: bedRoomsController,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.deny(
+                                        RegExp(r'^ ')),
+                                  ],
                                   decoration: InputDecoration(
                                     fillColor: kWhiteColor,
                                     filled: true,
@@ -311,6 +316,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                               child: TypeAheadField<int>(
                                 textFieldConfiguration: TextFieldConfiguration(
                                   controller: washRoomsController,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.deny(
+                                        RegExp(r'^ ')),
+                                  ],
                                   decoration: InputDecoration(
                                     fillColor: kWhiteColor,
                                     filled: true,
@@ -401,6 +410,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   child: TypeAheadField<int>(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: capacityController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r'^ ')),
+                      ],
                       decoration: InputDecoration(
                         fillColor: kWhiteColor,
                         filled: true,
@@ -581,6 +593,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 CustomTextFormField(
                   hintText: '\$100',
                   maxLines: 1,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(5),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   keyboardType: TextInputType.number,
                   ctrl: propertyPriceController,
                   name: "iamount",
@@ -611,6 +627,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   child: TypeAheadField<GetAllCountryDataModel>(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: countryController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r'^ ')),
+                      ],
                       decoration: InputDecoration(
                         fillColor: kWhiteColor,
                         filled: true,
@@ -885,6 +904,13 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                         .then((value) {
                                       if (value) {
                                         propertyNameController.clear();
+                                        getAllAmenitiesController.amenitisList
+                                            .clear();
+                                        getAllAmenitiesController
+                                            .selectedAmenitis("");
+                                        getAllAmenitiesController
+                                            .selectedAmenitis1
+                                            .clear();
                                         descriptionController.clear();
                                         propertyPriceController.clear();
                                         facilitiesController.clear();
@@ -899,6 +925,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                         washRoomsController.clear();
                                         selctesType = "";
                                         fileList = [];
+                                        imageList = [];
+                                        selctedImages = [];
+                                        images = [];
+                                        initialImagePaths = [];
                                       }
                                     });
                                   });
@@ -973,6 +1003,13 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                         .then((value) {
                                       if (value) {
                                         propertyNameController.clear();
+                                        getAllAmenitiesController.amenitisList
+                                            .clear();
+                                        getAllAmenitiesController
+                                            .selectedAmenitis("");
+                                        getAllAmenitiesController
+                                            .selectedAmenitis1
+                                            .clear();
                                         descriptionController.clear();
                                         propertyPriceController.clear();
                                         facilitiesController.clear();
@@ -987,6 +1024,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                         washRoomsController.clear();
                                         selctesType = "";
                                         fileList = [];
+                                        imageList = [];
+                                        selctedImages = [];
+                                        images = [];
+                                        initialImagePaths = [];
                                       }
                                     });
                                   });

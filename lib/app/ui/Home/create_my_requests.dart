@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,15 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
   final TextEditingController raisedFundsController = TextEditingController();
   final GetCurrentPropertyController getCurrentPropertyController =
       Get.put(GetCurrentPropertyController());
-  String image = "", name = "", addres = "", propertyId = "", hostId = "";
+  String image = "",
+      name = "",
+      addres = "",
+      propertyId = "",
+      hostId = "",
+      propertyName = "",
+      proeprtyAddress = "",
+      rentAmount = "",
+      amenityName = "";
   @override
   void initState() {
     super.initState();
@@ -62,6 +71,9 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
       name = data.name.toString();
       addres = data.address.toString();
       propertyId = data.id.toString();
+      propertyName = data.name.toString();
+      proeprtyAddress = data.address.toString();
+      rentAmount = data.rentAmount.toString();
       hostId = data.createdById.toString();
     });
   }
@@ -173,6 +185,9 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                         child: TypeAheadField<GetAllAmenitiesDataModel>(
                           textFieldConfiguration: TextFieldConfiguration(
                             controller: amenityController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.deny(RegExp(r'^ ')),
+                            ],
                             decoration: InputDecoration(
                               fillColor: kWhiteColor,
                               filled: true,
@@ -504,7 +519,11 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                                           selctesType,
                                           selectdate,
                                           propertyId,
-                                          hostId)
+                                          hostId,
+                                          propertyName,
+                                          proeprtyAddress,
+                                          rentAmount,
+                                          amenityController.text)
                                       .then((value) {
                                     if (value) {
                                       getAllRequestsController.getAllRequests();

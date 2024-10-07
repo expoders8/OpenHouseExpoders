@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -54,6 +55,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   child: TypeAheadField<GetAllAmenitiesDataModel>(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: amenityController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r'^ ')),
+                      ],
                       decoration: InputDecoration(
                         fillColor: kWhiteColor,
                         filled: true,
@@ -153,6 +157,10 @@ class _AddExpensePageState extends State<AddExpensePage> {
                     hintText: 'Price',
                     maxLines: 1,
                     ctrl: priceController,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(5),
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                     keyboardType: TextInputType.number,
                     name: "price",
                     formSubmitted: isFormSubmitted,

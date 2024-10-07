@@ -28,16 +28,13 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
         } else {
           if (getAllCheckoutController.checkoutList.isNotEmpty) {
             if (getAllCheckoutController.checkoutList[0].data!.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.only(top: 50.0),
-                child: Center(
-                  child: Text(
-                    "No request",
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdMedium),
-                  ),
+              return const Center(
+                child: Text(
+                  "No request",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
                 ),
               );
             } else {
@@ -118,7 +115,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                                           fontFamily: kCircularStdMedium),
                                     ),
                                     Text(
-                                      data.phonenumber.toString(),
+                                      data.phoneNumber.toString(),
                                       style: const TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 10,
@@ -194,7 +191,8 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                                       onPressed: () {
                                         checkoutService
                                             .acceptCheckoutInvitation(
-                                                data.id.toString());
+                                          data.id.toString(),
+                                        );
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(5),
@@ -239,16 +237,13 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                       ),
                     );
                   } else {
-                    return const Padding(
-                      padding: EdgeInsets.only(top: 50.0),
-                      child: Center(
-                        child: Text(
-                          "No request",
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 15,
-                              fontFamily: kCircularStdMedium),
-                        ),
+                    return const Center(
+                      child: Text(
+                        "No request",
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 15,
+                            fontFamily: kCircularStdMedium),
                       ),
                     );
                   }
@@ -256,16 +251,13 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
               );
             }
           } else {
-            return const Padding(
-              padding: EdgeInsets.only(top: 50.0),
-              child: Center(
-                child: Text(
-                  "No request",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 15,
-                      fontFamily: kCircularStdMedium),
-                ),
+            return const Center(
+              child: Text(
+                "No request",
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 15,
+                    fontFamily: kCircularStdMedium),
               ),
             );
           }

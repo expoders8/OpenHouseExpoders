@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 
 import '../models/get_expense_model.dart';
@@ -217,6 +215,10 @@ class PropertyCheckoutController extends GetxController {
   PropertiesService propertiesService = PropertiesService();
   RxString propertyId = "".obs;
   RxString rentalId = "".obs;
+  RxString proeprtyAddress = "".obs;
+  RxString propertyName = "".obs;
+  RxString email = "".obs;
+  RxInt rentAmount = 0.obs;
 
   void sendCheckoutProperties(List<Map<String, dynamic>> checkoutData) async {
     try {

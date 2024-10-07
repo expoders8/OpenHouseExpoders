@@ -30,11 +30,18 @@ class CheckoutService {
   notAcceptCheckoutInvitation(String rentalId) async {
     final GetAllCheckoutController getAllCheckoutController =
         Get.put(GetAllCheckoutController());
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
     try {
-      var response = await http.get(
-          Uri.parse(
-              '$baseUrl/api/tenant/checkout_request_delete?rentalid=$rentalId'),
-          headers: {'Content-type': 'application/json'});
+      var response = await http
+          .post(Uri.parse('$baseUrl/api/tenant/checkout_request_delete'),
+              body: json.encode({
+                "rentalid": rentalId,
+                "propertyName": "",
+                "proeprtyAddress": "",
+                "tenantEmail": userid["email"],
+              }),
+              headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         LoaderX.hide();
         Get.back();
@@ -48,13 +55,20 @@ class CheckoutService {
     }
   }
 
-  acceptCheckoutInvitation(String rentalId) async {
+  acceptCheckoutInvitation(
+      String rentalId, propertyName, proeprtyAddress) async {
     final GetAllCheckoutController getAllCheckoutController =
         Get.put(GetAllCheckoutController());
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
     try {
-      var response = await http.get(
-          Uri.parse(
-              '$baseUrl/api/tenant/checkout_request_delete?rentalid=$rentalId'),
+      var response = await http.post(Uri.parse('$baseUrl/api/tenant/checkout'),
+          body: json.encode({
+            "rentalid": rentalId,
+            "propertyName": "",
+            "proeprtyAddress": "",
+            "tenantEmail": userid["email"],
+          }),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         LoaderX.hide();

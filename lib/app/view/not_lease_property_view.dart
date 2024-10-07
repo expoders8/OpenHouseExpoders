@@ -40,12 +40,11 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
           if (getAvailablePropertyController.propertiesList.isNotEmpty) {
             if (getAvailablePropertyController
                 .propertiesList[0].data!.isEmpty) {
-              return Center(
-                child: SizedBox(
-                  width: Get.width - 80,
-                  child: const Text(
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 55.0),
+                  child: Text(
                     "No Properties",
-                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 15,
@@ -116,13 +115,15 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                               data.amenitys!);
                         } else {
                           return const Center(
-                            child: Text(
-                              "No Properties",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 15,
-                                  fontFamily: kCircularStdMedium),
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 55.0),
+                              child: Text(
+                                "No Properties",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                              ),
                             ),
                           );
                         }
@@ -134,13 +135,15 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
             }
           } else {
             return const Center(
-              child: Text(
-                "No Properties",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 15,
-                    fontFamily: kCircularStdMedium),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 55.0),
+                child: Text(
+                  "No Properties",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
               ),
             );
           }

@@ -27,6 +27,8 @@ import '../ui/Auth/ChangePassword/change_password.dart';
 import '../ui/Auth/ForgotPassword/forgot_password.dart';
 import '../ui/Property Details/Host/lease_property_details.dart';
 import '../ui/Property Details/Host/not_lease_property_details.dart';
+import '../ui/Track lease expenses/track_lease_expenses.dart';
+import '../ui/Track lease extensions/track_lease_extension.dart';
 import '../view/my_request_view_all.dart';
 import '../view/tenant_request_all_view.dart';
 
@@ -153,6 +155,14 @@ class AppPages {
     GetPage(
       name: _Paths.invitationshowPage,
       page: () => const InvitationshowPage(),
+    ),
+    GetPage(
+      name: _Paths.trackLeaseExtensionPage,
+      page: () => const TrackLeaseExtensionPage(),
+    ),
+    GetPage(
+      name: _Paths.trackLeaseExpensesPage,
+      page: () => const TrackLeaseExpensesPage(),
     ),
   ];
 }

@@ -133,8 +133,9 @@ class TenantService {
 
   getAllPreviousTenant(String? id) async {
     try {
-      var response = await http.get(
-          Uri.parse('$baseUrl/api/host/getall_previous_tenant?propertyid=$id'),
+      var response = await http.post(
+          Uri.parse('$baseUrl/api/host/getall_previous_tenant'),
+          body: json.encode({"propertyid": id}),
           headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {

@@ -60,6 +60,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           child: GestureDetector(
             onTap: () {
               FocusScope.of(context).requestFocus(FocusNode());

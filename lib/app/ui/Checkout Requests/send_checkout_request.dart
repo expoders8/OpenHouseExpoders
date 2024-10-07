@@ -83,9 +83,8 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
         return Icons.cleaning_services;
       case 'Icons.flash_on':
         return Icons.flash_on;
-      // Add more cases for other icons
       default:
-        return Icons.help; // default icon if no match
+        return Icons.help;
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:country_list_pick/country_list_pick.dart';
@@ -131,6 +132,9 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                         child: TypeAheadField<GetAllTenantDataModel>(
                             textFieldConfiguration: TextFieldConfiguration(
                               controller: emailController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(RegExp(r'^ ')),
+                              ],
                               decoration: InputDecoration(
                                 fillColor: kWhiteColor,
                                 filled: true,
@@ -290,6 +294,10 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                                         TextFieldConfiguration(
                                       keyboardType: TextInputType.number,
                                       controller: tenantController,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.deny(
+                                            RegExp(r'^ ')),
+                                      ],
                                       decoration: InputDecoration(
                                         fillColor: kWhiteColor,
                                         filled: true,
