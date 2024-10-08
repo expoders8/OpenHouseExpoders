@@ -129,6 +129,7 @@ class DBServices {
       await userCollection
           .doc(msg.reciverUID)
           .update({UserField.lastMessage: msg.content});
+
       // await userCollection
       //     .doc(msg.senderUID)
       //     .update({UserField.lastMessage: msg.content});
