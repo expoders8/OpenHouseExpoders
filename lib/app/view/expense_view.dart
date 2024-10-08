@@ -57,7 +57,7 @@ class _ExpenseViewState extends State<ExpenseView> {
                         children: [
                           slidableExpenseItem(
                             data.amenityname.toString(),
-                            data.price.toString(),
+                            "\$ ${data.price.toString()}",
                             // Icons.electric_bolt_sharp,
                             data.id.toString(),
                           ),

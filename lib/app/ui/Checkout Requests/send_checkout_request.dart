@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
+import '../widgets/custom_textfield.dart';
+import '../../controller/property_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../../config/provider/loader_provider.dart';
 import '../../controller/checkout_lookup_controller.dart';
-import '../../controller/property_controller.dart';
-import '../widgets/custom_textfield.dart';
 
 class SendCheckoutRequest extends StatefulWidget {
   final String? propertyId;

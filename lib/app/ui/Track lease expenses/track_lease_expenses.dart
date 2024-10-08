@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../config/constant/color_constant.dart';
+import '../../controller/property_controller.dart';
 import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class TrackLeaseExpensesPage extends StatefulWidget {
   const TrackLeaseExpensesPage({super.key});
@@ -13,6 +14,21 @@ class TrackLeaseExpensesPage extends StatefulWidget {
 }
 
 class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
+  final GetAllPropertyExpensesController getAllPropertyExpensesController =
+      Get.put(GetAllPropertyExpensesController());
+  Future<void> _refreshItems() async {
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      getAllPropertyExpensesController.getAllExpenses();
+    });
+  }
+
+  @override
+  void initState() {
+    getAllPropertyExpensesController.getAllExpenses();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,47 +36,139 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
         centerTitle: true,
         title: const Text("Property Service Expense"),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-          child: Column(
-            children: [
-              leaseproperty("assets/icons/1.png", "1500", "address", "5",
-                  "name", "1200", "800", "10 May 2024")
-            ],
-          ),
-        ),
+      body: Obx(
+        () {
+          if (getAllPropertyExpensesController.isLoading.value) {
+            return Container(
+              color: kBackGroundColor,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  color: kSelectedIconColor,
+                ),
+              ),
+            );
+          } else {
+            if (getAllPropertyExpensesController.expensetList.isNotEmpty) {
+              if (getAllPropertyExpensesController
+                  .expensetList[0].data!.isEmpty) {
+                return const Center(
+                  child: Text(
+                    "No Expense",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdMedium),
+                  ),
+                );
+              } else {
+                return Column(
+                  children: [
+                    Flexible(
+                      child: RefreshIndicator(
+                        onRefresh: _refreshItems,
+                        child: ListView.builder(
+                          itemCount: getAllPropertyExpensesController
+                              .expensetList[0].data!.length,
+                          itemBuilder: (context, index) {
+                            var requestData = getAllPropertyExpensesController
+                                .expensetList[0].data!;
+                            if (requestData.isNotEmpty) {
+                              var data = requestData[index];
+                              return SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15.0, vertical: 5.0),
+                                  child: Column(
+                                    children: [
+                                      leaseproperty(
+                                          data.propertyImage.toString(),
+                                          data.resultExpenses![index].price
+                                              .toString(),
+                                          data.propertyAddress.toString(),
+                                          data.propertyName.toString(),
+                                          data.resultExpenses!)
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                child: Text(
+                                  "No Expense",
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+            } else {
+              return const Center(
+                child: Text(
+                  "No Expense",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
+              );
+            }
+          }
+        },
       ),
     );
   }
 
-  leaseproperty(String image, price, address, person, tenantname, balancedue,
-      rentdue, expiredate) {
+  leaseproperty(String image, price, address, name, List amenitiesName) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: () {
-        // Get.to(() => const LeasePropertyDetailPage());
-      },
+      onPressed: () {},
       child: Container(
         width: Get.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: kWhiteColor),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
               Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                      scale: 1.2,
-                      height: 65,
-                      width: 65,
-                    ),
-                  ),
+                  image != "null"
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.network(
+                            image,
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                            height: 65,
+                            width: 65,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                "assets/images/noproperty.png",
+                                fit: BoxFit.cover,
+                                height: 110,
+                                width: 110,
+                              );
+                            },
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.asset(
+                            "assets/images/blank_profile.png",
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                            height: 70,
+                            width: 70,
+                          ),
+                        ),
                   const SizedBox(width: 15.0),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -68,9 +176,9 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
                     children: [
                       SizedBox(
                         width: Get.width - 170,
-                        child: const Text(
-                          "Name",
-                          style: TextStyle(
+                        child: Text(
+                          name,
+                          style: const TextStyle(
                               color: kPrimaryColor,
                               fontSize: 17,
                               fontFamily: kCircularStdMedium),
@@ -110,52 +218,36 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
                 ],
               ),
               const SizedBox(height: 10),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Amenities Name",
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdMedium),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  Text(
-                    "\$ 250",
-                    style: TextStyle(
-                        color: kRedColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdMedium),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Amenities Name",
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdMedium),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  Text(
-                    "\$ 250",
-                    style: TextStyle(
-                        color: kRedColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdMedium),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ],
+              Column(
+                children: amenitiesName.map((amenity) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0), // Add padding between items
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          amenity.title,
+                          style: const TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 15,
+                              fontFamily: kCircularStdMedium),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        Text(
+                          "\$ ${amenity.price}",
+                          style: const TextStyle(
+                              color: kRedColor,
+                              fontSize: 15,
+                              fontFamily: kCircularStdMedium),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
               ),
             ],
           ),

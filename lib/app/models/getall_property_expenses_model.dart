@@ -32,54 +32,82 @@ class GetallPropertyExpensesModel {
 }
 
 class GetallPropertyExpensesDataModel {
-  String? id;
-  String? name;
-  String? description;
-  String? address;
-  bool? isActive;
-  String? createdOn;
-  String? updatedOn;
-  String? price;
-  String? title;
+  String? propertyName;
+  String? propertyAddress;
+  String? propertyDescription;
   String? propertyImage;
+  List<ResultExpenses>? resultExpenses;
 
   GetallPropertyExpensesDataModel(
-      {this.id,
-      this.name,
-      this.description,
-      this.address,
-      this.isActive,
-      this.createdOn,
-      this.updatedOn,
-      this.price,
-      this.title,
-      this.propertyImage});
+      {this.propertyName,
+      this.propertyAddress,
+      this.propertyDescription,
+      this.propertyImage,
+      this.resultExpenses});
 
   GetallPropertyExpensesDataModel.fromJson(Map<String, dynamic> json) {
+    propertyName = json['property_name'];
+    propertyAddress = json['property_address'];
+    propertyDescription = json['property_description'];
+    propertyImage = json['property_image'];
+    if (json['resultExpenses'] != null) {
+      resultExpenses = <ResultExpenses>[];
+      json['resultExpenses'].forEach((v) {
+        resultExpenses!.add(ResultExpenses.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['property_name'] = propertyName;
+    data['property_address'] = propertyAddress;
+    data['property_description'] = propertyDescription;
+    data['property_image'] = propertyImage;
+    if (resultExpenses != null) {
+      data['resultExpenses'] = resultExpenses!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class ResultExpenses {
+  String? id;
+  String? amenityId;
+  String? price;
+  String? propertyId;
+  String? createdOn;
+  String? updatedOn;
+  String? title;
+
+  ResultExpenses(
+      {this.id,
+      this.amenityId,
+      this.price,
+      this.propertyId,
+      this.createdOn,
+      this.updatedOn,
+      this.title});
+
+  ResultExpenses.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    description = json['description'];
-    address = json['address'];
-    isActive = json['is_active'];
+    amenityId = json['amenity_id'];
+    price = json['price'];
+    propertyId = json['property_id'];
     createdOn = json['created_on'];
     updatedOn = json['updated_on'];
-    price = json['price'];
     title = json['title'];
-    propertyImage = json['property_image'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['name'] = name;
-    data['description'] = description;
-    data['address'] = address;
-    data['is_active'] = isActive;
+    data['amenity_id'] = amenityId;
+    data['price'] = price;
+    data['property_id'] = propertyId;
     data['created_on'] = createdOn;
     data['updated_on'] = updatedOn;
-    data['price'] = price;
     data['title'] = title;
-    data['property_image'] = propertyImage;
     return data;
   }
 }

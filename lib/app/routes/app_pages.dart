@@ -29,6 +29,8 @@ import '../ui/Property Details/Host/lease_property_details.dart';
 import '../ui/Property Details/Host/not_lease_property_details.dart';
 import '../ui/Track lease expenses/track_lease_expenses.dart';
 import '../ui/Track lease extensions/track_lease_extension.dart';
+import '../ui/Track property income/track_property_income.dart';
+import '../ui/message/message_page.dart';
 import '../view/my_request_view_all.dart';
 import '../view/tenant_request_all_view.dart';
 
@@ -163,6 +165,14 @@ class AppPages {
     GetPage(
       name: _Paths.trackLeaseExpensesPage,
       page: () => const TrackLeaseExpensesPage(),
+    ),
+    GetPage(
+      name: _Paths.trackPropertyIncomePage,
+      page: () => const TrackPropertyIncomePage(),
+    ),
+    GetPage(
+      name: _Paths.messagePage,
+      page: () => const MessagePage(),
     ),
   ];
 }

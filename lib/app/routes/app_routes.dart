@@ -33,6 +33,8 @@ abstract class Routes {
   static const invitationshowPage = _Paths.invitationshowPage;
   static const trackLeaseExpensesPage = _Paths.trackLeaseExpensesPage;
   static const trackLeaseExtensionPage = _Paths.trackLeaseExtensionPage;
+  static const trackPropertyIncomePage = _Paths.trackPropertyIncomePage;
+  static const messagePage = _Paths.messagePage;
   static const tenantLeasePropertyDetailPage =
       _Paths.tenantLeasePropertyDetailPage;
 }
@@ -68,5 +70,7 @@ abstract class _Paths {
   static const tenantLeasePropertyDetailPage = '/tenantLeasePropertyDetailPage';
   static const trackLeaseExtensionPage = '/trackLeaseExtensionPage';
   static const invitationshowPage = '/invitationshowPage';
+  static const messagePage = '/messagePage';
+  static const trackPropertyIncomePage = '/trackPropertyIncomePage';
   static const trackLeaseExpensesPage = '/trackLeaseExpensesPage';
 }

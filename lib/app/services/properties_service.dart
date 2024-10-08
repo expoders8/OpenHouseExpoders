@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:openhome/app/models/get_expense_model.dart';
 
 import '../controller/tab_controller.dart';
+import '../models/getall_property_expenses_model.dart';
 import '../models/getpropretyes_model.dart';
 import '../../config/constant/constant.dart';
 import '../controller/property_controller.dart';
@@ -436,6 +437,38 @@ class PropertiesService {
         SnackbarUtils.showErrorSnackbar("Server Error",
             "Error while Get Expenses, Please try after some time.");
         return Future.error("Server Error");
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  getAllPropertyExpenses() async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
+    try {
+      var response = await http.get(
+          Uri.parse(
+              '$baseUrl/api/host/getall_property_expenses?userid=${userid["id"]}'),
+          headers: {'Content-type': 'application/json'});
+      var decodedUser = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (decodedUser['success']) {
+          LoaderX.hide();
+          var data = json.decode(response.body);
+          return GetallPropertyExpensesModel.fromJson(data);
+        } else {
+          LoaderX.hide();
+          SnackbarUtils.showErrorSnackbar(
+              "Failed to Expenses Get", decodedUser['error']);
+          return Future.error("Server Error");
+        }
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar(
+            "Failed to Expenses Get", decodedUser['error']);
       }
     } catch (e) {
       LoaderX.hide();
