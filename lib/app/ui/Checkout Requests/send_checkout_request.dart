@@ -328,6 +328,10 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                           hintText: 'Comment',
                           maxLines: 1,
                           ctrl: commentController,
+                          onChanged: (p0) {
+                            String comment = commentController.text;
+                            jsonData.add({'Comment': comment});
+                          },
                           name: "create",
                         ),
                         const SizedBox(height: 15),
@@ -342,9 +346,10 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                             Future.delayed(const Duration(milliseconds: 100),
                                 () async {
                               if (_formKey.currentState!.validate()) {
-                                LoaderX.show(context, 60.0, 60.0);
-                                propertyCheckoutController
-                                    .sendCheckoutProperties(updatedJson);
+                                // LoaderX.show(context, 60.0, 60.0);
+                                print(updatedJson);
+                                // propertyCheckoutController
+                                //     .sendCheckoutProperties(updatedJson);
                               }
                             });
                             // createJson();

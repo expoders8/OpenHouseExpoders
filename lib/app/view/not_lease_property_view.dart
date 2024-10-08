@@ -164,6 +164,27 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
     );
   }
 
+  IconData getIconFromString(String? iconName) {
+    switch (iconName) {
+      case 'electricity-icon.png':
+        return Icons.electric_bolt;
+      case 'parking-icon.png':
+        return Icons.local_parking_outlined;
+      case 'pool-icon.png':
+        return Icons.pool;
+      case 'house-icon.png':
+        return Icons.clean_hands;
+      case 'Icons.description':
+        return Icons.description;
+      case 'Icons.cleaning_services':
+        return Icons.cleaning_services;
+      case 'Icons.flash_on':
+        return Icons.flash_on;
+      default:
+        return Icons.help;
+    }
+  }
+
   notLeaseProperty(
       String image, price, address, person, name, id, List amenities) {
     final GetAllTenantController getAllTenantController =
@@ -286,40 +307,27 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 3),
-                          const Row(
-                            children: [
-                              Icon(
-                                Icons.wifi,
-                                size: 16,
-                                color: kSecondaryPrimaryColor,
-                              ),
-                              SizedBox(width: 5),
-                              Icon(
-                                Icons.gas_meter_rounded,
-                                size: 16,
-                                color: kSecondaryPrimaryColor,
-                              ),
-                              SizedBox(width: 5),
-                              Icon(
-                                Icons.electric_bolt_sharp,
-                                size: 16,
-                                color: kSecondaryPrimaryColor,
-                              ),
-                              SizedBox(width: 5),
-                              Icon(
-                                Icons.local_parking,
-                                size: 16,
-                                color: kSecondaryPrimaryColor,
-                              ),
-                              SizedBox(width: 5),
-                              Icon(
-                                Icons.nest_cam_wired_stand_sharp,
-                                size: 16,
-                                color: kSecondaryPrimaryColor,
-                              ),
-                            ],
-                          ),
+                          const SizedBox(height: 2),
+                          SizedBox(
+                            width: Get.width - 200,
+                            height: 20,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: amenities.length,
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  children: [
+                                    Icon(
+                                      getIconFromString(amenities[index].icon),
+                                      size: 18,
+                                      color: kSecondaryPrimaryColor,
+                                    ),
+                                    const SizedBox(width: 5),
+                                  ],
+                                );
+                              },
+                            ),
+                          )
                         ],
                       )
                     ],

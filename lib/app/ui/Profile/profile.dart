@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:openhome/app/routes/app_pages.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Auth/Login/login.dart';
 import '../TabPage/tab_page.dart';
@@ -241,99 +242,129 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               SizedBox(height: phoneNo != "" ? 40 : 60),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.security,
-                          size: 18,
-                          color: kButtonColor,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          "Privacy and Security",
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 16,
-                              fontFamily: kCircularStdMedium),
-                        ),
-                      ],
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 13,
-                      color: kButtonColor,
-                    ),
-                  ],
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () async {
+                  var url = "https://www.google.com";
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(Uri.parse(url));
+                  } else {
+                    throw "Could not launch $url";
+                  }
+                },
+                child: const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.security,
+                            size: 18,
+                            color: kButtonColor,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Privacy and Security",
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 13,
+                        color: kButtonColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 18),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.perm_device_info_rounded,
-                          size: 18,
-                          color: kButtonColor,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          "Terms and conditions",
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 16,
-                              fontFamily: kCircularStdMedium),
-                        ),
-                      ],
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 13,
-                      color: kButtonColor,
-                    ),
-                  ],
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () async {
+                  var url = "https://www.google.com";
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(Uri.parse(url));
+                  } else {
+                    throw "Could not launch $url";
+                  }
+                },
+                child: const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.perm_device_info_rounded,
+                            size: 18,
+                            color: kButtonColor,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Terms and conditions",
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 13,
+                        color: kButtonColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 18),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.help_center_outlined,
-                          size: 18,
-                          color: kButtonColor,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          "Help Us",
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 16,
-                              fontFamily: kCircularStdMedium),
-                        ),
-                      ],
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 13,
-                      color: kButtonColor,
-                    ),
-                  ],
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () async {
+                  var url = "https://www.google.com";
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(Uri.parse(url));
+                  } else {
+                    throw "Could not launch $url";
+                  }
+                },
+                child: const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.help_center_outlined,
+                            size: 18,
+                            color: kButtonColor,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Help Us",
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 13,
+                        color: kButtonColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 18),
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {

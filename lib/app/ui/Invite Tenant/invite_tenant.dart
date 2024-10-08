@@ -191,8 +191,8 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                                   ),
                                 ),
                             suggestionsCallback: (pattern) async {
-                              final tenants =
-                                  await TenantService.getallTenant("", pattern);
+                              final tenants = await TenantService.getallTenant(
+                                  true, pattern);
                               return tenants;
                             },
                             itemBuilder:
@@ -239,15 +239,11 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                                     },
                                   ),
                                 ),
-                                subtitle:
-                                    Text(suggestion.phoneNumber.toString()),
-                                title: Text(suggestion.firstName.toString()),
+                                subtitle: Text(suggestion.email.toString()),
+                                title: Text(
+                                    "${suggestion.firstName.toString()} ${suggestion.lastName.toString()}"),
                               );
                             },
-                            // transitionBuilder:
-                            //     (context, suggestionsBox, controller) {
-                            //   return suggestionsBox;
-                            // },
                             onSuggestionSelected:
                                 (GetAllTenantDataModel? suggestion) {
                               setState(() {
@@ -361,7 +357,7 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                                     suggestionsCallback: (pattern) async {
                                       final tenants =
                                           await TenantService.getallTenant(
-                                              pattern, "");
+                                              false, pattern);
                                       return tenants;
                                     },
                                     itemBuilder: (context,
@@ -417,7 +413,7 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
                                         subtitle: Text(
                                             suggestion.phoneNumber.toString()),
                                         title: Text(
-                                            suggestion.firstName.toString()),
+                                            "${suggestion.firstName.toString()} ${suggestion.lastName.toString()}"),
                                       );
                                     },
                                     // transitionBuilder:

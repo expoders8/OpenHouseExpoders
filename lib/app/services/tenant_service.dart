@@ -13,27 +13,37 @@ import '../models/previous_tenant_model.dart';
 
 class TenantService {
   static Future<List<GetAllTenantDataModel>> getallTenant(
-    String? mobileno,
-    String? email,
+    bool? mobileno,
+    String? searchText,
   ) async {
     try {
       var response = await http.post(Uri.parse('$baseUrl/api/tenant/getall'),
-          body: json.encode({
-            "searchText": mobileno,
-            "email": email,
-          }),
+          body: json.encode({"searchText": searchText, "type": mobileno}),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200 || response.statusCode == 201) {
-        LoaderX.hide();
-        var data = json.decode(response.body);
-        final List<dynamic> fetchCountry = data['data'];
-        return fetchCountry
-            .map((e) => GetAllTenantDataModel.fromJson(e))
-            .where((value) {
-          final phoneLower = value.phoneNumber!.toLowerCase();
-          final searchLower = mobileno!.toLowerCase();
-          return phoneLower.contains(searchLower);
-        }).toList();
+        if (mobileno!) {
+          LoaderX.hide();
+          var data = json.decode(response.body);
+          final List<dynamic> fetchCountry = data['data'];
+          return fetchCountry
+              .map((e) => GetAllTenantDataModel.fromJson(e))
+              .where((value) {
+            final phoneLower = value.email!.toLowerCase();
+            final searchLower = searchText!.toLowerCase();
+            return phoneLower.contains(searchLower);
+          }).toList();
+        } else {
+          LoaderX.hide();
+          var data = json.decode(response.body);
+          final List<dynamic> fetchCountry = data['data'];
+          return fetchCountry
+              .map((e) => GetAllTenantDataModel.fromJson(e))
+              .where((value) {
+            final phoneLower = value.phoneNumber!.toLowerCase();
+            final searchLower = searchText!.toLowerCase();
+            return phoneLower.contains(searchLower);
+          }).toList();
+        }
       } else if (response.statusCode == 401) {
         LoaderX.hide();
         return Future.error("Authentication Error");

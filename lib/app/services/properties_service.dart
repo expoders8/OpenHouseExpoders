@@ -379,6 +379,8 @@ class PropertiesService {
   addExpense(String amenitiId, price, propertyId) async {
     final GetAllExpenseController getAllExpenseController =
         Get.put(GetAllExpenseController());
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
     try {
       var response =
           await http.post(Uri.parse('$baseUrl/api/property/addexpenses'),
@@ -388,7 +390,8 @@ class PropertiesService {
                 "property_id": propertyId,
                 "created_by_id": null,
                 "updated_by_id": null,
-                "is_active": true
+                "is_active": true,
+                "userid": userid["id"]
               }),
               headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);
