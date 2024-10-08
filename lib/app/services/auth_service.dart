@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:openhome/app/services/firebase_auth_service.dart';
 
 import '../ui/TabPage/tab_page.dart';
 import '../../config/constant/constant.dart';
@@ -26,6 +27,11 @@ class AuthService {
           getStorage.write('user', jsonEncode(decodedUser["data"]));
           getStorage.write('authToken', decodedUser["data"]['authToken']);
           getStorage.write('roll', decodedUser["data"]['type']);
+          var userObj = decodedUser["data"];
+          var fullName =
+              "${decodedUser["data"]['last_name']}, ${decodedUser["data"]['first_name']}";
+          await FirebaseAuthServices().signUp(fullName, email, password,
+              userObj['id'].toString(), userObj['profile_picture'].toString());
           getStorage.write('appFlow', 1);
           LoaderX.hide();
           Get.offAll(() => const TabPage());
