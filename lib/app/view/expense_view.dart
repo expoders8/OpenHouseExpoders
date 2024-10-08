@@ -24,7 +24,19 @@ class _ExpenseViewState extends State<ExpenseView> {
     return Obx(
       () {
         if (getAllExpenseController.isLoading.value) {
-          return Container();
+          return Padding(
+            padding: const EdgeInsets.only(top: 50.0),
+            child: Center(
+              child: Container(
+                color: kBackGroundColor,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    color: kSelectedIconColor,
+                  ),
+                ),
+              ),
+            ),
+          );
         } else {
           if (getAllExpenseController.expensetList.isNotEmpty) {
             if (getAllExpenseController.expensetList[0].data!.isEmpty) {
