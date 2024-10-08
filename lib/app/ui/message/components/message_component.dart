@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../config/constant/color_constant.dart';
+import '../../../../config/constant/constant.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../models/message_model.dart';
 import '../../../services/database_service.dart';
@@ -22,10 +23,19 @@ class _MessageComponentState extends State<MessageComponent> {
   String userId = "";
   @override
   void initState() {
-    // getUser();
+    getUser();
     super.initState();
   }
 
+  Future getUser() async {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    if (getUserData != null) {
+      setState(() {
+        userId = getUserData['id'].toString();
+      });
+    }
+  }
   // Future getUser() async {
   //   final SharedPreferences prefs = await SharedPreferences.getInstance();
   //   var data = prefs.getString('user');

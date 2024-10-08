@@ -116,26 +116,15 @@ class DBServices {
 
   Future<bool> sendMessage(Message msg) async {
     try {
-      msg.isRead = false;
       await msgCollection.doc().set(msg.toJson());
-
-      // var myUnreadMessages = await getUnreadMessages(msg.reciverUID);
-      // await userCollection.doc(msg.senderUID).update({
-      //   UserField.unreadCount: {msg.reciverUID: myUnreadMessages.length}
-      // });
-      // await userCollection
-      //     .doc(msg.senderUID)
-      //     .update({UserField.lastMessage: msg.content});
-      await userCollection
-          .doc(msg.reciverUID)
-          .update({UserField.lastMessage: msg.content});
-
-      // await userCollection
-      //     .doc(msg.senderUID)
-      //     .update({UserField.lastMessage: msg.content});
-      // await userCollection.doc(msg.senderUID).update({
-      //   UserField.isRead: FieldValue.increment(1),
-      // });
+      await userCollection.doc(msg.reciverUID).update({
+        UserField.lastMessageTime: msg.createAt,
+        UserField.lastMessage: msg.content
+      });
+      await userCollection.doc(msg.senderUID ?? "").update({
+        UserField.lastMessageTime: msg.createAt,
+        UserField.lastMessage: msg.content
+      });
       return true;
     } catch (e) {
       return false;
