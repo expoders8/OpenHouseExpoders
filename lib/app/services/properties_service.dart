@@ -109,6 +109,7 @@ class PropertiesService {
       String bathrooms,
       String billtype,
       String id,
+      String isActive,
       List<File> fileList) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
@@ -131,6 +132,7 @@ class PropertiesService {
         ..fields['profile_picture'] = ""
         ..fields['created_by_id'] = userid["id"]
         ..fields['updated_by_id'] = ""
+        ..fields['is_active'] = isActive
         ..fields['amenity_id'] =
             getAllAmenitiesController.selectedAmenitis1.toString()
         ..fields['id'] = id;

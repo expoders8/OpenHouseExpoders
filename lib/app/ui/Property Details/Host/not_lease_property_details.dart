@@ -224,6 +224,9 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                       propertydata.amenitys,
                                                   imagelist:
                                                       propertydata.images,
+                                                  isActive: propertydata
+                                                      .isActive
+                                                      .toString(),
                                                 ));
                                           },
                                           child: Container(

@@ -40,6 +40,7 @@ class CreatePropertyPage extends StatefulWidget {
   final String? state;
   final String? stateId;
   final String? city;
+  final String? isActive;
   final List? amenitiesid;
   final List? imagelist;
 
@@ -62,6 +63,7 @@ class CreatePropertyPage extends StatefulWidget {
     this.state,
     this.stateId,
     this.city,
+    this.isActive,
     this.amenitiesid,
     this.imagelist,
   });
@@ -1062,6 +1064,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             washRoomsController.text,
                                             selctesType,
                                             propertyId,
+                                            widget.isActive!,
                                             fileList)
                                         .then((value) {
                                       if (value) {

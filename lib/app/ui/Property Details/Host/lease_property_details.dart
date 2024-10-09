@@ -259,6 +259,9 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                         propertydata.amenitys,
                                                     imagelist:
                                                         propertydata.images,
+                                                    isActive: propertydata
+                                                        .isActive
+                                                        .toString(),
                                                   ));
                                             },
                                             child: Container(
