@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class UserField {
   static const String name = 'name';
@@ -14,7 +13,7 @@ class FirebaseUser {
   String? email;
   String? image;
   String? uid;
-  String? orgId;
+  String? type;
   String? lastMessage;
   Timestamp? lastMessageTime;
 
@@ -23,7 +22,7 @@ class FirebaseUser {
     this.email,
     this.image,
     this.uid,
-    this.orgId,
+    this.type,
     this.lastMessage,
     this.lastMessageTime,
   });
@@ -33,7 +32,7 @@ class FirebaseUser {
     email = json["email"];
     image = json["image"];
     uid = json["uid"];
-    orgId = json["orgId"];
+    type = json["type"];
     lastMessage = json["lastMessage"];
     lastMessageTime = json["lastMessageTime"];
   }
@@ -44,7 +43,7 @@ class FirebaseUser {
       "email": email,
       "image": image,
       "name": name,
-      "orgId": orgId,
+      "type": type,
       "lastMessage": lastMessage,
       "lastMessageTime": lastMessageTime
     };

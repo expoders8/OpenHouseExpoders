@@ -30,8 +30,13 @@ class AuthService {
           var userObj = decodedUser["data"];
           var fullName =
               "${decodedUser["data"]['last_name']}, ${decodedUser["data"]['first_name']}";
-          await FirebaseAuthServices().signUp(fullName, email, password,
-              userObj['id'].toString(), userObj['profile_picture'].toString());
+          await FirebaseAuthServices().signUp(
+              fullName,
+              email,
+              password,
+              userObj['id'].toString(),
+              userObj['profile_picture'].toString(),
+              decodedUser["data"]['type']);
           getStorage.write('appFlow', 1);
           LoaderX.hide();
           Get.offAll(() => const TabPage());
