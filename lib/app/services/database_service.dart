@@ -57,17 +57,25 @@ class DBServices {
     var getUserData = jsonDecode(data);
     return userCollection
         .where('uid', isNotEqualTo: getUserData['id'].toString())
-        .where('type',
-            isEqualTo: getUserData['type'] == "host" ? "tenant" : "host")
         .snapshots()
-        .map((event) => event.docs
-                .map((e) => FirebaseUserModel.fromJson(e.data()))
-                .where((element) {
-              final nameLower = element.name!.toLowerCase();
-              final searchLower = query.toLowerCase();
+        .asyncExpand((event) async* {
+      var userModelList = <FirebaseUserModel>[];
+      for (var doc in event.docs) {
+        var userModel = FirebaseUserModel.fromJson(doc.data());
+        // userModel.unreadCount =
+        //     myUnreadMessages.where((m) => m.senderUID == userModel.uid).length;
+        userModelList.add(userModel);
+      }
+      yield userModelList
+          .where((element) =>
+              element.type ==
+              (getUserData['type'] == "host" ? 'tenant' : 'host'))
+          .toList();
+    });
 
-              return nameLower.contains(searchLower);
-            }).toList());
+    // await for (var user in users) {
+    //   yield user;
+    // }
   }
   // Stream<List<FirebaseUserModel>> getDiscussionUser(String query) async* {
   //   var data = getStorage.read('user');

@@ -57,7 +57,7 @@ class FirebaseUserModel {
   String? email;
   String? image;
   String? uid;
-  String? orgId;
+  String? type;
   String? lastMessage;
   Timestamp? lastMessageTime;
   dynamic unreadCount;
@@ -67,7 +67,7 @@ class FirebaseUserModel {
     this.email,
     this.image,
     this.uid,
-    this.orgId,
+    this.type,
     this.lastMessage,
     this.lastMessageTime,
     this.unreadCount,
@@ -78,7 +78,7 @@ class FirebaseUserModel {
     email = json["email"];
     image = json["image"];
     uid = json["uid"];
-    orgId = json["orgId"];
+    type = json["type"];
     lastMessage = json["lastMessage"];
     lastMessageTime = json["lastMessageTime"];
     unreadCount = json["unreadCount"];
@@ -90,7 +90,7 @@ class FirebaseUserModel {
       "email": email,
       "image": image,
       "name": name,
-      "orgId": orgId,
+      "type": type,
       "lastMessage": lastMessage,
       "lastMessageTime": lastMessageTime,
       "unreadCount": unreadCount
