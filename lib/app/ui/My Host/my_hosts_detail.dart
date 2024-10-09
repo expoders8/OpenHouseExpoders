@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../controller/my_hosts_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../models/firebase_user_model.dart';
+import '../message/components/chat_screen.dart';
 
 class MyHostsDetailsPage extends StatefulWidget {
   const MyHostsDetailsPage({super.key});
@@ -15,11 +18,6 @@ class MyHostsDetailsPage extends StatefulWidget {
 class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
   final GetDetailHostsController getDetailHostsController =
       Get.put(GetDetailHostsController());
-  @override
-  void initState() {
-    getDetailHostsController.fetchHostDetail();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +49,9 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                             borderRadius: BorderRadius.circular(1000)),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: hostsdata.host!.profilePicture.toString() !=
-                                  "null"
+                          child: hostsdata.profilePicture.toString() != "null"
                               ? Image.network(
-                                  hostsdata.host!.profilePicture.toString(),
+                                  hostsdata.profilePicture.toString(),
                                   fit: BoxFit.cover,
                                   height: 90,
                                   width: 90,
@@ -80,7 +77,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${hostsdata.host!.firstName.toString()} ${hostsdata.host!.lastName.toString()}",
+                            "${hostsdata.firstName.toString()} ${hostsdata.lastName.toString()}",
                             style: const TextStyle(
                                 fontFamily: kCircularStdBold,
                                 fontSize: 20,
@@ -103,7 +100,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                hostsdata.host!.phoneNumber.toString(),
+                                hostsdata.phoneNumber.toString(),
                                 style: const TextStyle(
                                     fontSize: 13,
                                     color: kPrimaryColor,
@@ -128,7 +125,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                hostsdata.host!.email.toString(),
+                                hostsdata.email.toString(),
                                 style: const TextStyle(
                                     fontSize: 13,
                                     color: kPrimaryColor,
@@ -159,7 +156,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(25),
                                   child: Image.network(
-                                    hostsdata.host!.property!.profilePicture
+                                    hostsdata.property!.profilePicture
                                         .toString(),
                                     fit: BoxFit.cover,
                                     scale: 1.2,
@@ -183,8 +180,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                                     SizedBox(
                                       width: Get.width - 170,
                                       child: Text(
-                                        hostsdata.host!.property!.name
-                                            .toString(),
+                                        hostsdata.property!.name.toString(),
                                         style: const TextStyle(
                                             overflow: TextOverflow.ellipsis,
                                             color: kPrimaryColor,
@@ -202,7 +198,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                                         ),
                                         const SizedBox(width: 10),
                                         Text(
-                                          "\$ ${hostsdata.host!.property!.rentAmount.toString()}",
+                                          "\$ ${hostsdata.property!.rentAmount.toString()}",
                                           style: const TextStyle(
                                               overflow: TextOverflow.ellipsis,
                                               color: kPrimaryColor,
@@ -222,7 +218,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                                         SizedBox(
                                           width: Get.width / 2.5,
                                           child: Text(
-                                            hostsdata.host!.property!.address
+                                            hostsdata.property!.address
                                                 .toString(),
                                             style: const TextStyle(
                                                 color: kSecondaryPrimaryColor,
@@ -248,7 +244,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
         }
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: getUserChat,
         backgroundColor: kButtonColor,
         child: const Icon(
           Icons.chat,
@@ -256,6 +252,25 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
         ),
       ),
     );
+  }
+
+  getUserChat() async {
+    var userCollection = FirebaseFirestore.instance.collection("Users");
+
+    var id = getDetailHostsController.detailModel!.data!.id.toString();
+
+    var querySnapshot = await userCollection.where('uid', isEqualTo: id).get();
+
+    List<FirebaseUserModel> userList = querySnapshot.docs
+        .map((doc) => FirebaseUserModel.fromJson(doc.data()))
+        .where((user) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ChatScreen(user: user),
+        ),
+      );
+      return true;
+    }).toList();
   }
 
   Widget buildTextWidget(String text) {

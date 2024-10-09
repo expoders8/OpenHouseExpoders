@@ -151,6 +151,7 @@ class _CurrentHostViewState extends State<CurrentHostView> {
       padding: EdgeInsets.zero,
       onPressed: () {
         getDetailHostsController.hostId(id);
+        getDetailHostsController.fetchHostDetail();
         Get.to(() => const MyHostsDetailsPage());
       },
       child: Container(

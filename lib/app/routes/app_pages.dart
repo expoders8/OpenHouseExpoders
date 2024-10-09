@@ -7,6 +7,7 @@ import '../ui/Checkout Requests/send_checkout_request.dart';
 import '../ui/Invite Tenant/get_invitation_tenant.dart';
 import '../ui/My Host/my_hosts_detail.dart';
 import '../ui/My Tenants/my_tenants_detail.dart';
+import '../ui/Payment/pay_rent.dart';
 import '../ui/Profile/profile.dart';
 import '../ui/Property Details/Tenant/tenant_lease_property.dart';
 import '../ui/Splash/splash_screen.dart';
@@ -173,6 +174,10 @@ class AppPages {
     GetPage(
       name: _Paths.messagePage,
       page: () => const MessagePage(),
+    ),
+    GetPage(
+      name: _Paths.payRentPage,
+      page: () => const PayRentPage(),
     ),
   ];
 }

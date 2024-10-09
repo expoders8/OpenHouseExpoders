@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../../routes/app_pages.dart';
 import '../../../config/constant/constant.dart';
-import '../../controller/payment_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
 
@@ -24,8 +23,8 @@ class _PaymentPageState extends State<PaymentPage> {
       firstlater = "",
       lastlatter = "",
       selectedRoll = "";
-  final GetPaymentController getPaymentController =
-      Get.put(GetPaymentController());
+  // final GetPaymentController getPaymentController =
+  //     Get.put(GetPaymentController());
   int totalamount = 0;
   int dueamount = 0;
   @override
@@ -60,7 +59,7 @@ class _PaymentPageState extends State<PaymentPage> {
     await Future.delayed(
         const Duration(seconds: 2)); // Simulate network request
     setState(() {
-      getPaymentController.fetchAllPayments();
+      // getPaymentController.fetchAllPayments();
     });
   }
 
@@ -238,126 +237,152 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  Flexible(
-                    child: Obx(
-                      () {
-                        if (getPaymentController.isLoading.value) {
-                          return Container(
-                            color: kBackGroundColor,
-                            child: const Center(
-                              child: CircularProgressIndicator(
-                                color: kSelectedIconColor,
-                              ),
-                            ),
-                          );
-                        } else {
-                          if (getPaymentController.paymentList.isNotEmpty) {
-                            if (getPaymentController
-                                .paymentList[0].data!.isEmpty) {
-                              return const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(bottom: 55.0),
-                                  child: Text(
-                                    "No Payments",
-                                    style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontSize: 15,
-                                        fontFamily: kCircularStdMedium),
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return Column(
-                                children: [
-                                  Flexible(
-                                    child: RefreshIndicator(
-                                      onRefresh: _refreshItems,
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.vertical,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15.0),
-                                        itemCount: getPaymentController
-                                            .paymentList[0].data!.length,
-                                        itemBuilder: (context, index) {
-                                          var requestData = getPaymentController
-                                              .paymentList[0].data!;
-                                          if (requestData.isNotEmpty) {
-                                            var data = requestData[index];
-                                            return payment(
-                                                "assets/icons/boy 2.png",
-                                                "\$${data.totalPayment}",
-                                                data.address,
-                                                "Pending",
-                                                data.name,
-                                                data.mobileNo,
-                                                "\$250",
-                                                "25-06-2025");
-                                          } else {
-                                            return const Center(
-                                              child: Text(
-                                                "No Payments",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: kPrimaryColor,
-                                                    fontSize: 15,
-                                                    fontFamily:
-                                                        kCircularStdMedium),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0),
-                                      child: CupertinoButton(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () {},
-                                        child: Container(
-                                          height: 45,
-                                          width: Get.width,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                              border: Border.all(
-                                                  color: kWhiteColor),
-                                              color: kButtonColor),
-                                          child: const Center(
-                                            child: Text(
-                                              "Pay Now",
-                                              style: TextStyle(
-                                                  color: kWhiteColor,
-                                                  fontFamily:
-                                                      kCircularStdNormal,
-                                                  fontSize: 18),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }
-                          } else {
-                            return const Center(
-                              child: Padding(
-                                padding: EdgeInsets.only(bottom: 55.0),
-                                child: Text(
-                                  "No Payments",
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 15,
-                                      fontFamily: kCircularStdMedium),
-                                ),
-                              ),
-                            );
-                          }
-                        }
+                  // Flexible(
+                  //   child: Obx(
+                  //     () {
+                  //       if (getPaymentController.isLoading.value) {
+                  //         return Container(
+                  //           color: kBackGroundColor,
+                  //           child: const Center(
+                  //             child: CircularProgressIndicator(
+                  //               color: kSelectedIconColor,
+                  //             ),
+                  //           ),
+                  //         );
+                  //       } else {
+                  //         if (getPaymentController.paymentList.isNotEmpty) {
+                  //           if (getPaymentController
+                  //               .paymentList[0].data!.isEmpty) {
+                  //             return const Center(
+                  //               child: Padding(
+                  //                 padding: EdgeInsets.only(bottom: 55.0),
+                  //                 child: Text(
+                  //                   "No Payments",
+                  //                   style: TextStyle(
+                  //                       color: kPrimaryColor,
+                  //                       fontSize: 15,
+                  //                       fontFamily: kCircularStdMedium),
+                  //                 ),
+                  //               ),
+                  //             );
+                  //           } else {
+                  //             return Column(
+                  //               children: [
+                  //                 Flexible(
+                  //                   child: RefreshIndicator(
+                  //                     onRefresh: _refreshItems,
+                  //                     child: ListView.builder(
+                  //                       scrollDirection: Axis.vertical,
+                  //                       padding: const EdgeInsets.symmetric(
+                  //                           horizontal: 15.0),
+                  //                       itemCount: getPaymentController
+                  //                           .paymentList[0].data!.length,
+                  //                       itemBuilder: (context, index) {
+                  //                         var requestData = getPaymentController
+                  //                             .paymentList[0].data!;
+                  //                         if (requestData.isNotEmpty) {
+                  //                           var data = requestData[index];
+                  //                           return payment(
+                  //                               "assets/icons/boy 2.png",
+                  //                               "\$${data.totalPayment}",
+                  //                               data.address,
+                  //                               "Pending",
+                  //                               data.name,
+                  //                               data.mobileNo,
+                  //                               "\$250",
+                  //                               "25-06-2025");
+                  //                         } else {
+                  //                           return const Center(
+                  //                             child: Text(
+                  //                               "No Payments",
+                  //                               textAlign: TextAlign.center,
+                  //                               style: TextStyle(
+                  //                                   color: kPrimaryColor,
+                  //                                   fontSize: 15,
+                  //                                   fontFamily:
+                  //                                       kCircularStdMedium),
+                  //                             ),
+                  //                           );
+                  //                         }
+                  //                       },
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //                 Flexible(
+                  //                   child: Padding(
+                  //                     padding: const EdgeInsets.symmetric(
+                  //                         horizontal: 20.0),
+                  //                     child: CupertinoButton(
+                  //                       padding: EdgeInsets.zero,
+                  //                       onPressed: () {},
+                  //                       child: Container(
+                  //                         height: 45,
+                  //                         width: Get.width,
+                  //                         decoration: BoxDecoration(
+                  //                             borderRadius:
+                  //                                 BorderRadius.circular(25),
+                  //                             border: Border.all(
+                  //                                 color: kWhiteColor),
+                  //                             color: kButtonColor),
+                  //                         child: const Center(
+                  //                           child: Text(
+                  //                             "Pay Now",
+                  //                             style: TextStyle(
+                  //                                 color: kWhiteColor,
+                  //                                 fontFamily:
+                  //                                     kCircularStdNormal,
+                  //                                 fontSize: 18),
+                  //                           ),
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             );
+                  //           }
+                  //         } else {
+                  //           return const Center(
+                  //             child: Padding(
+                  //               padding: EdgeInsets.only(bottom: 55.0),
+                  //               child: Text(
+                  //                 "No Payments",
+                  //                 style: TextStyle(
+                  //                     color: kPrimaryColor,
+                  //                     fontSize: 15,
+                  //                     fontFamily: kCircularStdMedium),
+                  //               ),
+                  //             ),
+                  //           );
+                  //         }
+                  //       }
+                  //     },
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        Get.toNamed(Routes.payRentPage);
                       },
+                      child: Container(
+                        height: 45,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(color: kWhiteColor),
+                            color: kButtonColor),
+                        child: const Center(
+                          child: Text(
+                            "Pay Now",
+                            style: TextStyle(
+                                color: kWhiteColor,
+                                fontFamily: kCircularStdNormal,
+                                fontSize: 18),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],

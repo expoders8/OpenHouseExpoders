@@ -51,56 +51,6 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
           );
         } else {
           if (getCurrentPropertyController.trtrrtrt.isNotEmpty) {
-            // if (getCurrentPropertyController.trtrrtrt[0].data!.isEmpty) {
-            //   return Column(
-            //     children: [
-            //       const SizedBox(height: 100),
-            //       Image.asset(
-            //         "assets/house101.png",
-            //         fit: BoxFit.cover,
-            //         scale: 2,
-            //       ),
-            //       const Text(
-            //         "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or\nexplore properties once added.",
-            //         textAlign: TextAlign.center,
-            //         style: TextStyle(
-            //             color: kPrimaryColor,
-            //             fontSize: 15,
-            //             fontFamily: kCircularStdMedium),
-            //       ),
-            //       CupertinoButton(
-            //           child: Container(
-            //             padding: const EdgeInsets.all(5),
-            //             width: 180,
-            //             decoration: BoxDecoration(
-            //                 borderRadius: BorderRadius.circular(15),
-            //                 border: Border.all(width: 1, color: kButtonColor)),
-            //             child: const Row(
-            //               mainAxisAlignment: MainAxisAlignment.center,
-            //               children: [
-            //                 Center(
-            //                     child: Text(
-            //                   "Explore more",
-            //                   style:
-            //                       TextStyle(color: kPrimaryColor, fontSize: 17),
-            //                 )),
-            //                 SizedBox(width: 10),
-            //                 Icon(
-            //                   Icons.arrow_right_alt,
-            //                   size: 25,
-            //                   color: kPrimaryColor,
-            //                 )
-            //               ],
-            //             ),
-            //           ),
-            //           onPressed: () {
-            //             // Get.offAll(() => const TabPage(
-            //             //       selectedTabIndex: 1,
-            //             //     ));
-            //           }),
-            //     ],
-            //   );
-            // } else {
             return Column(
               children: [
                 Padding(

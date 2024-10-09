@@ -105,24 +105,6 @@ class GetAllMyHostDetailModel {
 }
 
 class GetAllMyHostDetailDataModel {
-  Host? host;
-
-  GetAllMyHostDetailDataModel({this.host});
-
-  GetAllMyHostDetailDataModel.fromJson(Map<String, dynamic> json) {
-    host = json['host'] != null ? Host.fromJson(json['host']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (host != null) {
-      data['host'] = host!.toJson();
-    }
-    return data;
-  }
-}
-
-class Host {
   String? id;
   String? firstName;
   String? lastName;
@@ -132,7 +114,7 @@ class Host {
   String? type;
   Property? property;
 
-  Host(
+  GetAllMyHostDetailDataModel(
       {this.id,
       this.firstName,
       this.lastName,
@@ -142,7 +124,7 @@ class Host {
       this.type,
       this.property});
 
-  Host.fromJson(Map<String, dynamic> json) {
+  GetAllMyHostDetailDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['firstName'];
     lastName = json['lastName'];

@@ -6,7 +6,6 @@ import '../services/my_hosts_service.dart';
 import '../../config/constant/constant.dart';
 import '../../config/provider/snackbar_provider.dart';
 import 'package:openhome/app/models/my_host_get_model.dart';
-import 'package:openhome/app/ui/My%20Host/my_hosts_detail.dart';
 
 class GetAllPreviousHostsController extends GetxController {
   var isLoading = true.obs;
@@ -66,6 +65,7 @@ class GetDetailHostsController extends GetxController {
 
   void feachconferanceId(String newValue) {
     hostId.value = newValue;
+    fetchHostDetail();
   }
 
   fetchHostDetail() async {
@@ -78,7 +78,6 @@ class GetDetailHostsController extends GetxController {
       if (response.statusCode == 200) {
         detailModel =
             GetAllMyHostDetailModel.fromJson(jsonDecode(response.body));
-
         return detailModel;
       } else {
         return Future.error("Server Error");

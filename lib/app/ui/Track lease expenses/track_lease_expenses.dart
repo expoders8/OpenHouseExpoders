@@ -153,8 +153,8 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
                               return Image.asset(
                                 "assets/images/noproperty.png",
                                 fit: BoxFit.cover,
-                                height: 110,
-                                width: 110,
+                                height: 65,
+                                width: 65,
                               );
                             },
                           ),
@@ -227,7 +227,8 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          amenity.title,
+                          amenity.title[0].toUpperCase() +
+                              amenity.title.substring(1),
                           style: const TextStyle(
                               color: kPrimaryColor,
                               fontSize: 15,
