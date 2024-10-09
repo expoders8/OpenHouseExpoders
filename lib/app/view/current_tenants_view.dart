@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import '../../config/constant/font_constant.dart';
 import '../controller/my_tenants_controller.dart';
 import '../../config/constant/color_constant.dart';
+import '../ui/My Tenants/my_tenants_detail.dart';
 
 class CurrentTenantsView extends StatefulWidget {
   const CurrentTenantsView({super.key});
@@ -151,6 +152,7 @@ class _CurrentTenantsViewState extends State<CurrentTenantsView> {
       onPressed: () {
         getDetailTenantsController.tenantId(id);
         getDetailTenantsController.fetchTenantDetail();
+        Get.to(() => const MyTenantsDetailsPage());
       },
       child: Container(
         width: Get.width,

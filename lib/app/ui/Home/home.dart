@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../view/home_view.dart';
 import '../../routes/app_pages.dart';
 import '../../controller/tab_controller.dart';
 import '../../../config/constant/constant.dart';
@@ -233,65 +232,126 @@ class _HomePageState extends State<HomePage> {
                           icon: Icons.trending_down,
                           name: "Track Property\nExpenses",
                         ),
+                        ResponsiveContainer(
+                          icon: Icons.trending_down,
+                          name: "Chat with Tenants",
+                        ),
                       ],
                     ),
                   ),
                 ),
-          // : Padding(
-          //     padding:
-          //         const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         const SizedBox(height: 10),
-          //         const Text(
-          //           "Checkout Requests",
-          //           style: TextStyle(
-          //               color: kPrimaryColor,
-          //               fontSize: 16,
-          //               fontFamily: kCircularStdMedium),
-          //         ),
-          //         const CheckOutRequestView(),
-          //         const SizedBox(height: 10),
-          //         const TenantRequestView(),
-          //         const SizedBox(height: 10),
-          //         Row(
-          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //           children: [
-          //             const Text(
-          //               "Lease Status",
-          //               style: TextStyle(
-          //                   color: kPrimaryColor,
-          //                   fontSize: 16,
-          //                   fontFamily: kCircularStdMedium),
-          //             ),
-          //             CupertinoButton(
-          //               onPressed: () {
-          //                 tabController.changeTabIndex(1);
-          //               },
-          //               child: const Text(
-          //                 "View all",
-          //                 style: TextStyle(
-          //                     color: kBlueColor,
-          //                     fontSize: 13,
-          //                     fontFamily: kCircularStdMedium),
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //         leaseproperty(
-          //             "assets/icons/1.png",
-          //             "\$2550",
-          //             "101 Main Street",
-          //             "2",
-          //             "Tenant Name",
-          //             "\$15,200",
-          //             "\$220",
-          //             "12-06-2021"),
-          //         const SizedBox(height: 85)
-          //       ],
-          //     ),
-          //   ),
+        ),
+      ),
+    );
+  }
+}
+
+class ResponsiveGridView extends StatelessWidget {
+  const ResponsiveGridView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    int gridColumns;
+    if (screenWidth <= 600) {
+      gridColumns = 2;
+    } else if (screenWidth <= 900) {
+      gridColumns = 3;
+    } else {
+      gridColumns = 4;
+    }
+
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: gridColumns,
+            crossAxisSpacing: 10.0,
+            mainAxisSpacing: 10.0,
+            childAspectRatio: 1,
+          ),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return ResponsiveContainer(
+              icon: Icons.home,
+              name: 'Item $index',
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class ResponsiveContainer extends StatelessWidget {
+  final IconData icon;
+  final String name;
+
+  const ResponsiveContainer(
+      {super.key, required this.icon, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    final tabController = Get.put(TabCountController());
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        if (name == "Manage All\nYour Properties") {
+          tabController.changeTabIndex(1);
+        } else if (name == "Manage Tenants' Service Requests") {
+          Get.toNamed(Routes.tenantRequestAllView);
+        } else if (name == "Track Check-Out Requests") {
+          Get.toNamed(Routes.checkoutRequestsPage);
+        } else if (name == "Tenant Service\nRequest") {
+          Get.toNamed(Routes.myRequestViewAllView);
+        } else if (name == "Property Invitations") {
+          Get.toNamed(Routes.invitationshowPage);
+        } else if (name == "Track Lease\nExtensions") {
+          Get.toNamed(Routes.trackLeaseExtensionPage);
+        } else if (name == "Track Property\nExpenses") {
+          Get.toNamed(Routes.trackLeaseExpensesPage);
+        } else if (name == "Track Property\nIncome") {
+          Get.toNamed(Routes.trackPropertyIncomePage);
+        } else if (name == "Chat with Host") {
+          Get.toNamed(Routes.messagePage);
+        } else if (name == "Chat with Tenants") {
+          Get.toNamed(Routes.messagePage);
+        }
+      },
+      child: Card(
+        elevation: 5,
+        child: Container(
+          height: 150,
+          width: 150,
+          decoration: BoxDecoration(
+            border: Border.all(color: kButtonColor, width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 31,
+                color: kButtonColor,
+              ),
+              const SizedBox(height: 10),
+              Center(
+                child: Text(
+                  name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontFamily: kCircularStdMedium,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

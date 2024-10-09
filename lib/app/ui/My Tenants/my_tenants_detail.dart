@@ -243,6 +243,14 @@ class _MyTenantsDetailsPageState extends State<MyTenantsDetailsPage> {
           );
         }
       }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: kButtonColor,
+        child: const Icon(
+          Icons.chat,
+          color: kWhiteColor,
+        ),
+      ),
     );
   }
 

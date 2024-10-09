@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../config/constant/constant.dart';
 import '../components/chat_screen.dart';
 import '../../../services/database_service.dart';
 import '../../../models/firebase_user_model.dart';
+import '../../../../config/constant/constant.dart';
 import '../../../../config/constant/color_constant.dart';
 
 class MessageBody extends StatefulWidget {

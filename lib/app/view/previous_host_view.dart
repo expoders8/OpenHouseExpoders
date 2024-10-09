@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import '../controller/my_hosts_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../ui/My Host/my_hosts_detail.dart';
 
 class PreviousHostView extends StatefulWidget {
   const PreviousHostView({super.key});
@@ -151,6 +152,7 @@ class _PreviousHostViewState extends State<PreviousHostView> {
       onPressed: () {
         getDetailHostsController.hostId(id);
         getDetailHostsController.fetchHostDetail();
+        Get.to(() => const MyHostsDetailsPage());
       },
       child: Container(
         width: Get.width,

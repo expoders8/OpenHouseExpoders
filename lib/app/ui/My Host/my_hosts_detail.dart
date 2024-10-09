@@ -16,6 +16,12 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
   final GetDetailHostsController getDetailHostsController =
       Get.put(GetDetailHostsController());
   @override
+  void initState() {
+    getDetailHostsController.fetchHostDetail();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -241,6 +247,14 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
           );
         }
       }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: kButtonColor,
+        child: const Icon(
+          Icons.chat,
+          color: kWhiteColor,
+        ),
+      ),
     );
   }
 

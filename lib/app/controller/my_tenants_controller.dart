@@ -79,7 +79,6 @@ class GetDetailTenantsController extends GetxController {
       if (response.statusCode == 200) {
         detailModel =
             GetAllMyTenantDetailModel.fromJson(jsonDecode(response.body));
-        Get.to(() => const MyTenantsDetailsPage());
         return detailModel;
       } else {
         return Future.error("Server Error");

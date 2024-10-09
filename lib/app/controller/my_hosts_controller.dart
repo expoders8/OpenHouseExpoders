@@ -66,7 +66,6 @@ class GetDetailHostsController extends GetxController {
 
   void feachconferanceId(String newValue) {
     hostId.value = newValue;
-    fetchHostDetail();
   }
 
   fetchHostDetail() async {
@@ -79,7 +78,7 @@ class GetDetailHostsController extends GetxController {
       if (response.statusCode == 200) {
         detailModel =
             GetAllMyHostDetailModel.fromJson(jsonDecode(response.body));
-        Get.to(() => const MyHostsDetailsPage());
+
         return detailModel;
       } else {
         return Future.error("Server Error");
