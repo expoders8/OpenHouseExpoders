@@ -57,6 +57,8 @@ class DBServices {
     var getUserData = jsonDecode(data);
     return userCollection
         .where('uid', isNotEqualTo: getUserData['id'].toString())
+        .where('type',
+            isEqualTo: getUserData['type'] == "host" ? "tenant" : "host")
         .snapshots()
         .map((event) => event.docs
                 .map((e) => FirebaseUserModel.fromJson(e.data()))

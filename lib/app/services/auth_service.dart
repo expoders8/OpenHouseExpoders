@@ -90,6 +90,16 @@ class AuthService {
           getStorage.write('authToken', decodedUser["data"]['auth_token']);
           getStorage.write('roll', decodedUser["data"]['type']);
           getStorage.write('appFlow', 1);
+          var userObj = decodedUser["data"];
+          var fullName =
+              "${decodedUser["data"]['last_name']}, ${decodedUser["data"]['first_name']}";
+          await FirebaseAuthServices().signUp(
+              fullName,
+              email,
+              password,
+              userObj['id'].toString(),
+              userObj['profile_picture'].toString(),
+              decodedUser["data"]['type']);
           LoaderX.hide();
           Get.offAll(() => const TabPage());
         } else {
@@ -138,6 +148,16 @@ class AuthService {
           getStorage.write('user', jsonEncode(decodedUser["data"]));
           getStorage.write('authToken', decodedUser["data"]['authToken']);
           getStorage.write('roll', decodedUser["data"]['type']);
+          var userObj = decodedUser["data"];
+          var fullName =
+              "${decodedUser["data"]['last_name']}, ${decodedUser["data"]['first_name']}";
+          await FirebaseAuthServices().signUp(
+              fullName,
+              email,
+              "",
+              userObj['id'].toString(),
+              userObj['profile_picture'].toString(),
+              decodedUser["data"]['type']);
           getStorage.write('appFlow', 1);
           return decodedUser['success'];
         } else {
