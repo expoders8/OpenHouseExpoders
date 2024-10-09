@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../components/chat_screen.dart';
+import '../../../models/message_model.dart';
 import '../../../services/database_service.dart';
 import '../../../models/firebase_user_model.dart';
 import '../../../../config/constant/constant.dart';
@@ -36,6 +38,25 @@ class _MessageBodyState extends State<MessageBody> {
     });
   }
 
+  Stream<List<Message>> getMessage(String reciverUID, [bool myMessage = true]) {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    var userConversationCollection =
+        FirebaseFirestore.instance.collection("userConversation");
+    var xx = userConversationCollection
+        .where("senderUID",
+            isEqualTo: myMessage ? getUserData['id'].toString() : reciverUID)
+        .where("reciverUID",
+            isEqualTo: myMessage ? reciverUID : getUserData['id'].toString())
+        .snapshots()
+        .map((event) =>
+            event.docs.map((e) => Message.fromJson(e.data(), e.id)).toList());
+    // userCollection.doc(getUserData['id'].toString()).update({
+    //   UserField.unreadCount: {reciverUID: 0}
+    // });
+    return xx;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -43,8 +64,7 @@ class _MessageBodyState extends State<MessageBody> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: StreamBuilder<List<FirebaseUserModel>>(
-        stream: DBServices().getDiscussionUser(
-            widget.searchQueryText != null ? widget.searchQueryText! : ''),
+        stream: DBServices().getDiscussionUser(),
         builder: (_, s) {
           if (s.hasData) {
             if (widget.searchQueryText == "") {

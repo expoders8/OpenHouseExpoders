@@ -10,6 +10,8 @@ import '../../config/constant/constant.dart';
 class DBServices {
   var userCollection = FirebaseFirestore.instance.collection("Users");
   var msgCollection = FirebaseFirestore.instance.collection("messages");
+  var userConversationCollection =
+      FirebaseFirestore.instance.collection("userConversation");
 
   Future<List<Message>> getUnreadMessages(String? reciverUID) async {
     var data = getStorage.read('user');
@@ -52,9 +54,10 @@ class DBServices {
             event.docs.map((e) => FirebaseUser.fromJson(e.data())).toList());
   }
 
-  Stream<List<FirebaseUserModel>> getDiscussionUser(String query) {
+  Stream<List<FirebaseUserModel>> getDiscussionUser() {
     var data = getStorage.read('user');
     var getUserData = jsonDecode(data);
+
     return userCollection
         .where('uid', isNotEqualTo: getUserData['id'].toString())
         .snapshots()
@@ -62,50 +65,25 @@ class DBServices {
       var userModelList = <FirebaseUserModel>[];
       for (var doc in event.docs) {
         var userModel = FirebaseUserModel.fromJson(doc.data());
-        // userModel.unreadCount =
-        //     myUnreadMessages.where((m) => m.senderUID == userModel.uid).length;
-        userModelList.add(userModel);
+
+        var conversationSnapshot = await userConversationCollection
+            .where('senderUID', isEqualTo: getUserData['id'].toString())
+            .where('reciverUID', isEqualTo: userModel.uid)
+            .get();
+
+        var conversation2Snapshot = await userConversationCollection
+            .where('reciverUID', isEqualTo: getUserData['id'].toString())
+            .where('senderUID', isEqualTo: userModel.uid)
+            .get();
+
+        if (conversationSnapshot.docs.isNotEmpty ||
+            conversation2Snapshot.docs.isNotEmpty) {
+          userModelList.add(userModel);
+        }
       }
-      yield userModelList
-          .where((element) =>
-              element.type ==
-              (getUserData['type'] == "host" ? 'tenant' : 'host'))
-          .toList();
+      yield userModelList.toList();
     });
-
-    // await for (var user in users) {
-    //   yield user;
-    // }
   }
-  // Stream<List<FirebaseUserModel>> getDiscussionUser(String query) async* {
-  //   var data = getStorage.read('user');
-  //   var getUserData = jsonDecode(data);
-  //   var orgId = getStorage.read('orgId').toLowerCase() ?? "";
-  //   var orgtrim = orgId.trim();
-  //   var myUnreadMessages = await getUnreadMessages(null);
-
-  //   var users = userCollection
-  //       .where('uid', isNotEqualTo: getUserData['id'].toString())
-  //       .snapshots()
-  //       .asyncExpand((event) async* {
-  //     var userModelList = <FirebaseUserModel>[];
-  //     for (var doc in event.docs) {
-  //       var userModel = FirebaseUserModel.fromJson(doc.data());
-  //       // userModel.unreadCount =
-  //       //     myUnreadMessages.where((m) => m.senderUID == userModel.uid).length;
-  //       userModelList.add(userModel);
-  //     }
-  //     yield userModelList
-  //         .where((element) =>
-  //             element.name!.toLowerCase().contains(query.toLowerCase()) &&
-  //             element.orgId == orgtrim)
-  //         .toList();
-  //   });
-
-  //   await for (var user in users) {
-  //     yield user;
-  //   }
-  // }
 
   Stream<List<Message>> getMessage(String reciverUID, [bool myMessage = true]) {
     var data = getStorage.read('user');
@@ -118,20 +96,19 @@ class DBServices {
         .snapshots()
         .map((event) =>
             event.docs.map((e) => Message.fromJson(e.data(), e.id)).toList());
-    // userCollection.doc(getUserData['id'].toString()).update({
-    //   UserField.unreadCount: {reciverUID: 0}
-    // });
     return xx;
   }
 
   Future<bool> sendMessage(Message msg) async {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
     try {
       await msgCollection.doc().set(msg.toJson());
       await userCollection.doc(msg.reciverUID).update({
         UserField.lastMessageTime: msg.createAt,
         UserField.lastMessage: msg.content
       });
-      await userCollection.doc(msg.senderUID ?? "").update({
+      await userCollection.doc(getUserData['id'] ?? "").update({
         UserField.lastMessageTime: msg.createAt,
         UserField.lastMessage: msg.content
       });
@@ -152,6 +129,23 @@ class DBServices {
           UserField.lastMessage: ''
         });
       }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  getallCoversetionUsers(Message msg) async {
+    try {
+      await userConversationCollection.doc().set(msg.toJson());
+      await userCollection.doc(msg.reciverUID).update({
+        UserField.lastMessageTime: msg.createAt,
+        UserField.lastMessage: msg.content
+      });
+      await userCollection.doc(msg.senderUID ?? "").update({
+        UserField.lastMessageTime: msg.createAt,
+        UserField.lastMessage: msg.content
+      });
       return true;
     } catch (e) {
       return false;

@@ -1,13 +1,12 @@
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../models/firebase_user_model.dart';
 import '../../../models/message_model.dart';
 import '../components/message_component.dart';
 import '../../../services/database_service.dart';
+import '../../../models/firebase_user_model.dart';
 import '../../../../config/constant/constant.dart';
 import '../../../../config/constant/font_constant.dart';
 import '../../../../config/constant/color_constant.dart';
@@ -22,7 +21,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String text = "";
-  String lastDate = "", userId = "";
+  String lastDate = "";
   bool show = false;
   bool isSame = false;
   bool sendButton = false;
@@ -31,57 +30,15 @@ class _ChatScreenState extends State<ChatScreen> {
   var msgController = TextEditingController();
   final ScrollController _controller = ScrollController();
   final TextEditingController emojicontroller = TextEditingController();
-  var userCollection = FirebaseFirestore.instance.collection("Users");
-  var msgCollection = FirebaseFirestore.instance.collection("messages");
-
-  @override
-  void initState() {
-    getUser();
-    msgList();
-    super.initState();
-  }
-
-  msgList() async {
-    var data = getStorage.read('user');
-    var getUserData = jsonDecode(data);
-
-    var msgLists = await msgCollection
-        .where('reciverUID', isEqualTo: getUserData['id'].toString())
-        .where('senderUID', isEqualTo: widget.user!.uid)
-        .where('isRead', isEqualTo: false)
-        .get();
-    // .snapshots()
-    // .map(
-    //     (d) => d.docs.map((e) => Message.fromJson(e.data(), e.id)).toList())
-    // .expand((list) => list);
-
-    var msgData = msgLists.docs
-        .map((doc) => Message.fromJson(doc.data(), doc.id))
-        .toList();
-    for (var msg in msgData) {
-      msgCollection.doc(msg.uid).update({
-        MessageField.isRead: true,
-      });
-    }
-    await userCollection.doc(widget.user!.uid).update({});
-  }
-
-  Future getUser() async {
-    var data = getStorage.read('user');
-    var getUserData = jsonDecode(data);
-    if (getUserData != null) {
-      setState(() {
-        userId = getUserData['id'].toString();
-      });
-    }
-  }
 
   sendMessageOnClick() async {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
     var msg = Message(
       content: msgController.text,
       createAt: Timestamp.now(),
       reciverUID: widget.user!.uid,
-      senderUID: userId,
+      senderUID: getUserData['id'].toString(),
     );
     msgController.clear();
     emojicontroller.clear();
@@ -89,6 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
       _controller.offset >= 220 ? _scrollDown() : null;
     }
     await DBServices().sendMessage(msg);
+    await DBServices().getallCoversetionUsers(msg);
     setState(() {
       sendButton = false;
     });
@@ -116,49 +74,9 @@ class _ChatScreenState extends State<ChatScreen> {
     return output == '';
   }
 
-  // void listen() async {
-  //   if (!islisteing) {
-  //     bool available = await speechToText.initialize();
-  //     if (available) {
-  //       setState(() {
-  //         islisteing = true;
-  //       });
-  //       speechToText.listen(
-  //         onResult: (result) => setState(
-  //           () {
-  //             text = result.recognizedWords;
-  //             msgController.text = text;
-  //             if (text != "") {
-  //               setState(() {
-  //                 sendButton = true;
-  //                 islisteing = false;
-  //               });
-  //             }
-  //           },
-  //         ),
-  //       );
-  //     }
-  //   } else {
-  //     setState(() {
-  //       islisteing = false;
-  //     });
-  //     speechToText.stop();
-  //   }
-  // }
-
-  _onBackspacePressed() {
-    emojicontroller
-      ..text = emojicontroller.text.characters.skipLast(1).toString()
-      ..selection = TextSelection.fromPosition(
-          TextPosition(offset: emojicontroller.text.length));
-    msgController
-      ..text = msgController.text.characters.skipLast(1).toString()
-      ..selection = TextSelection.fromPosition(
-          TextPosition(offset: msgController.text.length));
-  }
-
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -172,7 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: kWhiteColor,
         appBar: AppBar(
           toolbarHeight: 70,
-          backgroundColor: kAppBarColor,
+          backgroundColor: kWhiteColor,
           leadingWidth: 60,
           leading: Builder(
             builder: (BuildContext context) {
@@ -180,7 +98,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 icon: const Image(
                   image: AssetImage("assets/icons/backicon.png"),
                   width: 20,
-                  color: kBackGroundColor,
                 ),
                 onPressed: () => Navigator.of(context).pop(),
               );
@@ -190,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               icon: const Icon(
                 Icons.more_vert,
-                color: kBackGroundColor,
+                color: kTextSecondaryColor,
                 size: 28,
               ),
               onPressed: optionTypeBottomSheet,
@@ -200,7 +117,7 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               Text(
                 widget.user!.name!,
-                style: const TextStyle(fontSize: 18, color: kBackGroundColor),
+                style: const TextStyle(fontSize: 18, color: kPrimaryColor),
               ),
             ],
           ),
@@ -222,7 +139,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 builder: (context, s1) {
                   if (s1.hasData) {
                     return StreamBuilder<List<Message>>(
-                      stream: DBServices().getMessage(widget.user!.uid!, true),
+                      stream: DBServices().getMessage(widget.user!.uid!, false),
                       builder: (context, s2) {
                         if (s2.hasData) {
                           var messages = [...s1.data!, ...s2.data!];
@@ -253,7 +170,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                                 .toDate()
                                                 .toString()))
                                         : '';
+
                                     isSame = date == nextDate ? true : false;
+                                    // if (index != 0) {
+                                    //   //isSame = lastDate == date ? true : false;
+                                    //   isSame = date == nextDate ? true : false;
+                                    // }
                                     lastDate = date;
 
                                     return Container(
@@ -297,15 +219,19 @@ class _ChatScreenState extends State<ChatScreen> {
                                 );
                         } else {
                           return const Center(
-                              child: CircularProgressIndicator(
-                                  color: kSelectedIconColor));
+                            child: CircularProgressIndicator(
+                              color: kPrimaryColor,
+                            ),
+                          );
                         }
                       },
                     );
                   } else {
                     return const Center(
-                        child: CircularProgressIndicator(
-                            color: kSelectedIconColor));
+                      child: CircularProgressIndicator(
+                        color: kPrimaryColor,
+                      ),
+                    );
                   }
                 },
               ),
@@ -322,7 +248,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 Container(
-                  width: Get.width,
+                  width: size.width,
                   height: 50,
                   margin: const EdgeInsets.only(left: 2, right: 2, bottom: 8),
                   child: TextFormField(
@@ -334,21 +260,18 @@ class _ChatScreenState extends State<ChatScreen> {
                     minLines: 1,
                     cursorColor: kPrimaryColor,
                     onChanged: (value) {
-                      setState(() {
-                        islisteing = false;
-                      });
                       isAllSpaces(value);
                     },
                     decoration: InputDecoration(
                       hintText: "Type here...",
                       hintStyle: const TextStyle(color: Colors.grey),
-                      contentPadding: const EdgeInsets.all(5),
-                      prefixIcon: IconButton(
-                        icon: const Image(
-                          image: AssetImage("assets/icons/emoji.png"),
-                          width: 22,
+                      contentPadding: const EdgeInsets.fromLTRB(5, 5, 1, 5),
+                      prefixIcon: GestureDetector(
+                        child: Image.asset(
+                          "assets/icons/emoji.png",
+                          scale: 2,
                         ),
-                        onPressed: () {
+                        onTap: () {
                           focusNode.unfocus();
                           focusNode.canRequestFocus = false;
                           setState(() {
@@ -356,14 +279,23 @@ class _ChatScreenState extends State<ChatScreen> {
                           });
                         },
                       ),
-                      suffixIcon: IconButton(
-                        icon: const Icon(
-                          Icons.send,
-                          color: kPrimaryColor,
-                        ),
-                        onPressed: () async {
-                          sendMessageOnClick();
-                        },
+                      suffixIcon: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GestureDetector(
+                            child: const SizedBox(
+                              width: 60,
+                              height: 50,
+                              child: Icon(
+                                Icons.send,
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                            onTap: () async {
+                              sendMessageOnClick();
+                            },
+                          ),
+                        ],
                       ),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -373,11 +305,129 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ),
+                // show ? emojiSelect() : Container(),
               ],
             )
           ],
         ),
       ),
+    );
+  }
+
+  // Widget emojiSelect() {
+  //   focusNode.addListener(() {
+  //     if (focusNode.hasFocus) {
+  //       setState(() {
+  //         show = false;
+  //       });
+  //     }
+  //   });
+  //   return SizedBox(
+  //     height: 270,
+  //     child: EmojiPicker(
+  //       onEmojiSelected: ((category, emoji) => {
+  //             setState(() {
+  //               msgController.text = msgController.text + emoji.emoji;
+  //               sendButton = true;
+  //             })
+  //           }),
+  //       onBackspacePressed: _onBackspacePressed,
+  //       textEditingController: emojicontroller,
+  //       config: const Config(
+  //         columns: 7,
+  //         verticalSpacing: 0,
+  //         horizontalSpacing: 0,
+  //         gridPadding: EdgeInsets.zero,
+  //         initCategory: Category.RECENT,
+  //         bgColor: Color(0xFFF2F2F2),
+  //         indicatorColor: Colors.blue,
+  //         iconColor: Colors.grey,
+  //         iconColorSelected: Colors.blue,
+  //         backspaceColor: Colors.blue,
+  //         skinToneDialogBgColor: Colors.white,
+  //         skinToneIndicatorColor: Colors.grey,
+  //         enableSkinTones: true,
+  //         showRecentsTab: true,
+  //         recentsLimit: 28,
+  //         replaceEmojiOnLimitExceed: false,
+  //         noRecents: Text(
+  //           'No Recents',
+  //           style: TextStyle(fontSize: 20, color: Colors.black26),
+  //           textAlign: TextAlign.center,
+  //         ),
+  //         loadingIndicator: SizedBox.shrink(),
+  //         tabIndicatorAnimDuration: kTabScrollDuration,
+  //         categoryIcons: CategoryIcons(),
+  //         checkPlatformCompatibility: true,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  callTypeBottomSheet() {
+    FocusScope.of(context).requestFocus(FocusNode());
+    return showModalBottomSheet<dynamic>(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40.0),
+          topRight: Radius.circular(40.0),
+        ),
+      ),
+      isScrollControlled: true,
+      backgroundColor: kWhiteColor,
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            const Center(
+              child: ImageIcon(
+                AssetImage("assets/icons/line.png"),
+                size: 30,
+                color: Color(0XffBFC5CC),
+              ),
+            ),
+            Theme(
+              data: ThemeData(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: SizedBox(
+                height: 125,
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: const Center(
+                        child: Text(
+                          "General Call",
+                          style: TextStyle(
+                            fontFamily: kWorkSans,
+                            fontSize: 15,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                      ),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      title: const Center(
+                        child: Text(
+                          "Video Call",
+                          style: TextStyle(
+                            fontFamily: kWorkSans,
+                            fontSize: 15,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                      ),
+                      onTap: () {},
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -409,10 +459,22 @@ class _ChatScreenState extends State<ChatScreen> {
                 highlightColor: Colors.transparent,
               ),
               child: SizedBox(
-                height: 70,
+                height: 125,
                 child: Column(
                   children: [
-                    const SizedBox(height: 10),
+                    ListTile(
+                      title: const Center(
+                        child: Text(
+                          "Block",
+                          style: TextStyle(
+                            fontFamily: kWorkSans,
+                            fontSize: 15,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                      ),
+                      onTap: () {},
+                    ),
                     ListTile(
                       title: const Center(
                         child: Text(

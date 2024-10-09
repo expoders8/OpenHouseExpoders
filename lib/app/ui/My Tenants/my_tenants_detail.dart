@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config/constant/color_constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../controller/my_tenants_controller.dart';
+import '../../models/firebase_user_model.dart';
+import '../message/components/chat_screen.dart';
 
 class MyTenantsDetailsPage extends StatefulWidget {
   const MyTenantsDetailsPage({super.key});
@@ -31,6 +34,7 @@ class _MyTenantsDetailsPageState extends State<MyTenantsDetailsPage> {
               child: CircularProgressIndicator(color: kSelectedIconColor));
         } else {
           var tenantsdata = getDetailTenantsController.detailModel!.data!;
+
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -244,7 +248,7 @@ class _MyTenantsDetailsPageState extends State<MyTenantsDetailsPage> {
         }
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: getUserChat,
         backgroundColor: kButtonColor,
         child: const Icon(
           Icons.chat,
@@ -252,6 +256,26 @@ class _MyTenantsDetailsPageState extends State<MyTenantsDetailsPage> {
         ),
       ),
     );
+  }
+
+  getUserChat() async {
+    var userCollection = FirebaseFirestore.instance.collection("Users");
+
+    var id =
+        getDetailTenantsController.detailModel!.data!.tenant!.id.toString();
+
+    var querySnapshot = await userCollection.where('uid', isEqualTo: id).get();
+
+    List<FirebaseUserModel> userList = querySnapshot.docs
+        .map((doc) => FirebaseUserModel.fromJson(doc.data()))
+        .where((user) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ChatScreen(user: user),
+        ),
+      );
+      return true;
+    }).toList();
   }
 
   Widget buildTextWidget(String text) {
