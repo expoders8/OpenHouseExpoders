@@ -25,8 +25,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
       Get.put(GetnotleaseDetailsPropertiesController());
 
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 1));
     setState(() {
       getAvailablePropertyController.fetchAllProperties();
     });

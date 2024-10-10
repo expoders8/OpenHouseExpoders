@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/constant/constant.dart';
+import '../controller/request_controller.dart';
 import '../models/get_all_request_model.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
@@ -26,7 +28,7 @@ class RequestsService {
                 "updated_by_id": null,
                 "is_active": true,
                 "property_id": propertyId,
-                "host_user_id": hostId,
+                "host_userid": hostId,
                 "propertyName": propertyName,
                 "proeprtyAddress": proeprtyAddress,
                 "rentAmount": rentAmount,
@@ -47,6 +49,41 @@ class RequestsService {
         LoaderX.hide();
         SnackbarUtils.showErrorSnackbar(
             "Failed to AddRequest", decodedUser['error']);
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  resolveRequest(
+    String requestId,
+  ) async {
+    final GetAllHostRequestsController getAllHostRequestsController =
+        Get.put(GetAllHostRequestsController());
+    try {
+      var response =
+          await http.post(Uri.parse('$baseUrl/api/host/request_resolve'),
+              body: json.encode({
+                "requestid": requestId,
+              }),
+              headers: {'Content-type': 'application/json'});
+      var decodedUser = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (decodedUser['success']) {
+          getAllHostRequestsController.getAllRequests();
+          return true;
+        } else {
+          LoaderX.hide();
+          SnackbarUtils.showErrorSnackbar(
+              "Failed to Resolve request", decodedUser['error']);
+          return false;
+        }
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar(
+            "Failed to Resolve request", decodedUser['error']);
       }
     } catch (e) {
       LoaderX.hide();

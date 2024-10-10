@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../config/provider/loader_provider.dart';
 import '../widgets/custom_textfield.dart';
 import '../../controller/property_controller.dart';
 import '../../../config/constant/font_constant.dart';
@@ -327,10 +328,6 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                           hintText: 'Comment',
                           maxLines: 1,
                           ctrl: commentController,
-                          onChanged: (p0) {
-                            String comment = commentController.text;
-                            jsonData.add({'Comment': comment});
-                          },
                           name: "create",
                         ),
                         const SizedBox(height: 15),
@@ -345,10 +342,12 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                             Future.delayed(const Duration(milliseconds: 100),
                                 () async {
                               if (_formKey.currentState!.validate()) {
-                                // LoaderX.show(context, 60.0, 60.0);
-                                print(updatedJson);
-                                // propertyCheckoutController
-                                //     .sendCheckoutProperties(updatedJson);
+                                String comment = commentController.text;
+                                jsonData.add({'Comment': comment});
+                                LoaderX.show(context, 60.0, 60.0);
+                                // print(updatedJson);
+                                propertyCheckoutController
+                                    .sendCheckoutProperties(updatedJson);
                               }
                             });
                             // createJson();

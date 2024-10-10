@@ -528,8 +528,13 @@ class PropertiesService {
                 "checkoutJson": checkoutData,
               }),
               headers: {'Content-type': 'application/json'});
+      var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
+        if (decodedUser["message"] == "allready checkout invitation sent") {
+          SnackbarUtils.showErrorSnackbar(
+              "Service request", decodedUser["message"]);
+        }
         Get.back();
         Get.back();
         tabController.changeTabIndex(0);

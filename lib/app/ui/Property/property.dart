@@ -198,9 +198,7 @@ class _PropertyPageState extends State<PropertyPage>
                             onTap: () {
                               FocusScope.of(context).requestFocus(FocusNode());
                             },
-                            child: RefreshIndicator(
-                                onRefresh: _refreshList,
-                                child: const CurrentPropertyView()),
+                            child: const CurrentPropertyView(),
                           ),
                           GestureDetector(
                             onTap: () {

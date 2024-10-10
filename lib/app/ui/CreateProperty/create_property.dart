@@ -222,7 +222,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Form(
           key: _formKey,
-          // autovalidateMode: AutovalidateMode.always,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
@@ -263,6 +263,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                               child: TypeAheadField<int>(
                                 textFieldConfiguration: TextFieldConfiguration(
                                   controller: bedRoomsController,
+                                  keyboardType: TextInputType.number,
                                   inputFormatters: [
                                     FilteringTextInputFormatter.deny(
                                         RegExp(r'^ ')),
@@ -356,6 +357,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                               child: TypeAheadField<int>(
                                 textFieldConfiguration: TextFieldConfiguration(
                                   controller: washRoomsController,
+                                  keyboardType: TextInputType.number,
                                   inputFormatters: [
                                     FilteringTextInputFormatter.deny(
                                         RegExp(r'^ ')),
@@ -450,6 +452,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   child: TypeAheadField<int>(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: capacityController,
+                      keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(RegExp(r'^ ')),
                       ],
@@ -849,8 +852,15 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       autocorrect: true,
                       cursorColor: kPrimaryColor,
                     ),
-                    suggestionsCallback: (pattern) {
-                      return lookupService.getcountries();
+                    suggestionsCallback: (pattern) async {
+                      var countries = await lookupService.getcountries();
+                      return countries
+                          .where((country) =>
+                              country.name != null &&
+                              country.name!
+                                  .toLowerCase()
+                                  .contains(pattern.toLowerCase()))
+                          .toList();
                     },
                     itemBuilder: (context, GetAllCountryDataModel suggestion) {
                       return ListTile(

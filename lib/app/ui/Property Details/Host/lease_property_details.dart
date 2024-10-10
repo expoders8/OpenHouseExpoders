@@ -686,7 +686,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                 String formattedDate =
                                     DateFormat('dd-MM-yyyy').format(index);
                                 String formattedEndDate =
-                                    DateFormat('dd/MM/yyyy hh:mm:ss')
+                                    DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                                         .format(index);
                                 if (mounted) {
                                   setState(() {

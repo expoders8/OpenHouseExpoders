@@ -221,8 +221,7 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
               Column(
                 children: amenitiesName.map((amenity) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 4.0), // Add padding between items
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

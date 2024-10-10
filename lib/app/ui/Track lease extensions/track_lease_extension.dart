@@ -1,3 +1,4 @@
+import 'package:accordion/accordion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,8 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
   //   });
   // }
 
+  bool isView = false;
+
   @override
   void initState() {
     // getAllPropertyExpensesController.getAllExpenses();
@@ -43,20 +46,20 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Property Service Expense"),
+        title: const Text("Property Service Extensions"),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
           child: Column(
             children: [
-              leaseproperty(
-                "assets/icons/1.png",
-                "Address",
-                "Name",
-                "01 May 2024",
-                "01 jul 2024",
-              )
+              cardDesign(),
+              const SizedBox(height: 5),
+              cardDesign(),
+              const SizedBox(height: 5),
+              cardDesign(),
             ],
           ),
         ),
@@ -64,135 +67,207 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
     );
   }
 
-  leaseproperty(String image, address, name, previousDate, extendedDte) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      onPressed: () {},
-      child: Container(
-        width: Get.width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: kWhiteColor),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Row(
+  cardDesign() {
+    return Card(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.zero,
+            width: Get.width,
+            decoration: BoxDecoration(
+                color: kButtonColor, borderRadius: BorderRadius.circular(10)),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  image != "null"
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(18),
-                          child: Image.network(
-                            image,
-                            fit: BoxFit.cover,
-                            scale: 1.2,
-                            height: 65,
-                            width: 65,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(
-                                "assets/icons/1.png",
-                                fit: BoxFit.cover,
-                                height: 65,
-                                scale: 1.2,
-                                width: 65,
-                              );
-                            },
-                          ),
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(18),
-                          child: Image.asset(
-                            "assets/images/noproperty.png",
-                            fit: BoxFit.cover,
-                            scale: 1.2,
-                            height: 70,
-                            width: 70,
-                          ),
-                        ),
-                  const SizedBox(width: 15.0),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Text('Property Name',
+                      style: TextStyle(
+                          color: kWhiteColor,
+                          fontFamily: kCircularStdMedium,
+                          fontSize: 15)),
+                  Row(
                     children: [
-                      SizedBox(
-                        width: Get.width - 170,
-                        child: Text(
-                          name,
-                          style: const TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 17,
-                              fontFamily: kCircularStdMedium),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
+                      Icon(
+                        Icons.location_on,
+                        size: 16,
+                        color: kWhiteColor,
                       ),
-                      SizedBox(height: address.toString() == "null" ? 0 : 5),
-                      address.toString() == "null"
-                          ? Container()
-                          : Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Icon(
-                                  Icons.location_on,
-                                  size: 16,
-                                  color: kButtonColor,
-                                ),
-                                const SizedBox(width: 5),
-                                SizedBox(
-                                  width: Get.width / 2.5,
-                                  child: Text(
-                                    address.toString(),
-                                    style: const TextStyle(
-                                        color: kSecondaryPrimaryColor,
-                                        fontSize: 13,
-                                        fontFamily: kCircularStdMedium),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
+                      SizedBox(width: 5),
+                      Text('Property address',
+                          style: TextStyle(
+                              color: kWhiteColor,
+                              fontFamily: kCircularStdNormal,
+                              fontSize: 11)),
                     ],
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 5.0, right: 5.0, top: 10, bottom: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                width: 130,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: kWhiteColor,
+                    border: Border.all(color: kButtonColor, width: 1),
+                    borderRadius: BorderRadius.circular(12)),
+                child: const Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    Text(
+                      "Previous end date",
+                      style: TextStyle(
+                          fontFamily: kCircularStdNormal,
+                          fontSize: 12,
+                          color: kPrimaryColor),
+                    ),
+                    Text(
+                      "10 May 2024",
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontFamily: kCircularStdMedium,
+                          fontSize: 14),
+                    ),
+                  ],
+                )),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    height: 130,
+                    width: 2,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: kButtonColor, width: 0.8)),
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              "assets/images/blank_profile.png",
+                              fit: BoxFit.cover,
+                              height: 30,
+                              width: 30,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          const Text(
+                            "Tenant Name",
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontFamily: kCircularStdMedium,
+                                fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: Get.width - 85,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Rent Paid",
+                              style: TextStyle(
+                                  color: kGreenColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                            Text(
+                              "\$ 2500",
+                              style: TextStyle(
+                                  color: kGreenColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: Get.width - 85,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Extended rent",
+                              style: TextStyle(
+                                  color: kRedColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                            Text(
+                              "\$ 1500",
+                              style: TextStyle(
+                                  color: kRedColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: Get.width - 85,
+                        child: const Divider(
+                          color: kRedColor,
+                          thickness: 0.5,
+                          height: 5,
+                        ),
+                      ),
+                      SizedBox(
+                        width: Get.width - 85,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Total Amount",
+                              style: TextStyle(
+                                  color: kRedColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                            Text(
+                              "\$ 1500",
+                              style: TextStyle(
+                                  color: kRedColor,
+                                  fontSize: 15,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 130,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        border: Border.all(color: kButtonColor, width: 1),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: const Center(
+                        child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "Previous end date",
-                          style: TextStyle(
-                              fontFamily: kCircularStdNormal,
-                              fontSize: 12,
-                              color: kPrimaryColor),
-                        ),
                         Text(
-                          previousDate,
-                          style: const TextStyle(
-                              fontFamily: kCircularStdMedium,
-                              fontSize: 16,
-                              color: kPrimaryColor),
-                        ),
-                      ],
-                    ),
-                    Image.asset(
-                      "assets/icons/line_vertical.png",
-                      fit: BoxFit.cover,
-                      scale: 1.8,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
                           "Extended Date",
                           style: TextStyle(
                               fontFamily: kCircularStdNormal,
@@ -200,20 +275,192 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
                               color: kPrimaryColor),
                         ),
                         Text(
-                          extendedDte,
-                          style: const TextStyle(
+                          "10 May 2024",
+                          style: TextStyle(
                               fontFamily: kCircularStdMedium,
                               fontSize: 16,
                               color: kPrimaryColor),
                         ),
                       ],
+                    )),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        if (isView == true) {
+                          isView = false;
+                        } else {
+                          isView = true;
+                        }
+                      });
+                    },
+                    child: const Text(
+                      "View all",
+                      style: TextStyle(
+                          fontFamily: kCircularStdMedium,
+                          fontSize: 12,
+                          decoration: TextDecoration.underline,
+                          decorationColor: kBlueColor,
+                          color: kBlueColor),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+              // isView == true
+              //     ? Row(
+              //         mainAxisAlignment: MainAxisAlignment.start,
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Container(
+              //             margin: const EdgeInsets.only(left: 10),
+              //             height: 130,
+              //             width: 2,
+              //             decoration: BoxDecoration(
+              //                 border:
+              //                     Border.all(color: kButtonColor, width: 0.8)),
+              //           ),
+              //           const SizedBox(width: 10),
+              //           Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               const SizedBox(height: 10),
+              //               Row(
+              //                 children: [
+              //                   ClipRRect(
+              //                     borderRadius: BorderRadius.circular(10),
+              //                     child: Image.asset(
+              //                       "assets/images/blank_profile.png",
+              //                       fit: BoxFit.cover,
+              //                       height: 30,
+              //                       width: 30,
+              //                     ),
+              //                   ),
+              //                   const SizedBox(width: 5),
+              //                   const Text(
+              //                     "Tenant Name",
+              //                     style: TextStyle(
+              //                         color: kPrimaryColor,
+              //                         fontFamily: kCircularStdMedium,
+              //                         fontSize: 15),
+              //                   ),
+              //                 ],
+              //               ),
+              //               const SizedBox(height: 10),
+              //               SizedBox(
+              //                 width: Get.width - 85,
+              //                 child: const Row(
+              //                   mainAxisAlignment:
+              //                       MainAxisAlignment.spaceBetween,
+              //                   children: [
+              //                     Text(
+              //                       "Rent Paid",
+              //                       style: TextStyle(
+              //                           color: kGreenColor,
+              //                           fontSize: 15,
+              //                           fontFamily: kCircularStdMedium),
+              //                     ),
+              //                     Text(
+              //                       "\$ 2500",
+              //                       style: TextStyle(
+              //                           color: kGreenColor,
+              //                           fontSize: 15,
+              //                           fontFamily: kCircularStdMedium),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //               SizedBox(
+              //                 width: Get.width - 85,
+              //                 child: const Row(
+              //                   mainAxisAlignment:
+              //                       MainAxisAlignment.spaceBetween,
+              //                   children: [
+              //                     Text(
+              //                       "Extended rent",
+              //                       style: TextStyle(
+              //                           color: kRedColor,
+              //                           fontSize: 15,
+              //                           fontFamily: kCircularStdMedium),
+              //                     ),
+              //                     Text(
+              //                       "\$ 1500",
+              //                       style: TextStyle(
+              //                           color: kRedColor,
+              //                           fontSize: 15,
+              //                           fontFamily: kCircularStdMedium),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //               SizedBox(
+              //                 width: Get.width - 85,
+              //                 child: const Divider(
+              //                   color: kRedColor,
+              //                   thickness: 0.5,
+              //                   height: 5,
+              //                 ),
+              //               ),
+              //               SizedBox(
+              //                 width: Get.width - 85,
+              //                 child: const Row(
+              //                   mainAxisAlignment:
+              //                       MainAxisAlignment.spaceBetween,
+              //                   children: [
+              //                     Text(
+              //                       "Total Amount",
+              //                       style: TextStyle(
+              //                           color: kRedColor,
+              //                           fontSize: 15,
+              //                           fontFamily: kCircularStdMedium),
+              //                     ),
+              //                     Text(
+              //                       "\$ 1500",
+              //                       style: TextStyle(
+              //                           color: kRedColor,
+              //                           fontSize: 15,
+              //                           fontFamily: kCircularStdMedium),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //             ],
+              //           )
+              //         ],
+              //       )
+              //     : Container(),
+              // isView == true
+              //     ? Container(
+              //         width: 130,
+              //         height: 50,
+              //         decoration: BoxDecoration(
+              //             color: kWhiteColor,
+              //             border: Border.all(color: kButtonColor, width: 1),
+              //             borderRadius: BorderRadius.circular(12)),
+              //         child: const Center(
+              //             child: Column(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: [
+              //             Text(
+              //               "Extended Date",
+              //               style: TextStyle(
+              //                   fontFamily: kCircularStdNormal,
+              //                   fontSize: 12,
+              //                   color: kPrimaryColor),
+              //             ),
+              //             Text(
+              //               "10 May 2024",
+              //               style: TextStyle(
+              //                   fontFamily: kCircularStdMedium,
+              //                   fontSize: 16,
+              //                   color: kPrimaryColor),
+              //             ),
+              //           ],
+              //         )),
+              //       )
+              //     : Container()
+            ]),
           ),
-        ),
+        ],
       ),
     );
   }

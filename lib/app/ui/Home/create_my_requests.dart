@@ -74,7 +74,7 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
       propertyName = data.name.toString();
       proeprtyAddress = data.address.toString();
       rentAmount = data.rentAmount.toString();
-      hostId = data.createdById.toString();
+      hostId = data.hostUserId.toString();
     });
   }
 
@@ -243,8 +243,15 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                             autocorrect: true,
                             cursorColor: kPrimaryColor,
                           ),
-                          suggestionsCallback: (pattern) {
-                            return lookupService.getamenities();
+                          suggestionsCallback: (pattern) async {
+                            var amenities = await lookupService.getamenities();
+                            return amenities
+                                .where((country) =>
+                                    country.title != null &&
+                                    country.title!
+                                        .toLowerCase()
+                                        .contains(pattern.toLowerCase()))
+                                .toList();
                           },
                           itemBuilder:
                               (context, GetAllAmenitiesDataModel suggestion) {
@@ -409,6 +416,7 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                                           String formattedDate =
                                               DateFormat('yyyy-MM-dd')
                                                   .format(index);
+
                                           if (mounted) {
                                             setState(() {
                                               selectdate = formattedDate;
@@ -528,6 +536,9 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                                     if (value) {
                                       getAllRequestsController.getAllRequests();
                                       LoaderX.hide();
+                                      amenityController.clear();
+                                      raisedFundsController.clear();
+                                      selectdate = "";
                                       tabController.changeTabIndex(0);
                                     }
                                   });

@@ -25,8 +25,7 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
       Get.put(GetPreviousDetailsPropertiesController());
   DateTime? dateTime;
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 1));
     setState(() {
       getPreviousPropertyController.fetchAllProperties();
     });
@@ -50,17 +49,54 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
         } else {
           if (getPreviousPropertyController.propertiesList.isNotEmpty) {
             if (getPreviousPropertyController.propertiesList[0].data!.isEmpty) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 55.0),
-                  child: Text(
-                    "No property",
+              return Column(
+                children: [
+                  const SizedBox(height: 100),
+                  Image.asset(
+                    "assets/house101.png",
+                    fit: BoxFit.cover,
+                    scale: 2,
+                  ),
+                  const Text(
+                    "Once you receive an invitation or add a property, they will appear here.",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 15,
                         fontFamily: kCircularStdMedium),
                   ),
-                ),
+                  CupertinoButton(
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 180,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(width: 1, color: kButtonColor)),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: Text(
+                              "Explore more",
+                              style:
+                                  TextStyle(color: kPrimaryColor, fontSize: 17),
+                            )),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_right_alt,
+                              size: 25,
+                              color: kPrimaryColor,
+                            )
+                          ],
+                        ),
+                      ),
+                      onPressed: () {
+                        _refreshItems();
+                        // Get.offAll(() => const TabPage(
+                        //       selectedTabIndex: 1,
+                        //     ));
+                      }),
+                ],
               );
             } else {
               return Column(
@@ -134,17 +170,58 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                               ],
                             );
                           } else {
-                            return const Center(
-                              child: Padding(
-                                padding: EdgeInsets.only(bottom: 55.0),
-                                child: Text(
-                                  "No property",
+                            return Column(
+                              children: [
+                                const SizedBox(height: 100),
+                                Image.asset(
+                                  "assets/house101.png",
+                                  fit: BoxFit.cover,
+                                  scale: 2,
+                                ),
+                                const Text(
+                                  "Once you receive an invitation or add a property, they will appear here.",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: kPrimaryColor,
                                       fontSize: 15,
                                       fontFamily: kCircularStdMedium),
                                 ),
-                              ),
+                                CupertinoButton(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      width: 180,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                              width: 1, color: kButtonColor)),
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                              child: Text(
+                                            "Explore more",
+                                            style: TextStyle(
+                                                color: kPrimaryColor,
+                                                fontSize: 17),
+                                          )),
+                                          SizedBox(width: 10),
+                                          Icon(
+                                            Icons.arrow_right_alt,
+                                            size: 25,
+                                            color: kPrimaryColor,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      _refreshItems();
+                                      // Get.offAll(() => const TabPage(
+                                      //       selectedTabIndex: 1,
+                                      //     ));
+                                    }),
+                              ],
                             );
                           }
                         },
@@ -155,17 +232,54 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
               );
             }
           } else {
-            return const Center(
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 55.0),
-                child: Text(
-                  "No property",
+            return Column(
+              children: [
+                const SizedBox(height: 100),
+                Image.asset(
+                  "assets/house101.png",
+                  fit: BoxFit.cover,
+                  scale: 2,
+                ),
+                const Text(
+                  "Once you receive an invitation or add a property, they will appear here.",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 15,
                       fontFamily: kCircularStdMedium),
                 ),
-              ),
+                CupertinoButton(
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      width: 180,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(width: 1, color: kButtonColor)),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                              child: Text(
+                            "Explore more",
+                            style:
+                                TextStyle(color: kPrimaryColor, fontSize: 17),
+                          )),
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.arrow_right_alt,
+                            size: 25,
+                            color: kPrimaryColor,
+                          )
+                        ],
+                      ),
+                    ),
+                    onPressed: () {
+                      _refreshItems();
+                      // Get.offAll(() => const TabPage(
+                      //       selectedTabIndex: 1,
+                      //     ));
+                    }),
+              ],
             );
           }
         }

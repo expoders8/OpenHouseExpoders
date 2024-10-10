@@ -60,7 +60,7 @@ class GetAvailablePropertyController extends GetxController {
     super.onInit();
   }
 
-  void fetchAllProperties() async {
+  fetchAllProperties() async {
     try {
       isLoading(true);
       var properties =

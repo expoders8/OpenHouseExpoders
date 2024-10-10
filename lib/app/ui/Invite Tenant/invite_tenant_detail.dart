@@ -75,7 +75,8 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
                             String formattedDate =
                                 DateFormat('dd-MM-yyyy').format(index);
                             String formattedstartDate =
-                                DateFormat('dd/MM/yyyy hh:mm:ss').format(index);
+                                DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                                    .format(index);
                             if (mounted) {
                               setState(() {
                                 selectedStartDate = formattedDate;
@@ -168,7 +169,8 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
                             String formattedDate =
                                 DateFormat('dd-MM-yyyy').format(index);
                             String formattedEndDate =
-                                DateFormat('dd/MM/yyyy hh:mm:ss').format(index);
+                                DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                                    .format(index);
                             if (mounted) {
                               setState(() {
                                 selectedEndDate = formattedDate;
@@ -283,7 +285,6 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
                       getAllTenantController.endDate(pickedEndDate);
                       getAllTenantController.rentAmount(amountController.text);
                       LoaderX.show(context, 60.0, 60.0);
-
                       tenantService.inviteTenant();
                     } else {
                       if (pickedStartDate == "") {

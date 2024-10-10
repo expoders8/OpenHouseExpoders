@@ -153,7 +153,7 @@ class _AmenitiesViewState extends State<AmenitiesView> {
               ),
             ),
             validator: (values) {
-              if (values == null || values.isEmpty) {
+              if (selectedValues.isEmpty) {
                 return "Please select at least one Amenity";
               }
               return null;

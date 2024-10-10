@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../controller/request_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../services/requests_service.dart';
 
 class TenantRequestAllView extends StatefulWidget {
   const TenantRequestAllView({super.key});
@@ -16,6 +18,7 @@ class TenantRequestAllView extends StatefulWidget {
 class _TenantRequestAllViewState extends State<TenantRequestAllView> {
   final GetAllHostRequestsController getAllHostRequestsController =
       Get.put(GetAllHostRequestsController());
+  RequestsService requestsService = RequestsService();
   DateTime? dateTime;
   String formattedDate = '';
   Future<void> _refreshItems() async {
@@ -112,11 +115,35 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
                                                     fontSize: 18,
                                                     color: kPrimaryColor),
                                               ),
-                                              const Icon(
-                                                Icons.arrow_forward_ios_rounded,
-                                                size: 15,
-                                                color: kButtonColor,
-                                              ),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 7,
+                                                        vertical: 3),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    color: kGreenColor),
+                                                child: const Row(
+                                                  children: [
+                                                    Text(
+                                                      "resolve",
+                                                      style: TextStyle(
+                                                          color: kWhiteColor,
+                                                          fontSize: 12,
+                                                          fontFamily:
+                                                              kCircularStdNormal),
+                                                    ),
+                                                    SizedBox(width: 5),
+                                                    Icon(
+                                                      Icons.thumb_up,
+                                                      size: 11,
+                                                      color: kWhiteColor,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                             ],
                                           ),
                                           const SizedBox(height: 10),
@@ -218,79 +245,118 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 8),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 3),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25),
-                                                    color: kGreenColor),
-                                                child: Row(
+                                          SizedBox(
+                                              height: data.status.toString() ==
+                                                      "Resolved"
+                                                  ? 2
+                                                  : 8),
+                                          data.status.toString() == "Resolved"
+                                              ? Container()
+                                              : Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    const Icon(
-                                                      Icons.warning,
-                                                      size: 11,
-                                                      color: kWhiteColor,
+                                                    CupertinoButton(
+                                                      padding: EdgeInsets.zero,
+                                                      onPressed: () {
+                                                        requestsService
+                                                            .resolveRequest(data
+                                                                .id
+                                                                .toString());
+                                                      },
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 5,
+                                                                vertical: 3),
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        25),
+                                                            color: data.status
+                                                                        .toString() !=
+                                                                    "Pending"
+                                                                ? kGreenColor
+                                                                : kRedColor),
+                                                        child: Row(
+                                                          children: [
+                                                            const Icon(
+                                                              Icons.access_time,
+                                                              size: 12,
+                                                              color:
+                                                                  kWhiteColor,
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 5),
+                                                            Text(
+                                                              data.status
+                                                                  .toString(),
+                                                              style: const TextStyle(
+                                                                  color:
+                                                                      kWhiteColor,
+                                                                  fontSize: 10,
+                                                                  fontFamily:
+                                                                      kCircularStdMedium),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
                                                     ),
-                                                    const SizedBox(width: 5),
-                                                    Text(
-                                                      data.status.toString(),
-                                                      style: const TextStyle(
-                                                          color: kWhiteColor,
-                                                          fontSize: 9,
-                                                          fontFamily:
-                                                              kCircularStdNormal),
-                                                    ),
+                                                    data.type.toString() !=
+                                                            "normal"
+                                                        ? Container(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        5,
+                                                                    vertical:
+                                                                        3),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            25),
+                                                                color:
+                                                                    kButtonColor),
+                                                            child: const Row(
+                                                              children: [
+                                                                Icon(
+                                                                  Icons.warning,
+                                                                  size: 11,
+                                                                  color:
+                                                                      kWhiteColor,
+                                                                ),
+                                                                SizedBox(
+                                                                    width: 5),
+                                                                Text(
+                                                                  "Emergency",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          kWhiteColor,
+                                                                      fontSize:
+                                                                          9,
+                                                                      fontFamily:
+                                                                          kCircularStdNormal),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )
+                                                        : Container(),
                                                   ],
                                                 ),
-                                              ),
-                                              data.type.toString() != "normal"
-                                                  ? Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 5,
-                                                          vertical: 3),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(25),
-                                                          color: kButtonColor),
-                                                      child: const Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.warning,
-                                                            size: 11,
-                                                            color: kWhiteColor,
-                                                          ),
-                                                          SizedBox(width: 5),
-                                                          Text(
-                                                            "Emergency",
-                                                            style: TextStyle(
-                                                                color:
-                                                                    kWhiteColor,
-                                                                fontSize: 9,
-                                                                fontFamily:
-                                                                    kCircularStdNormal),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Container(),
-                                            ],
-                                          ),
                                         ],
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 10),
+                                  SizedBox(
+                                      height:
+                                          data.status.toString() == "Resolved"
+                                              ? 8
+                                              : 8),
                                 ],
                               );
                             } else {

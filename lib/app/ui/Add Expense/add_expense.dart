@@ -113,8 +113,17 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       autocorrect: true,
                       cursorColor: kPrimaryColor,
                     ),
-                    suggestionsCallback: (pattern) {
-                      return lookupService.getamenities();
+                    suggestionsCallback: (pattern) async {
+                      var amenities = await lookupService.getamenities();
+                      return amenities
+                          .where((country) =>
+                              country.title != null &&
+                              country.title!
+                                  .toLowerCase()
+                                  .contains(pattern.toLowerCase()))
+                          .toList();
+
+                      // return lookupService.getamenities();
                     },
                     itemBuilder:
                         (context, GetAllAmenitiesDataModel suggestion) {

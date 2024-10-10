@@ -38,7 +38,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
 
   Future<void> _refreshItems() async {
     await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+        const Duration(seconds: 1)); // Simulate network request
     setState(() {
       getLeasePropertyController.fetchAllProperties();
     });
@@ -61,21 +61,54 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
           // ignore: unnecessary_null_comparison
           if (getLeasePropertyController.propertiesList.isNotEmpty) {
             if (getLeasePropertyController.propertiesList[0].data!.isEmpty) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 55.0),
-                  child: SizedBox(
-                    width: Get.width - 80,
-                    child: const Text(
-                      textAlign: TextAlign.center,
-                      "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
-                      style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 15,
-                          fontFamily: kCircularStdMedium),
-                    ),
+              return Column(
+                children: [
+                  const SizedBox(height: 100),
+                  Image.asset(
+                    "assets/house101.png",
+                    fit: BoxFit.cover,
+                    scale: 2,
                   ),
-                ),
+                  const Text(
+                    "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                        fontFamily: kCircularStdMedium),
+                  ),
+                  CupertinoButton(
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 180,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(width: 1, color: kButtonColor)),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: Text(
+                              "Explore more",
+                              style:
+                                  TextStyle(color: kPrimaryColor, fontSize: 17),
+                            )),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_right_alt,
+                              size: 25,
+                              color: kPrimaryColor,
+                            )
+                          ],
+                        ),
+                      ),
+                      onPressed: () {
+                        _refreshItems();
+                        // Get.offAll(() => const TabPage(
+                        //       selectedTabIndex: 1,
+                        //     ));
+                      }),
+                ],
               );
             } else {
               return Column(
@@ -416,15 +449,58 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                               ],
                             );
                           } else {
-                            return const Center(
-                              child: Text(
-                                "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
-                              ),
+                            return Column(
+                              children: [
+                                const SizedBox(height: 100),
+                                Image.asset(
+                                  "assets/house101.png",
+                                  fit: BoxFit.cover,
+                                  scale: 2,
+                                ),
+                                const Text(
+                                  "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                                CupertinoButton(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      width: 180,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                              width: 1, color: kButtonColor)),
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                              child: Text(
+                                            "Explore more",
+                                            style: TextStyle(
+                                                color: kPrimaryColor,
+                                                fontSize: 17),
+                                          )),
+                                          SizedBox(width: 10),
+                                          Icon(
+                                            Icons.arrow_right_alt,
+                                            size: 25,
+                                            color: kPrimaryColor,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      _refreshItems();
+                                      // Get.offAll(() => const TabPage(
+                                      //       selectedTabIndex: 1,
+                                      //     ));
+                                    }),
+                              ],
                             );
                           }
                         },
@@ -435,15 +511,54 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
               );
             }
           } else {
-            return const Center(
-              child: Text(
-                "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 15,
-                    fontFamily: kCircularStdMedium),
-              ),
+            return Column(
+              children: [
+                const SizedBox(height: 100),
+                Image.asset(
+                  "assets/house101.png",
+                  fit: BoxFit.cover,
+                  scale: 2,
+                ),
+                const Text(
+                  "No leases available yet. You can manage leases once invited by a host or add a lease to start tracking your rentals.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 15,
+                      fontFamily: kCircularStdMedium),
+                ),
+                CupertinoButton(
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      width: 180,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(width: 1, color: kButtonColor)),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                              child: Text(
+                            "Explore more",
+                            style:
+                                TextStyle(color: kPrimaryColor, fontSize: 17),
+                          )),
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.arrow_right_alt,
+                            size: 25,
+                            color: kPrimaryColor,
+                          )
+                        ],
+                      ),
+                    ),
+                    onPressed: () {
+                      _refreshItems();
+                      // Get.offAll(() => const TabPage(
+                      //       selectedTabIndex: 1,
+                      //     ));
+                    }),
+              ],
             );
           }
         }
