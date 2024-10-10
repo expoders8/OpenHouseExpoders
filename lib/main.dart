@@ -13,7 +13,7 @@ import 'config/provider/theme_provider.dart';
 int? appflow = 0;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey = "pk_test_placeholder";
+  Stripe.publishableKey = stripePublishableKey;
   await Stripe.instance.applySettings();
   await Firebase.initializeApp();
   await GetStorage.init();
