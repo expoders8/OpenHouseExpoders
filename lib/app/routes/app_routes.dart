@@ -32,6 +32,7 @@ abstract class Routes {
   static const notLeasePropertyDetailPage = _Paths.notLeasePropertyDetailPage;
   static const invitationshowPage = _Paths.invitationshowPage;
   static const trackLeaseExpensesPage = _Paths.trackLeaseExpensesPage;
+  static const inAppWebViewWidget = _Paths.inAppWebViewWidget;
   static const trackLeaseExtensionPage = _Paths.trackLeaseExtensionPage;
   static const trackPropertyIncomePage = _Paths.trackPropertyIncomePage;
   static const messagePage = _Paths.messagePage;
@@ -62,6 +63,7 @@ abstract class _Paths {
   static const createMyRequestsPage = '/createMyRequestsPage';
   static const tenantRequestAllView = '/tenantRequestAllView';
   static const myTenantsDetailsPage = '/myTenantsDetailsPage';
+  static const inAppWebViewWidget = '/inAppWebViewWidget';
   static const checkoutRequestsPage = '/checkoutRequestsPage';
   static const totalAmountDetailPage = '/totalAmountDetailPage';
   static const inviteTenantDetailPage = '/inviteTenantDetailPage';

@@ -32,6 +32,7 @@ import '../ui/Track lease expenses/track_lease_expenses.dart';
 import '../ui/Track lease extensions/track_lease_extension.dart';
 import '../ui/Track property income/track_property_income.dart';
 import '../ui/message/message_page.dart';
+import '../ui/widgets/inapp_webview_widget.dart';
 import '../view/my_request_view_all.dart';
 import '../view/tenant_request_all_view.dart';
 
@@ -178,6 +179,10 @@ class AppPages {
     GetPage(
       name: _Paths.payRentPage,
       page: () => const PayRentPage(),
+    ),
+    GetPage(
+      name: _Paths.inAppWebViewWidget,
+      page: () => const InAppWebViewWidget(),
     ),
   ];
 }
