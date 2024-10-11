@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:openhome/app/models/get_expense_model.dart';
 
 import '../controller/tab_controller.dart';
+import '../models/extensions_model.dart';
 import '../models/getall_property_expenses_model.dart';
 import '../models/getpropretyes_model.dart';
 import '../../config/constant/constant.dart';
@@ -531,10 +532,7 @@ class PropertiesService {
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
-        if (decodedUser["message"] == "allready checkout invitation sent") {
-          SnackbarUtils.showErrorSnackbar(
-              "Service request", decodedUser["message"]);
-        }
+        SnackbarUtils.showSnackbar("Service request", decodedUser["message"]);
         Get.back();
         Get.back();
         tabController.changeTabIndex(0);
@@ -545,6 +543,34 @@ class PropertiesService {
         LoaderX.hide();
         SnackbarUtils.showErrorSnackbar("Server Error",
             "Error while Checkout request send, Please try after some time.");
+        return Future.error("Server Error");
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  getAllPropertyExtensions() async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
+    try {
+      var response = await http.post(
+          Uri.parse(
+              '$baseUrl/api/host/getall_extensions?userid=${userid['id']}'),
+          headers: {'Content-type': 'application/json'});
+      var decodedUser = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        LoaderX.hide();
+        return GetAllExtensionModel.fromJson(decodedUser);
+      } else if (response.statusCode == 401) {
+        LoaderX.hide();
+        return Future.error("Authentication Error");
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar("Server Error",
+            "Error while Property Extensions, Please try after some time.");
         return Future.error("Server Error");
       }
     } catch (e) {

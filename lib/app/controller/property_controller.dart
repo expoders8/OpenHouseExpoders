@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../models/extensions_model.dart';
 import '../models/get_expense_model.dart';
 import '../models/getall_property_expenses_model.dart';
 import '../models/getpropretyes_model.dart';
@@ -245,6 +246,31 @@ class PropertyCheckoutController extends GetxController {
       isLoading(true);
       await propertiesService.sendCheckoutProperties(
           propertyId.value, rentalId.value, checkoutData);
+    } finally {
+      isLoading(false);
+    }
+  }
+}
+
+class GetPropertyExtensionsController extends GetxController {
+  var isLoading = true.obs;
+  PropertiesService propertiesService = PropertiesService();
+  var propertiesExtensionsList = <GetAllExtensionModel>[].obs;
+
+  @override
+  void onInit() {
+    fetchAllPropertiesExtensions();
+    super.onInit();
+  }
+
+  void fetchAllPropertiesExtensions() async {
+    try {
+      isLoading(true);
+      var propertiesExtensions =
+          await propertiesService.getAllPropertyExtensions();
+      if (propertiesExtensions.data != null) {
+        propertiesExtensionsList.assign(propertiesExtensions);
+      }
     } finally {
       isLoading(false);
     }

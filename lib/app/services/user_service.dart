@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -8,6 +9,7 @@ import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
 
 class UserService {
+  var userCollection = FirebaseFirestore.instance.collection("Users");
   updateProfile(
       String firstName, String lastName, String email, File? file) async {
     var userdata = getStorage.read('user');
@@ -28,6 +30,13 @@ class UserService {
       response = await http.Response.fromStream(await request.send());
       if (response.statusCode == 200 || response.statusCode == 201) {
         var decodedUser = jsonDecode(response.body);
+        Map<String, dynamic> updatedData = {
+          'image': decodedUser["data"]['profile_picture'],
+          'name':
+              '${decodedUser["data"]['last_name']}${decodedUser["data"]['first_name']}',
+          'email': decodedUser["data"]['email']
+        };
+        await userCollection.doc(userid["id"]).update(updatedData);
         if (decodedUser['success']) {
           LoaderX.hide();
           if (decodedUser != null) {
