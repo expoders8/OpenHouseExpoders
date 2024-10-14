@@ -7,10 +7,20 @@ import '../../../config/constant/color_constant.dart';
 import '../../../config/provider/loader_provider.dart';
 
 class PayRentPage extends StatefulWidget {
+  final String? propertyId;
+  final String? propertyAmount;
+  final String? propertyName;
+  final String? propertyAddress;
+  final String? propertyImage;
   // final GetAllCampaignDataModel data;
 
   const PayRentPage({
     Key? key,
+    this.propertyId,
+    this.propertyAmount,
+    this.propertyName,
+    this.propertyAddress,
+    this.propertyImage,
   }) : super(key: key);
 
   @override
@@ -32,6 +42,8 @@ class _PayRentPageState extends State<PayRentPage> {
   @override
   void initState() {
     super.initState();
+    amountController.text =
+        widget.propertyAmount! == "" ? "" : widget.propertyAmount!;
   }
 
   // getPublishableKeyFromApi() async {
@@ -78,25 +90,33 @@ class _PayRentPageState extends State<PayRentPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: SizedBox(
-                          width: 70,
-                          height: 70,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              "assets/icons/1.png",
-                              fit: BoxFit.cover,
-                            ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.network(
+                            widget.propertyImage!,
+                            fit: BoxFit.cover,
+                            scale: 1.2,
+                            height: 75,
+                            width: 75,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                "assets/images/samplehouse.jpeg",
+                                fit: BoxFit.cover,
+                                height: 75,
+                                scale: 1.2,
+                                width: 75,
+                              );
+                            },
                           ),
                         ),
                       ),
-                      const Column(
+                      Column(
                         children: [
                           SizedBox(
                             width: 200,
                             child: Text(
-                              "Property Name",
-                              style: TextStyle(
+                              widget.propertyName!,
+                              style: const TextStyle(
                                 fontFamily: kCircularStdMedium,
                                 fontSize: 16,
                                 color: kPrimaryColor,
@@ -106,8 +126,8 @@ class _PayRentPageState extends State<PayRentPage> {
                           SizedBox(
                             width: 200,
                             child: Text(
-                              "Property Address",
-                              style: TextStyle(
+                              widget.propertyAddress!,
+                              style: const TextStyle(
                                 fontFamily: kCircularStdBook,
                                 fontSize: 12,
                                 color: kPrimaryColor,

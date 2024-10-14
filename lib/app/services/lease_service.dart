@@ -13,8 +13,8 @@ class LeaseService {
     String selecteddate,
     String propertyId,
   ) async {
-    // final GetAllNearByAmenitiesController getAllNearByAmenitiesController =
-    //     Get.put(GetAllNearByAmenitiesController());
+    final GetLeasePropertyController getLeasePropertyController =
+        Get.put(GetLeasePropertyController());
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
@@ -29,6 +29,7 @@ class LeaseService {
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (decodedUser['success']) {
+          getLeasePropertyController.fetchAllProperties();
           LoaderX.hide();
           Get.back();
         } else {

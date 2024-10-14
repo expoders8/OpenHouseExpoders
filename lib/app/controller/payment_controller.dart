@@ -26,3 +26,27 @@
 //     }
 //   }
 // }
+
+import 'package:get/get.dart';
+
+import '../services/payment_service.dart';
+
+class GetAllPaymentDataController extends GetxController {
+  var isLoading = true.obs;
+  PaymentService paymentService = PaymentService();
+  RxString rentAmount = "".obs;
+  RxString propertyId = "".obs;
+
+  // fetchAllPayments() async {
+  //   try {
+  //     isLoading(true);
+  //     var tenants = await paymentService.getPaymentlink(
+  //         rentAmount.value, propertyId.value);
+  //     // if (tenants.data != null) {
+  //     //   tenantssList.assign(tenants);
+  //     // }
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
+}

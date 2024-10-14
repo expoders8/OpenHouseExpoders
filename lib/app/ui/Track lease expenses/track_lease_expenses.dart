@@ -82,11 +82,9 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
                                     children: [
                                       leaseproperty(
                                           data.propertyImage.toString(),
-                                          data.resultExpenses![index].price
-                                              .toString(),
                                           data.propertyAddress.toString(),
                                           data.propertyName.toString(),
-                                          data.resultExpenses!)
+                                          data.rentals!)
                                     ],
                                   ),
                                 ),
@@ -126,7 +124,7 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
     );
   }
 
-  leaseproperty(String image, price, address, name, List amenitiesName) {
+  leaseproperty(String image, address, name, List amenitiesList) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {},
@@ -218,37 +216,39 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
                 ],
               ),
               const SizedBox(height: 10),
-              Column(
-                children: amenitiesName.map((amenity) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          amenity.title[0].toUpperCase() +
-                              amenity.title.substring(1),
-                          style: const TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 15,
-                              fontFamily: kCircularStdMedium),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        Text(
-                          "\$ ${amenity.price}",
-                          style: const TextStyle(
-                              color: kRedColor,
-                              fontSize: 15,
-                              fontFamily: kCircularStdMedium),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
+              amenitiesList.isNotEmpty
+                  ? Column(
+                      children: amenitiesList.map((amenity) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                amenity.title[0].toUpperCase() +
+                                    amenity.title.substring(1),
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                "\$ ${amenity.price}",
+                                style: const TextStyle(
+                                    color: kRedColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    )
+                  : Container(),
             ],
           ),
         ),

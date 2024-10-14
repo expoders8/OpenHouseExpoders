@@ -84,30 +84,33 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
                                 color: kPrimaryColor),
                           ),
                           const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: kButtonColor),
-                                child: const Icon(
-                                  Icons.phone,
-                                  color: kWhiteColor,
-                                  size: 12,
+                          hostsdata.phoneNumber.toString() == "null"
+                              ? Container()
+                              : Row(
+                                  children: [
+                                    Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          color: kButtonColor),
+                                      child: const Icon(
+                                        Icons.phone,
+                                        color: kWhiteColor,
+                                        size: 12,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      hostsdata.phoneNumber.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 13,
+                                          color: kPrimaryColor,
+                                          fontFamily: kCircularStdNormal),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                hostsdata.phoneNumber.toString(),
-                                style: const TextStyle(
-                                    fontSize: 13,
-                                    color: kPrimaryColor,
-                                    fontFamily: kCircularStdNormal),
-                              ),
-                            ],
-                          ),
                           const SizedBox(height: 10),
                           Row(
                             children: [

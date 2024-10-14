@@ -359,32 +359,6 @@ class _PaymentPageState extends State<PaymentPage> {
                   //     },
                   //   ),
                   // ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        Get.toNamed(Routes.payRentPage);
-                      },
-                      child: Container(
-                        height: 45,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: kWhiteColor),
-                            color: kButtonColor),
-                        child: const Center(
-                          child: Text(
-                            "Pay Now",
-                            style: TextStyle(
-                                color: kWhiteColor,
-                                fontFamily: kCircularStdNormal,
-                                fontSize: 18),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               )
             : SingleChildScrollView(

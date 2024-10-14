@@ -532,9 +532,9 @@ class PropertiesService {
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
+        Get.back();
+        Get.back();
         SnackbarUtils.showSnackbar("Service request", decodedUser["message"]);
-        Get.back();
-        Get.back();
         tabController.changeTabIndex(0);
       } else if (response.statusCode == 401) {
         LoaderX.hide();

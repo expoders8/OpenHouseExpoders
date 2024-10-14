@@ -455,7 +455,7 @@ class GetAllCurrentPropertyDataModel {
   bool? isActive;
   String? hostUserId;
   bool? checkoutRequested;
-  String? checkoutChecklist;
+  List? checkoutChecklist;
   String? checkoutRequestedOn;
   String? address;
   String? name;
@@ -505,7 +505,7 @@ class GetAllCurrentPropertyDataModel {
     isActive = json['is_active'];
     hostUserId = json['host_user_id'];
     checkoutRequested = json['checkout_requested'];
-    checkoutChecklist = json['checkout_checklist'];
+    checkoutChecklist = json['data'] != null ? json['checkout_checklist'] : [];
     checkoutRequestedOn = json['checkout_requested_on'];
     address = json['address'];
     name = json['name'];

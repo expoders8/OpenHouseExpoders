@@ -9,6 +9,7 @@ import '../controller/property_controller.dart';
 import '../controller/checkout_controller.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
+import '../models/get_checkout_tenant_model.dart';
 
 class CheckoutService {
   getCheckoutInvitation() async {
@@ -95,6 +96,38 @@ class CheckoutService {
         LoaderX.hide();
         Get.back();
         getAllCheckoutController.getAllCheckoutInvitation();
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  getAllCheckoutRequests() async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
+    try {
+      var response = await http.get(
+          Uri.parse(
+              '$baseUrl/api/tenant/getall_checkout_request?userid=${userid["id"]}'),
+          headers: {'Content-type': 'application/json'});
+      var decodedUser = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (decodedUser['success']) {
+          LoaderX.hide();
+          var data = json.decode(response.body);
+          return GetAllCheckoutRequestTenantModel.fromJson(data);
+        } else {
+          LoaderX.hide();
+          SnackbarUtils.showErrorSnackbar(
+              "Failed to Checkout Request", decodedUser['error']);
+          return Future.error("Server Error");
+        }
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar(
+            "Failed to Checkout Request", decodedUser['error']);
       }
     } catch (e) {
       LoaderX.hide();

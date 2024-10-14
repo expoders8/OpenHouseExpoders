@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../controller/payment_controller.dart';
 import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
@@ -25,6 +26,8 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
       Get.put(GetCurrentDetailsPropertiesController());
   final PropertyCheckoutController propertyCheckoutController =
       Get.put(PropertyCheckoutController());
+  final GetAllPaymentDataController getAllPaymentDataController =
+      Get.put(GetAllPaymentDataController());
   DateTime? dateTime;
   String formattedDate = '';
 
@@ -124,6 +127,11 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
                               onPressed: () {
                                 getCurrentDetailsPropertiesController
                                     .propertyId(propertyData.propertyId);
+                                getAllPaymentDataController.rentAmount(
+                                    propertyData.rentAmount.toString());
+                                getAllPaymentDataController
+                                    .propertyId(propertyData.id.toString());
+
                                 Get.to(() =>
                                     const TenantLeasePropertyDetailPage());
                                 getCurrentDetailsPropertiesController

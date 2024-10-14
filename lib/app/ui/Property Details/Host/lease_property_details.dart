@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
+import 'package:openhome/app/routes/app_pages.dart';
+import 'package:openhome/app/ui/Property%20Details/Host/lease_extend_page.dart';
 
 import '../../../view/nearby_view.dart';
 import '../../../view/expense_view.dart';
@@ -658,12 +660,17 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                           color: kButtonColor,
                         ),
                         const SizedBox(width: 10),
-                        Text(
-                          email,
-                          style: const TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 13,
-                              fontFamily: kCircularStdNormal),
+                        SizedBox(
+                          width: Get.width - 200,
+                          child: Text(
+                            email,
+                            style: const TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 13,
+                                fontFamily: kCircularStdNormal),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         ),
                       ],
                     ),
@@ -680,6 +687,9 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                       children: [
                         CupertinoButton(
                           onPressed: () {
+                            // Get.to(() => LeaseExtendPropertyPage(
+                            //       id: id,
+                            //     ));
                             BottomPicker.date(
                               pickerTitle: const Text(""),
                               onSubmit: (index) {

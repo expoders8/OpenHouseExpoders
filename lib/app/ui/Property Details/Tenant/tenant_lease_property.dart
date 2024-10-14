@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:openhome/app/routes/app_pages.dart';
+import 'package:openhome/app/ui/Payment/pay_rent.dart';
 
+import '../../../../config/provider/loader_provider.dart';
+import '../../../controller/payment_controller.dart';
 import '../../../controller/tab_controller.dart';
+import '../../../services/payment_service.dart';
 import '../../../view/nearby_view.dart';
 import '../../../view/property_details_view.dart';
 import '../../../../config/constant/constant.dart';
@@ -33,6 +37,7 @@ class _TenantLeasePropertyDetailPageState
 
   List<ImageProvider> images = [];
   final tabController = Get.put(TabCountController());
+  PaymentService paymentService = PaymentService();
 
   @override
   void initState() {
@@ -293,7 +298,7 @@ class _TenantLeasePropertyDetailPageState
                                                         padding:
                                                             EdgeInsets.zero,
                                                         color: kButtonColor,
-                                                        child: const Row(
+                                                        child: Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .center,
@@ -303,7 +308,36 @@ class _TenantLeasePropertyDetailPageState
                                                             Text("Pay rent"),
                                                           ],
                                                         ),
-                                                        onPressed: () {}),
+                                                        onPressed: () {
+                                                          LoaderX.show(context,
+                                                              60.0, 60.0);
+                                                          paymentService
+                                                              .getPaymentlink();
+
+                                                          // Get.to(
+                                                          //     () => PayRentPage(
+                                                          //           propertyId:
+                                                          //               propertydata
+                                                          //                   .id
+                                                          //                   .toString(),
+                                                          //           propertyAddress:
+                                                          //               propertydata
+                                                          //                   .address
+                                                          //                   .toString(),
+                                                          //           propertyAmount:
+                                                          //               propertydata
+                                                          //                   .rentAmount
+                                                          //                   .toString(),
+                                                          //           propertyName:
+                                                          //               propertydata
+                                                          //                   .name
+                                                          //                   .toString(),
+                                                          //           propertyImage: propertydata
+                                                          //               .images![
+                                                          //                   0]
+                                                          //               .toString(),
+                                                          //         ));
+                                                        }),
                                                   ),
                                                   const SizedBox(width: 10),
                                                   SizedBox(

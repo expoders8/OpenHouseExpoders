@@ -187,16 +187,15 @@ class AuthService {
             "newPassword": newPass
           }),
           headers: {'Content-type': 'application/json'});
+      var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        var decodedUser = jsonDecode(response.body);
         LoaderX.hide();
         Get.back();
         SnackbarUtils.showSnackbar(decodedUser["message"], "");
         return decodedUser;
       } else {
         LoaderX.hide();
-        SnackbarUtils.showErrorSnackbar("Server Error",
-            "Error while sending the mail, Please try after some time.");
+        SnackbarUtils.showErrorSnackbar("Server Error", decodedUser["message"]);
         return Future.error("Server Error");
       }
     } catch (e) {

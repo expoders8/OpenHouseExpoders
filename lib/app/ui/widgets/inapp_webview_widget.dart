@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+import '../../controller/payment_controller.dart';
 import '../../services/auth_service.dart';
+import '../../services/payment_service.dart';
 
 class InAppWebViewWidget extends StatefulWidget {
+  final String? url;
   const InAppWebViewWidget({
     Key? key,
+    this.url,
   }) : super(key: key);
 
   @override
@@ -29,6 +33,9 @@ class _InAppWebViewWidgetState extends State<InAppWebViewWidget> {
   InAppWebViewController? webViewController;
   AuthService authService = AuthService();
   final Completer<JsAlertRequest> alertCompleter = Completer<JsAlertRequest>();
+  PaymentService paymentService = PaymentService();
+  final GetAllPaymentDataController getAllPaymentDataController =
+      Get.put(GetAllPaymentDataController());
 
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
     crossPlatform: InAppWebViewOptions(
@@ -50,10 +57,6 @@ class _InAppWebViewWidgetState extends State<InAppWebViewWidget> {
   @override
   void initState() {
     super.initState();
-    var getURL = Get.parameters['url'];
-    setState(() {
-      url = getURL.toString();
-    });
   }
 
   rotatePhone() {
@@ -88,7 +91,7 @@ class _InAppWebViewWidgetState extends State<InAppWebViewWidget> {
             children: [
               InAppWebView(
                 key: webViewKey,
-                initialUrlRequest: URLRequest(url: Uri.parse(url)),
+                initialUrlRequest: URLRequest(url: Uri.parse(widget.url!)),
                 onWebViewCreated: (controller) {
                   webViewController = controller;
 

@@ -318,6 +318,8 @@ class ResponsiveContainer extends StatelessWidget {
           Get.toNamed(Routes.messagePage);
         } else if (name == "Chat with Tenants") {
           Get.toNamed(Routes.messagePage);
+        } else if (name == "Checkout Requests") {
+          Get.toNamed(Routes.checkoutRequestsTenantPage);
         }
       },
       child: Card(

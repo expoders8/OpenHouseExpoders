@@ -1,13 +1,11 @@
-import 'package:accordion/accordion.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 
-import '../../../config/constant/color_constant.dart';
-import '../../../config/constant/font_constant.dart';
-import '../../controller/property_controller.dart';
 import '../../models/extensions_model.dart';
+import '../../controller/property_controller.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 
 class TrackLeaseExtensionPage extends StatefulWidget {
   const TrackLeaseExtensionPage({super.key});
@@ -38,7 +36,14 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
         body: Obx(
           () {
             if (getPropertyExtensionsController.isLoading.value) {
-              return Container();
+              return Container(
+                color: kBackGroundColor,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    color: kSelectedIconColor,
+                  ),
+                ),
+              );
             } else {
               if (getPropertyExtensionsController
                   .propertiesExtensionsList.isNotEmpty) {
@@ -46,7 +51,7 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
                     .propertiesExtensionsList[0].data!.isEmpty) {
                   return const Center(
                     child: Text(
-                      "No request",
+                      "No extensions",
                       style: TextStyle(
                           color: kPrimaryColor,
                           fontSize: 15,
@@ -111,7 +116,7 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
                       } else {
                         return const Center(
                           child: Text(
-                            "No request",
+                            "No extensions",
                             style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: 15,
@@ -125,7 +130,7 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
               } else {
                 return const Center(
                   child: Text(
-                    "No request",
+                    "No extensions",
                     style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 15,
@@ -163,7 +168,7 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.calendar_month_outlined,
                     color: kButtonColor,
                   ),
@@ -237,7 +242,7 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               "Rent amount",
                               style: TextStyle(
                                   color: kPrimaryColor,
@@ -246,7 +251,7 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
                             ),
                             Text(
                               "\$${rentalsData.rentAmount.toString()}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: 15,
                                   fontFamily: kCircularStdMedium),
@@ -283,7 +288,7 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.calendar_month,
                     color: kGreenColor,
                   ),

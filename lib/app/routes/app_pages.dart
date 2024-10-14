@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../ui/Add Housekeeper/add_housekeeper.dart';
 import '../ui/Add NearBy/add_nearby.dart';
 import '../ui/Checkout Requests/checkout_request_get.dart';
+import '../ui/Checkout Requests/checkout_request_tenant.dart';
 import '../ui/Checkout Requests/send_checkout_request.dart';
 import '../ui/Invite Tenant/get_invitation_tenant.dart';
 import '../ui/My Host/my_hosts_detail.dart';
@@ -184,5 +185,13 @@ class AppPages {
       name: _Paths.inAppWebViewWidget,
       page: () => const InAppWebViewWidget(),
     ),
+    GetPage(
+      name: _Paths.checkoutRequestsTenantPage,
+      page: () => const CheckoutRequestsTenantPage(),
+    ),
+    // GetPage(
+    //   name: _Paths.leaseExtendPropertyPage,
+    //   page: () => const LeaseExtendPropertyPage(),
+    // ),
   ];
 }

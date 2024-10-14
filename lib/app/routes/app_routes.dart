@@ -23,6 +23,8 @@ abstract class Routes {
   static const myRequestViewAllView = _Paths.myRequestViewAllView;
   static const createMyRequestsPage = _Paths.createMyRequestsPage;
   static const tenantRequestAllView = _Paths.tenantRequestAllView;
+   static const checkoutRequestsTenantPage = _Paths.checkoutRequestsTenantPage;
+	  static const leaseExtendPropertyPage = _Paths.leaseExtendPropertyPage;
   static const myTenantsDetailsPage = _Paths.myTenantsDetailsPage;
   static const checkoutRequestsPage = _Paths.checkoutRequestsPage;
   static const totalAmountDetailPage = _Paths.totalAmountDetailPage;
@@ -63,12 +65,14 @@ abstract class _Paths {
   static const createMyRequestsPage = '/createMyRequestsPage';
   static const tenantRequestAllView = '/tenantRequestAllView';
   static const myTenantsDetailsPage = '/myTenantsDetailsPage';
-  static const inAppWebViewWidget = '/inAppWebViewWidget';
+  static const inAppWebViewWidget = '/inAppWebViewWidget';                           
   static const checkoutRequestsPage = '/checkoutRequestsPage';
   static const totalAmountDetailPage = '/totalAmountDetailPage';
   static const inviteTenantDetailPage = '/inviteTenantDetailPage';
   static const sendCheckoutRequest = '/sendCheckoutRequest';
   static const leasePropertyDetailPage = '/leasePropertyDetailPage';
+  static const leaseExtendPropertyPage = '/leaseExtendPropertyPage';
+  static const checkoutRequestsTenantPage = '/checkoutRequestsTenantPage';
   static const notLeasePropertyDetailPage = '/notLeasePropertyDetailPage';
   static const tenantLeasePropertyDetailPage = '/tenantLeasePropertyDetailPage';
   static const trackLeaseExtensionPage = '/trackLeaseExtensionPage';
