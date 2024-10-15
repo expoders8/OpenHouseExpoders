@@ -86,7 +86,15 @@ class _InAppWebViewWidgetState extends State<InAppWebViewWidget> {
           toolbarHeight: 0.1,
         ),
         body: WillPopScope(
-          onWillPop: () => refreshAndGetUserProfile(),
+          onWillPop: () async {
+            if (await webViewController!.canGoBack()) {
+              webViewController!.goBack();
+              Get.back();
+              return false;
+            } else {
+              return true;
+            }
+          },
           child: Stack(
             children: [
               InAppWebView(
@@ -98,7 +106,7 @@ class _InAppWebViewWidgetState extends State<InAppWebViewWidget> {
                   controller.addJavaScriptHandler(
                     handlerName: "stripeCallback",
                     callback: (args) {
-                      refreshAndGetUserProfile();
+                      // refreshAndGetUserProfile();
                     },
                   );
                 },
