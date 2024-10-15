@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 
 import '../models/extensions_model.dart';
 import '../models/get_expense_model.dart';
-import '../models/getall_property_expenses_model.dart';
 import '../models/getpropretyes_model.dart';
 import '../services/properties_service.dart';
+import '../models/getall_property_expenses_model.dart';
 
 class GetLeasePropertyController extends GetxController {
   var isLoading = true.obs;

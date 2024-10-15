@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../models/firebase_user_model.dart';
+import '../message/components/chat_screen.dart';
 import '../../controller/my_hosts_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../models/firebase_user_model.dart';
-import '../message/components/chat_screen.dart';
 
 class MyHostsDetailsPage extends StatefulWidget {
   const MyHostsDetailsPage({super.key});

@@ -19,6 +19,29 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
   final GetAllCheckoutController getAllCheckoutController =
       Get.put(GetAllCheckoutController());
   CheckoutService checkoutService = CheckoutService();
+  IconData getIconFromString(String? iconName) {
+    switch (iconName) {
+      case 'Remove Personal Belongings':
+        return Icons.inventory;
+      case 'Check for Damages':
+        return Icons.warning;
+      case 'Return Keys':
+        return Icons.key;
+      case 'Swimming Pool':
+        return Icons.pool;
+      case 'Pay Outstanding Bills':
+        return Icons.description;
+      case 'Clean Room':
+        return Icons.cleaning_services;
+      case 'Electricity':
+        return Icons.flash_on;
+      case 'Comment':
+        return Icons.comment;
+      default:
+        return Icons.help;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -93,16 +116,6 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                                           width: 65,
                                         ),
                                       ),
-                                // ClipRRect(
-                                //   borderRadius: BorderRadius.circular(50),
-                                //   child: Image.asset(
-                                //     "image",
-                                //     fit: BoxFit.cover,
-                                //     scale: 1.2,
-                                //     height: 40,
-                                //     width: 40,
-                                //   ),
-                                // ),
                                 const SizedBox(width: 10),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +165,181 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                               children: [
                                 CupertinoButton(
                                   padding: EdgeInsets.zero,
-                                  onPressed: _bottomSheetForChackout,
+                                  onPressed: () {
+                                    showModalBottomSheet<dynamic>(
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(40.0),
+                                          topRight: Radius.circular(40.0),
+                                        ),
+                                      ),
+                                      isScrollControlled: true,
+                                      backgroundColor: kWhiteColor,
+                                      context: context,
+                                      builder: (context) {
+                                        return Wrap(
+                                          children: [
+                                            const Center(
+                                              child: ImageIcon(
+                                                AssetImage(
+                                                    "assets/icons/line.png"),
+                                                size: 30,
+                                                color: Color(0XffBFC5CC),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: SizedBox(
+                                                height: 350,
+                                                child: ListView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemCount: 1,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var requestData =
+                                                        getAllCheckoutController
+                                                            .checkoutList[0]
+                                                            .data!;
+                                                    if (requestData
+                                                        .isNotEmpty) {
+                                                      var data =
+                                                          requestData[index];
+                                                      return Column(
+                                                        children: [
+                                                          ...data
+                                                              .updatedChecklist!
+                                                              .map(
+                                                                  (checklistItem) {
+                                                            return checklistItem
+                                                                        .name
+                                                                        .toString() ==
+                                                                    "Comment"
+                                                                ? Container()
+                                                                : Padding(
+                                                                    padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                        vertical:
+                                                                            8.0),
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.start,
+                                                                          children: [
+                                                                            Container(
+                                                                              decoration: BoxDecoration(
+                                                                                borderRadius: BorderRadius.circular(25),
+                                                                                border: Border.all(color: kPrimaryColor),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(3.0),
+                                                                                child: Icon(
+                                                                                  getIconFromString(checklistItem.name),
+                                                                                  size: 18,
+                                                                                  color: kButtonColor,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            const SizedBox(width: 10),
+                                                                            Text(
+                                                                              checklistItem.name.toString(),
+                                                                              style: const TextStyle(
+                                                                                fontFamily: kWorkSans,
+                                                                                fontSize: 15,
+                                                                                color: kPrimaryColor,
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        checklistItem.isActive ==
+                                                                                true
+                                                                            ? Container(
+                                                                                decoration: BoxDecoration(
+                                                                                  borderRadius: BorderRadius.circular(25),
+                                                                                  border: Border.all(color: kGreenColor),
+                                                                                ),
+                                                                                child: const Padding(
+                                                                                  padding: EdgeInsets.all(3.0),
+                                                                                  child: Icon(
+                                                                                    Icons.check,
+                                                                                    size: 18,
+                                                                                    color: kGreenColor,
+                                                                                  ),
+                                                                                ),
+                                                                              )
+                                                                            : Container(
+                                                                                decoration: BoxDecoration(
+                                                                                  borderRadius: BorderRadius.circular(25),
+                                                                                  border: Border.all(color: kButtonColor),
+                                                                                ),
+                                                                                child: const Padding(
+                                                                                  padding: EdgeInsets.all(3.0),
+                                                                                  child: Icon(
+                                                                                    Icons.close,
+                                                                                    size: 18,
+                                                                                    color: kButtonColor,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                      ],
+                                                                    ),
+                                                                  );
+                                                          }).toList(),
+                                                          const SizedBox(
+                                                              height: 5),
+                                                          SizedBox(
+                                                            width:
+                                                                Get.width - 50,
+                                                            child: Text(
+                                                              data
+                                                                  .updatedChecklist!
+                                                                  .last
+                                                                  .isActive!,
+                                                              style:
+                                                                  const TextStyle(
+                                                                color:
+                                                                    kPrimaryColor,
+                                                                fontSize: 15,
+                                                                fontFamily:
+                                                                    kCircularStdMedium,
+                                                              ),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              maxLines: 2,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      );
+                                                    } else {
+                                                      return const Center(
+                                                        child: Text(
+                                                          "No Requests",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  kPrimaryColor,
+                                                              fontSize: 15,
+                                                              fontFamily:
+                                                                  kCircularStdMedium),
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
                                   child: Row(
                                     children: [
                                       Container(
@@ -271,242 +458,7 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
     );
   }
 
-  _bottomSheetForChackout() {
-    return showModalBottomSheet<dynamic>(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40.0),
-          topRight: Radius.circular(40.0),
-        ),
-      ),
-      isScrollControlled: true,
-      backgroundColor: kWhiteColor,
-      context: context,
-      builder: (context) {
-        return Wrap(
-          children: [
-            const Center(
-              child: ImageIcon(
-                AssetImage("assets/icons/line.png"),
-                size: 30,
-                color: Color(0XffBFC5CC),
-              ),
-            ),
-            Theme(
-                data: ThemeData(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                ),
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      border: Border.all(color: kPrimaryColor)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(3.0),
-                                    child: Icon(
-                                      Icons.electric_bolt_sharp,
-                                      size: 18,
-                                      color: kButtonColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                const Text(
-                                  "Electricity",
-                                  style: TextStyle(
-                                    fontFamily: kWorkSans,
-                                    fontSize: 15,
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kGreenColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.check,
-                                  size: 18,
-                                  color: kGreenColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      title: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      border: Border.all(color: kPrimaryColor)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(3.0),
-                                    child: Icon(
-                                      Icons.gas_meter_sharp,
-                                      size: 18,
-                                      color: kButtonColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                const Text(
-                                  "Gas",
-                                  style: TextStyle(
-                                    fontFamily: kWorkSans,
-                                    fontSize: 15,
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kButtonColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.close,
-                                  size: 18,
-                                  color: kButtonColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      title: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      border: Border.all(color: kPrimaryColor)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(3.0),
-                                    child: Icon(
-                                      Icons.water,
-                                      size: 18,
-                                      color: kButtonColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                const Text(
-                                  "Pipe Fitting",
-                                  style: TextStyle(
-                                    fontFamily: kWorkSans,
-                                    fontSize: 15,
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kGreenColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.check,
-                                  size: 18,
-                                  color: kGreenColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      title: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      border: Border.all(color: kPrimaryColor)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(3.0),
-                                    child: Icon(
-                                      Icons.water,
-                                      size: 18,
-                                      color: kButtonColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                const Text(
-                                  "Other",
-                                  style: TextStyle(
-                                    fontFamily: kWorkSans,
-                                    fontSize: 15,
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: kButtonColor)),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3.0),
-                                child: Icon(
-                                  Icons.close,
-                                  size: 18,
-                                  color: kButtonColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                    const SizedBox(height: 25)
-                  ],
-                )),
-          ],
-        );
-      },
-    );
-  }
+  _bottomSheetForChackout() {}
 
   invitationDialog(String id, name, address) async {
     return await showDialog(

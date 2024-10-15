@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/services.dart';
+import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -9,13 +9,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
-import '../../../config/constant/constant.dart';
 import '../../view/amenities_view.dart';
 import 'package:http/http.dart' as http;
 import '../../models/country_model.dart';
 import '../widgets/custom_textfield.dart';
 import '../../services/lookup_service.dart';
 import '../../services/properties_service.dart';
+import '../../../config/constant/constant.dart';
 import '../../controller/property_controller.dart';
 import '../../controller/amenities_controller.dart';
 import '../../../config/constant/font_constant.dart';
@@ -222,7 +222,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Form(
           key: _formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          // autovalidateMode: AutovalidateMode.onUserInteraction,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
@@ -1281,9 +1281,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 totalImageCount++;
               });
             }
-          } else {
-            print('Local file does not exist: $path');
-          }
+          } else {}
         }
       }
       setState(() {
@@ -1313,7 +1311,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         throw Exception("Failed to download image: ${response.statusCode}");
       }
     } catch (e) {
-      print('Error downloading image: $e');
       return File('');
     }
   }

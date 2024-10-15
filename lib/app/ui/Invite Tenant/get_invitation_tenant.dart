@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../view/tenant_invitation_view.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../view/tenant_invitation_view.dart';
 
 class InvitationshowPage extends StatefulWidget {
   const InvitationshowPage({super.key});

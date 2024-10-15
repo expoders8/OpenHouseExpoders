@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:openhome/app/routes/app_pages.dart';
-import 'package:openhome/app/ui/Property%20Details/Host/lease_extend_page.dart';
 
 import '../../../view/nearby_view.dart';
 import '../../../view/expense_view.dart';
@@ -229,7 +227,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                         .subtype
                                                         .toString(),
                                                     capacity: propertydata
-                                                        .category
+                                                        .person
                                                         .toString(),
                                                     selctesType: "",
                                                     price: propertydata

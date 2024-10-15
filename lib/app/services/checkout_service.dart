@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../controller/my_tenants_controller.dart';
 import '../models/get_all_checkout.dart';
 import '../../config/constant/constant.dart';
 import '../controller/property_controller.dart';
@@ -75,6 +76,10 @@ class CheckoutService {
         Get.put(GetAvailablePropertyController());
     final GetLeasePropertyController getLeasePropertyController =
         Get.put(GetLeasePropertyController());
+    final GetAllCurrentTenantsController getAllCurrentTenantsController =
+        Get.put(GetAllCurrentTenantsController());
+    final GetAllPreviousTenantsController getAllPreviousTenantsController =
+        Get.put(GetAllPreviousTenantsController());
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
@@ -96,6 +101,10 @@ class CheckoutService {
         LoaderX.hide();
         Get.back();
         getAllCheckoutController.getAllCheckoutInvitation();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          getAllCurrentTenantsController.fetchAllTenants();
+        });
+        getAllPreviousTenantsController.fetchAllTenants();
       }
     } catch (e) {
       LoaderX.hide();

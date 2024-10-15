@@ -15,7 +15,7 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Messages"),
+        title: const Text("Messages"),
         centerTitle: true,
       ),
       body: MessageBody(

@@ -8,6 +8,7 @@ import '../../config/constant/font_constant.dart';
 import '../controller/invitation_controller.dart';
 import '../../config/constant/color_constant.dart';
 import '../../config/provider/loader_provider.dart';
+import '../services/tenant_service.dart';
 
 // ignore: must_be_immutable
 class TenantInvitationView extends StatefulWidget {
@@ -21,6 +22,7 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
   final GetAllInvitationController getAllInvitationController =
       Get.put(GetAllInvitationController());
   PropertiesService propertiesService = PropertiesService();
+  TenantService tenantService = TenantService();
   Future<void> _refreshItems() async {
     await Future.delayed(
         const Duration(seconds: 2)); // Simulate network request
@@ -198,7 +200,8 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
                                             CupertinoButton(
                                               padding: EdgeInsets.zero,
                                               onPressed: () {
-                                                invitationDialog();
+                                                invitationDialog(
+                                                    data.id.toString());
                                               },
                                               child: Container(
                                                 padding:
@@ -262,7 +265,7 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
     );
   }
 
-  invitationDialog() async {
+  invitationDialog(String id) async {
     return await showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -274,7 +277,8 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
         actions: <Widget>[
           TextButton(
             onPressed: () async {
-              Get.back();
+              LoaderX.show(context, 60.0, 60.0);
+              tenantService.deleteInvitations(id);
             },
             child: const Text(
               'Yes',

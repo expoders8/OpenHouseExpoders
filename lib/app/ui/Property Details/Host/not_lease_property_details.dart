@@ -195,8 +195,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                   whoshrooms: propertydata
                                                       .subtype
                                                       .toString(),
-                                                  capacity: propertydata
-                                                      .category
+                                                  capacity: propertydata.person
                                                       .toString(),
                                                   selctesType: "",
                                                   price: propertydata.rentAmount

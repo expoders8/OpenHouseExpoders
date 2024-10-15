@@ -118,8 +118,6 @@ class _AmenitiesViewState extends State<AmenitiesView> {
               String result = '[${formattedIds.join(", ")}]';
               getAllAmenitiesController.selectedAmenitis.value = result;
               getAllAmenitiesController.selectedAmenitis1(values);
-
-              print(getAllAmenitiesController.selectedAmenitis);
             },
             title: const Text(
               "Select Amenities",

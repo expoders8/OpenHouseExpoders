@@ -2,11 +2,11 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../config/provider/loader_provider.dart';
 import '../widgets/custom_textfield.dart';
 import '../../controller/property_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/loader_provider.dart';
 import '../../controller/checkout_lookup_controller.dart';
 
 class SendCheckoutRequest extends StatefulWidget {
@@ -36,8 +36,6 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
   bool isLoading = true;
   List<Map<String, dynamic>> jsonData = [];
   var updatedJson;
-
-  // Initialize a list to store the names of items with true state
   List<String> selectedNames = [];
 
   @override
@@ -57,21 +55,15 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
 
   List<Map<String, dynamic>> generateJson() {
     var requestData = getAllCheckoutLookupController.lookupdataList[0];
-
-    // Initialize or ensure jsonData has the correct structure, 7 keys in this case
     if (jsonData.isEmpty) {
       for (int i = 0; i < requestData.length; i++) {
         String key = requestData[i].name!;
-        jsonData.add({key: false}); // Add with initial false or default value
+        jsonData.add({key: false});
       }
     }
-
-    // Loop through and update the values based on toggleStates
     for (int i = 0; i < requestData.length; i++) {
       String key = requestData[i].name!;
       bool value = toggleStates[i];
-
-      // Update the value in the existing jsonData list at the corresponding index
       jsonData[i] = {key: value};
     }
 
@@ -147,22 +139,17 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                                         var requestData =
                                             getAllCheckoutLookupController
                                                 .lookupdataList[0];
-
                                         if (requestData.isNotEmpty) {
                                           var data = requestData[index];
                                           bool isToggled = toggleStates[index];
-
                                           return Column(
                                             children: [
                                               CupertinoButton(
                                                 padding: EdgeInsets.zero,
                                                 onPressed: () {
                                                   setState(() {
-                                                    // Toggle the current state
                                                     toggleStates[index] =
                                                         !toggleStates[index];
-
-                                                    // Update selectedNames based on the toggle state
                                                     if (toggleStates[index]) {
                                                       if (!selectedNames
                                                           .contains(data.name!
@@ -176,17 +163,8 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                                                           .name!
                                                           .toString());
                                                     }
-
-                                                    // Log the updated states and names
-                                                    // print(
-                                                    //     toggleStates); // Current toggle states
-                                                    // print(
-                                                    //     selectedNames); // Current selected names
-
-                                                    // Generate JSON structure after every toggle to avoid duplication
                                                     updatedJson =
                                                         generateJson();
-                                                    print(updatedJson);
                                                   });
                                                 },
                                                 child: Row(

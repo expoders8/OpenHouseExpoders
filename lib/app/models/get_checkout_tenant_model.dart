@@ -188,35 +188,42 @@ class GetAllCheckoutRequestTenantModel {
 
 class GetAllCheckoutRequestTenantDataModel {
   String? propertyId;
+  String? startDate;
+  String? endDate;
+  String? cretedOn;
+  String? rentAmount;
   String? propertyName;
   String? propertyAddress;
-  List<UpdatedChecklist>? updatedChecklist;
+  String? rentalCount;
   String? propertyImage;
-  List<Rentals>? rentals;
+  List<UpdatedChecklist>? updatedChecklist;
 
   GetAllCheckoutRequestTenantDataModel(
       {this.propertyId,
+      this.startDate,
+      this.endDate,
+      this.cretedOn,
+      this.rentAmount,
       this.propertyName,
       this.propertyAddress,
-      this.updatedChecklist,
+      this.rentalCount,
       this.propertyImage,
-      this.rentals});
+      this.updatedChecklist});
 
   GetAllCheckoutRequestTenantDataModel.fromJson(Map<String, dynamic> json) {
     propertyId = json['property_id'];
+    startDate = json['start_date'];
+    endDate = json['end_date'];
+    cretedOn = json['creted_on'];
+    rentAmount = json['rent_amount'];
     propertyName = json['property_name'];
     propertyAddress = json['property_address'];
+    rentalCount = json['rental_count'];
+    propertyImage = json['propertyImage'];
     if (json['updatedChecklist'] != null) {
       updatedChecklist = <UpdatedChecklist>[];
       json['updatedChecklist'].forEach((v) {
         updatedChecklist!.add(UpdatedChecklist.fromJson(v));
-      });
-    }
-    propertyImage = json['property_image'];
-    if (json['rentals'] != null) {
-      rentals = <Rentals>[];
-      json['rentals'].forEach((v) {
-        rentals!.add(Rentals.fromJson(v));
       });
     }
   }
@@ -224,15 +231,17 @@ class GetAllCheckoutRequestTenantDataModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['property_id'] = propertyId;
+    data['start_date'] = startDate;
+    data['end_date'] = endDate;
+    data['creted_on'] = cretedOn;
+    data['rent_amount'] = rentAmount;
     data['property_name'] = propertyName;
     data['property_address'] = propertyAddress;
+    data['rental_count'] = rentalCount;
+    data['propertyImage'] = propertyImage;
     if (updatedChecklist != null) {
       data['updatedChecklist'] =
           updatedChecklist!.map((v) => v.toJson()).toList();
-    }
-    data['property_image'] = propertyImage;
-    if (rentals != null) {
-      data['rentals'] = rentals!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -240,7 +249,7 @@ class GetAllCheckoutRequestTenantDataModel {
 
 class UpdatedChecklist {
   String? name;
-  dynamic? isActive;
+  dynamic isActive;
 
   UpdatedChecklist({this.name, this.isActive});
 
@@ -251,42 +260,12 @@ class UpdatedChecklist {
     } else {
       isActive = json['isActive'];
     }
-    // if (json['isActive'] is bool) {
-    //
-    // } else if (json['isActive'] is String) {
-    //   isActive = json['isActive'].toLowerCase();
-    // }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['isActive'] = isActive;
-    return data;
-  }
-}
-
-class Rentals {
-  String? startDate;
-  String? endDate;
-  String? cretedOn;
-  String? rentAmount;
-
-  Rentals({this.startDate, this.endDate, this.cretedOn, this.rentAmount});
-
-  Rentals.fromJson(Map<String, dynamic> json) {
-    startDate = json['start_date'];
-    endDate = json['end_date'];
-    cretedOn = json['creted_on'];
-    rentAmount = json['rent_amount'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['start_date'] = startDate;
-    data['end_date'] = endDate;
-    data['creted_on'] = cretedOn;
-    data['rent_amount'] = rentAmount;
     return data;
   }
 }

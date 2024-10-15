@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../config/constant/color_constant.dart';
-import '../../../config/constant/font_constant.dart';
-import '../../controller/my_tenants_controller.dart';
 import '../../models/firebase_user_model.dart';
 import '../message/components/chat_screen.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../controller/my_tenants_controller.dart';
+import '../../../config/constant/color_constant.dart';
 
 class MyTenantsDetailsPage extends StatefulWidget {
   const MyTenantsDetailsPage({super.key});

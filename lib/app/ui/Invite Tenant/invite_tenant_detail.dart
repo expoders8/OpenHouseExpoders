@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:bottom_picker/bottom_picker.dart';
@@ -244,6 +245,10 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
               const SizedBox(height: 15),
               CustomTextFormField(
                 hintText: '\$ Amount',
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(5),
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 maxLines: 1,
                 ctrl: amountController,
                 keyboardType: TextInputType.number,

@@ -115,35 +115,39 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
                                                     fontSize: 18,
                                                     color: kPrimaryColor),
                                               ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 7,
-                                                        vertical: 3),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    color: kGreenColor),
-                                                child: const Row(
-                                                  children: [
-                                                    Text(
-                                                      "resolve",
-                                                      style: TextStyle(
-                                                          color: kWhiteColor,
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              kCircularStdNormal),
-                                                    ),
-                                                    SizedBox(width: 5),
-                                                    Icon(
-                                                      Icons.thumb_up,
-                                                      size: 11,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
+                                              data.status.toString() ==
+                                                      "Resolved"
+                                                  ? Container(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 7,
+                                                          vertical: 3),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                          color: kGreenColor),
+                                                      child: const Row(
+                                                        children: [
+                                                          Text(
+                                                            "resolve",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    kWhiteColor,
+                                                                fontSize: 12,
+                                                                fontFamily:
+                                                                    kCircularStdNormal),
+                                                          ),
+                                                          SizedBox(width: 5),
+                                                          Icon(
+                                                            Icons.thumb_up,
+                                                            size: 11,
+                                                            color: kWhiteColor,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Container()
                                             ],
                                           ),
                                           const SizedBox(height: 10),

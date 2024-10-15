@@ -206,44 +206,6 @@ class _PropertyPageState extends State<PropertyPage>
                             },
                             child: const PreviousPropertyView(),
                           ),
-                          // Column(
-                          //   children: [
-                          //     const SizedBox(height: 10),
-                          //     TextFormField(
-                          //       controller: previoussearchController,
-                          //       decoration: InputDecoration(
-                          //         contentPadding:
-                          //             const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                          //         prefixIcon: const Icon(Icons.search),
-                          //         filled: true,
-                          //         fillColor: kWhiteColor,
-                          //         hintText: 'Search',
-                          //         hintStyle: const TextStyle(
-                          //             color: kSecondaryPrimaryColor,
-                          //             fontFamily: kCircularStdNormal,
-                          //             fontWeight: FontWeight.w400,
-                          //             fontSize: 16),
-                          //         border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(25.0),
-                          //           borderSide:
-                          //               const BorderSide(color: kWhiteColor),
-                          //         ),
-                          //         enabledBorder: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(25.0),
-                          //           borderSide:
-                          //               const BorderSide(color: kWhiteColor),
-                          //         ),
-                          //         focusedBorder: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(25.0),
-                          //           borderSide:
-                          //               const BorderSide(color: kWhiteColor),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     const SizedBox(height: 10),
-                          //     const PreviousPropertyView(),
-                          //   ],
-                          // ),
                         ],
                       ),
                     ),

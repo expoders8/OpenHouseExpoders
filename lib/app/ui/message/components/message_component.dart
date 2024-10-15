@@ -126,7 +126,7 @@ class _MessageComponentState extends State<MessageComponent> {
                         padding: const EdgeInsets.only(
                             bottom: 18, right: 5, left: 5),
                         child:
-                            buildImage(user!.length > 0 ? user![0].image! : ""),
+                            buildImage(user!.length > 0 ? user[0].image! : ""),
                       )
                     : Container()
               ],

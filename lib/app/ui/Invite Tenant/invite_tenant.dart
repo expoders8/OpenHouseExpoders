@@ -1,8 +1,8 @@
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:country_list_pick/country_list_pick.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:country_list_pick/country_list_pick.dart';
 
 import '../../routes/app_pages.dart';
 import '../../services/tenant_service.dart';
