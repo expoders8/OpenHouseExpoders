@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../TabPage/tab_page.dart';
 import '../../services/auth_service.dart';
@@ -86,39 +86,36 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
     }
   }
 
-  // appleSignin() async {
-  //   final credential = await SignInWithApple.getAppleIDCredential(
-  //     scopes: [
-  //       AppleIDAuthorizationScopes.email,
-  //       AppleIDAuthorizationScopes.fullName,
-  //     ],
-  //   );
+  appleSignin() async {
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
 
-  //   Future.delayed(const Duration(milliseconds: 100), () async {
-  //     LoaderX.show(context, 50.0, 50.0);
-  //     await authService
-  //         .socialLogin(
-  //             credential.givenName.toString(),
-  //             credential.familyName.toString(),
-  //             credential.email.toString(),
-  //             "",
-  //             credential.userIdentifier.toString(),
-  //             "Apple")
-  //         .then(
-  //       (value) async {
-  //         if (value) {
-  //           LoaderX.hide();
-  //           Get.offAll(() => const HomePage());
-  //         } else {
-  //           LoaderX.hide();
-  //           SnackbarUtils.showErrorSnackbar(
-  //               "Failed to Login", value.message.toString());
-  //         }
-  //         return null;
-  //       },
-  //     );
-  //   });
-  // }
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      LoaderX.show(context, 50.0, 50.0);
+      await authService
+            .socialLogin(
+              credential.givenName.toString(),
+              credential.familyName.toString(),
+              credential.email.toString(),
+          "",
+          credential.userIdentifier.toString(),
+          "Apple",
+        )
+            .then(
+          (value) async {
+            if (value) {
+              LoaderX.hide();
+              Get.offAll(() => const TabPage());
+            }
+            return null;
+          },
+        );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +184,7 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
-                                      color: kPrimaryColor, width: 1)),
+                                      color: kSecondaryPrimaryColor, width: 1)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
