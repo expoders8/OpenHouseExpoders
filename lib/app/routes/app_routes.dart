@@ -8,6 +8,7 @@ abstract class Routes {
   static const signUpPage = _Paths.signUpPage;
   static const profilePage = _Paths.profilePage;
   static const splashScreen = _Paths.splashScreen;
+  static const noInternetScreen = _Paths.noInternetScreen;
   static const myTenantsPage = _Paths.myTenantsPage;
   static const addNearByPage = _Paths.addNearByPage;
   static const addExpensePage = _Paths.addExpensePage;
@@ -23,8 +24,8 @@ abstract class Routes {
   static const myRequestViewAllView = _Paths.myRequestViewAllView;
   static const createMyRequestsPage = _Paths.createMyRequestsPage;
   static const tenantRequestAllView = _Paths.tenantRequestAllView;
-   static const checkoutRequestsTenantPage = _Paths.checkoutRequestsTenantPage;
-	  static const leaseExtendPropertyPage = _Paths.leaseExtendPropertyPage;
+  static const checkoutRequestsTenantPage = _Paths.checkoutRequestsTenantPage;
+  static const leaseExtendPropertyPage = _Paths.leaseExtendPropertyPage;
   static const myTenantsDetailsPage = _Paths.myTenantsDetailsPage;
   static const checkoutRequestsPage = _Paths.checkoutRequestsPage;
   static const totalAmountDetailPage = _Paths.totalAmountDetailPage;
@@ -49,6 +50,7 @@ abstract class _Paths {
   static const signUpPage = '/signUpPage';
   static const profilePage = '/profilePage';
   static const splashScreen = '/splashScreen';
+  static const noInternetScreen = '/noInternetScreen';
   static const myTenantsPage = '/myTenantsPage';
   static const addNearByPage = '/addNearByPage';
   static const addExpensePage = '/addExpensePage';
@@ -65,7 +67,7 @@ abstract class _Paths {
   static const createMyRequestsPage = '/createMyRequestsPage';
   static const tenantRequestAllView = '/tenantRequestAllView';
   static const myTenantsDetailsPage = '/myTenantsDetailsPage';
-  static const inAppWebViewWidget = '/inAppWebViewWidget';                           
+  static const inAppWebViewWidget = '/inAppWebViewWidget';
   static const checkoutRequestsPage = '/checkoutRequestsPage';
   static const totalAmountDetailPage = '/totalAmountDetailPage';
   static const inviteTenantDetailPage = '/inviteTenantDetailPage';

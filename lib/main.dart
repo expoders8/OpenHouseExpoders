@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'app/controller/network_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'config/constant/constant.dart';
 import 'config/provider/theme_provider.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final networkController = NetworkController();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -44,6 +46,9 @@ class MyApp extends StatelessWidget {
       theme: Provider.of<ThemeProvider>(context, listen: false).getTheme(),
       initialRoute: Routes.splashScreen,
       getPages: AppPages.routes,
+      initialBinding: BindingsBuilder(() {
+        networkController.checkInitialConnectivity();
+      }),
     );
   }
 }

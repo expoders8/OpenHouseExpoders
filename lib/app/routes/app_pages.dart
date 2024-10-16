@@ -34,6 +34,7 @@ import '../ui/Track lease extensions/track_lease_extension.dart';
 import '../ui/Track property income/track_property_income.dart';
 import '../ui/message/message_page.dart';
 import '../ui/widgets/inapp_webview_widget.dart';
+import '../ui/widgets/no_internet_screen.dart';
 import '../view/my_request_view_all.dart';
 import '../view/tenant_request_all_view.dart';
 
@@ -42,7 +43,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.tabPage;
+  static const initial = Routes.splashScreen;
 
   static final routes = [
     GetPage(
@@ -189,9 +190,9 @@ class AppPages {
       name: _Paths.checkoutRequestsTenantPage,
       page: () => const CheckoutRequestsTenantPage(),
     ),
-    // GetPage(
-    //   name: _Paths.leaseExtendPropertyPage,
-    //   page: () => const LeaseExtendPropertyPage(),
-    // ),
+    GetPage(
+      name: _Paths.noInternetScreen,
+      page: () => const NoInternetScreen(),
+    ),
   ];
 }
