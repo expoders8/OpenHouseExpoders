@@ -31,11 +31,21 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
   final GetAllTenantController getAllTenantController =
       Get.put(GetAllTenantController());
   TenantService tenantService = TenantService();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String pickedStartDate = "";
   String selectedStartDate = "";
   String pickedEndDate = "";
   String selectedEndDate = "";
+
+  @override
+  void initState() {
+    super.initState();
+    amountController.text =
+        getAllTenantController.rentAmount.toString() == "null"
+            ? ""
+            : getAllTenantController.rentAmount.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -249,11 +259,8 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
                   LengthLimitingTextInputFormatter(5),
                   FilteringTextInputFormatter.digitsOnly,
                 ],
-                maxLines: 1,
                 ctrl: amountController,
-                keyboardType: TextInputType.number,
-                name: "iamount",
-                validationMsg: 'Please enter amount',
+                enabled: false,
               ),
               const SizedBox(height: 15),
               Row(
@@ -283,9 +290,7 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
                   });
                   FocusScope.of(context).requestFocus(FocusNode());
                   Future.delayed(const Duration(milliseconds: 100), () async {
-                    if (_formKey.currentState!.validate() &&
-                        pickedStartDate != "" &&
-                        pickedEndDate != "") {
+                    if (pickedStartDate != "" && pickedEndDate != "") {
                       getAllTenantController.startDate(pickedStartDate);
                       getAllTenantController.endDate(pickedEndDate);
                       getAllTenantController.rentAmount(amountController.text);

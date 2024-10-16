@@ -53,9 +53,9 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                 children: [
                   const SizedBox(height: 100),
                   Image.asset(
-                    "assets/house101.png",
+                    "assets/images/noproperty1.png",
                     fit: BoxFit.cover,
-                    scale: 2,
+                    scale: 2.3,
                   ),
                   const Text(
                     "Once you receive an invitation or add a property, they will appear here.",
@@ -174,9 +174,9 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
                               children: [
                                 const SizedBox(height: 100),
                                 Image.asset(
-                                  "assets/house101.png",
+                                  "assets/images/noproperty1.png",
                                   fit: BoxFit.cover,
-                                  scale: 2,
+                                  scale: 2.3,
                                 ),
                                 const Text(
                                   "Once you receive an invitation or add a property, they will appear here.",
@@ -236,9 +236,9 @@ class _PreviousPropertyViewState extends State<PreviousPropertyView> {
               children: [
                 const SizedBox(height: 100),
                 Image.asset(
-                  "assets/house101.png",
+                  "assets/images/noproperty1.png",
                   fit: BoxFit.cover,
-                  scale: 2,
+                  scale: 2.3,
                 ),
                 const Text(
                   "Once you receive an invitation or add a property, they will appear here.",

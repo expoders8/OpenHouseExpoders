@@ -1,6 +1,8 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:openhome/config/constant/font_constant.dart';
 
 import '../../../config/constant/color_constant.dart';
 
@@ -24,12 +26,12 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 150,
-              width: 150,
-              margin: const EdgeInsets.only(bottom: 25),
+              height: 200,
+              width: 200,
+              margin: const EdgeInsets.only(bottom: 30),
               child: Center(
                 child: Lottie.asset(
-                  'assets/noData.json',
+                  'assets/nointernet.json',
                   width: 330,
                   height: 330,
                   fit: BoxFit.cover,
@@ -40,14 +42,17 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: kTextSecondaryColor),
+                  color: kPrimaryColor),
               child: Text('No Internet Connection'),
             ),
             const Padding(
               padding: EdgeInsets.all(20),
               child: DefaultTextStyle(
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, color: kButtonSecondaryColor),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: kCircularStdBook,
+                    color: kSecondaryPrimaryColor),
                 child: Text(
                     'You are not connected to the internet. Make sure Internet is on, Airplane Mode is off.'),
               ),
@@ -57,39 +62,29 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
               child: CupertinoButton(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                color: kButtonSecondaryColor,
+                color: kButtonColor,
                 onPressed: () async {
                   AppSettings.openAppSettings();
                 },
-                child: Row(
+                child: const Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    const Text(
+                    Text(
                       'Go to Settings',
-                      style:
-                          TextStyle(fontSize: 14, color: kTextSecondaryColor),
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: kCircularStdMedium,
+                          color: kWhiteColor),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: 10),
                     SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/icons/setting.png",
-                        fit: BoxFit.cover,
-                        color: kTextSecondaryColor,
-                      ),
-                    ),
+                        height: 20, width: 20, child: Icon(Icons.settings)),
                   ],
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

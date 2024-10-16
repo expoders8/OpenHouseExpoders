@@ -11,6 +11,7 @@ import '../../config/provider/snackbar_provider.dart';
 class LeaseService {
   extendProperty(
     String selecteddate,
+    String rentAmount,
     String propertyId,
   ) async {
     final GetLeasePropertyController getLeasePropertyController =
@@ -18,14 +19,15 @@ class LeaseService {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
-      var response = await http.post(
-          Uri.parse('$baseUrl/api/host/property_rentel_extend'),
-          body: json.encode({
-            "userid": userid["id"],
-            "propertyid": propertyId,
-            "datetime": selecteddate
-          }),
-          headers: {'Content-type': 'application/json'});
+      var response =
+          await http.post(Uri.parse('$baseUrl/api/host/property_rentel_extend'),
+              body: json.encode({
+                "userid": userid["id"],
+                "propertyid": propertyId,
+                "datetime": selecteddate,
+                "amount": rentAmount
+              }),
+              headers: {'Content-type': 'application/json'});
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (decodedUser['success']) {

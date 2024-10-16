@@ -67,6 +67,14 @@ class TenantService {
     final tabController = Get.put(TabCountController());
     final GetAllTenantController getAllTenantController =
         Get.put(GetAllTenantController());
+    String formattedRentAmount =
+        getAllTenantController.rentAmount.value.toString();
+
+// Remove .0 only if it's a whole number
+    if (formattedRentAmount.endsWith('.0')) {
+      formattedRentAmount =
+          formattedRentAmount.substring(0, formattedRentAmount.length - 2);
+    }
     try {
       var response = await http.post(Uri.parse('$baseUrl/api/tenant/invite'),
           body: json.encode({
@@ -75,7 +83,7 @@ class TenantService {
             "status": "",
             "host_user_id": userid["id"],
             "property_id": getAllTenantController.propertyId.value,
-            "rent_amount": getAllTenantController.rentAmount.value,
+            "rent_amount": formattedRentAmount,
             "rent_amount_unit": null,
             "created_by_id": null,
             "updated_by_id": null,

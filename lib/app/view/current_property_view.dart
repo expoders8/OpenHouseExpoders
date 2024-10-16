@@ -52,7 +52,8 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
             ),
           );
         } else {
-          if (getCurrentPropertyController.trtrrtrt.isNotEmpty) {
+          if (getCurrentPropertyController.trtrrtrt.isNotEmpty &&
+              getCurrentPropertyController.trtrrtrt[0].data != null) {
             return Column(
               children: [
                 Padding(
@@ -401,9 +402,9 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
               children: [
                 const SizedBox(height: 100),
                 Image.asset(
-                  "assets/house101.png",
+                  "assets/images/noproperty1.png",
                   fit: BoxFit.cover,
-                  scale: 2,
+                  scale: 2.3,
                 ),
                 const Text(
                   "You have no current leases or requests. Waiting for an invitation? Check your email for host invitations or\nexplore properties once added.",

@@ -48,17 +48,23 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
           if (getAvailablePropertyController.propertiesList.isNotEmpty) {
             if (getAvailablePropertyController
                 .propertiesList[0].data!.isEmpty) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 55.0),
-                  child: Text(
-                    "No Properties",
+              return Column(
+                children: [
+                  const SizedBox(height: 150),
+                  Image.asset(
+                    "assets/house101.png",
+                    fit: BoxFit.cover,
+                    scale: 2,
+                  ),
+                  const Text(
+                    "No properties",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 15,
                         fontFamily: kCircularStdMedium),
                   ),
-                ),
+                ],
               );
             } else {
               return Column(
@@ -124,17 +130,23 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                                 data.id.toString(),
                                 data.amenitys!);
                           } else {
-                            return const Center(
-                              child: Padding(
-                                padding: EdgeInsets.only(bottom: 55.0),
-                                child: Text(
-                                  "No Properties",
+                            return Column(
+                              children: [
+                                const SizedBox(height: 150),
+                                Image.asset(
+                                  "assets/house101.png",
+                                  fit: BoxFit.cover,
+                                  scale: 2,
+                                ),
+                                const Text(
+                                  "No properties",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: kPrimaryColor,
                                       fontSize: 15,
                                       fontFamily: kCircularStdMedium),
                                 ),
-                              ),
+                              ],
                             );
                           }
                         },
@@ -145,17 +157,23 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
               );
             }
           } else {
-            return const Center(
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 55.0),
-                child: Text(
-                  "No Properties",
+            return Column(
+              children: [
+                const SizedBox(height: 150),
+                Image.asset(
+                  "assets/house101.png",
+                  fit: BoxFit.cover,
+                  scale: 2,
+                ),
+                const Text(
+                  "No properties",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 15,
                       fontFamily: kCircularStdMedium),
                 ),
-              ),
+              ],
             );
           }
         }
@@ -198,6 +216,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
               getAllTenantController.propertyName.value = name;
               getAllTenantController.propertyAddress.value = address;
               getAllTenantController.propertyImage.value = image;
+              getAllTenantController.rentAmount.value = price;
             });
             getnotleaseDetailsPropertiesController.propertyId(id);
             getnotleaseDetailsPropertiesController.fetchPropertyDetail();

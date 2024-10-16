@@ -23,6 +23,7 @@ import '../../../../config/constant/color_constant.dart';
 import '../../../../config/provider/loader_provider.dart';
 import '../../../view/house keeper/house_keeper_view.dart';
 import '../../../controller/property_detail_controller.dart';
+import 'lease_extend_page.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
   const LeasePropertyDetailPage({super.key});
@@ -685,51 +686,47 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                       children: [
                         CupertinoButton(
                           onPressed: () {
-                            // Get.to(() => LeaseExtendPropertyPage(
-                            //       id: id,
-                            //     ));
-                            BottomPicker.date(
-                              pickerTitle: const Text(""),
-                              onSubmit: (index) {
-                                String formattedDate =
-                                    DateFormat('dd-MM-yyyy').format(index);
-                                String formattedEndDate =
-                                    DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                                        .format(index);
-                                if (mounted) {
-                                  setState(() {
-                                    selectedEndDate = formattedDate;
-                                    pickedEndDate = formattedEndDate;
-                                  });
-                                  LoaderX.show(context, 60.0, 60.0);
-                                  leaseService.extendProperty(
-                                      pickedEndDate, id);
-                                }
-                              },
-                              dateOrder: DatePickerDateOrder.ymd,
-                              minDateTime: DateTime(2024, 1, 1, 17, 57, 25),
-                              maxDateTime: DateTime(2050, 1, 1),
-                              pickerTextStyle: const TextStyle(
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                              onClose: () {
-                                Navigator.of(context).pop();
-                              },
-                              bottomPickerTheme: BottomPickerTheme.plumPlate,
-                              buttonAlignment: MainAxisAlignment.center,
-                              buttonContent: const Center(
-                                  child: Text(
-                                "Save",
-                                style: TextStyle(color: kWhiteColor),
-                              )),
-                              buttonStyle: BoxDecoration(
-                                  color: kButtonColor,
-                                  borderRadius: BorderRadius.circular(15)),
-                              closeIconColor: kPrimaryColor,
-                              closeIconSize: 25,
-                            ).show(context);
+                            Get.to(() => LeaseExtendPropertyPage(
+                                  id: id,
+                                ));
+                            // BottomPicker.date(
+                            //   pickerTitle: const Text(""),
+                            //   onSubmit: (index) {
+
+                            //     if (mounted) {
+                            //       setState(() {
+                            //         selectedEndDate = formattedDate;
+                            //         pickedEndDate = formattedEndDate;
+                            //       });
+                            //       LoaderX.show(context, 60.0, 60.0);
+                            //       leaseService.extendProperty(
+                            //           pickedEndDate, id);
+                            //     }
+                            //   },
+                            //   dateOrder: DatePickerDateOrder.ymd,
+                            //   minDateTime: DateTime(2024, 1, 1, 17, 57, 25),
+                            //   maxDateTime: DateTime(2050, 1, 1),
+                            //   pickerTextStyle: const TextStyle(
+                            //     color: kPrimaryColor,
+                            //     fontWeight: FontWeight.bold,
+                            //     fontSize: 14,
+                            //   ),
+                            //   onClose: () {
+                            //     Navigator.of(context).pop();
+                            //   },
+                            //   bottomPickerTheme: BottomPickerTheme.plumPlate,
+                            //   buttonAlignment: MainAxisAlignment.center,
+                            //   buttonContent: const Center(
+                            //       child: Text(
+                            //     "Save",
+                            //     style: TextStyle(color: kWhiteColor),
+                            //   )),
+                            //   buttonStyle: BoxDecoration(
+                            //       color: kButtonColor,
+                            //       borderRadius: BorderRadius.circular(15)),
+                            //   closeIconColor: kPrimaryColor,
+                            //   closeIconSize: 25,
+                            // ).show(context);
                           },
                           padding: EdgeInsets.zero,
                           child: Container(
