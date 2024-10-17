@@ -174,7 +174,8 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
                     Platform.isIOS
                         ? CupertinoButton(
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed:  
+                              appleSignin,
                             child: Container(
                               width: size.width > 500
                                   ? 600
