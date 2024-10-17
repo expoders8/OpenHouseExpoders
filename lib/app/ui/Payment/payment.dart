@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
+import '../../controller/payment_controller.dart';
 import '../../routes/app_pages.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
@@ -23,8 +25,10 @@ class _PaymentPageState extends State<PaymentPage> {
       firstlater = "",
       lastlatter = "",
       selectedRoll = "";
-  // final GetPaymentController getPaymentController =
-  //     Get.put(GetPaymentController());
+  final GetPaymentTenantController getPaymentTenantController =
+      Get.put(GetPaymentTenantController());
+  final GetPaymentHostController getPaymentHostController =
+      Get.put(GetPaymentHostController());
   int totalamount = 0;
   int dueamount = 0;
   @override
@@ -55,11 +59,18 @@ class _PaymentPageState extends State<PaymentPage> {
     }
   }
 
+  int totalPayrent = 0;
+  int totalAmount = 0;
+  int penddingrentAmount = 0;
+  DateTime? dateDueTime;
+  DateTime? dateTime;
+  String formattedDueDate = '';
+  String formattedDate = '';
+
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
-      // getPaymentController.fetchAllPayments();
+      getPaymentTenantController.fetchAllPayments();
     });
   }
 
@@ -237,241 +248,336 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  // Flexible(
-                  //   child: Obx(
-                  //     () {
-                  //       if (getPaymentController.isLoading.value) {
-                  //         return Container(
-                  //           color: kBackGroundColor,
-                  //           child: const Center(
-                  //             child: CircularProgressIndicator(
-                  //               color: kSelectedIconColor,
-                  //             ),
-                  //           ),
-                  //         );
-                  //       } else {
-                  //         if (getPaymentController.paymentList.isNotEmpty) {
-                  //           if (getPaymentController
-                  //               .paymentList[0].data!.isEmpty) {
-                  //             return const Center(
-                  //               child: Padding(
-                  //                 padding: EdgeInsets.only(bottom: 55.0),
-                  //                 child: Text(
-                  //                   "No Payments",
-                  //                   style: TextStyle(
-                  //                       color: kPrimaryColor,
-                  //                       fontSize: 15,
-                  //                       fontFamily: kCircularStdMedium),
-                  //                 ),
-                  //               ),
-                  //             );
-                  //           } else {
-                  //             return Column(
-                  //               children: [
-                  //                 Flexible(
-                  //                   child: RefreshIndicator(
-                  //                     onRefresh: _refreshItems,
-                  //                     child: ListView.builder(
-                  //                       scrollDirection: Axis.vertical,
-                  //                       padding: const EdgeInsets.symmetric(
-                  //                           horizontal: 15.0),
-                  //                       itemCount: getPaymentController
-                  //                           .paymentList[0].data!.length,
-                  //                       itemBuilder: (context, index) {
-                  //                         var requestData = getPaymentController
-                  //                             .paymentList[0].data!;
-                  //                         if (requestData.isNotEmpty) {
-                  //                           var data = requestData[index];
-                  //                           return payment(
-                  //                               "assets/icons/boy 2.png",
-                  //                               "\$${data.totalPayment}",
-                  //                               data.address,
-                  //                               "Pending",
-                  //                               data.name,
-                  //                               data.mobileNo,
-                  //                               "\$250",
-                  //                               "25-06-2025");
-                  //                         } else {
-                  //                           return const Center(
-                  //                             child: Text(
-                  //                               "No Payments",
-                  //                               textAlign: TextAlign.center,
-                  //                               style: TextStyle(
-                  //                                   color: kPrimaryColor,
-                  //                                   fontSize: 15,
-                  //                                   fontFamily:
-                  //                                       kCircularStdMedium),
-                  //                             ),
-                  //                           );
-                  //                         }
-                  //                       },
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //                 Flexible(
-                  //                   child: Padding(
-                  //                     padding: const EdgeInsets.symmetric(
-                  //                         horizontal: 20.0),
-                  //                     child: CupertinoButton(
-                  //                       padding: EdgeInsets.zero,
-                  //                       onPressed: () {},
-                  //                       child: Container(
-                  //                         height: 45,
-                  //                         width: Get.width,
-                  //                         decoration: BoxDecoration(
-                  //                             borderRadius:
-                  //                                 BorderRadius.circular(25),
-                  //                             border: Border.all(
-                  //                                 color: kWhiteColor),
-                  //                             color: kButtonColor),
-                  //                         child: const Center(
-                  //                           child: Text(
-                  //                             "Pay Now",
-                  //                             style: TextStyle(
-                  //                                 color: kWhiteColor,
-                  //                                 fontFamily:
-                  //                                     kCircularStdNormal,
-                  //                                 fontSize: 18),
-                  //                           ),
-                  //                         ),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ],
-                  //             );
-                  //           }
-                  //         } else {
-                  //           return const Center(
-                  //             child: Padding(
-                  //               padding: EdgeInsets.only(bottom: 55.0),
-                  //               child: Text(
-                  //                 "No Payments",
-                  //                 style: TextStyle(
-                  //                     color: kPrimaryColor,
-                  //                     fontSize: 15,
-                  //                     fontFamily: kCircularStdMedium),
-                  //               ),
-                  //             ),
-                  //           );
-                  //         }
-                  //       }
-                  //     },
-                  //   ),
-                  // ),
+                  Flexible(
+                    child: Obx(
+                      () {
+                        if (getPaymentTenantController.isLoading.value) {
+                          return Container(
+                            color: kBackGroundColor,
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                color: kSelectedIconColor,
+                              ),
+                            ),
+                          );
+                        } else {
+                          if (getPaymentTenantController
+                              .paymentList.isNotEmpty) {
+                            if (getPaymentTenantController
+                                .paymentList[0].data!.isEmpty) {
+                              return const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 55.0),
+                                  child: Text(
+                                    "No Payments",
+                                    style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontFamily: kCircularStdMedium),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Column(
+                                children: [
+                                  Flexible(
+                                    child: RefreshIndicator(
+                                      onRefresh: _refreshItems,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15.0),
+                                        itemCount: getPaymentTenantController
+                                            .paymentList[0].data!.length,
+                                        itemBuilder: (context, index) {
+                                          var requestData =
+                                              getPaymentTenantController
+                                                  .paymentList[0].data!;
+                                          if (requestData.isNotEmpty) {
+                                            var data = requestData[index];
+                                            dateDueTime = DateTime.parse(
+                                                data.dueDate!.toString());
+                                            formattedDueDate =
+                                                DateFormat('dd MMM yyyy')
+                                                    .format(dateDueTime!);
+                                            dateTime = DateTime.parse(
+                                                data.paymentDate!.toString());
+                                            formattedDate =
+                                                DateFormat('dd MMM yyyy')
+                                                    .format(dateTime!);
+                                            if (requestData[index]
+                                                .totalPayment!
+                                                .isNotEmpty) {
+                                              totalPayrent = data.totalPayment!
+                                                  .map((expense) => int.parse(
+                                                      expense.paymentAmount!))
+                                                  .reduce((sum, price) =>
+                                                      sum + price);
+                                              int currentTotalRent = int.parse(
+                                                  data.totalAmount.toString());
+                                              totalAmount = int.parse(
+                                                  data.totalAmount.toString());
+                                              penddingrentAmount =
+                                                  currentTotalRent -
+                                                      totalPayrent;
+                                            }
+                                            return payment(
+                                                data.userimage.toString(),
+                                                "\$ $totalPayrent",
+                                                data.propertyAddress,
+                                                penddingrentAmount == 0
+                                                    ? "Paid"
+                                                    : "Pending",
+                                                data.username,
+                                                data.phoneNumber.toString() ==
+                                                        "null"
+                                                    ? "null"
+                                                    : data.phoneNumber
+                                                        .toString(),
+                                                "\$ $penddingrentAmount",
+                                                penddingrentAmount == 0
+                                                    ? formattedDate
+                                                    : formattedDueDate);
+                                          } else {
+                                            return const Center(
+                                              child: Text(
+                                                "No Payments",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 15,
+                                                    fontFamily:
+                                                        kCircularStdMedium),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+                          } else {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 55.0),
+                                child: Text(
+                                  "No Payments",
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ),
                 ],
               )
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: Get.width / 2.250,
-                            decoration: BoxDecoration(
-                              color: kWhiteColor,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 15.0,
-                                  right: 15.0,
-                                  top: 20,
-                                  bottom: 20.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Total Amount",
-                                    style: TextStyle(
-                                        fontFamily: kCircularStdMedium,
-                                        fontSize: 15,
-                                        color: kPrimaryColor),
-                                  ),
-                                  Text(
-                                    "\$5420",
-                                    style: TextStyle(
-                                        fontFamily: kCircularStdMedium,
-                                        fontSize: 25,
-                                        color: kPrimaryColor),
-                                  ),
-                                ],
-                              ),
+            : Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: Get.width / 2.250,
+                          decoration: BoxDecoration(
+                            color: kWhiteColor,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 15.0, right: 15.0, top: 20, bottom: 20.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Total Amount",
+                                  style: TextStyle(
+                                      fontFamily: kCircularStdMedium,
+                                      fontSize: 15,
+                                      color: kPrimaryColor),
+                                ),
+                                Text(
+                                  "\$$totalamount",
+                                  style: const TextStyle(
+                                      fontFamily: kCircularStdMedium,
+                                      fontSize: 25,
+                                      color: kPrimaryColor),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          Container(
-                            width: Get.width / 2.250,
-                            decoration: BoxDecoration(
-                              color: kButtonColor,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 15.0,
-                                  right: 15.0,
-                                  top: 20,
-                                  bottom: 20.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Pending Amount",
-                                    style: TextStyle(
-                                        fontFamily: kCircularStdMedium,
-                                        fontSize: 15,
-                                        color: kWhiteColor),
-                                  ),
-                                  Text(
-                                    "\$1952",
-                                    style: TextStyle(
-                                        fontFamily: kCircularStdMedium,
-                                        fontSize: 25,
-                                        color: kWhiteColor),
-                                  ),
-                                ],
-                              ),
+                        ),
+                        const SizedBox(width: 10),
+                        Container(
+                          width: Get.width / 2.250,
+                          decoration: BoxDecoration(
+                            color: kButtonColor,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 15.0, right: 15.0, top: 20, bottom: 20.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Pending Amount",
+                                  style: TextStyle(
+                                      fontFamily: kCircularStdMedium,
+                                      fontSize: 15,
+                                      color: kWhiteColor),
+                                ),
+                                Text(
+                                  "\$$dueamount",
+                                  style: const TextStyle(
+                                      fontFamily: kCircularStdMedium,
+                                      fontSize: 25,
+                                      color: kWhiteColor),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 15),
-                      payment(
-                          "assets/icons/boy 1.png",
-                          "\$1850",
-                          "224 Robson St, Vancouver",
-                          "Paid",
-                          "Tenant Name",
-                          "+91 1234567890",
-                          "\$0",
-                          "12-06-2025"),
-                      const SizedBox(height: 12),
-                      payment(
-                          "assets/icons/boy 2.png",
-                          "\$1850",
-                          "101 Main Street",
-                          "Pending",
-                          "Tenant Name",
-                          "+91 9898758462",
-                          "\$250",
-                          "25-06-2025"),
-                      const SizedBox(height: 12),
-                      payment(
-                          "assets/icons/boy 3.png",
-                          "\$1850",
-                          "206 / B , Main Street",
-                          "Paid",
-                          "Tenant Name",
-                          "+91 7859642316",
-                          "\$250",
-                          "25-06-2025"),
-                      const SizedBox(height: 90)
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 15),
+                  Flexible(
+                    child: Obx(
+                      () {
+                        if (getPaymentHostController.isLoading.value) {
+                          return Container(
+                            color: kBackGroundColor,
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                color: kSelectedIconColor,
+                              ),
+                            ),
+                          );
+                        } else {
+                          if (getPaymentHostController.paymentList.isNotEmpty) {
+                            if (getPaymentHostController
+                                .paymentList[0].data!.isEmpty) {
+                              return const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 55.0),
+                                  child: Text(
+                                    "No Payments",
+                                    style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontFamily: kCircularStdMedium),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Column(
+                                children: [
+                                  Flexible(
+                                    child: RefreshIndicator(
+                                      onRefresh: _refreshItems,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15.0),
+                                        itemCount: getPaymentHostController
+                                            .paymentList[0].data!.length,
+                                        itemBuilder: (context, index) {
+                                          var requestData =
+                                              getPaymentHostController
+                                                  .paymentList[0].data!;
+                                          if (requestData.isNotEmpty) {
+                                            var data = requestData[index];
+                                            dateDueTime = DateTime.parse(
+                                                data.dueDate!.toString());
+                                            formattedDueDate =
+                                                DateFormat('dd MMM yyyy')
+                                                    .format(dateDueTime!);
+                                            dateTime = DateTime.parse(
+                                                data.paymentDate!.toString());
+                                            formattedDate =
+                                                DateFormat('dd MMM yyyy')
+                                                    .format(dateTime!);
+                                            if (requestData[index]
+                                                .totalPayment!
+                                                .isNotEmpty) {
+                                              totalPayrent = data.totalPayment!
+                                                  .map((expense) => int.parse(
+                                                      expense.paymentAmount!))
+                                                  .reduce((sum, price) =>
+                                                      sum + price);
+                                              int currentTotalRent = int.parse(
+                                                  data.totalAmount.toString());
+                                              totalAmount = int.parse(
+                                                  data.totalAmount.toString());
+                                              penddingrentAmount =
+                                                  currentTotalRent -
+                                                      totalPayrent;
+                                            }
+                                            return payment(
+                                                data.userimage.toString(),
+                                                "\$ $totalPayrent",
+                                                data.propertyAddress,
+                                                penddingrentAmount == 0
+                                                    ? "Paid"
+                                                    : "Pending",
+                                                data.username,
+                                                data.phoneNumber.toString() ==
+                                                        "null"
+                                                    ? "null"
+                                                    : data.phoneNumber
+                                                        .toString(),
+                                                "\$ $penddingrentAmount",
+                                                penddingrentAmount == 0
+                                                    ? formattedDate
+                                                    : formattedDueDate);
+                                          } else {
+                                            return const Center(
+                                              child: Text(
+                                                "No Payments",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 15,
+                                                    fontFamily:
+                                                        kCircularStdMedium),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+                          } else {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 55.0),
+                                child: Text(
+                                  "No Payments",
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
       ),
     );
@@ -543,30 +649,47 @@ class _PaymentPageState extends State<PaymentPage> {
                                     fontFamily: kCircularStdMedium)))
                       ]),
                       const SizedBox(height: 5),
-                      Row(children: [
-                        const Icon(
-                          Icons.phone,
-                          size: 16,
-                          color: kButtonColor,
-                        ),
-                        const SizedBox(width: 10),
-                        SizedBox(
-                            width: Get.width - 220,
-                            child: Text(cantact,
-                                style: const TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 13,
-                                    fontFamily: kCircularStdMedium)))
-                      ]),
+                      cantact.toString() == "null"
+                          ? Container()
+                          : Row(children: [
+                              const Icon(
+                                Icons.phone,
+                                size: 16,
+                                color: kButtonColor,
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                  width: Get.width - 220,
+                                  child: Text(cantact,
+                                      style: const TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 13,
+                                          fontFamily: kCircularStdMedium)))
+                            ]),
                     ]),
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.asset(
-                    userimage,
-                    fit: BoxFit.cover,
-                    height: 65,
-                    width: 65,
-                  ),
+                  borderRadius: BorderRadius.circular(100),
+                  child: userimage.toString() != "null"
+                      ? Image.network(
+                          userimage,
+                          fit: BoxFit.cover,
+                          height: 65,
+                          width: 65,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              "assets/images/blank_profile.png",
+                              fit: BoxFit.cover,
+                              height: 65,
+                              width: 65,
+                            );
+                          },
+                        )
+                      : Image.asset(
+                          "assets/images/blank_profile.png",
+                          fit: BoxFit.cover,
+                          height: 65,
+                          width: 65,
+                        ),
                 ),
               ],
             ),

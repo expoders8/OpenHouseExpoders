@@ -63,75 +63,68 @@ class _TrackPropertyIncomePageState extends State<TrackPropertyIncomePage> {
                 return Column(
                   children: [
                     Flexible(
-                      child: RefreshIndicator(
-                        onRefresh: _refreshItems,
-                        child: ListView.builder(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          itemCount: getAllIncomeTrackController
-                              .propertyList[0].data!.length,
-                          itemBuilder: (context, index) {
-                            var requestData = getAllIncomeTrackController
-                                .propertyList[0].data!;
-                            if (requestData.isNotEmpty) {
-                              var data = requestData[index];
-                              if (requestData[index]
-                                  .totalExpenses!
-                                  .isNotEmpty) {
-                                totalExpense = data.totalExpenses!
-                                    .map((expense) =>
-                                        int.parse(expense.propertyExpense!))
-                                    .reduce((sum, price) => sum + price);
-                              }
-                              if (requestData[index].pending!.isNotEmpty) {
-                                totalPenddingrent = data.pending!
-                                    .map((expense) =>
-                                        int.parse(expense.pendingAmount!))
-                                    .reduce((sum, price) => sum + price);
-
-                                int currentPendingRent = int.tryParse(
-                                        totalPenddingrent.toString()) ??
-                                    0;
-                                int totalAmount =
-                                    int.tryParse(data.totalAmount.toString()) ??
-                                        0;
-                                totalPenddingrent =
-                                    totalAmount - currentPendingRent;
-                              }
-                              totalAmount = totalPenddingrent - totalExpense;
-                              return SingleChildScrollView(
-                                physics: const BouncingScrollPhysics(
-                                    parent: AlwaysScrollableScrollPhysics()),
-                                child: Column(
-                                  children: [
-                                    leaseproperty(
-                                      data.propertyImage.toString(),
-                                      data.propertyAddress.toString(),
-                                      data.propertyName.toString(),
-                                      "\$ ${data.totalAmount.toString()}",
-                                      "\$ $totalPenddingrent",
-                                      "\$ $totalExpense",
-                                      "\$ $totalAmount",
-                                    )
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return SizedBox(
-                                height: Get.height - 100,
-                                child: const Center(
-                                  child: Text(
-                                    "No property",
-                                    style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontSize: 15,
-                                        fontFamily: kCircularStdMedium),
-                                  ),
-                                ),
-                              );
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        itemCount: getAllIncomeTrackController
+                            .propertyList[0].data!.length,
+                        itemBuilder: (context, index) {
+                          var requestData =
+                              getAllIncomeTrackController.propertyList[0].data!;
+                          if (requestData.isNotEmpty) {
+                            var data = requestData[index];
+                            if (requestData[index].totalExpenses!.isNotEmpty) {
+                              totalExpense = data.totalExpenses!
+                                  .map((expense) =>
+                                      int.parse(expense.propertyExpense!))
+                                  .reduce((sum, price) => sum + price);
                             }
-                          },
-                        ),
+                            if (requestData[index].pending!.isNotEmpty) {
+                              totalPenddingrent = data.pending!
+                                  .map((expense) =>
+                                      int.parse(expense.pendingAmount!))
+                                  .reduce((sum, price) => sum + price);
+
+                              int currentPendingRent =
+                                  int.tryParse(totalPenddingrent.toString()) ??
+                                      0;
+                              int totalAmount =
+                                  int.tryParse(data.totalAmount.toString()) ??
+                                      0;
+                              totalPenddingrent =
+                                  totalAmount - currentPendingRent;
+                            }
+                            totalAmount = totalPenddingrent - totalExpense;
+                            return Column(
+                              children: [
+                                leaseproperty(
+                                  data.propertyImage.toString(),
+                                  data.propertyAddress.toString(),
+                                  data.propertyName.toString(),
+                                  "\$ ${data.totalAmount.toString()}",
+                                  "\$ $totalPenddingrent",
+                                  "\$ $totalExpense",
+                                  "\$ $totalAmount",
+                                )
+                              ],
+                            );
+                          } else {
+                            return SizedBox(
+                              height: Get.height - 100,
+                              child: const Center(
+                                child: Text(
+                                  "No property",
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 15,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],

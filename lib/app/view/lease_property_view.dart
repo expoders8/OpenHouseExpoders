@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../config/constant/constant.dart';
+import '../controller/payment_controller.dart';
 import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
@@ -23,6 +24,8 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
   var leasesearchController = TextEditingController();
   final GetDetailsPropertiesController getDetailsPropertiesController =
       Get.put(GetDetailsPropertiesController());
+  final GetPropertyPaymentController getPropertyPaymentController =
+      Get.put(GetPropertyPaymentController());
   String selectedRoll = "";
   DateTime? dateTime;
   String formattedDate = '';
@@ -178,7 +181,8 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
                                         onPressed: () {
                                           getDetailsPropertiesController
                                               .propertyId(data.id);
-
+                                          getPropertyPaymentController
+                                              .propertyId(data.id);
                                           getDetailsPropertiesController
                                               .fetchPropertyDetail();
                                           Get.to(() =>

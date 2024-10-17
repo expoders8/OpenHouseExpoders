@@ -64,44 +64,41 @@ class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
                 return Column(
                   children: [
                     Flexible(
-                      child: RefreshIndicator(
-                        onRefresh: _refreshItems,
-                        child: ListView.builder(
-                          itemCount: getAllPropertyExpensesController
-                              .expensetList[0].data!.length,
-                          itemBuilder: (context, index) {
-                            var requestData = getAllPropertyExpensesController
-                                .expensetList[0].data!;
-                            if (requestData.isNotEmpty) {
-                              var data = requestData[index];
-                              return SingleChildScrollView(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0, vertical: 5.0),
-                                  child: Column(
-                                    children: [
-                                      leaseproperty(
-                                          data.propertyImage.toString(),
-                                          data.propertyAddress.toString(),
-                                          data.propertyName.toString(),
-                                          data.rentals!)
-                                    ],
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return const Center(
-                                child: Text(
-                                  "No Expense",
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 15,
-                                      fontFamily: kCircularStdMedium),
-                                ),
-                              );
-                            }
-                          },
-                        ),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        itemCount: getAllPropertyExpensesController
+                            .expensetList[0].data!.length,
+                        itemBuilder: (context, index) {
+                          var requestData = getAllPropertyExpensesController
+                              .expensetList[0].data!;
+                          if (requestData.isNotEmpty) {
+                            var data = requestData[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15.0, vertical: 5.0),
+                              child: Column(
+                                children: [
+                                  leaseproperty(
+                                      data.propertyImage.toString(),
+                                      data.propertyAddress.toString(),
+                                      data.propertyName.toString(),
+                                      data.rentals!)
+                                ],
+                              ),
+                            );
+                          } else {
+                            return const Center(
+                              child: Text(
+                                "No Expense",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],
