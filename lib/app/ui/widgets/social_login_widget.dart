@@ -51,6 +51,7 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
           await googleSignIn.signIn();
 
       if (googleSignInAccount != null) {
+        // ignore: use_build_context_synchronously
         LoaderX.show(context, 60.0, 60.0);
         final GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
@@ -97,23 +98,23 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
     Future.delayed(const Duration(milliseconds: 100), () async {
       LoaderX.show(context, 50.0, 50.0);
       await authService
-            .socialLogin(
-              credential.givenName.toString(),
-              credential.familyName.toString(),
-              credential.email.toString(),
-          "",
-          credential.userIdentifier.toString(),
-          "Apple",
-        )
-            .then(
-          (value) async {
-            if (value) {
-              LoaderX.hide();
-              Get.offAll(() => const TabPage());
-            }
-            return null;
-          },
-        );
+          .socialLogin(
+        credential.givenName.toString(),
+        credential.familyName.toString(),
+        credential.email.toString(),
+        "",
+        credential.userIdentifier.toString(),
+        "Apple",
+      )
+          .then(
+        (value) async {
+          if (value) {
+            LoaderX.hide();
+            Get.offAll(() => const TabPage());
+          }
+          return null;
+        },
+      );
     });
   }
 

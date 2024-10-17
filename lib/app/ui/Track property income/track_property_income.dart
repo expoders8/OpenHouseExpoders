@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -22,12 +21,6 @@ class _TrackPropertyIncomePageState extends State<TrackPropertyIncomePage> {
   int totalAmount = 0;
   DateTime? dateTime;
   String formattedDate = '';
-  Future<void> _refreshItems() async {
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      getAllIncomeTrackController.getAllProperties();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

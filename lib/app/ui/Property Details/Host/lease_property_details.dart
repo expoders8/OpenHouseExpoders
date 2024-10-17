@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:bottom_picker/bottom_picker.dart';
-import 'package:bottom_picker/resources/arrays.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
 import '../../../view/nearby_view.dart';

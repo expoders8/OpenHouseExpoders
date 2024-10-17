@@ -40,12 +40,6 @@ class _PropertyPageState extends State<PropertyPage>
       lastName = "",
       firstlater = "",
       lastlatter = "";
-  Future<void> _refreshList() async {
-    await Future.delayed(const Duration(microseconds: 1000));
-    setState(() {
-      getCurrentPropertyController.fetchAllProperties();
-    });
-  }
 
   @override
   void initState() {

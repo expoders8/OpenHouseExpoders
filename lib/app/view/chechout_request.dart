@@ -458,8 +458,6 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
     );
   }
 
-  _bottomSheetForChackout() {}
-
   invitationDialog(String id, name, address) async {
     return await showDialog(
       context: context,

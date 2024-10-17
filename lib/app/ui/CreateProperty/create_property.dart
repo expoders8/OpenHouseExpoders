@@ -103,7 +103,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController propertyPriceController = TextEditingController();
   List<dynamic> _placeList = [];
   int totalImageCount = 0;
-  String _sessionToken = '1234567890',
+  String sessionToken = '1234567890',
       countryName = "",
       placesApiKey = "AIzaSyAQYUMPajZSmEupi3I7rsukQMSAZJmh-XA";
   @override
@@ -124,7 +124,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   }
 
   _onChanged() {
-    if (_sessionToken == "null") {
+    if (sessionToken == "null") {
       setState(() {
         // _sessionToken = uuid.v4();
       });
@@ -137,7 +137,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
       String baseURL =
           'https://maps.googleapis.com/maps/api/place/autocomplete/json';
       String request =
-          '$baseURL?input=$input&key=$placesApiKey&sessiontoken=$_sessionToken';
+          '$baseURL?input=$input&key=$placesApiKey&sessiontoken=$sessionToken';
       var response = await http.get(Uri.parse(request));
       if (response.statusCode == 200) {
         setState(() {
@@ -1339,6 +1339,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
       );
 
       if (pickedImages.isNotEmpty) {
+        // ignore: use_build_context_synchronously
         LoaderX.show(context, 60.0, 60.0);
         fileList.clear(); // Clear previous files and re-add initial paths
         imageList = pickedImages;

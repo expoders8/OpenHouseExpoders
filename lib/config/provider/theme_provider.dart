@@ -9,7 +9,7 @@ class ThemeProvider extends ChangeNotifier {
   static const fontFamilyMedium = kCircularStdMedium;
 
   static BoxDecoration scaffoldDecoration =
-      BoxDecoration(color: primary.colorScheme.background);
+      BoxDecoration(color: primary.colorScheme.surface);
 
   static ThemeData primary = ThemeData(
     fontFamily: fontFamilyNormal,

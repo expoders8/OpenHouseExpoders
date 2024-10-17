@@ -16,12 +16,6 @@ class TrackLeaseExpensesPage extends StatefulWidget {
 class _TrackLeaseExpensesPageState extends State<TrackLeaseExpensesPage> {
   final GetAllPropertyExpensesController getAllPropertyExpensesController =
       Get.put(GetAllPropertyExpensesController());
-  Future<void> _refreshItems() async {
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      getAllPropertyExpensesController.getAllExpenses();
-    });
-  }
 
   @override
   void initState() {

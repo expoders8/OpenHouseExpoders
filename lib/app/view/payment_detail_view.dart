@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 
+import '../controller/payment_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
-import '../controller/payment_controller.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({super.key});
