@@ -99,7 +99,7 @@ class CheckoutService {
         getAvailablePropertyController.fetchAllProperties();
         getLeasePropertyController.fetchAllProperties();
         LoaderX.hide();
-        Get.back();
+        // Get.back();
         getAllCheckoutController.getAllCheckoutInvitation();
         WidgetsBinding.instance.addPostFrameCallback((_) {
           getAllCurrentTenantsController.fetchAllTenants();

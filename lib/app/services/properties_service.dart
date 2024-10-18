@@ -28,6 +28,7 @@ class PropertiesService {
       String propertyprice,
       String facilities,
       String address,
+      String address1,
       String countryid,
       String stateid,
       String cityname,
@@ -38,6 +39,7 @@ class PropertiesService {
       String bathrooms,
       String billtype,
       String id,
+      String category,
       List<File> fileList) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
@@ -53,11 +55,15 @@ class PropertiesService {
         ..fields['facilities'] = facilities
         ..fields['person'] = capacity
         ..fields['address'] = address
+        ..fields['address1'] = address1
         ..fields['country_id'] = countryid
         ..fields['city_name'] = cityname
         ..fields['profile_picture'] = ""
         ..fields['created_by_id'] = userid["id"]
         ..fields['updated_by_id'] = ""
+        ..fields['number_of_bedrooms'] = bedrooms
+        ..fields['number_of_washrooms'] = bathrooms
+        ..fields['category'] = category
         ..fields['amenity_id'] =
             getAllAmenitiesController.selectedAmenitis.value
         ..fields['id'] = id;
@@ -100,6 +106,7 @@ class PropertiesService {
       String propertyprice,
       String facilities,
       String address,
+      String address1,
       String countryid,
       String stateid,
       String cityname,
@@ -110,6 +117,7 @@ class PropertiesService {
       String bathrooms,
       String billtype,
       String id,
+      String category,
       String isActive,
       List<File> fileList) async {
     var userdata = getStorage.read('user');
@@ -133,6 +141,9 @@ class PropertiesService {
         ..fields['profile_picture'] = ""
         ..fields['created_by_id'] = userid["id"]
         ..fields['updated_by_id'] = ""
+        ..fields['number_of_bedrooms'] = bedrooms
+        ..fields['number_of_washrooms'] = bathrooms
+        ..fields['category'] = category
         ..fields['is_active'] = isActive
         ..fields['amenity_id'] =
             getAllAmenitiesController.selectedAmenitis1.toString()

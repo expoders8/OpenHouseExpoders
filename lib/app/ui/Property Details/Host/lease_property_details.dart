@@ -44,6 +44,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
   LeaseService leaseService = LeaseService();
   String pickedEndDate = "";
   String selectedEndDate = "";
+  bool showUI = false;
   @override
   void initState() {
     super.initState();
@@ -62,9 +63,11 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
             ...getDetailsPropertiesController.detailModel!.data!.images!
                 .map((imageUrl) => NetworkImage(imageUrl)),
           ];
+          showUI = true;
         });
       } else {
         setState(() {
+          showUI = true;
           images = [const AssetImage('assets/images/noproperty.png')];
         });
       }
@@ -94,7 +97,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
       body: Obx(() {
         if (getDetailsPropertiesController.isLoading.value) {
           return const Center(
-              child: CircularProgressIndicator(color: kSelectedIconColor));
+              child: CircularProgressIndicator(color: kPrimaryColor));
         } else {
           var propertydata = getDetailsPropertiesController.detailModel!.data!;
           return Stack(
@@ -102,16 +105,20 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
               SizedBox(
                 height: Get.height / 2.9,
                 width: double.infinity,
-                child: AnotherCarousel(
-                  images: images,
-                  dotSize: 6,
-                  autoplay: false,
-                  borderRadius: true,
-                  radius: const Radius.circular(0),
-                  dotPosition: DotPosition.bottomCenter,
-                  indicatorBgPadding: 27.0,
-                  dotBgColor: Colors.transparent,
-                ),
+                child: showUI == false
+                    ? const Center(
+                        child: CircularProgressIndicator(color: kPrimaryColor),
+                      )
+                    : AnotherCarousel(
+                        images: images,
+                        dotSize: 6,
+                        autoplay: false,
+                        borderRadius: true,
+                        radius: const Radius.circular(0),
+                        dotPosition: DotPosition.topCenter,
+                        indicatorBgPadding: 35.0,
+                        dotBgColor: Colors.transparent,
+                      ),
               ),
               Positioned(
                 top: 40,
@@ -219,10 +226,11 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                     description: propertydata
                                                         .description
                                                         .toString(),
-                                                    bedrooms: propertydata.type
+                                                    bedrooms: propertydata
+                                                        .numberofbedrooms
                                                         .toString(),
                                                     whoshrooms: propertydata
-                                                        .subtype
+                                                        .numberofwashrooms
                                                         .toString(),
                                                     capacity: propertydata
                                                         .person
@@ -259,6 +267,9 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                         propertydata.images,
                                                     isActive: propertydata
                                                         .isActive
+                                                        .toString(),
+                                                    category: propertydata
+                                                        .category
                                                         .toString(),
                                                   ));
                                             },

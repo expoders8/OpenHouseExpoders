@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../Home/home.dart';
+import '../Home/home_host.dart';
+import '../Home/home_tenant.dart';
 import '../My Host/my_host.dart';
 import '../Payment/payment.dart';
 import '../Property/property.dart';
@@ -89,7 +90,9 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                 IndexedStack(
                   index: tabCountController.tabIndex.value,
                   children: [
-                    const HomePage(),
+                    selectedRoll == "tenant"
+                        ? const HomeTenantPage()
+                        : const HomeHostPage(),
                     const PropertyPage(),
                     selectedRoll == "tenant"
                         ? const CreateMyRequestsPage()

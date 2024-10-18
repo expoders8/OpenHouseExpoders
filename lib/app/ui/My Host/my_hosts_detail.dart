@@ -32,7 +32,7 @@ class _MyHostsDetailsPageState extends State<MyHostsDetailsPage> {
       body: Obx(() {
         if (getDetailHostsController.isLoading.value) {
           return const Center(
-              child: CircularProgressIndicator(color: kSelectedIconColor));
+              child: CircularProgressIndicator(color: kPrimaryColor));
         } else {
           var hostsdata = getDetailHostsController.detailModel!.data!;
           return SingleChildScrollView(

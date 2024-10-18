@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
+import '../../models/serchproperty_model.dart';
 import '../../view/amenities_view.dart';
 import 'package:http/http.dart' as http;
 import '../../models/country_model.dart';
@@ -41,6 +42,7 @@ class CreatePropertyPage extends StatefulWidget {
   final String? stateId;
   final String? city;
   final String? isActive;
+  final String? category;
   final List? amenitiesid;
   final List? imagelist;
 
@@ -64,6 +66,7 @@ class CreatePropertyPage extends StatefulWidget {
     this.stateId,
     this.city,
     this.isActive,
+    this.category,
     this.amenitiesid,
     this.imagelist,
   });
@@ -98,6 +101,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController capacityController = TextEditingController();
   final TextEditingController washRoomsController = TextEditingController();
   final TextEditingController facilitiesController = TextEditingController();
+  final TextEditingController streetnameController = TextEditingController();
+  final TextEditingController unitnumberController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController propertyNameController = TextEditingController();
   final TextEditingController propertyPriceController = TextEditingController();
@@ -106,12 +111,13 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   String sessionToken = '1234567890',
       countryName = "",
       placesApiKey = "AIzaSyAQYUMPajZSmEupi3I7rsukQMSAZJmh-XA";
+  String? dropValue;
   @override
   void initState() {
     super.initState();
-    addressController.addListener(() {
-      _onChanged();
-    });
+    // addressController.addListener(() {
+    //   _onChanged();
+    // });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.checkEdit == "edit") {
         setState(() {
@@ -123,14 +129,14 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     });
   }
 
-  _onChanged() {
-    if (sessionToken == "null") {
-      setState(() {
-        // _sessionToken = uuid.v4();
-      });
-    }
-    getSuggestion(addressController.text);
-  }
+  // _onChanged() {
+  //   if (sessionToken == "null") {
+  //     setState(() {
+  //       // _sessionToken = uuid.v4();
+  //     });
+  //   }
+  //   getSuggestion(addressController.text);
+  // }
 
   void getSuggestion(String input) async {
     try {
@@ -187,6 +193,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
 
     stateid =
         widget.stateId.toString() == "null" ? "" : widget.stateId.toString();
+    // dropValue =
+    //     widget.category.toString() == "null" ? "" : widget.category.toString();
     cityController.text =
         widget.city.toString() == "null" ? "" : widget.city.toString();
     capacityController.text =
@@ -204,6 +212,18 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         ? ""
         : widget.selctesType.toString();
   }
+
+  final List<String> _categories = [
+    "Apartment",
+    "Villa",
+    "Townhouse",
+    "Condo",
+    "Bungalow",
+    "Farmhouse",
+    "Duplex",
+    "Permanent house",
+    "Cottage",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -230,6 +250,99 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 buildTextWidget("Property Name"),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                //   child: TypeAheadField<GetAllSearchPropertyDataModel>(
+                //     textFieldConfiguration: TextFieldConfiguration(
+                //       controller: propertyNameController,
+                //       inputFormatters: [
+                //         FilteringTextInputFormatter.deny(RegExp(r'^ ')),
+                //       ],
+                //       decoration: InputDecoration(
+                //         fillColor: kWhiteColor,
+                //         filled: true,
+                //         hintText: "Amenity",
+                //         contentPadding:
+                //             const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                //         hintStyle: const TextStyle(
+                //           fontFamily: kCircularStdBook,
+                //           fontWeight: FontWeight.w400,
+                //           color: kPrimaryColor,
+                //           fontSize: 14,
+                //         ),
+                //         hintMaxLines: 1,
+                //         suffixIcon: Image.asset(
+                //           "assets/icons/polygon_down.png",
+                //           scale: 2,
+                //           width: 5,
+                //         ),
+                //         border: const OutlineInputBorder(
+                //           borderRadius: BorderRadius.all(
+                //             Radius.circular(10.0),
+                //           ),
+                //           borderSide:
+                //               BorderSide(color: kWhiteColor, width: 1.0),
+                //         ),
+                //         enabledBorder: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(10.0),
+                //           borderSide:
+                //               const BorderSide(color: kWhiteColor, width: 1.0),
+                //         ),
+                //         focusedBorder: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(10.0),
+                //           borderSide: const BorderSide(
+                //             color: kWhiteColor,
+                //           ),
+                //         ),
+                //         errorBorder: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(10.0),
+                //           borderSide:
+                //               const BorderSide(color: kWhiteColor, width: 1.0),
+                //         ),
+                //         errorText: isFormSubmitted &&
+                //                 propertyNameController.text.isEmpty
+                //             ? 'Please select a Property name'
+                //             : null,
+                //       ),
+                //       style: const TextStyle(
+                //         fontFamily: kCircularStdBook,
+                //         fontWeight: FontWeight.w400,
+                //         color: kPrimaryColor,
+                //         fontSize: 14,
+                //       ),
+                //       autocorrect: true,
+                //       cursorColor: kPrimaryColor,
+                //     ),
+                //     suggestionsCallback: (pattern) async {
+                //       var amenities = await lookupService
+                //           .getSearchProperties(propertyNameController.text);
+                //       return amenities
+                //           .where((country) =>
+                //               country.name != null &&
+                //               country.name!
+                //                   .toLowerCase()
+                //                   .contains(pattern.toLowerCase()))
+                //           .toList();
+                //     },
+                //     itemBuilder:
+                //         (context, GetAllSearchPropertyDataModel suggestion) {
+                //       return ListTile(
+                //         title: Text(suggestion.name.toString()),
+                //       );
+                //     },
+                //     onSuggestionSelected:
+                //         (GetAllSearchPropertyDataModel suggestion) {
+                //       setState(() {
+                //         propertyNameController.text =
+                //             suggestion.name.toString();
+                //       });
+                //     },
+                //     noItemsFoundBuilder: (context) => const Padding(
+                //       padding: EdgeInsets.all(8.0),
+                //       child: Text('No Amenity found'),
+                //     ),
+                //   ),
+                // ),
                 CustomTextFormField(
                   hintText: 'Property Name',
                   maxLines: 1,
@@ -325,7 +438,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                 ),
                                 suggestionsCallback: (pattern) {
                                   List<int> numbers = List<int>.generate(
-                                      10, (index) => index + 1);
+                                      15, (index) => index + 1);
                                   return numbers
                                       .where((number) =>
                                           number.toString().contains(pattern))
@@ -333,7 +446,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                 },
                                 itemBuilder: (context, int suggestion) {
                                   return ListTile(
-                                    title: Text(suggestion.toString()),
+                                    title: Text('$suggestion bhk'),
                                   );
                                 },
                                 onSuggestionSelected: (int suggestion) {
@@ -535,102 +648,145 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                     ),
                   ),
                 ),
-                buildTextWidget("Property Bills"),
-                Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          selctesType = "included";
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(25)),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(3),
-                              height: 15,
-                              width: 15,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: kPrimaryColor),
-                                  borderRadius: BorderRadius.circular(25)),
-                              child: Container(
-                                height: 5,
-                                width: 5,
-                                decoration: BoxDecoration(
-                                    color: selctesType == "included"
-                                        ? kPrimaryColor
-                                        : kWhiteColor,
-                                    borderRadius: BorderRadius.circular(25)),
-                              ),
-                            ),
-                            const SizedBox(width: 15),
-                            const Text(
-                              "Included",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: kPrimaryColor,
-                                  fontFamily: kCircularStdMedium),
-                            ),
-                          ],
+                // buildTextWidget("Property Bills"),
+                // Row(
+                //   children: [
+                //     const SizedBox(width: 10),
+                //     CupertinoButton(
+                //       padding: EdgeInsets.zero,
+                //       onPressed: () {
+                //         setState(() {
+                //           selctesType = "included";
+                //         });
+                //       },
+                //       child: Container(
+                //         padding: const EdgeInsets.symmetric(
+                //             horizontal: 12, vertical: 5),
+                //         decoration: BoxDecoration(
+                //             border: Border.all(),
+                //             borderRadius: BorderRadius.circular(25)),
+                //         child: Row(
+                //           children: [
+                //             Container(
+                //               padding: const EdgeInsets.all(3),
+                //               height: 15,
+                //               width: 15,
+                //               decoration: BoxDecoration(
+                //                   border: Border.all(color: kPrimaryColor),
+                //                   borderRadius: BorderRadius.circular(25)),
+                //               child: Container(
+                //                 height: 5,
+                //                 width: 5,
+                //                 decoration: BoxDecoration(
+                //                     color: selctesType == "included"
+                //                         ? kPrimaryColor
+                //                         : kWhiteColor,
+                //                     borderRadius: BorderRadius.circular(25)),
+                //               ),
+                //             ),
+                //             const SizedBox(width: 15),
+                //             const Text(
+                //               "Included",
+                //               style: TextStyle(
+                //                   fontSize: 15,
+                //                   color: kPrimaryColor,
+                //                   fontFamily: kCircularStdMedium),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //     const SizedBox(width: 10),
+                //     CupertinoButton(
+                //       padding: EdgeInsets.zero,
+                //       onPressed: () {
+                //         setState(() {
+                //           selctesType = "notincluded";
+                //         });
+                //       },
+                //       child: Container(
+                //         padding: const EdgeInsets.symmetric(
+                //             horizontal: 12, vertical: 5),
+                //         decoration: BoxDecoration(
+                //             border: Border.all(),
+                //             borderRadius: BorderRadius.circular(15)),
+                //         child: Center(
+                //           child: Row(
+                //             children: [
+                //               Container(
+                //                 padding: const EdgeInsets.all(3),
+                //                 height: 15,
+                //                 width: 15,
+                //                 decoration: BoxDecoration(
+                //                     border: Border.all(color: kPrimaryColor),
+                //                     borderRadius: BorderRadius.circular(25)),
+                //                 child: Container(
+                //                   height: 5,
+                //                   width: 5,
+                //                   decoration: BoxDecoration(
+                //                       color: selctesType == "notincluded"
+                //                           ? kPrimaryColor
+                //                           : kWhiteColor,
+                //                       borderRadius: BorderRadius.circular(25)),
+                //                 ),
+                //               ),
+                //               const SizedBox(width: 15),
+                //               const Text(
+                //                 "Not Included",
+                //                 style: TextStyle(
+                //                     fontSize: 15,
+                //                     color: kPrimaryColor,
+                //                     fontFamily: kCircularStdMedium),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                const SizedBox(height: 10),
+                Container(
+                  height: 48,
+                  width: Get.width,
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    color: kWhiteColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: dropValue,
+                      icon: Padding(
+                        padding: const EdgeInsets.only(right: 9.0),
+                        child: Image.asset(
+                          "assets/icons/polygon_down.png",
+                          scale: 1,
+                          width: 13,
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
+                      hint: const Text(
+                        "Category",
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontFamily: kCircularStdBook,
+                            fontSize: 15),
+                      ),
+                      items: _categories.map((category) {
+                        return DropdownMenuItem<String>(
+                          value: category,
+                          child: Text(category),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
                         setState(() {
-                          selctesType = "notincluded";
+                          dropValue = value;
                         });
                       },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Center(
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(3),
-                                height: 15,
-                                width: 15,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: kPrimaryColor),
-                                    borderRadius: BorderRadius.circular(25)),
-                                child: Container(
-                                  height: 5,
-                                  width: 5,
-                                  decoration: BoxDecoration(
-                                      color: selctesType == "notincluded"
-                                          ? kPrimaryColor
-                                          : kWhiteColor,
-                                      borderRadius: BorderRadius.circular(25)),
-                                ),
-                              ),
-                              const SizedBox(width: 15),
-                              const Text(
-                                "Not Included",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: kPrimaryColor,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                     ),
-                  ],
+                  ),
                 ),
                 buildTextWidget("Rent per month"),
                 CustomTextFormField(
@@ -656,60 +812,101 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   validationMsg: 'Please enter facilities',
                 ),
                 buildTextWidget("Address"),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextFormField(
-                      validator: (value) {
-                        if (isFormSubmitted) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter Address';
-                          }
-                        }
-                        return null;
-                      },
-                      // focusNode: focusNode,
-                      controller: addressController,
-                      textInputAction: TextInputAction.next,
-                      onChanged: (value) => {
-                        // isTouched = true,
-                        getSuggestion(addressController.text)
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Flat / House No / Building",
-                        counterText: "",
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                        hintStyle: const TextStyle(
-                          fontFamily: kCircularStdBook,
-                          fontWeight: FontWeight.w400,
-                          color: kPrimaryColor,
-                          fontSize: 14,
-                        ),
-                        filled: true,
-                        fillColor: kWhiteColor,
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8.0),
-                          ),
-                          borderSide:
-                              BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              const BorderSide(color: kWhiteColor, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: const BorderSide(
-                            color: kWhiteColor,
-                          ),
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        flex: 2,
+                        child: CustomTextFormField(
+                          hintText: 'Unit number',
+                          maxLines: 1,
+                          ctrl: unitnumberController,
+                          name: "create",
+                          formSubmitted: isFormSubmitted,
+                          validationMsg: 'Please enter Unit number',
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 5),
+                      Flexible(
+                        flex: 5,
+                        child: CustomTextFormField(
+                          hintText: 'Address',
+                          maxLines: 1,
+                          ctrl: addressController,
+                          name: "create",
+                          formSubmitted: isFormSubmitted,
+                          validationMsg: 'Please enter Unit number',
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  hintText: 'Street name',
+                  maxLines: 1,
+                  ctrl: streetnameController,
+                  name: "create",
+                  formSubmitted: isFormSubmitted,
+                  validationMsg: 'Please enter Street name',
+                ),
+                const SizedBox(height: 10),
+
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     TextFormField(
+                //       validator: (value) {
+                //         if (isFormSubmitted) {
+                //           if (value == null || value.isEmpty) {
+                //             return 'Please enter Address';
+                //           }
+                //         }
+                //         return null;
+                //       },
+                //       // focusNode: focusNode,
+                //       controller: addressController,
+                //       textInputAction: TextInputAction.next,
+                //       onChanged: (value) => {
+                //         // isTouched = true,
+                //         getSuggestion(addressController.text)
+                //       },
+                //       decoration: InputDecoration(
+                //         hintText: "Flat / House No / Building",
+                //         counterText: "",
+                //         contentPadding:
+                //             const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                //         hintStyle: const TextStyle(
+                //           fontFamily: kCircularStdBook,
+                //           fontWeight: FontWeight.w400,
+                //           color: kPrimaryColor,
+                //           fontSize: 14,
+                //         ),
+                //         filled: true,
+                //         fillColor: kWhiteColor,
+                //         border: const OutlineInputBorder(
+                //           borderRadius: BorderRadius.all(
+                //             Radius.circular(8.0),
+                //           ),
+                //           borderSide:
+                //               BorderSide(color: kWhiteColor, width: 1.0),
+                //         ),
+                //         enabledBorder: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(8.0),
+                //           borderSide:
+                //               const BorderSide(color: kWhiteColor, width: 1.0),
+                //         ),
+                //         focusedBorder: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(8.0),
+                //           borderSide: const BorderSide(
+                //             color: kWhiteColor,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Container(
                   height: _placeList.isEmpty ? 0 : 200,
                   width: _placeList.isEmpty ? 0 : size.width,
@@ -1063,7 +1260,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             descriptionController.text,
                                             propertyPriceController.text,
                                             facilitiesController.text,
-                                            addressController.text,
+                                            "${unitnumberController.text} / ${addressController.text}",
+                                            streetnameController.text,
                                             countryId,
                                             stateid,
                                             cityController.text,
@@ -1074,6 +1272,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             washRoomsController.text,
                                             selctesType,
                                             propertyId,
+                                            dropValue!,
                                             widget.isActive!,
                                             fileList)
                                         .then((value) {
@@ -1163,7 +1362,8 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             descriptionController.text,
                                             propertyPriceController.text,
                                             facilitiesController.text,
-                                            addressController.text,
+                                            "${unitnumberController.text} / ${addressController.text}",
+                                            streetnameController.text,
                                             countryId,
                                             stateid,
                                             cityController.text,
@@ -1174,6 +1374,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             washRoomsController.text,
                                             selctesType,
                                             "null",
+                                            dropValue!,
                                             fileList)
                                         .then((value) {
                                       if (value) {

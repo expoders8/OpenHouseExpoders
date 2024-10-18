@@ -39,9 +39,7 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
               return Container(
                 color: kBackGroundColor,
                 child: const Center(
-                  child: CircularProgressIndicator(
-                    color: kSelectedIconColor,
-                  ),
+                  child: CircularProgressIndicator(color: kPrimaryColor),
                 ),
               );
             } else {

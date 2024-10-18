@@ -256,7 +256,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             color: kBackGroundColor,
                             child: const Center(
                               child: CircularProgressIndicator(
-                                color: kSelectedIconColor,
+                                color: kPrimaryColor,
                               ),
                             ),
                           );
@@ -458,7 +458,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             color: kBackGroundColor,
                             child: const Center(
                               child: CircularProgressIndicator(
-                                color: kSelectedIconColor,
+                                color: kPrimaryColor,
                               ),
                             ),
                           );

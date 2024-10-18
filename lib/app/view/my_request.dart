@@ -28,9 +28,7 @@ class _MyRequestViewState extends State<MyRequestView> {
           return Container(
             color: kBackGroundColor,
             child: const Center(
-              child: CircularProgressIndicator(
-                color: kSelectedIconColor,
-              ),
+              child: CircularProgressIndicator(color: kPrimaryColor),
             ),
           );
         } else {
@@ -65,7 +63,7 @@ class _MyRequestViewState extends State<MyRequestView> {
                     ],
                   ),
                   SizedBox(
-                    height: 204,
+                    height: 180,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount:
@@ -100,30 +98,18 @@ class _MyRequestViewState extends State<MyRequestView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
+                                        Text(
+                                          data.title
+                                                  .toString()
+                                                  .substring(0, 1)
+                                                  .toUpperCase() +
                                               data.title
-                                                      .toString()
-                                                      .substring(0, 1)
-                                                      .toUpperCase() +
-                                                  data.title
-                                                      .toString()
-                                                      .substring(1),
-                                              style: const TextStyle(
-                                                  fontFamily:
-                                                      kCircularStdMedium,
-                                                  fontSize: 18,
-                                                  color: kPrimaryColor),
-                                            ),
-                                            const Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              size: 15,
-                                              color: kButtonColor,
-                                            ),
-                                          ],
+                                                  .toString()
+                                                  .substring(1),
+                                          style: const TextStyle(
+                                              fontFamily: kCircularStdMedium,
+                                              fontSize: 18,
+                                              color: kPrimaryColor),
                                         ),
                                         const SizedBox(height: 10),
                                         Row(
@@ -162,7 +148,7 @@ class _MyRequestViewState extends State<MyRequestView> {
                                                   ),
                                                   const SizedBox(width: 10),
                                                   SizedBox(
-                                                    width: Get.width - 220,
+                                                    width: Get.width - 120,
                                                     child: Text(
                                                       data.address.toString(),
                                                       style: const TextStyle(
@@ -170,6 +156,9 @@ class _MyRequestViewState extends State<MyRequestView> {
                                                           fontSize: 12,
                                                           fontFamily:
                                                               kCircularStdNormal),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
                                                     ),
                                                   ),
                                                 ],
@@ -219,13 +208,44 @@ class _MyRequestViewState extends State<MyRequestView> {
                                             ),
                                           ],
                                         ),
-                                        // const SizedBox(height: 8),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            data.type.toString() != "normal"
-                                                ? Container(
+                                        const SizedBox(height: 8),
+                                        data.status.toString() == "Resolved"
+                                            ? Container(
+                                                width: 75,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 7,
+                                                        vertical: 3),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    color: kGreenColor),
+                                                child: const Row(
+                                                  children: [
+                                                    Text(
+                                                      "resolve",
+                                                      style: TextStyle(
+                                                          color: kWhiteColor,
+                                                          fontSize: 13,
+                                                          fontFamily:
+                                                              kCircularStdNormal),
+                                                    ),
+                                                    SizedBox(width: 5),
+                                                    Icon(
+                                                      Icons.thumb_up,
+                                                      size: 11,
+                                                      color: kWhiteColor,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
                                                     padding: const EdgeInsets
                                                         .symmetric(
                                                         horizontal: 5,
@@ -234,55 +254,73 @@ class _MyRequestViewState extends State<MyRequestView> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(25),
-                                                        color: kButtonColor),
-                                                    child: const Row(
+                                                        color: data.status
+                                                                    .toString() !=
+                                                                "Pending"
+                                                            ? kGreenColor
+                                                            : kRedColor),
+                                                    child: Row(
                                                       children: [
-                                                        Icon(
-                                                          Icons.warning,
-                                                          size: 11,
+                                                        const Icon(
+                                                          Icons.access_time,
+                                                          size: 12,
                                                           color: kWhiteColor,
                                                         ),
-                                                        SizedBox(width: 5),
+                                                        const SizedBox(
+                                                            width: 5),
                                                         Text(
-                                                          "Emergency",
-                                                          style: TextStyle(
+                                                          data.status
+                                                              .toString(),
+                                                          style: const TextStyle(
                                                               color:
                                                                   kWhiteColor,
-                                                              fontSize: 9,
+                                                              fontSize: 10,
                                                               fontFamily:
-                                                                  kCircularStdNormal),
+                                                                  kCircularStdMedium),
                                                         ),
                                                       ],
                                                     ),
-                                                  )
-                                                : Container(),
-                                            CupertinoButton(
-                                              padding: EdgeInsets.zero,
-                                              onPressed: () {},
-                                              child: Container(
-                                                height: 30,
-                                                width: 100,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25),
-                                                    border: Border.all(
-                                                        color: kWhiteColor),
-                                                    color: kPrimaryColor),
-                                                child: Center(
-                                                  child: Text(
-                                                    data.status.toString(),
-                                                    style: const TextStyle(
-                                                        color: kWhiteColor,
-                                                        fontFamily:
-                                                            kCircularStdNormal,
-                                                        fontSize: 13),
                                                   ),
-                                                ),
+                                                  data.type.toString() !=
+                                                          "normal"
+                                                      ? Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal: 5,
+                                                                  vertical: 3),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          25),
+                                                              color:
+                                                                  kButtonColor),
+                                                          child: const Row(
+                                                            children: [
+                                                              Icon(
+                                                                Icons.warning,
+                                                                size: 11,
+                                                                color:
+                                                                    kWhiteColor,
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 5),
+                                                              Text(
+                                                                "Emergency",
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        kWhiteColor,
+                                                                    fontSize: 9,
+                                                                    fontFamily:
+                                                                        kCircularStdNormal),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      : Container(),
+                                                ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
                                       ],
                                     ),
                                   ),

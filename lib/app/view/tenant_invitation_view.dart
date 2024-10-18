@@ -39,15 +39,11 @@ class _TenantInvitationViewtate extends State<TenantInvitationView> {
           return Container(
             color: kBackGroundColor,
             child: const Center(
-              child: CircularProgressIndicator(
-                color: kSelectedIconColor,
-              ),
+              child: CircularProgressIndicator(color: kPrimaryColor),
             ),
           );
         } else {
-          if (getAllInvitationController.invitationList.isNotEmpty &&
-              // ignore: unnecessary_null_comparison
-              getAllInvitationController.invitationList[0].data! != null) {
+          if (getAllInvitationController.invitationList.isNotEmpty) {
             if (getAllInvitationController.invitationList[0].data!.isEmpty) {
               return const Center(
                 child: Text(

@@ -31,7 +31,7 @@ class _MyTenantsDetailsPageState extends State<MyTenantsDetailsPage> {
       body: Obx(() {
         if (getDetailTenantsController.isLoading.value) {
           return const Center(
-              child: CircularProgressIndicator(color: kSelectedIconColor));
+              child: CircularProgressIndicator(color: kPrimaryColor));
         } else {
           var tenantsdata = getDetailTenantsController.detailModel!.data!;
 

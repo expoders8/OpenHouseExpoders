@@ -61,7 +61,7 @@ class _CheckoutRequestsTenantPageState
               color: kBackGroundColor,
               child: const Center(
                 child: CircularProgressIndicator(
-                  color: kSelectedIconColor,
+                  color: kPrimaryColor,
                 ),
               ),
             );

@@ -30,6 +30,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
       getnotleaseDetailsPropertiesController =
       Get.put(GetnotleaseDetailsPropertiesController());
   List<ImageProvider> images = [];
+  bool showUI = false;
 
   @override
   void initState() {
@@ -45,10 +46,12 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
             ...getnotleaseDetailsPropertiesController.detailModel!.data!.images!
                 .map((imageUrl) => NetworkImage(imageUrl)),
           ];
+          showUI = true;
         });
       } else {
         setState(() {
           images = [const AssetImage('assets/images/noproperty.png')];
+          showUI = true;
         });
       }
     });
@@ -65,7 +68,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
     return Scaffold(body: Obx(() {
       if (getnotleaseDetailsPropertiesController.isLoading.value) {
         return const Center(
-            child: CircularProgressIndicator(color: kSelectedIconColor));
+            child: CircularProgressIndicator(color: kPrimaryColor));
       } else {
         var propertydata =
             getnotleaseDetailsPropertiesController.detailModel!.data;
@@ -74,17 +77,21 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
             SizedBox(
               height: Get.height / 2.94,
               width: double.infinity,
-              child: AnotherCarousel(
-                images: images,
-                dotSize: 6,
-                autoplay: false,
-                showIndicator: true,
-                borderRadius: true,
-                radius: const Radius.circular(0),
-                dotPosition: DotPosition.bottomCenter,
-                indicatorBgPadding: 27.0,
-                dotBgColor: Colors.transparent,
-              ),
+              child: showUI == false
+                  ? const Center(
+                      child: CircularProgressIndicator(color: kPrimaryColor),
+                    )
+                  : AnotherCarousel(
+                      images: images,
+                      dotSize: 6,
+                      autoplay: false,
+                      showIndicator: true,
+                      borderRadius: true,
+                      radius: const Radius.circular(0),
+                      dotPosition: DotPosition.bottomCenter,
+                      indicatorBgPadding: 27.0,
+                      dotBgColor: Colors.transparent,
+                    ),
             ),
             Positioned(
                 top: 40,
@@ -190,10 +197,11 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                   description: propertydata
                                                       .description
                                                       .toString(),
-                                                  bedrooms: propertydata.type
+                                                  bedrooms: propertydata
+                                                      .numberofbedrooms
                                                       .toString(),
                                                   whoshrooms: propertydata
-                                                      .subtype
+                                                      .numberofwashrooms
                                                       .toString(),
                                                   capacity: propertydata.person
                                                       .toString(),
@@ -225,6 +233,9 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                       propertydata.images,
                                                   isActive: propertydata
                                                       .isActive
+                                                      .toString(),
+                                                  category: propertydata
+                                                      .category
                                                       .toString(),
                                                 ));
                                           },

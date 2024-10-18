@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:openhome/config/constant/color_constant.dart';
 
 import '../../controller/payment_controller.dart';
 import '../../services/auth_service.dart';
@@ -124,7 +125,7 @@ class _InAppWebViewWidgetState extends State<InAppWebViewWidget> {
               ),
               isLoading
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(color: kPrimaryColor),
                     )
                   : const Stack(),
             ],

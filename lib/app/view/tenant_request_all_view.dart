@@ -42,9 +42,7 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
             return Container(
               color: kBackGroundColor,
               child: const Center(
-                child: CircularProgressIndicator(
-                  color: kSelectedIconColor,
-                ),
+                child: CircularProgressIndicator(color: kPrimaryColor),
               ),
             );
           } else {

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../models/lookup_get_checkout_request.dart';
+import '../models/serchproperty_model.dart';
 import '../models/state_model.dart';
 import '../models/country_model.dart';
 import '../models/get_amenities_model.dart';
@@ -20,6 +21,31 @@ class LookupService {
         final List<dynamic> fetchAmenities = data['data'];
         return fetchAmenities
             .map((json) => GetAllAmenitiesDataModel.fromJson(json))
+            .toList();
+      } else if (response.statusCode == 401) {
+        return Future.error("Authentication Error");
+      } else {
+        throw Exception('Failed to fetch Category');
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  Future<List<GetAllSearchPropertyDataModel>> getSearchProperties(
+      String searchText) async {
+    try {
+      var response = await http.post(
+          Uri.parse('$baseUrl/api/property/search_property'),
+          body: json.encode({"searchText": searchText}),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        final List<dynamic> fetchAmenities = data['data'];
+        return fetchAmenities
+            .map((json) => GetAllSearchPropertyDataModel.fromJson(json))
             .toList();
       } else if (response.statusCode == 401) {
         return Future.error("Authentication Error");

@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 import '../routes/app_pages.dart';
 import '../controller/request_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../services/requests_service.dart';
 
 class TenantRequestView extends StatefulWidget {
   const TenantRequestView({super.key});
@@ -17,6 +19,9 @@ class TenantRequestView extends StatefulWidget {
 class _TanantRequestViewState extends State<TenantRequestView> {
   final GetAllHostRequestsController getAllHostRequestsController =
       Get.put(GetAllHostRequestsController());
+  RequestsService requestsService = RequestsService();
+  DateTime? dateTime;
+  String formattedDate = '';
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -25,9 +30,7 @@ class _TanantRequestViewState extends State<TenantRequestView> {
           return Container(
             color: kBackGroundColor,
             child: const Center(
-              child: CircularProgressIndicator(
-                color: kSelectedIconColor,
-              ),
+              child: CircularProgressIndicator(color: kPrimaryColor),
             ),
           );
         } else {
@@ -72,6 +75,14 @@ class _TanantRequestViewState extends State<TenantRequestView> {
                             getAllHostRequestsController.requestList[0].data!;
                         if (requestData.isNotEmpty) {
                           var data = requestData[index];
+                          if (data.startDate != null) {
+                            dateTime =
+                                DateTime.parse(data.startDate!.toString());
+                            formattedDate =
+                                DateFormat('dd MMM yyyy').format(dateTime!);
+                          } else {
+                            formattedDate = 'No Date Available';
+                          }
                           return Row(
                             children: [
                               Padding(
@@ -89,30 +100,18 @@ class _TanantRequestViewState extends State<TenantRequestView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
+                                        Text(
+                                          data.title
+                                                  .toString()
+                                                  .substring(0, 1)
+                                                  .toUpperCase() +
                                               data.title
-                                                      .toString()
-                                                      .substring(0, 1)
-                                                      .toUpperCase() +
-                                                  data.title
-                                                      .toString()
-                                                      .substring(1),
-                                              style: const TextStyle(
-                                                  fontFamily:
-                                                      kCircularStdMedium,
-                                                  fontSize: 18,
-                                                  color: kPrimaryColor),
-                                            ),
-                                            const Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              size: 15,
-                                              color: kButtonColor,
-                                            ),
-                                          ],
+                                                  .toString()
+                                                  .substring(1),
+                                          style: const TextStyle(
+                                              fontFamily: kCircularStdMedium,
+                                              fontSize: 18,
+                                              color: kPrimaryColor),
                                         ),
                                         const SizedBox(height: 10),
                                         Row(
@@ -140,29 +139,34 @@ class _TanantRequestViewState extends State<TenantRequestView> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.location_on,
-                                              size: 16,
-                                              color: kButtonColor,
-                                            ),
-                                            const SizedBox(width: 10),
-                                            SizedBox(
-                                              width: Get.width - 220,
-                                              child: const Text(
-                                                "address",
-                                                style: TextStyle(
-                                                    color: kPrimaryColor,
-                                                    fontSize: 12,
-                                                    fontFamily:
-                                                        kCircularStdNormal),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
+                                        const SizedBox(height: 5),
+                                        data.address.toString() != "null"
+                                            ? Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.location_on,
+                                                    size: 16,
+                                                    color: kButtonColor,
+                                                  ),
+                                                  const SizedBox(width: 10),
+                                                  SizedBox(
+                                                    width: Get.width - 120,
+                                                    child: Text(
+                                                      data.address.toString(),
+                                                      style: const TextStyle(
+                                                          color: kPrimaryColor,
+                                                          fontSize: 12,
+                                                          fontFamily:
+                                                              kCircularStdNormal),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            : Container(),
+                                        const SizedBox(height: 5),
                                         Row(
                                           children: [
                                             const Icon(
@@ -184,70 +188,150 @@ class _TanantRequestViewState extends State<TenantRequestView> {
                                             ),
                                           ],
                                         ),
-                                        // const SizedBox(height: 8),
+                                        const SizedBox(height: 5),
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            data.type.toString() != "normal"
-                                                ? Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 3),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(25),
-                                                        color: kButtonColor),
-                                                    child: const Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.warning,
-                                                          size: 11,
-                                                          color: kWhiteColor,
-                                                        ),
-                                                        SizedBox(width: 5),
-                                                        Text(
-                                                          "Emergency",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  kWhiteColor,
-                                                              fontSize: 9,
-                                                              fontFamily:
-                                                                  kCircularStdNormal),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                : Container(),
-                                            CupertinoButton(
-                                              padding: EdgeInsets.zero,
-                                              onPressed: () {},
-                                              child: Container(
-                                                height: 30,
-                                                width: 70,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25),
-                                                    border: Border.all(
-                                                        color: kWhiteColor),
-                                                    color: kPrimaryColor),
-                                                child: Center(
-                                                  child: Text(
-                                                    data.status.toString(),
-                                                    style: const TextStyle(
-                                                        color: kWhiteColor,
-                                                        fontFamily:
-                                                            kCircularStdNormal,
-                                                        fontSize: 13),
-                                                  ),
-                                                ),
+                                            const Icon(
+                                              Icons.date_range_outlined,
+                                              size: 16,
+                                              color: kButtonColor,
+                                            ),
+                                            const SizedBox(width: 10),
+                                            SizedBox(
+                                              width: Get.width - 220,
+                                              child: Text(
+                                                formattedDate,
+                                                style: const TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 13,
+                                                    fontFamily:
+                                                        kCircularStdNormal),
                                               ),
                                             ),
                                           ],
                                         ),
+                                        const SizedBox(height: 8),
+                                        data.status.toString() == "Resolved"
+                                            ? Container(
+                                                width: 75,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 7,
+                                                        vertical: 3),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    color: kGreenColor),
+                                                child: const Row(
+                                                  children: [
+                                                    Text(
+                                                      "resolve",
+                                                      style: TextStyle(
+                                                          color: kWhiteColor,
+                                                          fontSize: 13,
+                                                          fontFamily:
+                                                              kCircularStdNormal),
+                                                    ),
+                                                    SizedBox(width: 5),
+                                                    Icon(
+                                                      Icons.thumb_up,
+                                                      size: 11,
+                                                      color: kWhiteColor,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  CupertinoButton(
+                                                    padding: EdgeInsets.zero,
+                                                    onPressed: () {
+                                                      requestsService
+                                                          .resolveRequest(data
+                                                              .id
+                                                              .toString());
+                                                    },
+                                                    child: Container(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 5,
+                                                          vertical: 3),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(25),
+                                                          color: data.status
+                                                                      .toString() !=
+                                                                  "Pending"
+                                                              ? kGreenColor
+                                                              : kRedColor),
+                                                      child: Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.access_time,
+                                                            size: 12,
+                                                            color: kWhiteColor,
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 5),
+                                                          Text(
+                                                            data.status
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                color:
+                                                                    kWhiteColor,
+                                                                fontSize: 10,
+                                                                fontFamily:
+                                                                    kCircularStdMedium),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  data.type.toString() !=
+                                                          "normal"
+                                                      ? Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal: 5,
+                                                                  vertical: 3),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          25),
+                                                              color:
+                                                                  kButtonColor),
+                                                          child: const Row(
+                                                            children: [
+                                                              Icon(
+                                                                Icons.warning,
+                                                                size: 11,
+                                                                color:
+                                                                    kWhiteColor,
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 5),
+                                                              Text(
+                                                                "Emergency",
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        kWhiteColor,
+                                                                    fontSize: 9,
+                                                                    fontFamily:
+                                                                        kCircularStdNormal),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      : Container(),
+                                                ],
+                                              ),
                                       ],
                                     ),
                                   ),

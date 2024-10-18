@@ -22,6 +22,7 @@ class _PreviousPropertyDetailPageState extends State<PreviousPropertyDetailPage>
       getPreviousDetailsPropertiesController =
       Get.put(GetPreviousDetailsPropertiesController());
   List<ImageProvider> images = [];
+  bool showUI = false;
 
   @override
   void initState() {
@@ -36,9 +37,11 @@ class _PreviousPropertyDetailPageState extends State<PreviousPropertyDetailPage>
             ...getPreviousDetailsPropertiesController.detailModel!.data!.images!
                 .map((imageUrl) => NetworkImage(imageUrl)),
           ];
+          showUI = true;
         });
       } else {
         setState(() {
+          showUI = true;
           images = [const AssetImage('assets/images/noproperty.png')];
         });
       }
@@ -50,7 +53,7 @@ class _PreviousPropertyDetailPageState extends State<PreviousPropertyDetailPage>
     return Scaffold(body: Obx(() {
       if (getPreviousDetailsPropertiesController.isLoading.value) {
         return const Center(
-            child: CircularProgressIndicator(color: kSelectedIconColor));
+            child: CircularProgressIndicator(color: kPrimaryColor));
       } else {
         var propertydata =
             getPreviousDetailsPropertiesController.detailModel!.data;
@@ -59,17 +62,21 @@ class _PreviousPropertyDetailPageState extends State<PreviousPropertyDetailPage>
             SizedBox(
               height: Get.height / 2.94,
               width: double.infinity,
-              child: AnotherCarousel(
-                images: images,
-                dotSize: 6,
-                autoplay: false,
-                showIndicator: true,
-                borderRadius: true,
-                radius: const Radius.circular(0),
-                dotPosition: DotPosition.bottomCenter,
-                indicatorBgPadding: 27.0,
-                dotBgColor: Colors.transparent,
-              ),
+              child: showUI == false
+                  ? const Center(
+                      child: CircularProgressIndicator(color: kPrimaryColor),
+                    )
+                  : AnotherCarousel(
+                      images: images,
+                      dotSize: 6,
+                      autoplay: false,
+                      showIndicator: true,
+                      borderRadius: true,
+                      radius: const Radius.circular(0),
+                      dotPosition: DotPosition.bottomCenter,
+                      indicatorBgPadding: 27.0,
+                      dotBgColor: Colors.transparent,
+                    ),
             ),
             Positioned(
                 top: 40,

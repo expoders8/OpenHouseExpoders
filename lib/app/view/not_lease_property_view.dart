@@ -39,9 +39,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
           return Container(
             color: kBackGroundColor,
             child: const Center(
-              child: CircularProgressIndicator(
-                color: kSelectedIconColor,
-              ),
+              child: CircularProgressIndicator(color: kPrimaryColor),
             ),
           );
         } else {
@@ -57,7 +55,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                     scale: 2,
                   ),
                   const Text(
-                    "No properties",
+                    "No properties available!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -139,7 +137,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                                   scale: 2,
                                 ),
                                 const Text(
-                                  "No properties",
+                                  "No properties available",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: kPrimaryColor,
@@ -166,7 +164,7 @@ class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
                   scale: 2,
                 ),
                 const Text(
-                  "No properties",
+                  "No properties available",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: kPrimaryColor,

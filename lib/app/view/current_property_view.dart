@@ -46,9 +46,7 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
           return Container(
             color: kBackGroundColor,
             child: const Center(
-              child: CircularProgressIndicator(
-                color: kSelectedIconColor,
-              ),
+              child: CircularProgressIndicator(color: kPrimaryColor),
             ),
           );
         } else {

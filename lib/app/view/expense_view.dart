@@ -30,9 +30,7 @@ class _ExpenseViewState extends State<ExpenseView> {
               child: Container(
                 color: kBackGroundColor,
                 child: const Center(
-                  child: CircularProgressIndicator(
-                    color: kSelectedIconColor,
-                  ),
+                  child: CircularProgressIndicator(color: kPrimaryColor),
                 ),
               ),
             ),

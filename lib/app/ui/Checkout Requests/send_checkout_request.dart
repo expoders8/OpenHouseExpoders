@@ -108,7 +108,10 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Center(
               child: isLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      color: kPrimaryColor,
+                    ))
                   : Column(
                       children: [
                         Obx(
@@ -119,7 +122,7 @@ class _SendCheckoutRequestState extends State<SendCheckoutRequest> {
                                 color: kBackGroundColor,
                                 child: const Center(
                                   child: CircularProgressIndicator(
-                                    color: kSelectedIconColor,
+                                    color: kPrimaryColor,
                                   ),
                                 ),
                               );

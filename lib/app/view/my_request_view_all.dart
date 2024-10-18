@@ -32,7 +32,7 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Tenant Requests"),
+        title: const Text("My Requests"),
       ),
       body: Obx(
         () {
@@ -40,9 +40,7 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
             return Container(
               color: kBackGroundColor,
               child: const Center(
-                child: CircularProgressIndicator(
-                  color: kSelectedIconColor,
-                ),
+                child: CircularProgressIndicator(color: kPrimaryColor),
               ),
             );
           } else {

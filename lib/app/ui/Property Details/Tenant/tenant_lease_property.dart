@@ -36,6 +36,7 @@ class _TenantLeasePropertyDetailPageState
   List<ImageProvider> images = [];
   final tabController = Get.put(TabCountController());
   PaymentService paymentService = PaymentService();
+  bool showUI = false;
 
   @override
   void initState() {
@@ -55,9 +56,11 @@ class _TenantLeasePropertyDetailPageState
             ...getCurrentDetailsPropertiesController.detailModel!.data!.images!
                 .map((imageUrl) => NetworkImage(imageUrl)),
           ];
+          showUI = true;
         });
       } else {
         setState(() {
+          showUI = true;
           images = [const AssetImage('assets/images/noproperty.png')];
         });
       }
@@ -76,7 +79,7 @@ class _TenantLeasePropertyDetailPageState
       body: Obx(() {
         if (getCurrentDetailsPropertiesController.isLoading.value) {
           return const Center(
-              child: CircularProgressIndicator(color: kSelectedIconColor));
+              child: CircularProgressIndicator(color: kPrimaryColor));
         } else {
           var propertydata =
               getCurrentDetailsPropertiesController.detailModel!.data;
@@ -85,16 +88,20 @@ class _TenantLeasePropertyDetailPageState
               SizedBox(
                 height: Get.height / 2.9,
                 width: double.infinity,
-                child: AnotherCarousel(
-                  images: images,
-                  dotSize: 6,
-                  autoplay: false,
-                  borderRadius: true,
-                  radius: const Radius.circular(0),
-                  dotPosition: DotPosition.bottomCenter,
-                  indicatorBgPadding: 27.0,
-                  dotBgColor: Colors.transparent,
-                ),
+                child: showUI == false
+                    ? const Center(
+                        child: CircularProgressIndicator(color: kPrimaryColor),
+                      )
+                    : AnotherCarousel(
+                        images: images,
+                        dotSize: 6,
+                        autoplay: false,
+                        borderRadius: true,
+                        radius: const Radius.circular(0),
+                        dotPosition: DotPosition.bottomCenter,
+                        indicatorBgPadding: 27.0,
+                        dotBgColor: Colors.transparent,
+                      ),
               ),
               Positioned(
                 top: 40,

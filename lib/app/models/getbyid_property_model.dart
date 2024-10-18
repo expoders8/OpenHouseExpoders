@@ -51,6 +51,8 @@ class PropertyDetailDataModel {
   String? subtype;
   String? size;
   String? sizeunit;
+  String? numberofbedrooms;
+  String? numberofwashrooms;
   String? rentAmountUnit;
   String? tenantFirstName;
   String? tenantLastName;
@@ -89,6 +91,8 @@ class PropertyDetailDataModel {
       this.subtype,
       this.size,
       this.sizeunit,
+      this.numberofbedrooms,
+      this.numberofwashrooms,
       this.rentAmountUnit,
       this.tenantFirstName,
       this.tenantLastName,
@@ -127,6 +131,8 @@ class PropertyDetailDataModel {
     subtype = json['subtype'];
     size = json['size'];
     sizeunit = json['sizeunit'];
+    numberofbedrooms = json['number_of_bedrooms'];
+    numberofwashrooms = json['number_of_washrooms'];
     rentAmountUnit = json['rent_amount_unit'];
     tenantFirstName = json['tenant_first_name'];
     tenantLastName = json['tenant_last_name'];
