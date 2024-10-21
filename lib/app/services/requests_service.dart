@@ -66,6 +66,8 @@ class RequestsService {
   ) async {
     final GetAllHostRequestsController getAllHostRequestsController =
         Get.put(GetAllHostRequestsController());
+    final GetAllHostHomeDataController getAllHostHomeDataController =
+        Get.put(GetAllHostHomeDataController());
     try {
       var response =
           await http.post(Uri.parse('$baseUrl/api/host/request_resolve'),
@@ -76,6 +78,7 @@ class RequestsService {
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (decodedUser['success']) {
+          getAllHostHomeDataController.getAllHostHomePageData();
           getAllHostRequestsController.getAllRequests();
           return true;
         } else {
