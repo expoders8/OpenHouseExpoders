@@ -215,6 +215,9 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                       .toString(),
                                                   address: propertydata.address
                                                       .toString(),
+                                                  address1: propertydata
+                                                      .address1
+                                                      .toString(),
                                                   country: propertydata
                                                       .countryName
                                                       .toString(),

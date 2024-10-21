@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import '../models/host_lending_model.dart';
 import '../../config/constant/constant.dart';
 import '../../config/provider/loader_provider.dart';
-import '../../config/provider/snackbar_provider.dart';
 import '../models/tenant_lending_model.dart';
 
 class HostHomePageService {
@@ -21,7 +20,7 @@ class HostHomePageService {
       }
     } catch (e) {
       LoaderX.hide();
-      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      // SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
       throw e.toString();
     }
   }
@@ -40,7 +39,7 @@ class HostHomePageService {
       }
     } catch (e) {
       LoaderX.hide();
-      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      // SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
       throw e.toString();
     }
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../controller/host_homepage_controller.dart';
 import '../controller/my_tenants_controller.dart';
 import '../models/get_all_checkout.dart';
 import '../../config/constant/constant.dart';
@@ -69,7 +70,15 @@ class CheckoutService {
   }
 
   acceptCheckoutInvitation(
-      String rentalId, propertyName, proeprtyAddress, proeprtyId) async {
+    String rentalId,
+    propertyName,
+    proeprtyAddress,
+    proeprtyId,
+    tenantId,
+    hostId,
+    comment,
+    double? rating,
+  ) async {
     final GetAllCheckoutController getAllCheckoutController =
         Get.put(GetAllCheckoutController());
     final GetAvailablePropertyController getAvailablePropertyController =
@@ -80,6 +89,8 @@ class CheckoutService {
         Get.put(GetAllCurrentTenantsController());
     final GetAllPreviousTenantsController getAllPreviousTenantsController =
         Get.put(GetAllPreviousTenantsController());
+    final GetAllHostHomeDataController getAllHostHomeDataController =
+        Get.put(GetAllHostHomeDataController());
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
@@ -89,17 +100,21 @@ class CheckoutService {
             "propertyName": propertyName,
             "proeprtyAddress": proeprtyAddress,
             "tenantEmail": userid["email"],
-            "propertyId": proeprtyId
+            "propertyId": proeprtyId,
+            "tenantid": tenantId,
+            "hostid": hostId,
+            "rating": rating,
+            "commant": comment,
           }),
           headers: {'Content-type': 'application/json'});
       if (response.statusCode == 200) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           getAvailablePropertyController.fetchAllProperties();
         });
-        getAvailablePropertyController.fetchAllProperties();
         getLeasePropertyController.fetchAllProperties();
+        getAllHostHomeDataController.getAllHostHomePageData();
         LoaderX.hide();
-        // Get.back();
+        Get.back();
         getAllCheckoutController.getAllCheckoutInvitation();
         WidgetsBinding.instance.addPostFrameCallback((_) {
           getAllCurrentTenantsController.fetchAllTenants();

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 
 import '../models/host_lending_model.dart';
 import '../models/tenant_lending_model.dart';
@@ -9,7 +8,7 @@ class GetAllHostHomeDataController extends GetxController {
   var isLoading = true.obs;
   HostHomePageService hostHomePageService = HostHomePageService();
   var dataList = <HostLendingModel>[].obs;
-  var showUI = false.obs;
+
   // @override
   // void onInit() {
   //   getAllHostHomePageData();
@@ -17,13 +16,16 @@ class GetAllHostHomeDataController extends GetxController {
   // }
 
   void getAllHostHomePageData() async {
-    isLoading(true);
-    var checkoutData = await hostHomePageService.getHostHomeData();
-    // if (checkoutData != null) {
-    isLoading(false);
-    dataList.assign(checkoutData);
-
-    // }
+    try {
+      isLoading(true);
+      var checkoutData = await hostHomePageService.getHostHomeData();
+      if (checkoutData != null) {
+        dataList.assign(checkoutData);
+        isLoading(false);
+      }
+    } finally {
+      isLoading(false);
+    }
   }
 }
 
@@ -32,11 +34,11 @@ class GetAllTenantHomeDataController extends GetxController {
   HostHomePageService hostHomePageService = HostHomePageService();
   var dataList = <TenantLendingModel>[].obs;
 
-  @override
-  void onInit() {
-    getAllTenantHomePageData();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   getAllTenantHomePageData();
+  //   super.onInit();
+  // }
 
   void getAllTenantHomePageData() async {
     try {
@@ -44,6 +46,7 @@ class GetAllTenantHomeDataController extends GetxController {
       var checkoutData = await hostHomePageService.getTenantHomeData();
       if (checkoutData != null) {
         dataList.assign(checkoutData);
+        isLoading(false);
       }
     } finally {
       isLoading(false);

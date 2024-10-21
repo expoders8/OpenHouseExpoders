@@ -36,6 +36,7 @@ class CreatePropertyPage extends StatefulWidget {
   final String? facilities;
   final String? person;
   final String? address;
+  final String? address1;
   final String? country;
   final String? countryId;
   final String? state;
@@ -60,6 +61,7 @@ class CreatePropertyPage extends StatefulWidget {
     this.facilities,
     this.person,
     this.address,
+    this.address1,
     this.country,
     this.countryId,
     this.state,
@@ -106,12 +108,12 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController propertyNameController = TextEditingController();
   final TextEditingController propertyPriceController = TextEditingController();
+  final TextEditingController categoryController = TextEditingController();
   List<dynamic> _placeList = [];
   int totalImageCount = 0;
   String sessionToken = '1234567890',
       countryName = "",
       placesApiKey = "AIzaSyAQYUMPajZSmEupi3I7rsukQMSAZJmh-XA";
-  String? dropValue;
   @override
   void initState() {
     super.initState();
@@ -183,18 +185,20 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         : widget.facilities.toString();
     personController.text =
         widget.person.toString() == "null" ? "" : widget.person.toString();
-    addressController.text =
-        widget.address.toString() == "null" ? "" : widget.address.toString();
+    streetnameController.text =
+        widget.address1.toString() == "null" ? "" : widget.address1.toString();
+    List<String> addressParts = widget.address.toString().split('/');
+    unitnumberController.text = addressParts[0].trim();
+    addressController.text = addressParts[1].trim();
     countryController.text =
         widget.country.toString() == "null" ? "" : widget.country.toString();
     countryId = widget.countryId.toString() == "null"
         ? ""
         : widget.countryId.toString();
-
     stateid =
         widget.stateId.toString() == "null" ? "" : widget.stateId.toString();
-    // dropValue =
-    //     widget.category.toString() == "null" ? "" : widget.category.toString();
+    categoryController.text =
+        widget.category.toString() == "null" ? "" : widget.category.toString();
     cityController.text =
         widget.city.toString() == "null" ? "" : widget.city.toString();
     capacityController.text =
@@ -210,7 +214,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     selctesType = "included";
     amenities = widget.amenitiesid.toString() == "null"
         ? ""
-        : widget.selctesType.toString();
+        : widget.amenitiesid.toString();
   }
 
   final List<String> _categories = [
@@ -250,107 +254,107 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 buildTextWidget("Property Name"),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                //   child: TypeAheadField<GetAllSearchPropertyDataModel>(
-                //     textFieldConfiguration: TextFieldConfiguration(
-                //       controller: propertyNameController,
-                //       inputFormatters: [
-                //         FilteringTextInputFormatter.deny(RegExp(r'^ ')),
-                //       ],
-                //       decoration: InputDecoration(
-                //         fillColor: kWhiteColor,
-                //         filled: true,
-                //         hintText: "Amenity",
-                //         contentPadding:
-                //             const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                //         hintStyle: const TextStyle(
-                //           fontFamily: kCircularStdBook,
-                //           fontWeight: FontWeight.w400,
-                //           color: kPrimaryColor,
-                //           fontSize: 14,
-                //         ),
-                //         hintMaxLines: 1,
-                //         suffixIcon: Image.asset(
-                //           "assets/icons/polygon_down.png",
-                //           scale: 2,
-                //           width: 5,
-                //         ),
-                //         border: const OutlineInputBorder(
-                //           borderRadius: BorderRadius.all(
-                //             Radius.circular(10.0),
-                //           ),
-                //           borderSide:
-                //               BorderSide(color: kWhiteColor, width: 1.0),
-                //         ),
-                //         enabledBorder: OutlineInputBorder(
-                //           borderRadius: BorderRadius.circular(10.0),
-                //           borderSide:
-                //               const BorderSide(color: kWhiteColor, width: 1.0),
-                //         ),
-                //         focusedBorder: OutlineInputBorder(
-                //           borderRadius: BorderRadius.circular(10.0),
-                //           borderSide: const BorderSide(
-                //             color: kWhiteColor,
-                //           ),
-                //         ),
-                //         errorBorder: OutlineInputBorder(
-                //           borderRadius: BorderRadius.circular(10.0),
-                //           borderSide:
-                //               const BorderSide(color: kWhiteColor, width: 1.0),
-                //         ),
-                //         errorText: isFormSubmitted &&
-                //                 propertyNameController.text.isEmpty
-                //             ? 'Please select a Property name'
-                //             : null,
-                //       ),
-                //       style: const TextStyle(
-                //         fontFamily: kCircularStdBook,
-                //         fontWeight: FontWeight.w400,
-                //         color: kPrimaryColor,
-                //         fontSize: 14,
-                //       ),
-                //       autocorrect: true,
-                //       cursorColor: kPrimaryColor,
-                //     ),
-                //     suggestionsCallback: (pattern) async {
-                //       var amenities = await lookupService
-                //           .getSearchProperties(propertyNameController.text);
-                //       return amenities
-                //           .where((country) =>
-                //               country.name != null &&
-                //               country.name!
-                //                   .toLowerCase()
-                //                   .contains(pattern.toLowerCase()))
-                //           .toList();
-                //     },
-                //     itemBuilder:
-                //         (context, GetAllSearchPropertyDataModel suggestion) {
-                //       return ListTile(
-                //         title: Text(suggestion.name.toString()),
-                //       );
-                //     },
-                //     onSuggestionSelected:
-                //         (GetAllSearchPropertyDataModel suggestion) {
-                //       setState(() {
-                //         propertyNameController.text =
-                //             suggestion.name.toString();
-                //       });
-                //     },
-                //     noItemsFoundBuilder: (context) => const Padding(
-                //       padding: EdgeInsets.all(8.0),
-                //       child: Text('No Amenity found'),
-                //     ),
-                //   ),
-                // ),
-                CustomTextFormField(
-                  hintText: 'Property Name',
-                  maxLines: 1,
-                  ctrl: propertyNameController,
-                  name: "create",
-                  formSubmitted: isFormSubmitted,
-                  validationMsg: 'Please enter property name',
+                TypeAheadField<GetAllSearchPropertyDataModel>(
+                  textFieldConfiguration: TextFieldConfiguration(
+                    controller: propertyNameController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp(r'^ ')),
+                    ],
+                    decoration: InputDecoration(
+                      fillColor: kWhiteColor,
+                      filled: true,
+                      hintText: "Property Name",
+                      contentPadding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                      hintStyle: const TextStyle(
+                        fontFamily: kCircularStdBook,
+                        fontWeight: FontWeight.w400,
+                        color: kPrimaryColor,
+                        fontSize: 14,
+                      ),
+                      hintMaxLines: 1,
+                      suffixIcon: Image.asset(
+                        "assets/icons/polygon_down.png",
+                        scale: 2,
+                        width: 5,
+                      ),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ),
+                        borderSide: BorderSide(color: kWhiteColor, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide:
+                            const BorderSide(color: kWhiteColor, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(
+                          color: kWhiteColor,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide:
+                            const BorderSide(color: kWhiteColor, width: 1.0),
+                      ),
+                      errorText:
+                          isFormSubmitted && propertyNameController.text.isEmpty
+                              ? 'Please select a Property name'
+                              : null,
+                    ),
+                    style: const TextStyle(
+                      fontFamily: kCircularStdBook,
+                      fontWeight: FontWeight.w400,
+                      color: kPrimaryColor,
+                      fontSize: 14,
+                    ),
+                    autocorrect: true,
+                    cursorColor: kPrimaryColor,
+                  ),
+                  suggestionsCallback: (pattern) async {
+                    var properties = await lookupService
+                        .getSearchProperties(propertyNameController.text);
+                    if (properties.isEmpty) {
+                      return [
+                        GetAllSearchPropertyDataModel(
+                            name: propertyNameController.text)
+                      ];
+                    }
+                    return properties
+                        .where((property) =>
+                            property.name != null &&
+                            property.name!
+                                .toLowerCase()
+                                .contains(pattern.toLowerCase()))
+                        .toList();
+                  },
+                  itemBuilder:
+                      (context, GetAllSearchPropertyDataModel suggestion) {
+                    return ListTile(
+                      title: Text(suggestion.name.toString()),
+                    );
+                  },
+                  onSuggestionSelected:
+                      (GetAllSearchPropertyDataModel suggestion) {
+                    setState(() {
+                      propertyNameController.text = suggestion.name.toString();
+                    });
+                  },
+                  noItemsFoundBuilder: (context) => const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('No Property Name found'),
+                  ),
                 ),
+                // CustomTextFormField(
+                //   hintText: 'Property Name',
+                //   maxLines: 1,
+                //   ctrl: propertyNameController,
+                //   name: "create",
+                //   formSubmitted: isFormSubmitted,
+                //   validationMsg: 'Please enter property name',
+                // ),
                 buildTextWidget("Description"),
                 CustomTextFormField(
                   hintText: 'Description',
@@ -758,7 +762,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
-                      value: dropValue,
+                      value: categoryController.text.isEmpty
+                          ? null
+                          : categoryController.text,
                       icon: Padding(
                         padding: const EdgeInsets.only(right: 9.0),
                         child: Image.asset(
@@ -770,9 +776,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       hint: const Text(
                         "Category",
                         style: TextStyle(
-                            color: kPrimaryColor,
-                            fontFamily: kCircularStdBook,
-                            fontSize: 15),
+                          color: kPrimaryColor,
+                          fontFamily: kCircularStdBook,
+                          fontSize: 15,
+                        ),
                       ),
                       items: _categories.map((category) {
                         return DropdownMenuItem<String>(
@@ -782,7 +789,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-                          dropValue = value;
+                          categoryController.text = value ?? '';
                         });
                       },
                     ),
@@ -1272,7 +1279,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             washRoomsController.text,
                                             selctesType,
                                             propertyId,
-                                            dropValue!,
+                                            categoryController.text,
                                             widget.isActive!,
                                             fileList)
                                         .then((value) {
@@ -1374,7 +1381,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                             washRoomsController.text,
                                             selctesType,
                                             "null",
-                                            dropValue!,
+                                            categoryController.text,
                                             fileList)
                                         .then((value) {
                                       if (value) {

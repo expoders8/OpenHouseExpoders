@@ -77,11 +77,7 @@ class _HomeTenantPageState extends State<HomeTenantPage> {
 
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 10), () {
-      setState(() {
-        showUI = true;
-      });
-    });
+    getAllTenantHomeDataController.getAllTenantHomePageData();
     var roll = getStorage.read('roll') ?? "";
     setState(() {
       selectedRoll = roll;
@@ -208,122 +204,80 @@ class _HomeTenantPageState extends State<HomeTenantPage> {
         ],
         backgroundColor: kBackGroundColor,
       ),
-      body: showUI == false
-          ? const Center(
-              child: CircularProgressIndicator(color: kPrimaryColor),
-            )
-          : getAllTenantHomeDataController.dataList[0].data!.propertiesData !=
-                      null ||
-                  getAllTenantHomeDataController
-                      .dataList[0].data!.tenantRequest!.isNotEmpty ||
-                  getAllTenantHomeDataController
-                      .dataList[0].data!.invitationData!.isNotEmpty
-              ? SafeArea(
-                  child: Obx(
-                    () {
-                      if (getAllTenantHomeDataController.isLoading.value) {
-                        return Container(
-                          color: kBackGroundColor,
-                          child: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                      } else {
-                        if (getAllTenantHomeDataController.dataList[0].data !=
-                            null) {
-                          if (getAllTenantHomeDataController.dataList[0].data ==
-                              null) {
-                            return const Center(
-                              child: Text(
-                                "No extensions",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                            );
-                          } else {
-                            return ListView.builder(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              itemCount: 1,
-                              itemBuilder: (context, index) {
-                                var requestData = getAllTenantHomeDataController
-                                    .dataList[0].data!;
-                                var data = requestData;
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      "Invitations",
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 16,
-                                          fontFamily: kCircularStdMedium),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    buildTenantinvitation(data.invitationData),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Text(
-                                          "My Requests",
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 16,
-                                              fontFamily: kCircularStdMedium),
-                                        ),
-                                        CupertinoButton(
-                                          onPressed: () {
-                                            Get.toNamed(
-                                                Routes.myRequestViewAllView);
-                                          },
-                                          child: const Text(
-                                            "View all",
-                                            style: TextStyle(
-                                                color: kBlueColor,
-                                                fontSize: 13,
-                                                fontFamily: kCircularStdMedium),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    buildTenantrequest(data.tenantRequest),
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      "Current property",
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 16,
-                                          fontFamily: kCircularStdMedium),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    buildTenantProperty(data.propertiesData!),
-                                    const SizedBox(height: 90),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                        } else {
-                          return const Center(
-                            child: Text(
-                              "No Home",
+      body: SafeArea(
+        child: Obx(
+          () {
+            if (getAllTenantHomeDataController.isLoading.value) {
+              return Container(
+                color: kBackGroundColor,
+                child: const Center(
+                  child: CircularProgressIndicator(color: kPrimaryColor),
+                ),
+              );
+            } else {
+              if (getAllTenantHomeDataController.dataList.isNotEmpty) {
+                return ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    var requestData =
+                        getAllTenantHomeDataController.dataList[0].data!;
+                    var data = requestData;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 10),
+                        const Text(
+                          "Invitations",
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 16,
+                              fontFamily: kCircularStdMedium),
+                        ),
+                        const SizedBox(height: 10),
+                        buildTenantinvitation(data.invitationData),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "My Requests",
                               style: TextStyle(
                                   color: kPrimaryColor,
-                                  fontSize: 15,
+                                  fontSize: 16,
                                   fontFamily: kCircularStdMedium),
                             ),
-                          );
-                        }
-                      }
-                    },
-                  ),
-                )
-              : SizedBox(
+                            CupertinoButton(
+                              onPressed: () {
+                                Get.toNamed(Routes.myRequestViewAllView);
+                              },
+                              child: const Text(
+                                "View all",
+                                style: TextStyle(
+                                    color: kBlueColor,
+                                    fontSize: 13,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                            ),
+                          ],
+                        ),
+                        buildTenantrequest(data.tenantRequest),
+                        const SizedBox(height: 10),
+                        const Text(
+                          "Current property",
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 16,
+                              fontFamily: kCircularStdMedium),
+                        ),
+                        const SizedBox(height: 10),
+                        buildTenantProperty(data.propertiesData!),
+                        const SizedBox(height: 90),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                return SizedBox(
                   height: Get.height - 85,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -360,7 +314,12 @@ class _HomeTenantPageState extends State<HomeTenantPage> {
                       ],
                     ),
                   ),
-                ),
+                );
+              }
+            }
+          },
+        ),
+      ),
     );
   }
 

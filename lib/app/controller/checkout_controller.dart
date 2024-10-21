@@ -9,11 +9,11 @@ class GetAllCheckoutController extends GetxController {
   CheckoutService checkoutService = CheckoutService();
   var checkoutList = <GetAllCheckoutModel>[].obs;
 
-  // @override
-  // void onInit() {
-  //   getAllCheckoutInvitation();
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    getAllCheckoutInvitation();
+    super.onInit();
+  }
 
   void getAllCheckoutInvitation() async {
     try {

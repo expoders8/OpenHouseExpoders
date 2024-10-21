@@ -102,7 +102,8 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
                                     "${data.tenantFirstName} ${data.tenantLastName}",
                                     data.address.toString(),
                                     data.tenantPhoneNumber.toString(),
-                                    data.id.toString()),
+                                    data.id.toString(),
+                                    data.tenantrating!),
                                 const SizedBox(height: 10),
                               ],
                             );
@@ -146,7 +147,7 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
     );
   }
 
-  previousTenants(String? image, name, address, contact, id) {
+  previousTenants(String? image, name, address, contact, id, double? rating) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
@@ -194,65 +195,143 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
                           ),
                         ),
                   const SizedBox(width: 15),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: const TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: 18,
-                            fontFamily: kCircularStdMedium),
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.location_on,
-                            size: 16,
-                            color: kButtonColor,
-                          ),
-                          const SizedBox(width: 5),
-                          SizedBox(
-                            width: Get.width / 2,
-                            child: Text(
-                              address,
+                  SizedBox(
+                    width: Get.width - 140,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
                               style: const TextStyle(
-                                  color: kSecondaryPrimaryColor,
-                                  fontSize: 13,
-                                  fontFamily: kCircularStdBook),
+                                  color: kPrimaryColor,
+                                  fontSize: 18,
+                                  fontFamily: kCircularStdMedium),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: contact != "null" ? 3 : 0),
-                      contact != "null"
-                          ? Row(
+                            const SizedBox(height: 5),
+                            Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 const Icon(
-                                  Icons.phone,
+                                  Icons.location_on,
                                   size: 16,
                                   color: kButtonColor,
                                 ),
                                 const SizedBox(width: 5),
                                 SizedBox(
-                                  width: Get.width / 2,
+                                  width: Get.width - 200,
                                   child: Text(
-                                    contact,
+                                    address,
                                     style: const TextStyle(
-                                        color: kPrimaryColor,
+                                        color: kSecondaryPrimaryColor,
                                         fontSize: 13,
                                         fontFamily: kCircularStdBook),
                                   ),
                                 ),
                               ],
-                            )
-                          : Container(),
-                    ],
+                            ),
+                            SizedBox(height: contact != "null" ? 3 : 0),
+                            contact != "null"
+                                ? Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Icon(
+                                        Icons.phone,
+                                        size: 16,
+                                        color: kButtonColor,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      SizedBox(
+                                        width: Get.width - 200,
+                                        child: Text(
+                                          contact,
+                                          style: const TextStyle(
+                                              color: kPrimaryColor,
+                                              fontSize: 13,
+                                              fontFamily: kCircularStdBook),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                        Image.asset(
+                          rating! <= 2
+                              ? "assets/images/bad.jpg"
+                              : rating <= 3 && rating > 2
+                                  ? "assets/images/good.jpg"
+                                  : rating <= 4 && rating > 3
+                                      ? "assets/images/average.jpg"
+                                      : rating <= 5 && rating > 4
+                                          ? "assets/images/excellent.jpg"
+                                          : "",
+                          height: 35,
+                          width: 35,
+                          fit: BoxFit.cover,
+                        ),
+                        // Column(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Stack(
+                        //       alignment: Alignment.center,
+                        //       children: [
+                        //         // Outer Green Circle
+                        //         Container(
+                        //           width: 25,
+                        //           height: 25,
+                        //           decoration: BoxDecoration(
+                        //             shape: BoxShape.circle,
+                        //             gradient: LinearGradient(
+                        //               colors: rating! <= 2
+                        //                   ? [Colors.redAccent, Colors.red]
+                        //                   : rating <= 3 && rating > 2
+                        //                       ? [Colors.blueAccent, Colors.blue]
+                        //                       : rating <= 4 && rating > 3
+                        //                           ? [
+                        //                               Colors.orangeAccent,
+                        //                               Colors.orange
+                        //                             ]
+                        //                           : rating <= 5 && rating > 4
+                        //                               ? [
+                        //                                   Colors.greenAccent,
+                        //                                   Colors.green
+                        //                                 ]
+                        //                               : [
+                        //                                   Colors.greenAccent,
+                        //                                   Colors.green
+                        //                                 ],
+                        //               begin: Alignment.topLeft,
+                        //               end: Alignment.bottomRight,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         // Checkmark Icon
+                        //         const Icon(
+                        //           Icons.check,
+                        //           color: Colors.white,
+                        //           size: 15,
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     const SizedBox(height: 2),
+                        //     Text(
+
+                        //       style: const TextStyle(
+                        //           color: kPrimaryColor,
+                        //           fontSize: 10,
+                        //           fontFamily: kCircularStdMedium),
+                        //     ),
+                        //   ],
+                        // ),
+                      ],
+                    ),
                   )
                 ],
               ),

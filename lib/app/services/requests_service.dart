@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/constant/constant.dart';
+import '../controller/host_homepage_controller.dart';
 import '../controller/request_controller.dart';
 import '../models/get_all_request_model.dart';
 import '../../config/provider/loader_provider.dart';
@@ -15,6 +16,8 @@ class RequestsService {
       propertyName, proeprtyAddress, rentAmount, amenityName) async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
+    final GetAllTenantHomeDataController getAllTenantHomeDataController =
+        Get.put(GetAllTenantHomeDataController());
     try {
       var response =
           await http.post(Uri.parse('$baseUrl/api/property/addrequest'),
@@ -38,6 +41,7 @@ class RequestsService {
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (decodedUser['success']) {
+          getAllTenantHomeDataController.getAllTenantHomePageData();
           return true;
         } else {
           LoaderX.hide();

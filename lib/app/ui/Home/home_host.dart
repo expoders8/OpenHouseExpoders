@@ -18,6 +18,7 @@ import '../../../config/constant/color_constant.dart';
 import '../../services/checkout_service.dart';
 import '../../services/requests_service.dart';
 import '../Property Details/Host/lease_property_details.dart';
+import '../Review/review_page.dart';
 
 class HomeHostPage extends StatefulWidget {
   const HomeHostPage({super.key});
@@ -72,11 +73,7 @@ class _HomeHostPageState extends State<HomeHostPage> {
   @override
   void initState() {
     getAllHostHomeDataController.getAllHostHomePageData();
-    // Future.delayed(const Duration(seconds: 10), () {
-    setState(() {
-      showUI = true;
-    });
-    // });
+
     var roll = getStorage.read('roll') ?? "";
     setState(() {
       selectedRoll = roll;
@@ -100,272 +97,238 @@ class _HomeHostPageState extends State<HomeHostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "OpenHouse",
-              style: TextStyle(fontFamily: kCircularStdBold, fontSize: 18),
-            ),
-            const SizedBox(width: 3),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25), color: kButtonColor),
-              child: Center(
-                child: Text(
-                  '${selectedRoll[0].toUpperCase()}${selectedRoll.substring(1)}',
-                  style: const TextStyle(
-                    color: kWhiteColor,
-                    fontSize: 10,
-                    fontFamily: kCircularStdNormal,
-                  ),
-                ),
+        appBar: AppBar(
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "OpenHouse",
+                style: TextStyle(fontFamily: kCircularStdBold, fontSize: 18),
               ),
-            )
-          ],
-        ),
-        automaticallyImplyLeading: false,
-        actions: [
-          CupertinoButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              Get.toNamed(Routes.notificationPage);
-            },
-            child: Image.asset(
-              "assets/icons/notification.png",
-              fit: BoxFit.cover,
-              height: 33,
-              width: 33,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                Get.toNamed(Routes.profilePage);
-              },
-              child: ClipOval(
-                child: Material(
-                    child: userImage != ""
-                        ? Image.network(
-                            userImage,
-                            width: 30,
-                            height: 30,
-                            errorBuilder: (context, error, stackTrace) =>
-                                Image.asset(
-                              "assets/images/blank_profile.png",
-                              width: 30,
-                              height: 30,
-                              fit: BoxFit.cover,
-                            ),
-                            fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              }
-                              return SizedBox(
-                                width: 30,
-                                height: 30,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: kPrimaryColor,
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                        : Container(
-                            height: 36,
-                            width: 36,
-                            color: kTransparentColor,
-                            child: Center(
-                                child: Text(
-                              "$firstlater$lastlatter".toUpperCase(),
-                              style: const TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 15,
-                                  fontFamily: kCircularStdNormal),
-                            )),
-                          )),
-              ),
-            ),
-          ),
-        ],
-        backgroundColor: kBackGroundColor,
-      ),
-      body: getAllHostHomeDataController.isLoading.value == true
-          ? const Center(
-              child: CircularProgressIndicator(color: kPrimaryColor),
-            )
-          : getAllHostHomeDataController.dataList[0].data!.propertiesData !=
-                      null ||
-                  getAllHostHomeDataController
-                      .dataList[0].data!.tenantRequest!.isNotEmpty ||
-                  getAllHostHomeDataController
-                      .dataList[0].data!.checkOutRequest!.isNotEmpty
-              ? SafeArea(
-                  child: Obx(
-                    () {
-                      if (getAllHostHomeDataController.isLoading.value) {
-                        return Container(
-                          color: kBackGroundColor,
-                          child: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                      } else {
-                        if (getAllHostHomeDataController.dataList[0].data !=
-                            null) {
-                          if (getAllHostHomeDataController.dataList[0].data ==
-                              null) {
-                            return const Center(
-                              child: Text(
-                                "No extensions",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                            );
-                          } else {
-                            return ListView.builder(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              itemCount: 1,
-                              itemBuilder: (context, index) {
-                                var requestData = getAllHostHomeDataController
-                                    .dataList[0].data!;
-                                var data = requestData;
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      "Checkout Requests",
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 16,
-                                          fontFamily: kCircularStdMedium),
-                                    ),
-                                    buildcheckoutrequest(data.checkOutRequest),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Text(
-                                          "Tenant Requests",
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 16,
-                                              fontFamily: kCircularStdMedium),
-                                        ),
-                                        CupertinoButton(
-                                          padding: EdgeInsets.zero,
-                                          onPressed: () {
-                                            Get.toNamed(
-                                                Routes.tenantRequestAllView);
-                                          },
-                                          child: const Text(
-                                            "View all",
-                                            style: TextStyle(
-                                                color: kBlueColor,
-                                                fontSize: 13,
-                                                fontFamily: kCircularStdMedium),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    buildTenantrequest(data.tenantRequest),
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      "Lease expairy",
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 16,
-                                          fontFamily: kCircularStdMedium),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    buildTenantProperty(data.propertiesData!),
-                                    const SizedBox(height: 90),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                        } else {
-                          return const Center(
-                            child: Text(
-                              "No extensions",
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 15,
-                                  fontFamily: kCircularStdMedium),
-                            ),
-                          );
-                        }
-                      }
-                    },
-                  ),
-                )
-              : SizedBox(
-                  height: Get.height - 85,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GridView(
-                      padding: const EdgeInsets.fromLTRB(5, 10, 5, 80),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 5.0,
-                        mainAxisSpacing: 3.0,
-                        childAspectRatio: 1,
-                      ),
-                      children: const [
-                        ResponsiveContainer(
-                          icon: Icons.home,
-                          name: 'Manage All\nYour Properties',
-                        ),
-                        ResponsiveContainer(
-                          icon: Icons.build,
-                          name: "Manage Tenants' Service Requests",
-                        ),
-                        ResponsiveContainer(
-                          icon: Icons.exit_to_app,
-                          name: "Track Check-Out Requests",
-                        ),
-                        ResponsiveContainer(
-                          icon: Icons.calendar_today,
-                          name: "Track Lease\nExtensions",
-                        ),
-                        ResponsiveContainer(
-                          icon: Icons.trending_up,
-                          name: "Track Property\nIncome",
-                        ),
-                        ResponsiveContainer(
-                          icon: Icons.trending_down,
-                          name: "Track Property\nExpenses",
-                        ),
-                        ResponsiveContainer(
-                          icon: Icons.trending_down,
-                          name: "Chat with Tenants",
-                        ),
-                      ],
+              const SizedBox(width: 3),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: kButtonColor),
+                child: Center(
+                  child: Text(
+                    '${selectedRoll[0].toUpperCase()}${selectedRoll.substring(1)}',
+                    style: const TextStyle(
+                      color: kWhiteColor,
+                      fontSize: 10,
+                      fontFamily: kCircularStdNormal,
                     ),
                   ),
                 ),
-    );
+              )
+            ],
+          ),
+          automaticallyImplyLeading: false,
+          actions: [
+            CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                Get.toNamed(Routes.notificationPage);
+              },
+              child: Image.asset(
+                "assets/icons/notification.png",
+                fit: BoxFit.cover,
+                height: 33,
+                width: 33,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  Get.toNamed(Routes.profilePage);
+                },
+                child: ClipOval(
+                  child: Material(
+                      child: userImage != ""
+                          ? Image.network(
+                              userImage,
+                              width: 30,
+                              height: 30,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(
+                                "assets/images/blank_profile.png",
+                                width: 30,
+                                height: 30,
+                                fit: BoxFit.cover,
+                              ),
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return SizedBox(
+                                  width: 30,
+                                  height: 30,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: kPrimaryColor,
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          : Container(
+                              height: 36,
+                              width: 36,
+                              color: kTransparentColor,
+                              child: Center(
+                                  child: Text(
+                                "$firstlater$lastlatter".toUpperCase(),
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                    fontFamily: kCircularStdNormal),
+                              )),
+                            )),
+                ),
+              ),
+            ),
+          ],
+          backgroundColor: kBackGroundColor,
+        ),
+        body: SafeArea(
+          child: Obx(
+            () {
+              if (getAllHostHomeDataController.isLoading.value) {
+                return Container(
+                  color: kBackGroundColor,
+                  child: const Center(
+                    child: CircularProgressIndicator(color: kPrimaryColor),
+                  ),
+                );
+              } else {
+                if (getAllHostHomeDataController.dataList.isNotEmpty) {
+                  return ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    itemCount: 1,
+                    itemBuilder: (context, index) {
+                      var requestData =
+                          getAllHostHomeDataController.dataList[0].data!;
+                      var data = requestData;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Checkout Requests",
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                          buildcheckoutrequest(data.checkOutRequest),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Tenant Requests",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 16,
+                                    fontFamily: kCircularStdMedium),
+                              ),
+                              CupertinoButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  Get.toNamed(Routes.tenantRequestAllView);
+                                },
+                                child: const Text(
+                                  "View all",
+                                  style: TextStyle(
+                                      color: kBlueColor,
+                                      fontSize: 13,
+                                      fontFamily: kCircularStdMedium),
+                                ),
+                              ),
+                            ],
+                          ),
+                          buildTenantrequest(data.tenantRequest),
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Lease expairy",
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                fontFamily: kCircularStdMedium),
+                          ),
+                          const SizedBox(height: 10),
+                          buildTenantProperty(data.propertiesData!),
+                          const SizedBox(height: 90),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  return SizedBox(
+                    height: Get.height - 85,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView(
+                        padding: const EdgeInsets.fromLTRB(5, 10, 5, 80),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 5.0,
+                          mainAxisSpacing: 3.0,
+                          childAspectRatio: 1,
+                        ),
+                        children: const [
+                          ResponsiveContainer(
+                            icon: Icons.home,
+                            name: 'Manage All\nYour Properties',
+                          ),
+                          ResponsiveContainer(
+                            icon: Icons.build,
+                            name: "Manage Tenants' Service Requests",
+                          ),
+                          ResponsiveContainer(
+                            icon: Icons.exit_to_app,
+                            name: "Track Check-Out Requests",
+                          ),
+                          ResponsiveContainer(
+                            icon: Icons.calendar_today,
+                            name: "Track Lease\nExtensions",
+                          ),
+                          ResponsiveContainer(
+                            icon: Icons.trending_up,
+                            name: "Track Property\nIncome",
+                          ),
+                          ResponsiveContainer(
+                            icon: Icons.trending_down,
+                            name: "Track Property\nExpenses",
+                          ),
+                          ResponsiveContainer(
+                            icon: Icons.trending_down,
+                            name: "Chat with Tenants",
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+              }
+            },
+          ),
+        ));
   }
 
   Widget buildcheckoutrequest(List<CheckOutRequest>? checkOut) {
@@ -699,11 +662,15 @@ class _HomeHostPageState extends State<HomeHostPage> {
                         CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            checkoutService.acceptCheckoutInvitation(
-                                rentalsData.id.toString(),
-                                rentalsData.name.toString(),
-                                rentalsData.address.toString(),
-                                rentalsData.propertyId.toString());
+                            Get.to(() => TenantReviewPage(
+                                  id: rentalsData.id.toString(),
+                                  name: rentalsData.name.toString(),
+                                  address: rentalsData.address.toString(),
+                                  propertyId: rentalsData.propertyId.toString(),
+                                  hostId: rentalsData.hostUserId.toString(),
+                                  tenantId: rentalsData.tenantUserId.toString(),
+                                ));
+                            // Get.toNamed(Routes.tenantReviewPage);
                           },
                           child: Container(
                             padding: const EdgeInsets.all(5),
@@ -942,11 +909,11 @@ class _HomeHostPageState extends State<HomeHostPage> {
                           fit: BoxFit.cover,
                           scale: 1.8,
                         ),
-                        Column(
+                        const Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
+                            Text(
                               "Lease expiry",
                               style: TextStyle(
                                   fontFamily: kCircularStdNormal,
@@ -955,7 +922,7 @@ class _HomeHostPageState extends State<HomeHostPage> {
                             ),
                             Text(
                               "formattedDate",
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontFamily: kCircularStdMedium,
                                   fontSize: 17,
                                   color: kPrimaryColor),

@@ -247,6 +247,9 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                     address: propertydata
                                                         .address
                                                         .toString(),
+                                                    address1: propertydata
+                                                        .address1
+                                                        .toString(),
                                                     country: propertydata
                                                         .countryName
                                                         .toString(),

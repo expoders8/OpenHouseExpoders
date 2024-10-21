@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:openhome/app/models/get_expense_model.dart';
 
+import '../controller/host_homepage_controller.dart';
 import '../controller/tab_controller.dart';
 import '../models/extensions_model.dart';
 import '../models/getall_property_expenses_model.dart';
@@ -297,6 +298,8 @@ class PropertiesService {
         Get.put(GetAllInvitationController());
     final GetCurrentPropertyController getCurrentPropertyController =
         Get.put(GetCurrentPropertyController());
+    final GetAllTenantHomeDataController getAllTenantHomeDataController =
+        Get.put(GetAllTenantHomeDataController());
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
@@ -306,6 +309,7 @@ class PropertiesService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         LoaderX.hide();
         var data = json.decode(response.body);
+        getAllTenantHomeDataController.getAllTenantHomePageData();
         getAllInvitationController.getAllInvitations();
         getCurrentPropertyController.fetchAllProperties();
         Get.back();

@@ -11,6 +11,7 @@ import '../ui/My Tenants/my_tenants_detail.dart';
 import '../ui/Payment/pay_rent.dart';
 import '../ui/Profile/profile.dart';
 import '../ui/Property Details/Tenant/tenant_lease_property.dart';
+import '../ui/Review/review_page.dart';
 import '../ui/Splash/splash_screen.dart';
 import '../ui/TabPage/tab_page.dart';
 import '../ui/Auth/Login/login.dart';
@@ -193,6 +194,10 @@ class AppPages {
     GetPage(
       name: _Paths.noInternetScreen,
       page: () => const NoInternetScreen(),
+    ),
+    GetPage(
+      name: _Paths.tenantReviewPage,
+      page: () => const TenantReviewPage(),
     ),
   ];
 }

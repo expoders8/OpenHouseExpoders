@@ -38,6 +38,7 @@ class GetAllMyTenantsDataModel {
   String? tenantPhoneNumber;
   String? tenantProfilePicture;
   String? tenantType;
+  double? tenantrating;
   String? address;
 
   GetAllMyTenantsDataModel(
@@ -48,6 +49,7 @@ class GetAllMyTenantsDataModel {
       this.tenantPhoneNumber,
       this.tenantProfilePicture,
       this.tenantType,
+      this.tenantrating,
       this.address});
 
   GetAllMyTenantsDataModel.fromJson(Map<String, dynamic> json) {
@@ -58,6 +60,9 @@ class GetAllMyTenantsDataModel {
     tenantPhoneNumber = json['tenant_phone_number'];
     tenantProfilePicture = json['tenant_profile_picture'];
     tenantType = json['tenant_type'];
+    tenantrating = json['tenant_rating'] is int
+        ? tenantrating = (json['tenant_rating'] as int).toDouble()
+        : tenantrating = json['tenant_rating'];
     address = json['address'];
   }
 
@@ -70,6 +75,7 @@ class GetAllMyTenantsDataModel {
     data['tenant_phone_number'] = tenantPhoneNumber;
     data['tenant_profile_picture'] = tenantProfilePicture;
     data['tenant_type'] = tenantType;
+    data['tenant_rating'] = tenantrating;
     data['address'] = address;
     return data;
   }

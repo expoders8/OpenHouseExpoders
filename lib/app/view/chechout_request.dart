@@ -1,12 +1,14 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:openhome/app/routes/app_pages.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../../config/provider/loader_provider.dart';
 import '../controller/checkout_controller.dart';
 import '../services/checkout_service.dart';
+import '../ui/Review/review_page.dart';
 
 class CheckOutRequestView extends StatefulWidget {
   const CheckOutRequestView({super.key});
@@ -381,12 +383,18 @@ class _CheckOutRequestViewState extends State<CheckOutRequestView> {
                                       CupertinoButton(
                                         padding: EdgeInsets.zero,
                                         onPressed: () {
-                                          checkoutService
-                                              .acceptCheckoutInvitation(
-                                                  data.id.toString(),
-                                                  data.name.toString(),
-                                                  data.address.toString(),
-                                                  data.propertyId.toString());
+                                          Get.to(() => TenantReviewPage(
+                                                id: data.id.toString(),
+                                                name: data.name.toString(),
+                                                address:
+                                                    data.address.toString(),
+                                                propertyId:
+                                                    data.propertyId.toString(),
+                                                hostId:
+                                                    data.hostUserId.toString(),
+                                                tenantId: data.tenantUserId
+                                                    .toString(),
+                                              ));
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.all(5),
