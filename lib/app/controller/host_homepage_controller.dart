@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 import '../models/host_lending_model.dart';
 import '../models/tenant_lending_model.dart';
@@ -8,23 +9,21 @@ class GetAllHostHomeDataController extends GetxController {
   var isLoading = true.obs;
   HostHomePageService hostHomePageService = HostHomePageService();
   var dataList = <HostLendingModel>[].obs;
-
-  @override
-  void onInit() {
-    getAllHostHomePageData();
-    super.onInit();
-  }
+  var showUI = false.obs;
+  // @override
+  // void onInit() {
+  //   getAllHostHomePageData();
+  //   super.onInit();
+  // }
 
   void getAllHostHomePageData() async {
-    try {
-      isLoading(true);
-      var checkoutData = await hostHomePageService.getHostHomeData();
-      if (checkoutData != null) {
-        dataList.assign(checkoutData);
-      }
-    } finally {
-      isLoading(false);
-    }
+    isLoading(true);
+    var checkoutData = await hostHomePageService.getHostHomeData();
+    // if (checkoutData != null) {
+    isLoading(false);
+    dataList.assign(checkoutData);
+
+    // }
   }
 }
 

@@ -71,11 +71,12 @@ class _HomeHostPageState extends State<HomeHostPage> {
   final tabController = Get.put(TabCountController());
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 10), () {
-      setState(() {
-        showUI = true;
-      });
+    getAllHostHomeDataController.getAllHostHomePageData();
+    // Future.delayed(const Duration(seconds: 10), () {
+    setState(() {
+      showUI = true;
     });
+    // });
     var roll = getStorage.read('roll') ?? "";
     setState(() {
       selectedRoll = roll;
@@ -202,7 +203,7 @@ class _HomeHostPageState extends State<HomeHostPage> {
         ],
         backgroundColor: kBackGroundColor,
       ),
-      body: showUI == false
+      body: getAllHostHomeDataController.isLoading.value == true
           ? const Center(
               child: CircularProgressIndicator(color: kPrimaryColor),
             )
