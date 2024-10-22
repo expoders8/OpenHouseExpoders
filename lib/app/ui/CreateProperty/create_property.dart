@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -109,7 +108,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController propertyNameController = TextEditingController();
   final TextEditingController propertyPriceController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
-  List<dynamic> _placeList = [];
+  List<dynamic> placeList = [];
   int totalImageCount = 0;
   String sessionToken = '1234567890',
       countryName = "",
@@ -140,24 +139,24 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   //   getSuggestion(addressController.text);
   // }
 
-  void getSuggestion(String input) async {
-    try {
-      String baseURL =
-          'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-      String request =
-          '$baseURL?input=$input&key=$placesApiKey&sessiontoken=$sessionToken';
-      var response = await http.get(Uri.parse(request));
-      if (response.statusCode == 200) {
-        setState(() {
-          _placeList = json.decode(response.body)['predictions'];
-        });
-      } else {
-        throw Exception('Failed to load predictions');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // void getSuggestion(String input) async {
+  //   try {
+  //     String baseURL =
+  //         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+  //     String request =
+  //         '$baseURL?input=$input&key=$placesApiKey&sessiontoken=$sessionToken';
+  //     var response = await http.get(Uri.parse(request));
+  //     if (response.statusCode == 200) {
+  //       setState(() {
+  //         placeList = json.decode(response.body)['predictions'];
+  //       });
+  //     } else {
+  //       throw Exception('Failed to load predictions');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -340,6 +339,12 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       (GetAllSearchPropertyDataModel suggestion) {
                     setState(() {
                       propertyNameController.text = suggestion.name.toString();
+                      widget.checkEdit != "edit"
+                          ? streetnameController.text =
+                              suggestion.address1.toString() == "null"
+                                  ? ""
+                                  : suggestion.address1.toString()
+                          : "";
                     });
                   },
                   noItemsFoundBuilder: (context) => const Padding(
@@ -857,6 +862,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   name: "create",
                   formSubmitted: isFormSubmitted,
                   validationMsg: 'Please enter Street name',
+                  enabled: false,
                 ),
                 const SizedBox(height: 10),
 
@@ -914,84 +920,84 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 //     ),
                 //   ],
                 // ),
-                Container(
-                  height: _placeList.isEmpty ? 0 : 200,
-                  width: _placeList.isEmpty ? 0 : size.width,
-                  color: kWhiteColor,
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    shrinkWrap: true,
-                    itemCount: _placeList.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () async {
-                          Future.delayed(const Duration(milliseconds: 100),
-                              () async {
-                            String placeId = _placeList[index]['place_id'];
-                            String detailsURL =
-                                'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$placesApiKey';
-                            var detailsResponse =
-                                await http.get(Uri.parse(detailsURL));
-                            var detailsData = json.decode(detailsResponse.body);
-                            if (detailsResponse.statusCode == 200) {
-                              List<dynamic> addressComponents =
-                                  detailsData['result']['address_components'];
-                              String city = '';
-                              for (var component in addressComponents) {
-                                List<dynamic> types = component['types'];
+                // Container(
+                //   height: _placeList.isEmpty ? 0 : 200,
+                //   width: _placeList.isEmpty ? 0 : size.width,
+                //   color: kWhiteColor,
+                //   child: ListView.builder(
+                //     physics: const BouncingScrollPhysics(
+                //         parent: AlwaysScrollableScrollPhysics()),
+                //     shrinkWrap: true,
+                //     itemCount: _placeList.length,
+                //     itemBuilder: (context, index) {
+                //       return GestureDetector(
+                //         onTap: () async {
+                //           Future.delayed(const Duration(milliseconds: 100),
+                //               () async {
+                //             String placeId = _placeList[index]['place_id'];
+                //             String detailsURL =
+                //                 'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$placesApiKey';
+                //             var detailsResponse =
+                //                 await http.get(Uri.parse(detailsURL));
+                //             var detailsData = json.decode(detailsResponse.body);
+                //             if (detailsResponse.statusCode == 200) {
+                //               List<dynamic> addressComponents =
+                //                   detailsData['result']['address_components'];
+                //               String city = '';
+                //               for (var component in addressComponents) {
+                //                 List<dynamic> types = component['types'];
 
-                                if (types.contains('country')) {
-                                  setState(() {
-                                    countryName = component['long_name'];
-                                  });
-                                }
-                                if (types
-                                    .contains('administrative_area_level_1')) {
-                                  // state = component['long_name'];
-                                }
-                                if (types.contains('locality') ||
-                                    types.contains('postal_town')) {
-                                  city = component['long_name'];
-                                }
-                              }
-                              setState(() {
-                                // con.text = state;
-                                cityController.text = city;
+                //                 if (types.contains('country')) {
+                //                   setState(() {
+                //                     countryName = component['long_name'];
+                //                   });
+                //                 }
+                //                 if (types
+                //                     .contains('administrative_area_level_1')) {
+                //                   // state = component['long_name'];
+                //                 }
+                //                 if (types.contains('locality') ||
+                //                     types.contains('postal_town')) {
+                //                   city = component['long_name'];
+                //                 }
+                //               }
+                //               setState(() {
+                //                 // con.text = state;
+                //                 cityController.text = city;
 
-                                // print(_stateController.text);
-                                // print(_cityController.text);
-                                // stateError = false;
-                                // cityError = false;
-                              });
-                              setState(() {
-                                // pickedCity = "1";
-                                // pickedState = "2";
-                              });
+                //                 // print(_stateController.text);
+                //                 // print(_cityController.text);
+                //                 // stateError = false;
+                //                 // cityError = false;
+                //               });
+                //               setState(() {
+                //                 // pickedCity = "1";
+                //                 // pickedState = "2";
+                //               });
 
-                              checCounrty();
-                            } else {
-                              throw Exception('Failed to load place details');
-                            }
-                            setState(() {
-                              // street1Controller.text = _placeList[index]
-                              //         ["terms"]
-                              //     .sublist(
-                              //         0, _placeList[index]["terms"].length - 3)
-                              //     .map((term) => term["value"])
-                              //     .join(", ");
-                              // focusNode.unfocus();
-                              _placeList.clear();
-                            });
-                          });
-                        },
-                        child: ListTile(
-                          title: Text(_placeList[index]["description"]),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                //               checCounrty();
+                //             } else {
+                //               throw Exception('Failed to load place details');
+                //             }
+                //             setState(() {
+                //               // street1Controller.text = _placeList[index]
+                //               //         ["terms"]
+                //               //     .sublist(
+                //               //         0, _placeList[index]["terms"].length - 3)
+                //               //     .map((term) => term["value"])
+                //               //     .join(", ");
+                //               // focusNode.unfocus();
+                //               _placeList.clear();
+                //             });
+                //           });
+                //         },
+                //         child: ListTile(
+                //           title: Text(_placeList[index]["description"]),
+                //         ),
+                //       );
+                //     },
+                //   ),
+                // ),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0.0),

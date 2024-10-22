@@ -137,6 +137,7 @@ class PropertiesService {
         ..fields['facilities'] = facilities
         ..fields['person'] = capacity
         ..fields['address'] = address
+        ..fields['address1'] = address1
         ..fields['country_id'] = countryid
         ..fields['city_name'] = cityname
         ..fields['profile_picture'] = ""
