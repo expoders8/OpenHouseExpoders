@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 
 import '../models/get_all_checkout.dart';
-import '../models/get_checkout_tenant_model.dart';
 import '../services/checkout_service.dart';
+import '../models/get_checkout_tenant_model.dart';
 
 class GetAllCheckoutController extends GetxController {
   var isLoading = true.obs;
-  CheckoutService checkoutService = CheckoutService();
   var checkoutList = <GetAllCheckoutModel>[].obs;
+  CheckoutService checkoutService = CheckoutService();
 
   @override
   void onInit() {

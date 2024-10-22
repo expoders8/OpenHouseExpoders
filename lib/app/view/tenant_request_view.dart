@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 
 import '../routes/app_pages.dart';
+import '../services/requests_service.dart';
 import '../controller/request_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
-import '../services/requests_service.dart';
 
 class TenantRequestView extends StatefulWidget {
   const TenantRequestView({super.key});
@@ -17,11 +17,11 @@ class TenantRequestView extends StatefulWidget {
 }
 
 class _TanantRequestViewState extends State<TenantRequestView> {
-  final GetAllHostRequestsController getAllHostRequestsController =
-      Get.put(GetAllHostRequestsController());
-  RequestsService requestsService = RequestsService();
   DateTime? dateTime;
   String formattedDate = '';
+  RequestsService requestsService = RequestsService();
+  final GetAllHostRequestsController getAllHostRequestsController =
+      Get.put(GetAllHostRequestsController());
   @override
   Widget build(BuildContext context) {
     return Obx(

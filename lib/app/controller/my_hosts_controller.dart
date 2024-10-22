@@ -9,8 +9,8 @@ import 'package:openhome/app/models/my_host_get_model.dart';
 
 class GetAllPreviousHostsController extends GetxController {
   var isLoading = true.obs;
-  var hostsList = <GetAllMyHostsModel>[].obs;
   RxString searchText = "".obs;
+  var hostsList = <GetAllMyHostsModel>[].obs;
   MyHostService myHostService = MyHostService();
 
   @override

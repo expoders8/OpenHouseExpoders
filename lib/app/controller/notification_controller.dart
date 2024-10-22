@@ -5,8 +5,8 @@ import '../services/notification_service.dart';
 
 class GetAllNotificationsController extends GetxController {
   var isLoading = true.obs;
-  NotificationsService notificationsService = NotificationsService();
   var notificationList = <GetAllNotificationModel>[].obs;
+  NotificationsService notificationsService = NotificationsService();
 
   @override
   void onInit() {

@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
+import '../services/requests_service.dart';
 import '../controller/request_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
-import '../services/requests_service.dart';
 
 class TenantRequestAllView extends StatefulWidget {
   const TenantRequestAllView({super.key});
@@ -16,14 +16,14 @@ class TenantRequestAllView extends StatefulWidget {
 }
 
 class _TenantRequestAllViewState extends State<TenantRequestAllView> {
-  final GetAllHostRequestsController getAllHostRequestsController =
-      Get.put(GetAllHostRequestsController());
-  RequestsService requestsService = RequestsService();
   DateTime? dateTime;
   String formattedDate = '';
+  RequestsService requestsService = RequestsService();
+  final GetAllHostRequestsController getAllHostRequestsController =
+      Get.put(GetAllHostRequestsController());
+
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
       getAllHostRequestsController.getAllRequests();
     });

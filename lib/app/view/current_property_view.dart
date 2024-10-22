@@ -18,9 +18,11 @@ class CurrentPropertyView extends StatefulWidget {
 }
 
 class _CurrentPropertyViewState extends State<CurrentPropertyView> {
+  DateTime? dateTime;
+  String formattedDate = '';
+  TextEditingController leasesearchController = TextEditingController();
   final GetCurrentPropertyController getCurrentPropertyController =
       Get.put(GetCurrentPropertyController());
-  var leasesearchController = TextEditingController();
   final GetCurrentDetailsPropertiesController
       getCurrentDetailsPropertiesController =
       Get.put(GetCurrentDetailsPropertiesController());
@@ -28,8 +30,6 @@ class _CurrentPropertyViewState extends State<CurrentPropertyView> {
       Get.put(PropertyCheckoutController());
   final GetAllPaymentDataController getAllPaymentDataController =
       Get.put(GetAllPaymentDataController());
-  DateTime? dateTime;
-  String formattedDate = '';
 
   Future<void> _refreshItems() async {
     await Future.delayed(const Duration(seconds: 1));

@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/constant/constant.dart';
-import '../controller/host_homepage_controller.dart';
-import '../controller/request_controller.dart';
-import '../models/get_all_request_model.dart';
-import '../../config/provider/loader_provider.dart';
-import '../../config/provider/snackbar_provider.dart';
 import '../models/tenant_request_model.dart';
+import '../models/get_all_request_model.dart';
+import '../controller/request_controller.dart';
+import '../../config/provider/loader_provider.dart';
+import '../controller/host_homepage_controller.dart';
+import '../../config/provider/snackbar_provider.dart';
 
 class RequestsService {
   addRequest(String amenityId, description, type, date, propertyId, hostId,

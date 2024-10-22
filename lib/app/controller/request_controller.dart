@@ -6,8 +6,8 @@ import '../models/get_all_request_model.dart';
 
 class GetAllRequestsController extends GetxController {
   var isLoading = true.obs;
-  RequestsService requestsService = RequestsService();
   var requestList = <GetAllRequestsModel>[].obs;
+  RequestsService requestsService = RequestsService();
 
   @override
   void onInit() {
@@ -30,8 +30,8 @@ class GetAllRequestsController extends GetxController {
 
 class GetAllHostRequestsController extends GetxController {
   var isLoading = true.obs;
-  RequestsService requestsService = RequestsService();
   var requestList = <GetAllHostRequestsModel>[].obs;
+  RequestsService requestsService = RequestsService();
 
   @override
   void onInit() {

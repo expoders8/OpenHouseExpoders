@@ -8,7 +8,6 @@ import 'package:bottom_picker/resources/arrays.dart';
 
 import '../widgets/custom_textfield.dart';
 import '../../services/tenant_service.dart';
-import '../../controller/tab_controller.dart';
 import '../../controller/tenants_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -26,17 +25,17 @@ class _InviteTenantDetailPageState extends State<InviteTenantDetailPage> {
       isFormSubmitted = false,
       endDateError = false,
       startDateError = false;
-  final tabController = Get.put(TabCountController());
+  String pickedStartDate = "",
+      selectedStartDate = "",
+      pickedEndDate = "",
+      selectedEndDate = "";
+
+  TenantService tenantService = TenantService();
   TextEditingController amountController = TextEditingController();
   final GetAllTenantController getAllTenantController =
       Get.put(GetAllTenantController());
-  TenantService tenantService = TenantService();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String pickedStartDate = "";
-  String selectedStartDate = "";
-  String pickedEndDate = "";
-  String selectedEndDate = "";
 
   @override
   void initState() {

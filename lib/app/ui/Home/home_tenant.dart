@@ -1,26 +1,26 @@
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../routes/app_pages.dart';
+import '../../services/tenant_service.dart';
+import '../../controller/tab_controller.dart';
+import '../../services/checkout_service.dart';
+import '../../services/requests_service.dart';
+import '../../models/firebase_user_model.dart';
+import '../../models/tenant_lending_model.dart';
+import '../../../config/constant/constant.dart';
+import '../../services/properties_service.dart';
 import '../../controller/payment_controller.dart';
 import '../../controller/property_controller.dart';
+import '../../../config/constant/font_constant.dart';
+import '../../../config/constant/color_constant.dart';
 import '../../../config/provider/loader_provider.dart';
 import '../../controller/host_homepage_controller.dart';
 import '../../controller/property_detail_controller.dart';
-import '../../models/firebase_user_model.dart';
-import '../../models/tenant_lending_model.dart';
-import '../../routes/app_pages.dart';
-import '../../controller/tab_controller.dart';
-import '../../../config/constant/constant.dart';
-import '../../../config/constant/font_constant.dart';
-import '../../../config/constant/color_constant.dart';
-import '../../services/checkout_service.dart';
-import '../../services/properties_service.dart';
-import '../../services/requests_service.dart';
-import '../../services/tenant_service.dart';
 import '../Property Details/Tenant/tenant_lease_property.dart';
 
 class HomeTenantPage extends StatefulWidget {
@@ -31,28 +31,31 @@ class HomeTenantPage extends StatefulWidget {
 }
 
 class _HomeTenantPageState extends State<HomeTenantPage> {
-  String selectedRoll = "";
   String userImage = "",
-      authToken = "",
       firstName = "",
       lastName = "",
       firstlater = "",
-      lastlatter = "";
-  final GetAllTenantHomeDataController getAllTenantHomeDataController =
-      Get.put(GetAllTenantHomeDataController());
-  final tabController = Get.put(TabCountController());
+      lastlatter = "",
+      selectedRoll = "";
+
   TenantService tenantService = TenantService();
+  final tabController = Get.put(TabCountController());
   CheckoutService checkoutService = CheckoutService();
   RequestsService requestsService = RequestsService();
   PropertiesService propertiesService = PropertiesService();
+
   var userCollection = FirebaseFirestore.instance.collection("Users");
+
   final PropertyCheckoutController propertyCheckoutController =
       Get.put(PropertyCheckoutController());
+  final GetAllTenantHomeDataController getAllTenantHomeDataController =
+      Get.put(GetAllTenantHomeDataController());
   final GetCurrentDetailsPropertiesController
       getCurrentDetailsPropertiesController =
       Get.put(GetCurrentDetailsPropertiesController());
   final GetAllPaymentDataController getAllPaymentDataController =
       Get.put(GetAllPaymentDataController());
+
   IconData getIconFromString(String? iconName) {
     switch (iconName) {
       case 'Remove Personal Belongings':
@@ -75,8 +78,6 @@ class _HomeTenantPageState extends State<HomeTenantPage> {
         return Icons.help;
     }
   }
-
-  bool showUI = false;
 
   @override
   void initState() {

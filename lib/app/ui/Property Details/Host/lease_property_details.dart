@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'lease_extend_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
@@ -20,7 +21,6 @@ import '../../../../config/constant/color_constant.dart';
 import '../../../../config/provider/loader_provider.dart';
 import '../../../view/house keeper/house_keeper_view.dart';
 import '../../../controller/property_detail_controller.dart';
-import 'lease_extend_page.dart';
 
 class LeasePropertyDetailPage extends StatefulWidget {
   const LeasePropertyDetailPage({super.key});
@@ -32,19 +32,18 @@ class LeasePropertyDetailPage extends StatefulWidget {
 
 class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
     with SingleTickerProviderStateMixin {
-  String selectedRoll = "";
+  String pickedEndDate = "", selectedEndDate = "", selectedRoll = "";
+  bool showUI = false, isPreviousTenantsSelected = true;
+  List<ImageProvider> images = [];
+
   late TabController _tabController;
-  bool isPreviousTenantsSelected = true;
+  LeaseService leaseService = LeaseService();
+  PropertiesService propertiesService = PropertiesService();
   final GetDetailsPropertiesController getDetailsPropertiesController =
       Get.put(GetDetailsPropertiesController());
   final GetAllExpenseController getAllExpenseController =
       Get.put(GetAllExpenseController());
-  List<ImageProvider> images = [];
-  PropertiesService propertiesService = PropertiesService();
-  LeaseService leaseService = LeaseService();
-  String pickedEndDate = "";
-  String selectedEndDate = "";
-  bool showUI = false;
+
   @override
   void initState() {
     super.initState();

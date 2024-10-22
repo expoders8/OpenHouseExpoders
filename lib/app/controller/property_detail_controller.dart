@@ -8,9 +8,9 @@ import '../../config/provider/snackbar_provider.dart';
 
 class GetDetailsPropertiesController extends GetxController {
   var isLoading = true.obs;
+  String selectedRoll = "";
   RxString propertyId = "".obs;
   PropertyDetailModel? detailModel;
-  String selectedRoll = "";
 
   void feachconferanceId(String newValue) {
     propertyId.value = newValue;

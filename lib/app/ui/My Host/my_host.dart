@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../models/firebase_user_model.dart';
 import '../../routes/app_pages.dart';
 import '../../view/current_host_view.dart';
 import '../../view/previous_host_view.dart';
+import '../../models/firebase_user_model.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -21,16 +21,17 @@ class MyHostsPage extends StatefulWidget {
 
 class MyHostsPageState extends State<MyHostsPage>
     with SingleTickerProviderStateMixin {
-  String selectedRoll = "";
   late TabController _tabController;
-  var searchController = TextEditingController();
-  var userCollection = FirebaseFirestore.instance.collection("Users");
+
   String userImage = "",
-      authToken = "",
       firstName = "",
       lastName = "",
       firstlater = "",
-      lastlatter = "";
+      lastlatter = "",
+      selectedRoll = "";
+
+  TextEditingController searchController = TextEditingController();
+  var userCollection = FirebaseFirestore.instance.collection("Users");
   @override
   void initState() {
     super.initState();
@@ -46,7 +47,6 @@ class MyHostsPageState extends State<MyHostsPage>
     var user = getStorage.read('user');
     var userData = jsonDecode(user);
     if (userData != null) {
-      // userImage = userData["profile_picture"] ?? "";
       firstName = userData['first_name'] ?? "";
       lastName = userData['last_name'] ?? "";
       firstlater = firstName[0];

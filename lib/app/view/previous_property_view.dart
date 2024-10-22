@@ -17,13 +17,16 @@ class PreviousPropertyView extends StatefulWidget {
 }
 
 class _PreviousPropertyViewState extends State<PreviousPropertyView> {
+  DateTime? dateTime;
+
+  TextEditingController leasesearchController = TextEditingController();
+
   final GetPreviousPropertyController getPreviousPropertyController =
       Get.put(GetPreviousPropertyController());
-  var leasesearchController = TextEditingController();
   final GetPreviousDetailsPropertiesController
       getPreviousDetailsPropertiesController =
       Get.put(GetPreviousDetailsPropertiesController());
-  DateTime? dateTime;
+
   Future<void> _refreshItems() async {
     await Future.delayed(const Duration(seconds: 1));
     setState(() {

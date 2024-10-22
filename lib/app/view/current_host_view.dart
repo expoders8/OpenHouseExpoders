@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../ui/My Host/my_hosts_detail.dart';
 import '../controller/my_hosts_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
-import '../ui/My Host/my_hosts_detail.dart';
 
 class CurrentHostView extends StatefulWidget {
   const CurrentHostView({super.key});
@@ -15,14 +15,15 @@ class CurrentHostView extends StatefulWidget {
 }
 
 class _CurrentHostViewState extends State<CurrentHostView> {
+  TextEditingController searchController = TextEditingController();
+
   final GetAllCurrentHostsController getAllCurrentHostsController =
       Get.put(GetAllCurrentHostsController());
-  TextEditingController searchController = TextEditingController();
   final GetDetailHostsController getDetailHostsController =
       Get.put(GetDetailHostsController());
+
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
       getAllCurrentHostsController.fetchAllTenants();
     });

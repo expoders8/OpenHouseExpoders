@@ -22,11 +22,13 @@ class _InviteTenantPageState extends State<InviteTenantPage> {
   bool isFormSubmitted = false;
   bool withEmail = true;
   String selectedCountrydialCode = "+91";
+
+  TextEditingController emailController = TextEditingController();
+  final TextEditingController tenantController = TextEditingController();
   final TextEditingController mobilenoController = TextEditingController();
+
   final GetAllTenantController getAllTenantController =
       Get.put(GetAllTenantController());
-  final TextEditingController tenantController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
 
   @override
   void dispose() {

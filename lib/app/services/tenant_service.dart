@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../controller/invitation_controller.dart';
 import '../controller/tab_controller.dart';
 import '../models/getall_tenant_model.dart';
 import '../models/get_invitation_model.dart';
 import '../../config/constant/constant.dart';
+import '../models/previous_tenant_model.dart';
 import '../controller/tenants_controller.dart';
+import '../controller/invitation_controller.dart';
 import '../../config/provider/loader_provider.dart';
 import '../../config/provider/snackbar_provider.dart';
-import '../models/previous_tenant_model.dart';
 
 class TenantService {
   static Future<List<GetAllTenantDataModel>> getallTenant(

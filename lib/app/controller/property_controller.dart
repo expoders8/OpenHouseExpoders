@@ -8,9 +8,9 @@ import '../models/getall_property_expenses_model.dart';
 
 class GetLeasePropertyController extends GetxController {
   var isLoading = true.obs;
-  PropertiesService propertiesService = PropertiesService();
-  var propertiesList = <GetAllPropertiesModel>[].obs;
   RxString searchText = "".obs;
+  var propertiesList = <GetAllPropertiesModel>[].obs;
+  PropertiesService propertiesService = PropertiesService();
 
   @override
   void onInit() {
@@ -51,9 +51,9 @@ class GetLeasePropertyController extends GetxController {
 
 class GetAvailablePropertyController extends GetxController {
   var isLoading = true.obs;
+  RxString searchText = "".obs;
   var propertiesList = <GetAllPropertiesModel>[].obs;
   PropertiesService propertiesService = PropertiesService();
-  RxString searchText = "".obs;
 
   @override
   void onInit() {
@@ -93,14 +93,14 @@ class GetAvailablePropertyController extends GetxController {
 }
 
 class GetCurrentPropertyController extends GetxController {
-  var isLoading = true.obs;
-  PropertiesService propertiesService = PropertiesService();
-  var trtrrtrt = <GetAllCurrentPropertyModel>[].obs;
-  RxString searchText = "".obs;
-  RxString image = "".obs;
   RxString name = "".obs;
+  RxString image = "".obs;
+  var isLoading = true.obs;
   RxString address = "".obs;
+  RxString searchText = "".obs;
   RxString propertyId = "".obs;
+  var trtrrtrt = <GetAllCurrentPropertyModel>[].obs;
+  PropertiesService propertiesService = PropertiesService();
 
   @override
   void onInit() {
@@ -122,14 +122,14 @@ class GetCurrentPropertyController extends GetxController {
 }
 
 class GetPreviousPropertyController extends GetxController {
-  var isLoading = true.obs;
-  PropertiesService propertiesService = PropertiesService();
-  var propertiesList = <GetAllPropertiesModel>[].obs;
-  RxString searchText = "".obs;
-  RxString image = "".obs;
   RxString name = "".obs;
+  RxString image = "".obs;
+  var isLoading = true.obs;
   RxString address = "".obs;
+  RxString searchText = "".obs;
   RxString propertyId = "".obs;
+  var propertiesList = <GetAllPropertiesModel>[].obs;
+  PropertiesService propertiesService = PropertiesService();
 
   @override
   void onInit() {
@@ -152,9 +152,9 @@ class GetPreviousPropertyController extends GetxController {
 
 class GetMyLeasePropertyController extends GetxController {
   var isLoading = true.obs;
-  PropertiesService propertiesService = PropertiesService();
-  var propertiesList = <GetAllPropertiesModel>[].obs;
   RxString searchText = "".obs;
+  var propertiesList = <GetAllPropertiesModel>[].obs;
+  PropertiesService propertiesService = PropertiesService();
 
   @override
   void onInit() {
@@ -195,9 +195,9 @@ class GetMyLeasePropertyController extends GetxController {
 
 class GetAllExpenseController extends GetxController {
   var isLoading = true.obs;
-  PropertiesService propertiesService = PropertiesService();
-  var expensetList = <GetAllExpenseModel>[].obs;
   RxString propertyId = "".obs;
+  var expensetList = <GetAllExpenseModel>[].obs;
+  PropertiesService propertiesService = PropertiesService();
 
   void getAllExpenses() async {
     try {
@@ -214,9 +214,9 @@ class GetAllExpenseController extends GetxController {
 
 class GetAllPropertyExpensesController extends GetxController {
   var isLoading = true.obs;
-  PropertiesService propertiesService = PropertiesService();
-  var expensetList = <GetallPropertyExpensesModel>[].obs;
   RxString propertyId = "".obs;
+  var expensetList = <GetallPropertyExpensesModel>[].obs;
+  PropertiesService propertiesService = PropertiesService();
 
   void getAllExpenses() async {
     try {
@@ -232,14 +232,14 @@ class GetAllPropertyExpensesController extends GetxController {
 }
 
 class PropertyCheckoutController extends GetxController {
-  var isLoading = true.obs;
-  PropertiesService propertiesService = PropertiesService();
-  RxString propertyId = "".obs;
-  RxString rentalId = "".obs;
-  RxString proeprtyAddress = "".obs;
-  RxString propertyName = "".obs;
   RxString email = "".obs;
+  var isLoading = true.obs;
   RxInt rentAmount = 0.obs;
+  RxString rentalId = "".obs;
+  RxString propertyId = "".obs;
+  RxString propertyName = "".obs;
+  RxString proeprtyAddress = "".obs;
+  PropertiesService propertiesService = PropertiesService();
 
   void sendCheckoutProperties(List<Map<String, dynamic>> checkoutData) async {
     try {

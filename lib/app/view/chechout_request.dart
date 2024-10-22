@@ -1,14 +1,13 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:openhome/app/routes/app_pages.dart';
 
+import '../ui/Review/review_page.dart';
+import '../services/checkout_service.dart';
+import '../controller/checkout_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../../config/provider/loader_provider.dart';
-import '../controller/checkout_controller.dart';
-import '../services/checkout_service.dart';
-import '../ui/Review/review_page.dart';
 
 class CheckOutRequestView extends StatefulWidget {
   const CheckOutRequestView({super.key});
@@ -18,9 +17,10 @@ class CheckOutRequestView extends StatefulWidget {
 }
 
 class _CheckOutRequestViewState extends State<CheckOutRequestView> {
+  CheckoutService checkoutService = CheckoutService();
   final GetAllCheckoutController getAllCheckoutController =
       Get.put(GetAllCheckoutController());
-  CheckoutService checkoutService = CheckoutService();
+
   IconData getIconFromString(String? iconName) {
     switch (iconName) {
       case 'Remove Personal Belongings':

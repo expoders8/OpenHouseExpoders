@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../config/constant/constant.dart';
 import '../../config/provider/loader_provider.dart';

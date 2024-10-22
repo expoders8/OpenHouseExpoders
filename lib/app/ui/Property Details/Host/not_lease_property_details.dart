@@ -25,12 +25,11 @@ class NotLeasePropertyDetailPage extends StatefulWidget {
 class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  bool isPreviousTenantsSelected = true;
+  bool isPreviousTenantsSelected = true, showUI = false;
   final GetnotleaseDetailsPropertiesController
       getnotleaseDetailsPropertiesController =
       Get.put(GetnotleaseDetailsPropertiesController());
   List<ImageProvider> images = [];
-  bool showUI = false;
 
   @override
   void initState() {

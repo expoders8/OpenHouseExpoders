@@ -16,6 +16,7 @@ class NearByAmenitiesView extends StatefulWidget {
 class _NearByAmenitiesViewState extends State<NearByAmenitiesView> {
   final GetAllNearByAmenitiesController getAllNearByAmenitiesController =
       Get.put(GetAllNearByAmenitiesController());
+
   @override
   void initState() {
     getAllNearByAmenitiesController.propertyId(widget.propertyId.toString());

@@ -19,13 +19,6 @@ class _TrackLeaseExtensionPageState extends State<TrackLeaseExtensionPage> {
   final GetPropertyExtensionsController getPropertyExtensionsController =
       Get.put(GetPropertyExtensionsController());
 
-  bool isView = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

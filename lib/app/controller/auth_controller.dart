@@ -2,12 +2,12 @@ import 'package:get/get.dart';
 import '../services/auth_service.dart';
 
 class LoginController extends GetxController {
-  AuthService authService = AuthService();
-  final organizationId = ''.obs;
   var email = ''.obs;
   final password = ''.obs;
   final fcmToken = ''.obs;
+  final organizationId = ''.obs;
   final isSigningIn = false.obs;
+  AuthService authService = AuthService();
 
   Future<void> login() async {
     isSigningIn(true);
@@ -20,15 +20,15 @@ class LoginController extends GetxController {
 }
 
 class SignUpController extends GetxController {
-  AuthService authService = AuthService();
-  final firstname = ''.obs;
-  final lastname = ''.obs;
   var email = ''.obs;
+  final roll = ''.obs;
   var mobileNo = ''.obs;
+  final lastname = ''.obs;
   final password = ''.obs;
   final fcmToken = ''.obs;
-  final roll = ''.obs;
+  final firstname = ''.obs;
   final isSigningIn = false.obs;
+  AuthService authService = AuthService();
 
   Future<void> signUp() async {
     isSigningIn(true);

@@ -1,15 +1,15 @@
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../../../config/provider/loader_provider.dart';
-import '../../services/properties_service.dart';
 import '../widgets/custom_textfield.dart';
 import '../../services/lookup_service.dart';
 import '../../models/get_amenities_model.dart';
+import '../../services/properties_service.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/loader_provider.dart';
 
 class AddExpensePage extends StatefulWidget {
   final String? propertyId;
@@ -25,8 +25,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
   final _formKey = GlobalKey<FormState>();
   LookupService lookupService = LookupService();
   PropertiesService propertiesService = PropertiesService();
-  final TextEditingController amenityController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController amenityController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

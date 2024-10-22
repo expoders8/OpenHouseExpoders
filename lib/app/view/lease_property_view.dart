@@ -19,16 +19,16 @@ class LeasePropertyView extends StatefulWidget {
 }
 
 class _LeasePropertyViewState extends State<LeasePropertyView> {
+  String selectedRoll = "", formattedDate = '';
+  DateTime? dateTime;
+
   final GetLeasePropertyController getLeasePropertyController =
       Get.put(GetLeasePropertyController());
-  var leasesearchController = TextEditingController();
+  TextEditingController leasesearchController = TextEditingController();
   final GetDetailsPropertiesController getDetailsPropertiesController =
       Get.put(GetDetailsPropertiesController());
   final GetPropertyPaymentController getPropertyPaymentController =
       Get.put(GetPropertyPaymentController());
-  String selectedRoll = "";
-  DateTime? dateTime;
-  String formattedDate = '';
 
   @override
   void initState() {
@@ -40,8 +40,7 @@ class _LeasePropertyViewState extends State<LeasePropertyView> {
   }
 
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 1)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 1));
     setState(() {
       getLeasePropertyController.fetchAllProperties();
     });

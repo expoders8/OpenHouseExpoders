@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../../../config/provider/loader_provider.dart';
-import '../../services/checkout_service.dart';
 import '../widgets/custom_textfield.dart';
+import '../../services/checkout_service.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
+import '../../../config/provider/loader_provider.dart';
 
 class TenantReviewPage extends StatefulWidget {
   final String? id;

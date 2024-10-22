@@ -15,13 +15,13 @@ class TenantHistoryView extends StatefulWidget {
 }
 
 class _TenantHistoryViewState extends State<TenantHistoryView> {
+  DateTime? dateTime, dateTime1;
+  String enddate = '', startdate = '';
+
   final GetAllPropertyPreviousTenantController
       getAllPropertyPreviousTenantController =
       Get.put(GetAllPropertyPreviousTenantController());
-  DateTime? dateTime;
-  DateTime? dateTime1;
-  String enddate = '';
-  String startdate = '';
+
   @override
   void initState() {
     getAllPropertyPreviousTenantController

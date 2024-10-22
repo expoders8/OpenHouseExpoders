@@ -14,13 +14,12 @@ class TrackPropertyIncomePage extends StatefulWidget {
 }
 
 class _TrackPropertyIncomePageState extends State<TrackPropertyIncomePage> {
-  final GetAllIncomeTrackController getAllIncomeTrackController =
-      Get.put(GetAllIncomeTrackController());
-  int totalExpense = 0;
-  int totalPenddingrent = 0;
-  int totalAmount = 0;
+  int totalPenddingrent = 0, totalAmount = 0, totalExpense = 0;
   DateTime? dateTime;
   String formattedDate = '';
+
+  final GetAllIncomeTrackController getAllIncomeTrackController =
+      Get.put(GetAllIncomeTrackController());
 
   @override
   Widget build(BuildContext context) {

@@ -9,8 +9,8 @@ import '../../config/provider/snackbar_provider.dart';
 
 class GetAllPreviousTenantsController extends GetxController {
   var isLoading = true.obs;
-  var tenantsList = <GetAllMyTenantsModel>[].obs;
   RxString searchText = "".obs;
+  var tenantsList = <GetAllMyTenantsModel>[].obs;
   MyTenantService myTenantService = MyTenantService();
 
   @override
@@ -34,8 +34,8 @@ class GetAllPreviousTenantsController extends GetxController {
 
 class GetAllCurrentTenantsController extends GetxController {
   var isLoading = true.obs;
-  var tenantsList = <GetAllMyTenantsModel>[].obs;
   RxString searchText = "".obs;
+  var tenantsList = <GetAllMyTenantsModel>[].obs;
   MyTenantService myTenantService = MyTenantService();
 
   @override
@@ -58,10 +58,10 @@ class GetAllCurrentTenantsController extends GetxController {
 }
 
 class GetDetailTenantsController extends GetxController {
+  String selectedRoll = "";
   var isLoading = true.obs;
   RxString tenantId = "".obs;
   GetAllMyTenantDetailModel? detailModel;
-  String selectedRoll = "";
 
   void feachconferanceId(String newValue) {
     tenantId.value = newValue;

@@ -14,16 +14,16 @@ class PaymentView extends StatefulWidget {
 }
 
 class _PaymentViewState extends State<PaymentView> {
+  DateTime? dateTime;
+  String formattedDate = '';
   final GetPropertyPaymentController getPropertyPaymentController =
       Get.put(GetPropertyPaymentController());
+
   @override
   void initState() {
     getPropertyPaymentController.fetchAllPayments();
     super.initState();
   }
-
-  DateTime? dateTime;
-  String formattedDate = '';
 
   @override
   Widget build(BuildContext context) {

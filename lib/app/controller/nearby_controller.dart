@@ -5,9 +5,9 @@ import '../services/nearby_service.dart';
 
 class GetAllNearByAmenitiesController extends GetxController {
   var isLoading = true.obs;
-  NearByService nearByService = NearByService();
   RxString propertyId = "".obs;
   var requestList = <GetAllNearByModel>[].obs;
+  NearByService nearByService = NearByService();
 
   void getAllNearBys() async {
     try {

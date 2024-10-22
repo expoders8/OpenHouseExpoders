@@ -5,8 +5,8 @@ import '../services/income_track_service.dart';
 
 class GetAllIncomeTrackController extends GetxController {
   var isLoading = true.obs;
-  IncomeTrackService incomeTrackService = IncomeTrackService();
   var propertyList = <GetAllTrackPropertyIncomeModel>[].obs;
+  IncomeTrackService incomeTrackService = IncomeTrackService();
 
   @override
   void onInit() {

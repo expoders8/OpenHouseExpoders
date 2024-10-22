@@ -16,10 +16,11 @@ class MyRequestView extends StatefulWidget {
 }
 
 class _MyRequestViewState extends State<MyRequestView> {
-  final GetAllRequestsController getAllRequestsController =
-      Get.put(GetAllRequestsController());
   DateTime? dateTime;
   String formattedDate = '';
+  final GetAllRequestsController getAllRequestsController =
+      Get.put(GetAllRequestsController());
+
   @override
   Widget build(BuildContext context) {
     return Obx(

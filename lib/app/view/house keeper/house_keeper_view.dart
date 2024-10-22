@@ -18,6 +18,7 @@ class HouseKeeperView extends StatefulWidget {
 class _HouseKeeperViewState extends State<HouseKeeperView> {
   final GetAllHouseKeeperController getAllHouseKeeperController =
       Get.put(GetAllHouseKeeperController());
+
   @override
   void initState() {
     getAllHouseKeeperController.propertyId(widget.propertyId.toString());

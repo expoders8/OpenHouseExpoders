@@ -15,13 +15,13 @@ class MyRequestViewAllView extends StatefulWidget {
 }
 
 class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
-  final GetAllRequestsController getAllRequestsController =
-      Get.put(GetAllRequestsController());
   DateTime? dateTime;
   String formattedDate = '';
+  final GetAllRequestsController getAllRequestsController =
+      Get.put(GetAllRequestsController());
+
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
       getAllRequestsController.getAllRequests();
     });

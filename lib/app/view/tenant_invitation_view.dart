@@ -3,12 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../services/tenant_service.dart';
 import '../services/properties_service.dart';
 import '../../config/constant/font_constant.dart';
 import '../controller/invitation_controller.dart';
 import '../../config/constant/color_constant.dart';
 import '../../config/provider/loader_provider.dart';
-import '../services/tenant_service.dart';
 
 // ignore: must_be_immutable
 class TenantInvitationView extends StatefulWidget {
@@ -19,13 +19,14 @@ class TenantInvitationView extends StatefulWidget {
 }
 
 class _TenantInvitationViewtate extends State<TenantInvitationView> {
+  TenantService tenantService = TenantService();
+  PropertiesService propertiesService = PropertiesService();
+
   final GetAllInvitationController getAllInvitationController =
       Get.put(GetAllInvitationController());
-  PropertiesService propertiesService = PropertiesService();
-  TenantService tenantService = TenantService();
+
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
       getAllInvitationController.getAllInvitations();
     });

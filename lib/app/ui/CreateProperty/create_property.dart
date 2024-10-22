@@ -8,12 +8,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:multi_image_picker_plus/multi_image_picker_plus.dart';
 
-import '../../models/serchproperty_model.dart';
 import '../../view/amenities_view.dart';
 import 'package:http/http.dart' as http;
 import '../../models/country_model.dart';
 import '../widgets/custom_textfield.dart';
 import '../../services/lookup_service.dart';
+import '../../models/serchproperty_model.dart';
 import '../../services/properties_service.dart';
 import '../../../config/constant/constant.dart';
 import '../../controller/property_controller.dart';
@@ -77,26 +77,28 @@ class CreatePropertyPage extends StatefulWidget {
 }
 
 class _CreatePropertyPageState extends State<CreatePropertyPage> {
-  String amenities = "";
   List selctedImages = [];
   List<File> fileList = [];
-  bool isFormSubmitted = false;
+  List<dynamic> placeList = [];
   List<Asset> images = <Asset>[];
-  String selctesType = "included";
-  bool isImagePickerError = false;
   List<Asset> imageList = <Asset>[];
-  String error = 'No Error Dectected';
-  String countryId = "", stateid = "", propertyId = "";
+  bool isFormSubmitted = false, isImagePickerError = false;
+  int totalImageCount = 0;
+  String countryId = "",
+      stateid = "",
+      propertyId = "",
+      selctesType = "included",
+      error = 'No Error Dectected',
+      amenities = "",
+      sessionToken = '1234567890',
+      countryName = "",
+      placesApiKey = "AIzaSyAQYUMPajZSmEupi3I7rsukQMSAZJmh-XA";
   final _formKey = GlobalKey<FormState>();
   LookupService lookupService = LookupService();
   PropertiesService propertiesService = PropertiesService();
-  final GetAllAmenitiesController getAllAmenitiesController =
-      Get.put(GetAllAmenitiesController());
-  final GetCurrentPropertyController getCurrentPropertyController =
-      Get.put(GetCurrentPropertyController());
   final TextEditingController cityController = TextEditingController();
   final TextEditingController personController = TextEditingController();
-  final addressController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
   final TextEditingController bedRoomsController = TextEditingController();
   final TextEditingController capacityController = TextEditingController();
@@ -108,17 +110,14 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   final TextEditingController propertyNameController = TextEditingController();
   final TextEditingController propertyPriceController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
-  List<dynamic> placeList = [];
-  int totalImageCount = 0;
-  String sessionToken = '1234567890',
-      countryName = "",
-      placesApiKey = "AIzaSyAQYUMPajZSmEupi3I7rsukQMSAZJmh-XA";
+  final GetAllAmenitiesController getAllAmenitiesController =
+      Get.put(GetAllAmenitiesController());
+  final GetCurrentPropertyController getCurrentPropertyController =
+      Get.put(GetCurrentPropertyController());
+
   @override
   void initState() {
     super.initState();
-    // addressController.addListener(() {
-    //   _onChanged();
-    // });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.checkEdit == "edit") {
         setState(() {

@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../models/firebase_user_model.dart';
 import '../../routes/app_pages.dart';
 import '../../view/current_tenants_view.dart';
+import '../../models/firebase_user_model.dart';
 import '../../view/previous_tenants_view.dart';
 import '../../../config/constant/constant.dart';
 import '../../../config/constant/font_constant.dart';
@@ -21,16 +21,16 @@ class MyTenantsPage extends StatefulWidget {
 
 class _MyTenantsPageState extends State<MyTenantsPage>
     with SingleTickerProviderStateMixin {
-  String selectedRoll = "";
-  late TabController _tabController;
-
   String userImage = "",
-      authToken = "",
       firstName = "",
       lastName = "",
       firstlater = "",
-      lastlatter = "";
+      lastlatter = "",
+      selectedRoll = "";
+  late TabController _tabController;
+
   var userCollection = FirebaseFirestore.instance.collection("Users");
+
   @override
   void initState() {
     super.initState();

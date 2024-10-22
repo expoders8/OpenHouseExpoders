@@ -26,19 +26,21 @@ class CreateMyRequestsPage extends StatefulWidget {
 }
 
 class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
-  String pickedDate = "";
-  String pickedTime = "";
-  String amenitiesId = "";
-  String selectTime = "Time";
-  String selctesType = "normal";
-  String selectdate = "YYYY/MM/DD";
-  bool isTouched = false,
-      timeError = false,
-      dateError = false,
-      isFormSubmitted = false;
+  String pickedDate = "",
+      amenitiesId = "",
+      selctesType = "normal",
+      selectdate = "YYYY/MM/DD",
+      image = "",
+      name = "",
+      addres = "",
+      propertyId = "",
+      hostId = "",
+      propertyName = "",
+      proeprtyAddress = "",
+      rentAmount = "";
+  bool dateError = false, isFormSubmitted = false;
   final _formKey = GlobalKey<FormState>();
-  final GetAllRequestsController getAllRequestsController =
-      Get.put(GetAllRequestsController());
+
   LookupService lookupService = LookupService();
   RequestsService requestsService = RequestsService();
   final tabController = Get.put(TabCountController());
@@ -46,15 +48,9 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
   final TextEditingController raisedFundsController = TextEditingController();
   final GetCurrentPropertyController getCurrentPropertyController =
       Get.put(GetCurrentPropertyController());
-  String image = "",
-      name = "",
-      addres = "",
-      propertyId = "",
-      hostId = "",
-      propertyName = "",
-      proeprtyAddress = "",
-      rentAmount = "",
-      amenityName = "";
+  final GetAllRequestsController getAllRequestsController =
+      Get.put(GetAllRequestsController());
+
   @override
   void initState() {
     super.initState();

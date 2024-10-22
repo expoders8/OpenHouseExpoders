@@ -1,26 +1,26 @@
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../config/provider/loader_provider.dart';
-import '../../controller/checkout_controller.dart';
-import '../../controller/host_homepage_controller.dart';
-import '../../controller/payment_controller.dart';
-import '../../controller/property_detail_controller.dart';
-import '../../models/firebase_user_model.dart';
-import '../../models/host_lending_model.dart';
+import '../Review/review_page.dart';
 import '../../routes/app_pages.dart';
+import '../../services/requests_service.dart';
 import '../../controller/tab_controller.dart';
+import '../../models/host_lending_model.dart';
+import '../../services/checkout_service.dart';
+import '../../models/firebase_user_model.dart';
 import '../../../config/constant/constant.dart';
+import '../../controller/payment_controller.dart';
+import '../../controller/checkout_controller.dart';
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
-import '../../services/checkout_service.dart';
-import '../../services/requests_service.dart';
+import '../../../config/provider/loader_provider.dart';
+import '../../controller/host_homepage_controller.dart';
+import '../../controller/property_detail_controller.dart';
 import '../Property Details/Host/lease_property_details.dart';
-import '../Review/review_page.dart';
 
 class HomeHostPage extends StatefulWidget {
   const HomeHostPage({super.key});
@@ -30,18 +30,26 @@ class HomeHostPage extends StatefulWidget {
 }
 
 class _HomeHostPageState extends State<HomeHostPage> {
-  String selectedRoll = "";
   String userImage = "",
-      authToken = "",
+      selectedRoll = "",
       firstName = "",
       lastName = "",
       firstlater = "",
       lastlatter = "";
   bool showUI = false;
-  final GetAllCheckoutController getAllCheckoutController =
-      Get.put(GetAllCheckoutController());
   CheckoutService checkoutService = CheckoutService();
   RequestsService requestsService = RequestsService();
+  final tabController = Get.put(TabCountController());
+  final GetAllCheckoutController getAllCheckoutController =
+      Get.put(GetAllCheckoutController());
+  final GetDetailsPropertiesController getDetailsPropertiesController =
+      Get.put(GetDetailsPropertiesController());
+  final GetPropertyPaymentController getPropertyPaymentController =
+      Get.put(GetPropertyPaymentController());
+  final GetAllHostHomeDataController getAllHostHomeDataController =
+      Get.put(GetAllHostHomeDataController());
+  var userCollection = FirebaseFirestore.instance.collection("Users");
+
   IconData getIconFromString(String? iconName) {
     switch (iconName) {
       case 'Remove Personal Belongings':
@@ -65,14 +73,6 @@ class _HomeHostPageState extends State<HomeHostPage> {
     }
   }
 
-  var userCollection = FirebaseFirestore.instance.collection("Users");
-  final GetDetailsPropertiesController getDetailsPropertiesController =
-      Get.put(GetDetailsPropertiesController());
-  final GetPropertyPaymentController getPropertyPaymentController =
-      Get.put(GetPropertyPaymentController());
-  final GetAllHostHomeDataController getAllHostHomeDataController =
-      Get.put(GetAllHostHomeDataController());
-  final tabController = Get.put(TabCountController());
   @override
   void initState() {
     getAllHostHomeDataController.getAllHostHomePageData();
@@ -89,7 +89,6 @@ class _HomeHostPageState extends State<HomeHostPage> {
     var user = getStorage.read('user');
     var userData = jsonDecode(user);
     if (userData != null) {
-      // userImage = userData["profile_picture"] ?? "";
       firstName = userData['first_name'] ?? "";
       lastName = userData['last_name'] ?? "";
       firstlater = firstName[0];

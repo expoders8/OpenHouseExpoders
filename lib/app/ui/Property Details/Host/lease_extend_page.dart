@@ -1,16 +1,16 @@
-import 'package:bottom_picker/bottom_picker.dart';
-import 'package:bottom_picker/resources/arrays.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
 
-import '../../../../config/constant/color_constant.dart';
-import '../../../../config/constant/font_constant.dart';
-import '../../../../config/provider/loader_provider.dart';
-import '../../../services/lease_service.dart';
 import '../../widgets/custom_textfield.dart';
+import '../../../services/lease_service.dart';
+import '../../../../config/constant/font_constant.dart';
+import '../../../../config/constant/color_constant.dart';
+import '../../../../config/provider/loader_provider.dart';
 
 class LeaseExtendPropertyPage extends StatefulWidget {
   final String? id;
@@ -22,15 +22,15 @@ class LeaseExtendPropertyPage extends StatefulWidget {
 }
 
 class _LeaseExtendPropertyPageState extends State<LeaseExtendPropertyPage> {
-  String pickedDate = "";
-  String selectTime = "Time";
-  String selectdate = "YYYY/MM/DD";
-  LeaseService leaseService = LeaseService();
-  String pickedEndDate = "";
-  String selectedEndDate = "";
-  bool isTouched = false, dateError = false, isFormSubmitted = false;
+  String selectdate = "YYYY/MM/DD",
+      pickedDate = "",
+      pickedEndDate = "",
+      selectedEndDate = "";
+  bool dateError = false, isFormSubmitted = false;
   final _formKey = GlobalKey<FormState>();
+  LeaseService leaseService = LeaseService();
   final TextEditingController amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

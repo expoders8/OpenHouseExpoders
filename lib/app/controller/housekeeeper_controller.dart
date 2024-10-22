@@ -5,9 +5,9 @@ import '../models/get_all_housekeeper_model.dart';
 
 class GetAllHouseKeeperController extends GetxController {
   var isLoading = true.obs;
-  HouseKeeperService houseKeeperService = HouseKeeperService();
   RxString propertyId = "".obs;
   var requestList = <GetAllHousekeeperModel>[].obs;
+  HouseKeeperService houseKeeperService = HouseKeeperService();
 
   void getAllHousekeepers() async {
     try {

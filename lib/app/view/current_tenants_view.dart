@@ -15,14 +15,14 @@ class CurrentTenantsView extends StatefulWidget {
 }
 
 class _CurrentTenantsViewState extends State<CurrentTenantsView> {
+  TextEditingController searchController = TextEditingController();
   final GetAllCurrentTenantsController getAllCurrentTenantsController =
       Get.put(GetAllCurrentTenantsController());
-  TextEditingController searchController = TextEditingController();
   final GetDetailTenantsController getDetailTenantsController =
       Get.put(GetDetailTenantsController());
+
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
       getAllCurrentTenantsController.fetchAllTenants();
     });

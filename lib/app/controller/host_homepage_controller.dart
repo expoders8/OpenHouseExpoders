@@ -6,8 +6,8 @@ import '../services/host_homepage_service.dart';
 
 class GetAllHostHomeDataController extends GetxController {
   var isLoading = true.obs;
-  HostHomePageService hostHomePageService = HostHomePageService();
   var dataList = <HostLendingModel>[].obs;
+  HostHomePageService hostHomePageService = HostHomePageService();
 
   // @override
   // void onInit() {
@@ -31,8 +31,8 @@ class GetAllHostHomeDataController extends GetxController {
 
 class GetAllTenantHomeDataController extends GetxController {
   var isLoading = true.obs;
-  HostHomePageService hostHomePageService = HostHomePageService();
   var dataList = <TenantLendingModel>[].obs;
+  HostHomePageService hostHomePageService = HostHomePageService();
 
   // @override
   // void onInit() {

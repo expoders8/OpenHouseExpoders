@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 
-import '../models/getall_property_peyment_model.dart';
 import '../models/getpayment_model.dart';
 import '../services/payment_service.dart';
+import '../models/getall_property_peyment_model.dart';
 
 class GetPaymentTenantController extends GetxController {
   var isLoading = true.obs;
-  PaymentService paymentService = PaymentService();
   var paymentList = <GetAllPaymentModel>[].obs;
+  PaymentService paymentService = PaymentService();
 
   @override
   void onInit() {
@@ -30,8 +30,8 @@ class GetPaymentTenantController extends GetxController {
 
 class GetPaymentHostController extends GetxController {
   var isLoading = true.obs;
-  PaymentService paymentService = PaymentService();
   var paymentList = <GetAllPaymentModel>[].obs;
+  PaymentService paymentService = PaymentService();
 
   @override
   void onInit() {
@@ -54,9 +54,9 @@ class GetPaymentHostController extends GetxController {
 
 class GetPropertyPaymentController extends GetxController {
   var isLoading = true.obs;
+  RxString propertyId = "".obs;
   PaymentService paymentService = PaymentService();
   var paymentList = <GetAllProeprtyPaymentModel>[].obs;
-  RxString propertyId = "".obs;
 
   void fetchAllPayments() async {
     try {
@@ -74,9 +74,9 @@ class GetPropertyPaymentController extends GetxController {
 
 class GetAllPaymentDataController extends GetxController {
   var isLoading = true.obs;
-  PaymentService paymentService = PaymentService();
   RxString rentAmount = "".obs;
   RxString propertyId = "".obs;
+  PaymentService paymentService = PaymentService();
 
   // fetchAllPayments() async {
   //   try {

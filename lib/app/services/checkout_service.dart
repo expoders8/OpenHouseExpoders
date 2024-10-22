@@ -1,17 +1,17 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../controller/host_homepage_controller.dart';
-import '../controller/my_tenants_controller.dart';
 import '../models/get_all_checkout.dart';
 import '../../config/constant/constant.dart';
 import '../controller/property_controller.dart';
 import '../controller/checkout_controller.dart';
-import '../../config/provider/loader_provider.dart';
-import '../../config/provider/snackbar_provider.dart';
+import '../controller/my_tenants_controller.dart';
 import '../models/get_checkout_tenant_model.dart';
+import '../../config/provider/loader_provider.dart';
+import '../controller/host_homepage_controller.dart';
+import '../../config/provider/snackbar_provider.dart';
 
 class CheckoutService {
   getCheckoutInvitation() async {

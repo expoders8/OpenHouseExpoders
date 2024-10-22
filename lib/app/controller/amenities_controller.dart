@@ -5,14 +5,12 @@ import '../models/get_amenities_model.dart';
 
 class GetAllAmenitiesController extends GetxController {
   var isLoading = true.obs;
-  var amenitisList = <List<GetAllAmenitiesDataModel>>[].obs;
-  LookupService lookupService = LookupService();
   RxString categoryId = "".obs;
-  // var selectedAmenitis = <String>[].obs;
+  var selectedAmenitis = ''.obs;
   RxList selectedImages = [].obs;
   RxList selectedAmenitis1 = [].obs;
-  // RxList selectedAmenitis = [].obs;
-  var selectedAmenitis = ''.obs;
+  LookupService lookupService = LookupService();
+  var amenitisList = <List<GetAllAmenitiesDataModel>>[].obs;
 
   void fetchAllAmenites() async {
     try {

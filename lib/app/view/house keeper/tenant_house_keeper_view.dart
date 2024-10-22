@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 import '../../../config/constant/font_constant.dart';
 import '../../../config/constant/color_constant.dart';
@@ -16,6 +16,7 @@ class TenantHouseKeeperView extends StatefulWidget {
 class _TenantHouseKeeperViewState extends State<TenantHouseKeeperView> {
   final GetAllHouseKeeperController getAllHouseKeeperController =
       Get.put(GetAllHouseKeeperController());
+
   @override
   void initState() {
     getAllHouseKeeperController.propertyId(widget.propertyId.toString());

@@ -17,12 +17,12 @@ class NotLeasePropertyView extends StatefulWidget {
 }
 
 class _NotLeasePropertyViewState extends State<NotLeasePropertyView> {
-  final GetAvailablePropertyController getAvailablePropertyController =
-      Get.put(GetAvailablePropertyController());
-  var notleasesearchController = TextEditingController();
+  TextEditingController notleasesearchController = TextEditingController();
   final GetnotleaseDetailsPropertiesController
       getnotleaseDetailsPropertiesController =
       Get.put(GetnotleaseDetailsPropertiesController());
+  final GetAvailablePropertyController getAvailablePropertyController =
+      Get.put(GetAvailablePropertyController());
 
   Future<void> _refreshItems() async {
     await Future.delayed(const Duration(seconds: 1));
