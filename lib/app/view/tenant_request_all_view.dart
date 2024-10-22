@@ -160,7 +160,7 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
                                               ),
                                               const SizedBox(width: 10),
                                               SizedBox(
-                                                width: Get.width - 220,
+                                                width: 220,
                                                 child: Text(
                                                   data.description.toString(),
                                                   style: const TextStyle(
@@ -168,9 +168,6 @@ class _TenantRequestAllViewState extends State<TenantRequestAllView> {
                                                       fontSize: 13,
                                                       fontFamily:
                                                           kCircularStdBold),
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                             ],

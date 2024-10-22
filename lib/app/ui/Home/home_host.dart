@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ import '../../controller/checkout_controller.dart';
 import '../../controller/host_homepage_controller.dart';
 import '../../controller/payment_controller.dart';
 import '../../controller/property_detail_controller.dart';
+import '../../models/firebase_user_model.dart';
 import '../../models/host_lending_model.dart';
 import '../../routes/app_pages.dart';
 import '../../controller/tab_controller.dart';
@@ -63,6 +65,7 @@ class _HomeHostPageState extends State<HomeHostPage> {
     }
   }
 
+  var userCollection = FirebaseFirestore.instance.collection("Users");
   final GetDetailsPropertiesController getDetailsPropertiesController =
       Get.put(GetDetailsPropertiesController());
   final GetPropertyPaymentController getPropertyPaymentController =
@@ -86,12 +89,34 @@ class _HomeHostPageState extends State<HomeHostPage> {
     var user = getStorage.read('user');
     var userData = jsonDecode(user);
     if (userData != null) {
-      userImage = userData["profile_picture"] ?? "";
+      // userImage = userData["profile_picture"] ?? "";
       firstName = userData['first_name'] ?? "";
       lastName = userData['last_name'] ?? "";
       firstlater = firstName[0];
       lastlatter = lastName[0];
     }
+    getUserFirebaseDatabase();
+  }
+
+  Stream<List<FirebaseUser>> getAppUser() {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    return userCollection
+        .where('uid', isEqualTo: getUserData['id'].toString())
+        .snapshots()
+        .map((event) =>
+            event.docs.map((e) => FirebaseUser.fromJson(e.data())).toList());
+  }
+
+  getUserFirebaseDatabase() async {
+    var userStream = getAppUser();
+    userStream.listen((users) {
+      if (users.isNotEmpty) {
+        setState(() {
+          userImage = users.first.image.toString();
+        });
+      }
+    });
   }
 
   @override

@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../models/firebase_user_model.dart';
 import '../../routes/app_pages.dart';
 import '../../view/lease_property_view.dart';
 import '../../view/current_property_view.dart';
@@ -28,6 +30,7 @@ class _PropertyPageState extends State<PropertyPage>
   var currentsearchController = TextEditingController();
   var previoussearchController = TextEditingController();
   var notleasesearchController = TextEditingController();
+  var userCollection = FirebaseFirestore.instance.collection("Users");
   final GetAvailablePropertyController getAvailablePropertyController =
       Get.put(GetAvailablePropertyController());
   final GetLeasePropertyController getLeasePropertyController =
@@ -63,12 +66,34 @@ class _PropertyPageState extends State<PropertyPage>
     var user = getStorage.read('user');
     var userData = jsonDecode(user);
     if (userData != null) {
-      userImage = userData["profile_picture"] ?? "";
+      // userImage = userData["profile_picture"] ?? "";
       firstName = userData['first_name'] ?? "";
       lastName = userData['last_name'] ?? "";
       firstlater = firstName[0];
       lastlatter = lastName[0];
     }
+    getUserFirebaseDatabase();
+  }
+
+  Stream<List<FirebaseUser>> getAppUser() {
+    var data = getStorage.read('user');
+    var getUserData = jsonDecode(data);
+    return userCollection
+        .where('uid', isEqualTo: getUserData['id'].toString())
+        .snapshots()
+        .map((event) =>
+            event.docs.map((e) => FirebaseUser.fromJson(e.data())).toList());
+  }
+
+  getUserFirebaseDatabase() async {
+    var userStream = getAppUser();
+    userStream.listen((users) {
+      if (users.isNotEmpty) {
+        setState(() {
+          userImage = users.first.image.toString();
+        });
+      }
+    });
   }
 
   @override
