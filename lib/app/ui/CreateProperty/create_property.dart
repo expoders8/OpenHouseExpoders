@@ -861,7 +861,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   name: "create",
                   formSubmitted: isFormSubmitted,
                   validationMsg: 'Please enter Street name',
-                  enabled: false,
                 ),
                 const SizedBox(height: 10),
                 Padding(
