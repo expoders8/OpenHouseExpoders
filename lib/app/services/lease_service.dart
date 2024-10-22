@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -57,6 +58,8 @@ class LeaseService {
   ) async {
     final GetLeasePropertyController getLeasePropertyController =
         Get.put(GetLeasePropertyController());
+    final GetAvailablePropertyController getAvailablePropertyController =
+        Get.put(GetAvailablePropertyController());
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);
     try {
@@ -67,8 +70,11 @@ class LeaseService {
       var decodedUser = jsonDecode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (decodedUser['success']) {
-          getLeasePropertyController.fetchAllProperties();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            getLeasePropertyController.fetchAllProperties();
+          });
           LoaderX.hide();
+          getAvailablePropertyController.fetchAllProperties();
           Get.back();
           Get.back();
         } else {

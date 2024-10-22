@@ -163,7 +163,7 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                               SliverAppBar(
                                   automaticallyImplyLeading: false,
                                   backgroundColor: kBackGroundColor,
-                                  expandedHeight: 0,
+                                  expandedHeight: 65,
                                   floating: false,
                                   flexibleSpace: Column(
                                     children: [
@@ -174,11 +174,13 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               SizedBox(
-                                                width: Get.width - 100,
+                                                width: Get.width - 120,
                                                 child: Text(
-                                                  propertydata.name!.toString(),
+                                                  propertydata.name.toString(),
                                                   style: const TextStyle(
                                                       color: kPrimaryColor,
                                                       fontSize: 18,
@@ -188,6 +190,17 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
                                                 ),
+                                              ),
+                                              Text(
+                                                "(${propertydata.category!.toString()})",
+                                                style: const TextStyle(
+                                                    color:
+                                                        kSecondaryPrimaryColor,
+                                                    fontSize: 13,
+                                                    fontFamily:
+                                                        kCircularStdMedium),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                               ),
                                               Row(
                                                 children: [
@@ -293,15 +306,38 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                                         ],
                                       ),
                                       Row(
-                                        children: List.generate(4, (index) {
-                                          return const Icon(Icons.star,
-                                              color: Color.fromARGB(
-                                                  255, 255, 230, 0));
-                                        })
-                                          ..add(const Icon(Icons.star_half,
-                                              color: Color.fromARGB(
-                                                  255, 255, 230, 0))),
+                                        children: [
+                                          const Icon(
+                                            Icons.location_on,
+                                            size: 16,
+                                            color: kButtonColor,
+                                          ),
+                                          const SizedBox(width: 5),
+                                          SizedBox(
+                                            width: Get.width - 50,
+                                            child: Text(
+                                              "${propertydata.address!.toString()} , ${propertydata.cityName!.toString()}",
+                                              style: const TextStyle(
+                                                  color: kSecondaryPrimaryColor,
+                                                  fontSize: 13,
+                                                  fontFamily:
+                                                      kCircularStdMedium),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          ),
+                                        ],
                                       ),
+                                      // Row(
+                                      //   children: List.generate(4, (index) {
+                                      //     return const Icon(Icons.star,
+                                      //         color: Color.fromARGB(
+                                      //             255, 255, 230, 0));
+                                      //   })
+                                      //     ..add(const Icon(Icons.star_half,
+                                      //         color: Color.fromARGB(
+                                      //             255, 255, 230, 0))),
+                                      // ),
                                     ],
                                   )),
                             ];
@@ -779,56 +815,6 @@ class _LeasePropertyDetailPageeState extends State<LeasePropertyDetailPage>
                       ],
                     ),
                   ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Monthly rent",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 15,
-                      fontFamily: kCircularStdNormal),
-                ),
-                Text(
-                  "\$2540 / month",
-                  style: TextStyle(
-                      color: kSecondaryPrimaryColor,
-                      fontSize: 12,
-                      fontFamily: kCircularStdBook),
-                ),
-              ],
-            ),
-            Image.asset(
-              "assets/icons/line_vertical.png",
-              fit: BoxFit.cover,
-              scale: 1.9,
-              color: kSecondaryColor,
-            ),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Deposit",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 15,
-                      fontFamily: kCircularStdNormal),
-                ),
-                Text(
-                  "\$1800",
-                  style: TextStyle(
-                      color: kSecondaryPrimaryColor,
-                      fontSize: 12,
-                      fontFamily: kCircularStdBook),
-                ),
-              ],
-            ),
           ],
         ),
       ],

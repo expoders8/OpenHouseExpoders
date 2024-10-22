@@ -36,10 +36,10 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Bedrooms",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -47,21 +47,14 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "1 Single",
-                    style: TextStyle(
+                    "${propertydata.numberofbedrooms.toString()} BHK",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
                   ),
-                  Text(
-                    "1 Double",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     "Capacity",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -69,8 +62,8 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "3 Person",
-                    style: TextStyle(
+                    "${propertydata.person.toString()} Person",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
@@ -83,10 +76,10 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
                 scale: 0.7,
                 color: kSecondaryColor,
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Bathrooms",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -94,30 +87,8 @@ class _PropertyDetailsViewState extends State<PropertyDetailsView> {
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "1 full bathroom",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  Text(
-                    "1 toilet",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Bills",
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdNormal),
-                  ),
-                  Text(
-                    "Included",
-                    style: TextStyle(
+                    "${propertydata.numberofwashrooms.toString()} bathroom",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
@@ -232,10 +203,10 @@ class _NotLeasePropertyDetailsViewState
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Bedrooms",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -243,21 +214,14 @@ class _NotLeasePropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "1 Single",
-                    style: TextStyle(
+                    "${propertydata.numberofbedrooms.toString()} BHK",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
                   ),
-                  Text(
-                    "1 Double",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     "Capacity",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -265,8 +229,8 @@ class _NotLeasePropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "3 Person",
-                    style: TextStyle(
+                    "${propertydata.person.toString()} Person",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
@@ -279,10 +243,10 @@ class _NotLeasePropertyDetailsViewState
                 scale: 0.7,
                 color: kSecondaryColor,
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Bathrooms",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -290,30 +254,8 @@ class _NotLeasePropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "1 full bathroom",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  Text(
-                    "1 toilet",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Bills",
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdNormal),
-                  ),
-                  Text(
-                    "Included",
-                    style: TextStyle(
+                    "${propertydata.numberofwashrooms.toString()} bathroom",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
@@ -427,10 +369,10 @@ class _CurrentPropertyDetailsViewState
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Bedrooms",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -438,21 +380,14 @@ class _CurrentPropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "1 Single",
-                    style: TextStyle(
+                    "${propertydata.numberofbedrooms.toString()} BHK",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
                   ),
-                  Text(
-                    "1 Double",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     "Capacity",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -460,8 +395,8 @@ class _CurrentPropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "3 Person",
-                    style: TextStyle(
+                    "${propertydata.person.toString()} Person",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
@@ -474,10 +409,10 @@ class _CurrentPropertyDetailsViewState
                 scale: 0.7,
                 color: kSecondaryColor,
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Bathrooms",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -485,30 +420,8 @@ class _CurrentPropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "1 full bathroom",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  Text(
-                    "1 toilet",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Bills",
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdNormal),
-                  ),
-                  Text(
-                    "Included",
-                    style: TextStyle(
+                    "${propertydata.numberofwashrooms.toString()} bathroom",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
@@ -623,10 +536,10 @@ class _PreviousPropertyDetailsViewState
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Bedrooms",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -634,21 +547,14 @@ class _PreviousPropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "1 Single",
-                    style: TextStyle(
+                    "${propertydata.numberofbedrooms.toString()} BHK",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
                   ),
-                  Text(
-                    "1 Double",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     "Capacity",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -656,8 +562,8 @@ class _PreviousPropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "3 Person",
-                    style: TextStyle(
+                    "${propertydata.person.toString()} Person",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),
@@ -670,10 +576,10 @@ class _PreviousPropertyDetailsViewState
                 scale: 0.7,
                 color: kSecondaryColor,
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Bathrooms",
                     style: TextStyle(
                         color: kPrimaryColor,
@@ -681,30 +587,8 @@ class _PreviousPropertyDetailsViewState
                         fontFamily: kCircularStdNormal),
                   ),
                   Text(
-                    "1 full bathroom",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  Text(
-                    "1 toilet",
-                    style: TextStyle(
-                        color: kSecondaryPrimaryColor,
-                        fontSize: 12,
-                        fontFamily: kCircularStdBook),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Bills",
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 15,
-                        fontFamily: kCircularStdNormal),
-                  ),
-                  Text(
-                    "Included",
-                    style: TextStyle(
+                    "${propertydata.numberofwashrooms.toString()} bathroom",
+                    style: const TextStyle(
                         color: kSecondaryPrimaryColor,
                         fontSize: 12,
                         fontFamily: kCircularStdBook),

@@ -454,7 +454,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                 },
                                 itemBuilder: (context, int suggestion) {
                                   return ListTile(
-                                    title: Text('$suggestion bhk'),
+                                    title: Text('$suggestion BHK'),
                                   );
                                 },
                                 onSuggestionSelected: (int suggestion) {
@@ -864,140 +864,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   enabled: false,
                 ),
                 const SizedBox(height: 10),
-
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     TextFormField(
-                //       validator: (value) {
-                //         if (isFormSubmitted) {
-                //           if (value == null || value.isEmpty) {
-                //             return 'Please enter Address';
-                //           }
-                //         }
-                //         return null;
-                //       },
-                //       // focusNode: focusNode,
-                //       controller: addressController,
-                //       textInputAction: TextInputAction.next,
-                //       onChanged: (value) => {
-                //         // isTouched = true,
-                //         getSuggestion(addressController.text)
-                //       },
-                //       decoration: InputDecoration(
-                //         hintText: "Flat / House No / Building",
-                //         counterText: "",
-                //         contentPadding:
-                //             const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                //         hintStyle: const TextStyle(
-                //           fontFamily: kCircularStdBook,
-                //           fontWeight: FontWeight.w400,
-                //           color: kPrimaryColor,
-                //           fontSize: 14,
-                //         ),
-                //         filled: true,
-                //         fillColor: kWhiteColor,
-                //         border: const OutlineInputBorder(
-                //           borderRadius: BorderRadius.all(
-                //             Radius.circular(8.0),
-                //           ),
-                //           borderSide:
-                //               BorderSide(color: kWhiteColor, width: 1.0),
-                //         ),
-                //         enabledBorder: OutlineInputBorder(
-                //           borderRadius: BorderRadius.circular(8.0),
-                //           borderSide:
-                //               const BorderSide(color: kWhiteColor, width: 1.0),
-                //         ),
-                //         focusedBorder: OutlineInputBorder(
-                //           borderRadius: BorderRadius.circular(8.0),
-                //           borderSide: const BorderSide(
-                //             color: kWhiteColor,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // Container(
-                //   height: _placeList.isEmpty ? 0 : 200,
-                //   width: _placeList.isEmpty ? 0 : size.width,
-                //   color: kWhiteColor,
-                //   child: ListView.builder(
-                //     physics: const BouncingScrollPhysics(
-                //         parent: AlwaysScrollableScrollPhysics()),
-                //     shrinkWrap: true,
-                //     itemCount: _placeList.length,
-                //     itemBuilder: (context, index) {
-                //       return GestureDetector(
-                //         onTap: () async {
-                //           Future.delayed(const Duration(milliseconds: 100),
-                //               () async {
-                //             String placeId = _placeList[index]['place_id'];
-                //             String detailsURL =
-                //                 'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$placesApiKey';
-                //             var detailsResponse =
-                //                 await http.get(Uri.parse(detailsURL));
-                //             var detailsData = json.decode(detailsResponse.body);
-                //             if (detailsResponse.statusCode == 200) {
-                //               List<dynamic> addressComponents =
-                //                   detailsData['result']['address_components'];
-                //               String city = '';
-                //               for (var component in addressComponents) {
-                //                 List<dynamic> types = component['types'];
-
-                //                 if (types.contains('country')) {
-                //                   setState(() {
-                //                     countryName = component['long_name'];
-                //                   });
-                //                 }
-                //                 if (types
-                //                     .contains('administrative_area_level_1')) {
-                //                   // state = component['long_name'];
-                //                 }
-                //                 if (types.contains('locality') ||
-                //                     types.contains('postal_town')) {
-                //                   city = component['long_name'];
-                //                 }
-                //               }
-                //               setState(() {
-                //                 // con.text = state;
-                //                 cityController.text = city;
-
-                //                 // print(_stateController.text);
-                //                 // print(_cityController.text);
-                //                 // stateError = false;
-                //                 // cityError = false;
-                //               });
-                //               setState(() {
-                //                 // pickedCity = "1";
-                //                 // pickedState = "2";
-                //               });
-
-                //               checCounrty();
-                //             } else {
-                //               throw Exception('Failed to load place details');
-                //             }
-                //             setState(() {
-                //               // street1Controller.text = _placeList[index]
-                //               //         ["terms"]
-                //               //     .sublist(
-                //               //         0, _placeList[index]["terms"].length - 3)
-                //               //     .map((term) => term["value"])
-                //               //     .join(", ");
-                //               // focusNode.unfocus();
-                //               _placeList.clear();
-                //             });
-                //           });
-                //         },
-                //         child: ListTile(
-                //           title: Text(_placeList[index]["description"]),
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // ),
-                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0.0),
                   child: TypeAheadField<GetAllCountryDataModel>(
@@ -1105,7 +971,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                   initialAmenitiesIds: widget.amenitiesid,
                 ),
                 const SizedBox(height: 10),
-                imageList.isEmpty && fileList.isEmpty
+                fileList.isEmpty
                     ? GestureDetector(
                         onTap: pickImage,
                         child: SizedBox(
@@ -1154,9 +1020,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                         ),
                       )
                     : SizedBox(
-                        height: fileList.length == 1 || fileList.length == 2
-                            ? 120
-                            : 240,
+                        height: fileList.length <= 2 ? 120 : 240,
                         child: GridView.count(
                           physics: const NeverScrollableScrollPhysics(),
                           crossAxisCount: 3,
@@ -1185,9 +1049,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                         onTap: () {
                                           setState(() {
                                             fileList.removeAt(index);
-                                            if (fileList.isEmpty) {
-                                              isImagePickerError = true;
-                                            }
+                                            totalImageCount--;
                                           });
                                         },
                                         child: const Icon(
@@ -1471,9 +1333,28 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     }
   }
 
+  Future<File> _downloadImageFromUrl(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        String tempPath = (await getTemporaryDirectory()).path;
+        String fileName = url.split('/').last;
+        String filePath = '$tempPath/$fileName';
+        File file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+        return file;
+      } else {
+        throw Exception("Failed to download image: ${response.statusCode}");
+      }
+    } catch (e) {
+      return File('');
+    }
+  }
+
   void loadInitialImages() async {
     try {
       for (var path in initialImagePaths) {
+        if (fileList.length >= 5) break;
         if (path.startsWith('http')) {
           File file = await _downloadImageFromUrl(path);
           if (totalImageCount < 5 &&
@@ -1494,9 +1375,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 totalImageCount++;
               });
             }
-          } else {}
+          }
         }
       }
+
       setState(() {
         isImagePickerError = false;
       });
@@ -1510,26 +1392,10 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     }
   }
 
-  Future<File> _downloadImageFromUrl(String url) async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        String tempPath = (await getTemporaryDirectory()).path;
-        String fileName = url.split('/').last;
-        String filePath = '$tempPath/$fileName';
-        File file = File(filePath);
-        await file.writeAsBytes(response.bodyBytes);
-        return file;
-      } else {
-        throw Exception("Failed to download image: ${response.statusCode}");
-      }
-    } catch (e) {
-      return File('');
-    }
-  }
-
   Future<void> pickImage() async {
     try {
+      int remainingSlots = 5 - fileList.length;
+      if (remainingSlots <= 0) return;
       List<Asset> pickedImages = await MultiImagePicker.pickImages(
         selectedAssets: fileList.isEmpty ? [] : imageList,
         iosOptions: const IOSOptions(
@@ -1541,7 +1407,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
         androidOptions: AndroidOptions(
           actionBarColor: Colors.red,
           actionBarTitleColor: Colors.white,
-          maxImages: 5 - totalImageCount,
+          maxImages: remainingSlots,
           hasCameraInPickerPage: false,
           statusBarColor: Colors.black26,
           actionBarTitle: "Select Photo",
@@ -1554,25 +1420,22 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
       if (pickedImages.isNotEmpty) {
         // ignore: use_build_context_synchronously
         LoaderX.show(context, 60.0, 60.0);
-        fileList.clear(); // Clear previous files and re-add initial paths
         imageList = pickedImages;
-
-        // loadInitialImages(); // Reload initial images
 
         for (var asset in imageList) {
           final filePath = await getFilePathFromAsset(asset);
-          setState(() {
-            fileList.add(File(filePath));
-            LoaderX.hide();
-          });
+          if (fileList.length < 5) {
+            setState(() {
+              fileList.add(File(filePath));
+              totalImageCount++;
+            });
+          }
         }
+        LoaderX.hide();
         setState(() {
-          LoaderX.hide();
           isImagePickerError = false;
-        });
-        setState(() {
           initialImagePaths = widget.imagelist!;
-          if (widget.imagelist!.isNotEmpty) {
+          if (fileList.isEmpty) {
             loadInitialImages();
           }
         });

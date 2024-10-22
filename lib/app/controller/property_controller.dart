@@ -114,6 +114,7 @@ class GetCurrentPropertyController extends GetxController {
       var properties = await propertiesService.getAllCurrentProperties();
       if (properties.data != null) {
         trtrrtrt.assign(properties);
+        isLoading(false);
       }
     } finally {
       isLoading(false);

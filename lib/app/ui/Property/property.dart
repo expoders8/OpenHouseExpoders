@@ -35,8 +35,6 @@ class _PropertyPageState extends State<PropertyPage>
       Get.put(GetAvailablePropertyController());
   final GetLeasePropertyController getLeasePropertyController =
       Get.put(GetLeasePropertyController());
-  final GetCurrentPropertyController getCurrentPropertyController =
-      Get.put(GetCurrentPropertyController());
   String userImage = "",
       authToken = "",
       firstName = "",

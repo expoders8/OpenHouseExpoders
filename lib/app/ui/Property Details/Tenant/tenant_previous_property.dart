@@ -120,18 +120,20 @@ class _PreviousPropertyDetailPageState extends State<PreviousPropertyDetailPage>
                             SliverAppBar(
                                 automaticallyImplyLeading: false,
                                 backgroundColor: kBackGroundColor,
-                                expandedHeight: 0,
+                                expandedHeight: 65,
                                 floating: false,
                                 flexibleSpace: Column(
                                   children: [
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                          width: Get.width - 100,
+                                          width: Get.width - 120,
                                           child: Text(
-                                            propertydata!.name!.toString(),
+                                            propertydata!.name.toString(),
                                             style: const TextStyle(
                                                 color: kPrimaryColor,
                                                 fontSize: 18,
@@ -139,6 +141,15 @@ class _PreviousPropertyDetailPageState extends State<PreviousPropertyDetailPage>
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                           ),
+                                        ),
+                                        Text(
+                                          "(${propertydata.category!.toString()})",
+                                          style: const TextStyle(
+                                              color: kSecondaryPrimaryColor,
+                                              fontSize: 13,
+                                              fontFamily: kCircularStdMedium),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
                                         ),
                                         Row(
                                           children: [

@@ -228,33 +228,6 @@ class PropertiesService {
     }
   }
 
-  getByIdProperties(String id) async {
-    try {
-      var response = await http.get(
-          Uri.parse('$baseUrl/api/property/getbyid?id=$id'),
-          headers: {'Content-type': 'application/json'});
-      if (response.statusCode == 200) {
-        var decodedUser = jsonDecode(response.body);
-        if (decodedUser['success']) {
-          Get.to(() => const LeasePropertyDetailPage());
-          getStorage.write('authToken', decodedUser["data"]['authToken']);
-          return decodedUser['success'];
-        } else {
-          LoaderX.hide();
-          SnackbarUtils.showErrorSnackbar(
-              "Failed to Login", decodedUser['message']);
-          return Future.error("Server Error");
-        }
-      } else {
-        LoaderX.hide();
-      }
-    } catch (e) {
-      LoaderX.hide();
-      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
-      throw e.toString();
-    }
-  }
-
   getMyLeaseProperties(PropertiesRequestModel getRequest) async {
     try {
       var response =

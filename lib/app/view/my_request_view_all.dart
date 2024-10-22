@@ -158,7 +158,7 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
                                               ),
                                               const SizedBox(width: 10),
                                               SizedBox(
-                                                width: Get.width - 220,
+                                                width: 220,
                                                 child: Text(
                                                   data.description.toString(),
                                                   style: const TextStyle(
@@ -166,9 +166,6 @@ class _MyRequestViewAllViewState extends State<MyRequestViewAllView> {
                                                       fontSize: 13,
                                                       fontFamily:
                                                           kCircularStdBold),
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                             ],

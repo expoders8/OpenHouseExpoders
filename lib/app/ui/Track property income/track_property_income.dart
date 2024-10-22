@@ -86,7 +86,9 @@ class _TrackPropertyIncomePageState extends State<TrackPropertyIncomePage> {
                               totalPenddingrent =
                                   totalAmount - currentPendingRent;
                             }
-                            totalAmount = totalPenddingrent - totalExpense;
+                            totalAmount = totalPenddingrent == 0
+                                ? totalAmount - totalExpense
+                                : totalPenddingrent - totalExpense;
                             return Column(
                               children: [
                                 leaseproperty(
@@ -94,7 +96,9 @@ class _TrackPropertyIncomePageState extends State<TrackPropertyIncomePage> {
                                   data.propertyAddress.toString(),
                                   data.propertyName.toString(),
                                   "\$ ${data.totalAmount.toString()}",
-                                  "\$ $totalPenddingrent",
+                                  totalPenddingrent == 0
+                                      ? "\$ $totalAmount"
+                                      : "\$ $totalPenddingrent",
                                   "\$ $totalExpense",
                                   "\$ $totalAmount",
                                 )

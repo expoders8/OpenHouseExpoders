@@ -134,7 +134,7 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                             SliverAppBar(
                                 automaticallyImplyLeading: false,
                                 backgroundColor: kBackGroundColor,
-                                expandedHeight: 0,
+                                expandedHeight: 65,
                                 floating: false,
                                 flexibleSpace: Column(
                                   children: [
@@ -145,11 +145,13 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             SizedBox(
-                                              width: Get.width - 100,
+                                              width: Get.width - 120,
                                               child: Text(
-                                                propertydata.name!.toString(),
+                                                propertydata.name.toString(),
                                                 style: const TextStyle(
                                                     color: kPrimaryColor,
                                                     fontSize: 18,
@@ -158,6 +160,16 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
                                               ),
+                                            ),
+                                            Text(
+                                              "(${propertydata.category!.toString()})",
+                                              style: const TextStyle(
+                                                  color: kSecondaryPrimaryColor,
+                                                  fontSize: 13,
+                                                  fontFamily:
+                                                      kCircularStdMedium),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
                                             ),
                                             Row(
                                               children: [
@@ -257,14 +269,26 @@ class _NotLeasePropertyDetailPageState extends State<NotLeasePropertyDetailPage>
                                       ],
                                     ),
                                     Row(
-                                      children: List.generate(4, (index) {
-                                        return const Icon(Icons.star,
-                                            color: Color.fromARGB(
-                                                255, 255, 230, 0));
-                                      })
-                                        ..add(const Icon(Icons.star_half,
-                                            color: Color.fromARGB(
-                                                255, 255, 230, 0))),
+                                      children: [
+                                        const Icon(
+                                          Icons.location_on,
+                                          size: 16,
+                                          color: kButtonColor,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: Get.width - 50,
+                                          child: Text(
+                                            "${propertydata.address!.toString()} , ${propertydata.cityName!.toString()}",
+                                            style: const TextStyle(
+                                                color: kSecondaryPrimaryColor,
+                                                fontSize: 13,
+                                                fontFamily: kCircularStdMedium),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 )),

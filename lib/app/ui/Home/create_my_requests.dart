@@ -597,9 +597,7 @@ class _CreateMyRequestsPageState extends State<CreateMyRequestsPage> {
                         ),
                       ),
                       onPressed: () {
-                        // Get.offAll(() => const TabPage(
-                        //       selectedTabIndex: 1,
-                        //     ));
+                        getpropertydata();
                       }),
                 ],
               ),
