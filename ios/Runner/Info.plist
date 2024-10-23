@@ -22,6 +22,8 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need access to your location to show the city name.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

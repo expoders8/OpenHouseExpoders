@@ -1,14 +1,15 @@
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../models/firebase_user_model.dart';
 import '../../routes/app_pages.dart';
 import '../../view/lease_property_view.dart';
+import '../../models/firebase_user_model.dart';
 import '../../view/current_property_view.dart';
 import '../../../config/constant/constant.dart';
+import '../../view/list_property_view.dart';
 import '../../view/previous_property_view.dart';
 import '../../view/not_lease_property_view.dart';
 import '../../controller/property_controller.dart';
@@ -45,6 +46,7 @@ class _PropertyPageState extends State<PropertyPage>
   @override
   void initState() {
     super.initState();
+
     var roll = getStorage.read('roll') ?? "";
     setState(() {
       selectedRoll = roll;
@@ -215,7 +217,15 @@ class _PropertyPageState extends State<PropertyPage>
                             onTap: () {
                               FocusScope.of(context).requestFocus(FocusNode());
                             },
-                            child: const CurrentPropertyView(),
+                            child: const Column(
+                              children: [
+                                Flexible(child: ListPropertyView()),
+                                SizedBox(
+                                  height: 85,
+                                )
+                              ],
+                            ),
+                            // child: const CurrentPropertyView(),
                           ),
                           GestureDetector(
                             onTap: () {

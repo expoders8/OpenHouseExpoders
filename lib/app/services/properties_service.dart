@@ -7,6 +7,7 @@ import '../models/get_expense_model.dart';
 
 import '../models/extensions_model.dart';
 import '../controller/tab_controller.dart';
+import '../models/get_list_property.dart';
 import '../models/getpropretyes_model.dart';
 import '../../config/constant/constant.dart';
 import '../controller/property_controller.dart';
@@ -57,7 +58,7 @@ class PropertiesService {
         ..fields['address'] = address
         ..fields['address1'] = address1
         ..fields['country_id'] = countryid
-        ..fields['city_name'] = cityname
+        ..fields['city_name'] = cityname.toLowerCase()
         ..fields['profile_picture'] = ""
         ..fields['created_by_id'] = userid["id"]
         ..fields['updated_by_id'] = ""
@@ -138,7 +139,7 @@ class PropertiesService {
         ..fields['address'] = address
         ..fields['address1'] = address1
         ..fields['country_id'] = countryid
-        ..fields['city_name'] = cityname
+        ..fields['city_name'] = cityname.toLowerCase()
         ..fields['profile_picture'] = ""
         ..fields['created_by_id'] = userid["id"]
         ..fields['updated_by_id'] = ""
@@ -211,6 +212,32 @@ class PropertiesService {
         LoaderX.hide();
         var data = json.decode(response.body);
         return GetAllPropertiesModel.fromJson(data);
+      } else if (response.statusCode == 401) {
+        LoaderX.hide();
+        return Future.error("Authentication Error");
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar("Server Error",
+            "Error while fetch Properties, Please try after some time.");
+        return Future.error("Server Error");
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
+  getAllListProperties(String cityName) async {
+    try {
+      var response = await http.post(
+          Uri.parse('$baseUrl/api/tenant/current_location_property'),
+          body: json.encode({"cityname": cityName.toLowerCase()}),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        LoaderX.hide();
+        var data = json.decode(response.body);
+        return GetAllListPropertyModel.fromJson(data);
       } else if (response.statusCode == 401) {
         LoaderX.hide();
         return Future.error("Authentication Error");

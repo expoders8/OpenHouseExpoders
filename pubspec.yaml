@@ -1,4 +1,4 @@
-name: OpenHouse
+name: openhouse
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -66,6 +66,8 @@ dependencies:
   app_settings: ^5.1.1
   # connectivity_plus: ^4.0.2
   sign_in_with_apple: ^5.0.0
+  geolocator: ^12.0.0
+  geocoding: ^3.0.0
 
 dev_dependencies:
   flutter_test:

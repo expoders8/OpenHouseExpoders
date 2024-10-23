@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../models/extensions_model.dart';
 import '../models/get_expense_model.dart';
+import '../models/get_list_property.dart';
 import '../models/getpropretyes_model.dart';
 import '../services/properties_service.dart';
 import '../models/getall_property_expenses_model.dart';
@@ -275,5 +276,41 @@ class GetPropertyExtensionsController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+}
+
+class GetListPropertyController extends GetxController {
+  var isLoading = true.obs;
+  RxString searchText = "".obs;
+  var propertiesList = <GetAllListPropertyModel>[].obs;
+  PropertiesService propertiesService = PropertiesService();
+
+  fetchAllProperties(String cityName) async {
+    try {
+      isLoading(true);
+      var properties = await propertiesService.getAllListProperties(cityName);
+      if (properties.data != null) {
+        propertiesList.assign(properties);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  createRequest() {
+    PropertiesRequestModel propertiesRequestModel = PropertiesRequestModel();
+    propertiesRequestModel.pageSize = 100;
+    propertiesRequestModel.pageNumber = 1;
+    propertiesRequestModel.searchText =
+        searchText.value.isEmpty ? null : searchText.value;
+    propertiesRequestModel.sortBy = null;
+    propertiesRequestModel.propertyid = null;
+    propertiesRequestModel.userId = null;
+    propertiesRequestModel.type = null;
+    propertiesRequestModel.onlease = false;
+    propertiesRequestModel.countryId = null;
+    propertiesRequestModel.stateId = null;
+    propertiesRequestModel.cityName = null;
+    return propertiesRequestModel;
   }
 }

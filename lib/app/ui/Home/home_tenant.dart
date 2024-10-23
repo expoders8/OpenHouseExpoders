@@ -124,13 +124,12 @@ class _HomeTenantPageState extends State<HomeTenantPage> {
     });
   }
 
-    Future<void> _refreshItems() async {
+  Future<void> _refreshItems() async {
     await Future.delayed(const Duration(seconds: 2));
     setState(() {
       getAllTenantHomeDataController.getAllTenantHomePageData();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -772,7 +771,7 @@ class _HomeTenantPageState extends State<HomeTenantPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Container(
                   width: Get.width - 150,
-                   height: 192,
+                  height: 192,
                   decoration: BoxDecoration(
                     color: kWhiteColor,
                     borderRadius: BorderRadius.circular(15),
