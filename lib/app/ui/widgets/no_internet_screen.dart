@@ -2,9 +2,9 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:openhome/config/constant/font_constant.dart';
 
 import '../../../config/constant/color_constant.dart';
+import '../../../config/constant/font_constant.dart';
 
 class NoInternetScreen extends StatefulWidget {
   const NoInternetScreen({Key? key}) : super(key: key);

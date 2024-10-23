@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:openhome/app/services/firebase_auth_service.dart';
+import '../services/firebase_auth_service.dart';
 
 import '../ui/TabPage/tab_page.dart';
 import '../../config/constant/constant.dart';

@@ -459,22 +459,22 @@ class _ChatScreenState extends State<ChatScreen> {
                 highlightColor: Colors.transparent,
               ),
               child: SizedBox(
-                height: 125,
+                height: 100,
                 child: Column(
                   children: [
-                    ListTile(
-                      title: const Center(
-                        child: Text(
-                          "Block",
-                          style: TextStyle(
-                            fontFamily: kWorkSans,
-                            fontSize: 15,
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
+                    // ListTile(
+                    //   title: const Center(
+                    //     child: Text(
+                    //       "Block",
+                    //       style: TextStyle(
+                    //         fontFamily: kWorkSans,
+                    //         fontSize: 15,
+                    //         color: kPrimaryColor,
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   onTap: () {},
+                    // ),
                     ListTile(
                       title: const Center(
                         child: Text(

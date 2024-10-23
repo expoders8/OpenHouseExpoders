@@ -22,8 +22,7 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
       Get.put(GetDetailTenantsController());
 
   Future<void> _refreshItems() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Simulate network request
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
       getAllPreviousTenantsController.fetchAllTenants();
     });
@@ -53,36 +52,36 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
             } else {
               return Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: TextFormField(
-                      controller: searchController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.fromLTRB(13, 0, 10, 0),
-                        prefixIcon: const Icon(Icons.search),
-                        filled: true,
-                        fillColor: kWhiteColor,
-                        hintText: 'Search',
-                        hintStyle: const TextStyle(
-                            color: kSecondaryPrimaryColor,
-                            fontFamily: kCircularStdNormal,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: const BorderSide(color: kWhiteColor),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: const BorderSide(color: kWhiteColor),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: const BorderSide(color: kWhiteColor),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 10.0),
+                  //   child: TextFormField(
+                  //     controller: searchController,
+                  //     decoration: InputDecoration(
+                  //       contentPadding: const EdgeInsets.fromLTRB(13, 0, 10, 0),
+                  //       prefixIcon: const Icon(Icons.search),
+                  //       filled: true,
+                  //       fillColor: kWhiteColor,
+                  //       hintText: 'Search',
+                  //       hintStyle: const TextStyle(
+                  //           color: kSecondaryPrimaryColor,
+                  //           fontFamily: kCircularStdNormal,
+                  //           fontWeight: FontWeight.w400,
+                  //           fontSize: 16),
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(25.0),
+                  //         borderSide: const BorderSide(color: kWhiteColor),
+                  //       ),
+                  //       enabledBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(25.0),
+                  //         borderSide: const BorderSide(color: kWhiteColor),
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(25.0),
+                  //         borderSide: const BorderSide(color: kWhiteColor),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(height: 10),
                   Flexible(
                     child: RefreshIndicator(
@@ -277,60 +276,6 @@ class _PreviousTenantsViewState extends State<PreviousTenantsView> {
                           width: 35,
                           fit: BoxFit.cover,
                         ),
-                        // Column(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     Stack(
-                        //       alignment: Alignment.center,
-                        //       children: [
-                        //         // Outer Green Circle
-                        //         Container(
-                        //           width: 25,
-                        //           height: 25,
-                        //           decoration: BoxDecoration(
-                        //             shape: BoxShape.circle,
-                        //             gradient: LinearGradient(
-                        //               colors: rating! <= 2
-                        //                   ? [Colors.redAccent, Colors.red]
-                        //                   : rating <= 3 && rating > 2
-                        //                       ? [Colors.blueAccent, Colors.blue]
-                        //                       : rating <= 4 && rating > 3
-                        //                           ? [
-                        //                               Colors.orangeAccent,
-                        //                               Colors.orange
-                        //                             ]
-                        //                           : rating <= 5 && rating > 4
-                        //                               ? [
-                        //                                   Colors.greenAccent,
-                        //                                   Colors.green
-                        //                                 ]
-                        //                               : [
-                        //                                   Colors.greenAccent,
-                        //                                   Colors.green
-                        //                                 ],
-                        //               begin: Alignment.topLeft,
-                        //               end: Alignment.bottomRight,
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         // Checkmark Icon
-                        //         const Icon(
-                        //           Icons.check,
-                        //           color: Colors.white,
-                        //           size: 15,
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     const SizedBox(height: 2),
-                        //     Text(
-
-                        //       style: const TextStyle(
-                        //           color: kPrimaryColor,
-                        //           fontSize: 10,
-                        //           fontFamily: kCircularStdMedium),
-                        //     ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   )

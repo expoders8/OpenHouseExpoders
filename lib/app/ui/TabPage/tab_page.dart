@@ -116,9 +116,8 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
                             elevation: 5,
                             child: Container(
                               margin:
-                                  EdgeInsets.only(top: Platform.isIOS ? 8 : 0),
-                              height: Platform.isIOS ? 100 : 68,
-                              // decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                                  EdgeInsets.only(top: Platform.isAndroid ? 0 : 3),
+                              height: 68,
                               child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
@@ -199,103 +198,5 @@ class _TabPageState extends State<TabPage> with WidgetsBindingObserver {
     );
   }
 
-  buildBottomNavigationMenu(context, landingPageController) {
-    return Obx(
-      () => SizedBox(
-        height: Platform.isIOS ? 105 : 68,
-        child: Theme(
-          data: ThemeData(
-            splashColor: kTransparentColor,
-            highlightColor: kTransparentColor,
-          ),
-          child: BottomNavigationBar(
-            elevation: 1,
-            showUnselectedLabels: true,
-            showSelectedLabels: true,
-            onTap: landingPageController.changeTabIndex,
-            currentIndex: landingPageController.tabIndex.value,
-            backgroundColor: kBackGroundColor,
-            unselectedItemColor: kBlack45Color,
-            selectedItemColor: kAppBackGround2Color,
-            unselectedLabelStyle: unselectedLabelStyle,
-            selectedLabelStyle: selectedLabelStyle,
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: Container(
-                  margin: const EdgeInsets.only(bottom: 11, top: 6),
-                  child: Image.asset(
-                    "assets/icons/homeicon.png",
-                    color: controller.tabIndex.value == 0
-                        ? kAppBackGround2Color
-                        : kBlack45Color,
-                    height: 20,
-                    width: 20,
-                  ),
-                ),
-                label: 'Home',
-                backgroundColor: kBackGroundColor,
-              ),
-              BottomNavigationBarItem(
-                icon: Container(
-                  margin: const EdgeInsets.only(bottom: 11, top: 6),
-                  child: Image.asset(
-                    "assets/icons/file.png",
-                    color: controller.tabIndex.value == 1
-                        ? kAppBackGround2Color
-                        : kBlack45Color,
-                    height: 20,
-                    width: 20,
-                  ),
-                ),
-                label: 'e',
-                backgroundColor: kBackGroundColor,
-              ),
-              BottomNavigationBarItem(
-                icon: Container(
-                  margin: const EdgeInsets.only(bottom: 0, top: 0),
-                  child: Image.asset(
-                    "assets/icons/recodingicon.png",
-                    height: 38,
-                    width: 40,
-                  ),
-                ),
-                label: 'e',
-              ),
-              BottomNavigationBarItem(
-                icon: Container(
-                  margin: const EdgeInsets.only(bottom: 10, top: 5),
-                  child: Image.asset(
-                    "assets/icons/pencolor.png",
-                    color: controller.tabIndex.value == 3
-                        ? kAppBackGround2Color
-                        : kBlack45Color,
-                    height: 22,
-                    width: 22,
-                  ),
-                ),
-                label: 'e',
-                backgroundColor: kBackGroundColor,
-              ),
-              BottomNavigationBarItem(
-                icon: Container(
-                  margin: const EdgeInsets.only(bottom: 11, top: 6),
-                  child: Image.asset(
-                    "assets/icons/User.png",
-                    color: controller.tabIndex.value == 4
-                        ? kAppBackGround2Color
-                        : kBlack45Color,
-                    height: 20,
-                    width: 20,
-                  ),
-                ),
-                label: 'e',
-                backgroundColor: kBackGroundColor,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+ 
 }

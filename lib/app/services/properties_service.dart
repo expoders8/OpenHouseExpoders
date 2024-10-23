@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:openhome/app/models/get_expense_model.dart';
+import '../models/get_expense_model.dart';
 
 import '../models/extensions_model.dart';
 import '../controller/tab_controller.dart';
@@ -16,7 +16,6 @@ import '../../config/provider/loader_provider.dart';
 import '../controller/host_homepage_controller.dart';
 import '../../config/provider/snackbar_provider.dart';
 import '../models/getall_property_expenses_model.dart';
-import '../ui/Property Details/Host/lease_property_details.dart';
 
 class PropertiesService {
   final tabController = Get.put(TabCountController());

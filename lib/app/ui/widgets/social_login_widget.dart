@@ -133,7 +133,7 @@ class _SocialLoginPageState extends State<SocialLoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(width: Platform.isIOS ? 10 : 0),
+                    SizedBox(width: Platform.isIOS ? 0 : 0),
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: handleGoogleSignIn,

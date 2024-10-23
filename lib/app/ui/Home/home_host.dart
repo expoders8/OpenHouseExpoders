@@ -73,6 +73,13 @@ class _HomeHostPageState extends State<HomeHostPage> {
     }
   }
 
+  Future<void> _refreshItems() async {
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      getAllHostHomeDataController.getAllHostHomePageData();
+    });
+  }
+
   @override
   void initState() {
     getAllHostHomeDataController.getAllHostHomePageData();
@@ -240,66 +247,69 @@ class _HomeHostPageState extends State<HomeHostPage> {
                 );
               } else {
                 if (getAllHostHomeDataController.dataList.isNotEmpty) {
-                  return ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
-                      var requestData =
-                          getAllHostHomeDataController.dataList[0].data!;
-                      var data = requestData;
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 10),
-                          const Text(
-                            "Checkout Requests",
-                            style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 16,
-                                fontFamily: kCircularStdMedium),
-                          ),
-                          buildcheckoutrequest(data.checkOutRequest),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Tenant Requests",
-                                style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 16,
-                                    fontFamily: kCircularStdMedium),
-                              ),
-                              CupertinoButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () {
-                                  Get.toNamed(Routes.tenantRequestAllView);
-                                },
-                                child: const Text(
-                                  "View all",
+                  return RefreshIndicator(
+                    onRefresh: _refreshItems,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        var requestData =
+                            getAllHostHomeDataController.dataList[0].data!;
+                        var data = requestData;
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 10),
+                            const Text(
+                              "Checkout Requests",
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 16,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                            buildcheckoutrequest(data.checkOutRequest),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  "Tenant Requests",
                                   style: TextStyle(
-                                      color: kBlueColor,
-                                      fontSize: 13,
+                                      color: kPrimaryColor,
+                                      fontSize: 16,
                                       fontFamily: kCircularStdMedium),
                                 ),
-                              ),
-                            ],
-                          ),
-                          buildTenantrequest(data.tenantRequest),
-                          const SizedBox(height: 10),
-                          const Text(
-                            "Lease expairy",
-                            style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 16,
-                                fontFamily: kCircularStdMedium),
-                          ),
-                          const SizedBox(height: 10),
-                          buildTenantProperty(data.propertiesData!),
-                          const SizedBox(height: 90),
-                        ],
-                      );
-                    },
+                                CupertinoButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    Get.toNamed(Routes.tenantRequestAllView);
+                                  },
+                                  child: const Text(
+                                    "View all",
+                                    style: TextStyle(
+                                        color: kBlueColor,
+                                        fontSize: 13,
+                                        fontFamily: kCircularStdMedium),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            buildTenantrequest(data.tenantRequest),
+                            const SizedBox(height: 10),
+                            const Text(
+                              "Lease expairy",
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 16,
+                                  fontFamily: kCircularStdMedium),
+                            ),
+                            const SizedBox(height: 10),
+                            buildTenantProperty(data.propertiesData!),
+                            const SizedBox(height: 90),
+                          ],
+                        );
+                      },
+                    ),
                   );
                 } else {
                   return SizedBox(
@@ -978,6 +988,7 @@ class _HomeHostPageState extends State<HomeHostPage> {
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Container(
               width: Get.width - 150,
+              height: 192,
               decoration: BoxDecoration(
                 color: kWhiteColor,
                 borderRadius: BorderRadius.circular(15),
@@ -1110,7 +1121,7 @@ class _HomeHostPageState extends State<HomeHostPage> {
                                 SizedBox(width: 5),
                                 Icon(
                                   Icons.thumb_up,
-                                  size: 11,
+                                  size: 10,
                                   color: kWhiteColor,
                                 ),
                               ],

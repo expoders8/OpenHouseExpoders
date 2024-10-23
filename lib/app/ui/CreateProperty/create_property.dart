@@ -1019,7 +1019,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                         ),
                       )
                     : SizedBox(
-                        height: fileList.length <= 2 ? 120 : 240,
+                        height: fileList.length <= 2 ? Platform.isAndroid ? 120 : 130 : 240,
                         child: GridView.count(
                           physics: const NeverScrollableScrollPhysics(),
                           crossAxisCount: 3,
@@ -1075,7 +1075,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                       child: Image.asset(
                                         "assets/icons/shareImage.png",
                                         color: Colors.red,
-                                        scale: 1.2,
+                                        scale:   1.2,
                                       ),
                                     ),
                                   ),
@@ -1300,7 +1300,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                           ),
                         ),
                       ),
-                SizedBox(height: widget.checkEdit == "edit" ? 10 : 90)
+                SizedBox(height: widget.checkEdit == "edit" ? Platform.isAndroid? 15: 25 : 90)
               ],
             ),
           ),

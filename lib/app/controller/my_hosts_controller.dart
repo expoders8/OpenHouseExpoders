@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import '../models/my_host_get_model.dart';
 import '../services/my_hosts_service.dart';
 import '../../config/constant/constant.dart';
 import '../../config/provider/snackbar_provider.dart';
-import 'package:openhome/app/models/my_host_get_model.dart';
 
 class GetAllPreviousHostsController extends GetxController {
   var isLoading = true.obs;

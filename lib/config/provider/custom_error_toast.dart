@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:openhome/config/constant/color_constant.dart';
+
+import '../constant/color_constant.dart';
 
 class CustomEErrorToast extends StatelessWidget {
   final String message;

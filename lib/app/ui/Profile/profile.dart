@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:openhome/app/routes/app_pages.dart';
 
+import '../../routes/app_pages.dart';
 import '../Auth/Login/login.dart';
 import '../TabPage/tab_page.dart';
 import '../../../config/constant/constant.dart';
@@ -245,7 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () async {
-                  var url = "https://www.google.com";
+                  var url = "https://openhousenextjs.vercel.app/privacy/privacy-policy";
                   if (await canLaunchUrl(Uri.parse(url))) {
                     await launchUrl(Uri.parse(url));
                   } else {

@@ -2,12 +2,12 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:openhome/app/ui/Property%20Details/Tenant/tenant_previous_property.dart';
 
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
 import '../controller/property_controller.dart';
 import '../controller/property_detail_controller.dart';
+import '../ui/Property Details/Tenant/tenant_previous_property.dart';
 
 class PreviousPropertyView extends StatefulWidget {
   const PreviousPropertyView({super.key});
