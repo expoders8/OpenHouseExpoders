@@ -228,7 +228,7 @@ class Amenitys {
 }
 
 class Hostdetails {
-  String? createdById;
+  String? id;
   String? firstName;
   String? lastName;
   String? email;
@@ -239,7 +239,7 @@ class Hostdetails {
   String? createdOn;
 
   Hostdetails(
-      {this.createdById,
+      {this.id,
       this.firstName,
       this.lastName,
       this.email,
@@ -250,7 +250,7 @@ class Hostdetails {
       this.createdOn});
 
   Hostdetails.fromJson(Map<String, dynamic> json) {
-    createdById = json['created_by_id'];
+    id = json['id'];
     firstName = json['first_name'];
     lastName = json['last_name'];
     email = json['email'];
@@ -263,7 +263,7 @@ class Hostdetails {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['created_by_id'] = createdById;
+    data['id'] = id;
     data['first_name'] = firstName;
     data['last_name'] = lastName;
     data['email'] = email;

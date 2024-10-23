@@ -60,6 +60,7 @@ class GetAllListPropertyDataModel {
   String? numberOfWashrooms;
   List<Amenitys>? amenitys;
   String? propertyImages;
+  Hostdetails? hostdetails;
 
   GetAllListPropertyDataModel(
       {this.id,
@@ -90,7 +91,8 @@ class GetAllListPropertyDataModel {
       this.numberOfBedrooms,
       this.numberOfWashrooms,
       this.amenitys,
-      this.propertyImages});
+      this.propertyImages,
+      this.hostdetails});
 
   GetAllListPropertyDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -127,6 +129,9 @@ class GetAllListPropertyDataModel {
       });
     }
     propertyImages = json['property_images'];
+    hostdetails = json['Hostdetails'] != null
+        ? new Hostdetails.fromJson(json['Hostdetails'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -162,6 +167,10 @@ class GetAllListPropertyDataModel {
       data['amenitys'] = amenitys!.map((v) => v.toJson()).toList();
     }
     data['property_images'] = propertyImages;
+    if (this.hostdetails != null) {
+      data['Hostdetails'] = this.hostdetails!.toJson();
+    }
+    return data;
     return data;
   }
 }
@@ -184,6 +193,55 @@ class Amenitys {
     data['id'] = id;
     data['title'] = title;
     data['icon'] = icon;
+    return data;
+  }
+}
+
+class Hostdetails {
+  String? id;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? phoneNumber;
+  String? profilePicture;
+  String? type;
+  String? rating;
+  String? createdOn;
+
+  Hostdetails(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phoneNumber,
+      this.profilePicture,
+      this.type,
+      this.rating,
+      this.createdOn});
+
+  Hostdetails.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+    email = json['email'];
+    phoneNumber = json['phone_number'];
+    profilePicture = json['profile_picture'];
+    type = json['type'];
+    rating = json['rating'];
+    createdOn = json['created_on'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['email'] = email;
+    data['phone_number'] = phoneNumber;
+    data['profile_picture'] = profilePicture;
+    data['type'] = type;
+    data['rating'] = rating;
+    data['created_on'] = createdOn;
     return data;
   }
 }

@@ -10,6 +10,7 @@ class GetAllTenantController extends GetxController {
   RxString endDate = "".obs;
   RxString phoneNo = "".obs;
   RxString tenantId = "".obs;
+  RxString hostId = "".obs;
   RxString hostName = "".obs;
   RxString startDate = "".obs;
   RxString searchText = "".obs;

@@ -119,6 +119,64 @@ class TenantService {
     }
   }
 
+  bookpropertyhost() async {
+    var userdata = getStorage.read('user');
+    var userid = jsonDecode(userdata);
+    final tabController = Get.put(TabCountController());
+    final GetAllTenantController getAllTenantController =
+        Get.put(GetAllTenantController());
+    String formattedRentAmount =
+        getAllTenantController.rentAmount.value.toString();
+
+// Remove .0 only if it's a whole number
+    if (formattedRentAmount.endsWith('.0')) {
+      formattedRentAmount =
+          formattedRentAmount.substring(0, formattedRentAmount.length - 2);
+    }
+    try {
+      var response = await http.post(Uri.parse('$baseUrl/api/tenant/invite'),
+          body: json.encode({
+            "email": getAllTenantController.email.value,
+            "phone_number": getAllTenantController.phoneNo.value,
+            "status": "",
+            "host_user_id": getAllTenantController.hostId.value,
+            "property_id": getAllTenantController.propertyId.value,
+            "rent_amount": formattedRentAmount,
+            "rent_amount_unit": null,
+            "created_by_id": null,
+            "updated_by_id": null,
+            "is_active": true,
+            "start_date": getAllTenantController.startDate.value,
+            "end_date": getAllTenantController.endDate.value,
+            "tenant_id": userid["id"],
+            "propertyAddress": getAllTenantController.propertyAddress.value,
+            "propertyName": getAllTenantController.propertyName.value,
+            "hostName": "${userid["first_name"]} ${userid["last_name"]}",
+          }),
+          headers: {'Content-type': 'application/json'});
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        LoaderX.hide();
+        Get.back();
+        Get.back();
+        Get.back();
+        tabController.changeTabIndex(0);
+      } else if (response.statusCode == 202) {
+        LoaderX.hide();
+        Get.back();
+        SnackbarUtils.showSnackbar("allready invitation sent.", "");
+      } else {
+        LoaderX.hide();
+        SnackbarUtils.showErrorSnackbar("Server Error",
+            "Error while fetch Properties, Please try after some time.");
+        return Future.error("Server Error");
+      }
+    } catch (e) {
+      LoaderX.hide();
+      SnackbarUtils.showErrorSnackbar("Server Error", e.toString());
+      throw e.toString();
+    }
+  }
+
   getAllInvitations() async {
     var userdata = getStorage.read('user');
     var userid = jsonDecode(userdata);

@@ -7,6 +7,11 @@ import 'package:geolocator/geolocator.dart';
 import '../controller/property_controller.dart';
 import '../../config/constant/font_constant.dart';
 import '../../config/constant/color_constant.dart';
+import '../controller/property_detail_controller.dart';
+import '../controller/tenants_controller.dart';
+import '../ui/Property Details/Host/not_lease_property_details.dart';
+import '../ui/Property Details/Tenant/tenant_list_property.dart';
+import '../ui/widgets/book_property_tenant.dart';
 
 class ListPropertyView extends StatefulWidget {
   const ListPropertyView({super.key});
@@ -17,9 +22,8 @@ class ListPropertyView extends StatefulWidget {
 
 class _ListPropertyViewState extends State<ListPropertyView> {
   TextEditingController notleasesearchController = TextEditingController();
-  // final GetnotleaseDetailsPropertiesController
-  //     getnotleaseDetailsPropertiesController =
-  //     Get.put(GetnotleaseDetailsPropertiesController());
+  final GetListDetailsPropertiesController getListDetailsPropertiesController =
+      Get.put(GetListDetailsPropertiesController());
   final GetListPropertyController getListPropertyController =
       Get.put(GetListPropertyController());
   String city = "Fetching City...";
@@ -135,6 +139,9 @@ class _ListPropertyViewState extends State<ListPropertyView> {
                             data.person.toString(),
                             data.name.toString(),
                             data.id.toString(),
+                            data.hostdetails!.email.toString(),
+                            data.hostdetails!.phoneNumber.toString(),
+                            data.hostdetails!.id.toString(),
                             data.amenitys!),
                       ],
                     );
@@ -207,25 +214,18 @@ class _ListPropertyViewState extends State<ListPropertyView> {
     }
   }
 
-  notLeaseProperty(
-      String image, price, address, person, name, id, List amenities) {
-    // final GetAllTenantController getAllTenantController =
-    //     Get.put(GetAllTenantController());
+  notLeaseProperty(String image, price, address, person, name, id, email,
+      phoneNo, hostId, List amenities) {
+    final GetAllTenantController getAllTenantController =
+        Get.put(GetAllTenantController());
     return Column(
       children: [
         CupertinoButton(
           padding: EdgeInsets.zero,
           onPressed: () {
-            // setState(() {
-            //   getAllTenantController.propertyId.value = id;
-            //   getAllTenantController.propertyName.value = name;
-            //   getAllTenantController.propertyAddress.value = address;
-            //   getAllTenantController.propertyImage.value = image;
-            //   getAllTenantController.rentAmount.value = price;
-            // });
-            // getnotleaseDetailsPropertiesController.propertyId(id);
-            // getnotleaseDetailsPropertiesController.fetchPropertyDetail();
-            // Get.to(() => const NotLeasePropertyDetailPage());
+            getListDetailsPropertiesController.propertyId(id);
+            getListDetailsPropertiesController.fetchPropertyDetail();
+            Get.to(() => const ListPropertyDetailPage());
           },
           child: Container(
             width: Get.width,
@@ -353,6 +353,45 @@ class _ListPropertyViewState extends State<ListPropertyView> {
                           )
                         ],
                       )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            getAllTenantController.propertyId.value = id;
+                            getAllTenantController.propertyName.value = name;
+                            getAllTenantController.propertyAddress.value =
+                                address;
+                            getAllTenantController.propertyImage.value = image;
+                            getAllTenantController.rentAmount.value = price;
+                            getAllTenantController.email(email);
+                            getAllTenantController.phoneNo(phoneNo);
+                            getAllTenantController.hostId(hostId);
+                          });
+                          Get.to(() => const BookPropertyPage());
+                        },
+                        child: Container(
+                          height: 35,
+                          width: 120,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(color: kWhiteColor),
+                              color: kButtonColor),
+                          child: const Center(
+                            child: Text(
+                              "Book Property",
+                              style: TextStyle(
+                                  color: kWhiteColor,
+                                  fontFamily: kCircularStdNormal,
+                                  fontSize: 13),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],
